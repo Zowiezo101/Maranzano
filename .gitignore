@@ -1,0 +1,5 @@
+syntax: glob
+desktop.ini
+*.log
+docker/.env
+docker/database/

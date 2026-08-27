@@ -1,0 +1,82 @@
+
+# Name of this set of containers
+name: database-server
+
+services:
+
+  # This is the container for the MySQL database
+  database:
+    # The location of the Dockerfile
+    build:
+      context: "./bin/mysql"
+      
+    # A file containing sensitive information
+    env_file: ".env"
+      
+    # The name for this container
+    container_name: "database"
+    
+    # If anything goes wrong, restart the database
+    restart: "always"
+    
+    # The database port
+    ports:
+      - "3306:3306"
+      
+    volumes:      
+      # This allows the database to be initialized with our sql files (Currently not used)
+      # - ../database/sql:/docker-entrypoint-initdb.d
+      
+      # The 'database' directory will be mapped to the container directory "/var/lib/mysql"
+      - ./database:/var/lib/mysql
+      
+      # This is a log directory mapped to the VMs log directory
+      - ./logs/mysql:/var/log
+    
+    environment:
+      # Some environment variables to log in to the database
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: maranzano
+      
+  # This is the container for phpMyAdmin
+  phpmyadmin:
+    # The location of the Dockerfile
+    build:
+      context: "./bin/pma"
+      
+    # The name for this container
+    container_name: "phpmyadmin"
+    
+    # We need the database, but don't have to wait for it to be initialized
+    links:
+      - database
+      
+    environment:
+      # Settings for phpMyAdmin
+      PMA_HOST: database
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      
+      # Settings for the MySQL database
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    
+    # Using port 8080 on the host and port 80 on the container
+    ports:
+      - "8080:80"
+      
+    volumes:      
+      # This is a config file mapped to the VMs config files
+      - ./config/php/php.ini:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
+      
+      # This is a log directory mapped to the VMs log directory
+      - ./logs/php:/var/log/apache2
+    
+# Needed so that the website container can communicate with the database
+networks:
+  database-server_default:
+    driver: bridge
