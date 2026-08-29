@@ -1,3 +1,8 @@
+<?php 
+    // This needs to be started at the very beginning
+    session_start();
+?>
+
 <!doctype html>
 
 <html>
