@@ -1,0 +1,41 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 28 aug 2026, 19:31:38
+    Author     : Zowiezo101
+*/
+
+:root {
+    /* The color values */
+    --bg-color-rgb: 69, 64, 53;
+    --bg-color-secondary-rgb: 135, 125, 104;
+    --acc-color-rgb: 168, 47, 47;
+    --acc-color-secondary-rgb: 125, 51, 51;
+    --link-color-rgb: 255, 255, 255;
+    --link-hover-color-rgb: 168, 47, 47;
+    
+    /* Color values translated to hex values */
+    --bg-color:            rgba(var(--bg-color-rgb), 1);
+    --bg-color-secondary:  rgba(var(--bg-color-secondary-rgb), 1);
+    --acc-color:           rgba(var(--acc-color-rgb), 1);
+    --acc-color-secondary: rgba(var(--acc-color-econdary-rgb), 1);
+    --link-color:          rgba(var(--link-color-rgb), 1);
+    --link-hover-color:    rgba(var(--link-hover-color-rgb), 1);
+    
+    /* Inserting the color values into bootstrap */
+    --bs-body-color:        var(--bs-white);
+    --bs-body-color-rgb:    var(--bs-white-rgb);
+    --bs-body-bg:           var(--bg-color);
+    --bs-body-bg-rgb:       var(--bg-color-rgb);
+    --bs-secondary-bg:      var(--bg-color-secondary);
+    --bs-secondary-bg-rgb:  var(--bg-color-secondary-rgb);
+    --bs-tertiary-bg:       var(--acc-color);
+    --bs-tertiary-bg-rgb:   var(--acc-color-rgb);
+    --bs-link-color:            var(--link-color);
+    --bs-link-color-rgb:        var(--link-color-rgb);
+    --bs-link-hover-color:      var(--link-hover-color);
+    --bs-link-hover-color-rgb:  var(--link-hover-color-rgb);
+}
+

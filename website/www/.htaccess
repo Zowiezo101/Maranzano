@@ -1,0 +1,28 @@
+
+RewriteEngine On
+
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
+
+# TODO: Pas nodig als de website eenmaal live gaat 
+# (Anders kan je niet met andere apparaten erop)
+# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+# RewriteRule ^ %{REQUEST_SCHEME}://%1%{REQUEST_URI} [R=301,L]
+
+# RewriteCond %{HTTPS} off
+# RewriteCond %{HTTP_HOST} !=localhost
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301] 
+
+# Making sure things are redirected to the correct file types
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.htm -f
+RewriteRule ^(.*)$ $1.htm
