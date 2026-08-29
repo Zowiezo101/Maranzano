@@ -1,6 +1,9 @@
 <?php 
     // This needs to be started at the very beginning
     session_start();
+    
+    require "src/tools/base.php";
+    require "src/tools/database.php"
 ?>
 
 <!doctype html>
@@ -19,7 +22,7 @@
         <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
 
 
-        <title>Mafiani</title>
+        <title><?php getString("global.title"); ?></title>
     </head>
     
     <body class="d-flex flex-column min-vh-100 mx-auto bg-body fst-italic">
@@ -34,7 +37,7 @@
                     <div class="row text-end border border-3 border-black bg-body px-5 pt-3">
                         <div class="col px-0">
                             <img class="img-fluid" src="img/Mafiani_wit.png" alt="Mafiani"/>
-                            v1.0a
+                            <?php getString("global.version"); ?>
                         </div>
                     </div>
 
@@ -43,14 +46,14 @@
                         <div class="col-3">
                             <!-- Menu -->
                             <div class="row bg-body-tertiary text-center border border-3 border-black border-top-0">
-                                <b>Menu</b>
+                                <b><?php getString("global.menu"); ?></b>
                             </div>
                             <div class="row">
-                                <button type="button" class="btn btn-link text-start" onclick="onClickHome()">Home</button>
-                                <button type="button" class="btn btn-link text-start" data-bs-toggle="modal" data-bs-target="#loginModal">Log in</button>
-                                <button type="button" class="btn btn-link text-start" data-bs-toggle="modal" data-bs-target="#registerModal">Sign up</button>
-                                <button type="button" class="btn btn-link text-start" onclick="onClickRules()">Rules</button>
-                                <button type="button" class="btn btn-link text-start" onclick="onClickAboutUs()">About us</button>
+                                <button type="button" class="btn btn-link text-start" onclick="onClickHome()"><?php getString("menu.home"); ?></button>
+                                <button type="button" class="btn btn-link text-start" data-bs-toggle="modal" data-bs-target="#loginModal"><?php getString("menu.login"); ?></button>
+                                <button type="button" class="btn btn-link text-start" data-bs-toggle="modal" data-bs-target="#registerModal"><?php getString("menu.signup"); ?></button>
+                                <button type="button" class="btn btn-link text-start" onclick="onClickRules()"><?php getString("menu.rules"); ?></button>
+                                <button type="button" class="btn btn-link text-start" onclick="onClickAboutUs()"><?php getString("menu.aboutus"); ?></button>
                             </div>
                         </div>
                         <div id="content" class="col-6">
@@ -59,10 +62,10 @@
                         <div class="col-3">
                             <!-- News -->
                             <div class="row bg-body-tertiary text-center border border-3 border-black border-top-0">
-                                <b>News</b>
+                                <b><?php getString("global.news"); ?></b>
                             </div>
                             <div class="row">
-                                <p>Hier komen nieuws artikelen vanuit de database</p>
+                                <?php getNews(); ?>
                             </div>
                         </div>
                     </div>
@@ -70,7 +73,7 @@
                      <!-- The bottom part (x users online) -->
                     <div class="row bg-body-secondary">
                         <div class="col-3">
-                            X users online
+                            <?php getString("menu.users"); ?>
                         </div>
                     </div>
                 </div>
@@ -122,24 +125,19 @@
 
 <script>
     function onClickHome() {
+        var text = `<?php getString("home.content"); ?>`;
         
-        var text = `
-            <b>Welcome to Mafiani</b>
-            <p>An oldskool mafia game inspired by the beloved "DeLuccio". Climb to power in this thrilling player driven mafia experience. Where you choose how to play and who to trust.</p>
-            <br/>
-            <p>-Team Mafiani</p>`;
-                
         $("#content").html(text);
     }
     
     function onClickRules() {
-        var text = `Hier komen de regels`;
+        var text = `<?php getString("rules.content"); ?>`;
                 
         $("#content").html(text);
     }
     
     function onClickAboutUs() {
-        var text = `Hier komt een about us`;
+        var text = `<?php getString("aboutus.content"); ?>`;
                 
         $("#content").html(text);
     }
