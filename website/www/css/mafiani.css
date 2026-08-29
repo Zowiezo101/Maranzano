@@ -9,9 +9,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 :root {
     /* The color values */
-    /*--bg-color-rgb: 129, 106, 54;*/
     --bg-color-rgb: 69, 64, 53;
-    /*--bg-color-secondary-rgb: 158, 142, 104;*/
     --bg-color-secondary-rgb: 135, 125, 104;
     --acc-color-rgb: 168, 47, 47;
     --acc-color-secondary-rgb: 125, 51, 51;
@@ -31,8 +29,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     --bs-tertiary-bg:       var(--acc-color);
     --bs-tertiary-bg-rgb:   var(--acc-color-rgb);
 }
-
-/*body {
-    background-color: var(--bg-color);
-}*/
 
