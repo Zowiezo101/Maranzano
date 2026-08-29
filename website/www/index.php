@@ -30,24 +30,40 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
   
+        <!-- The container with all the rows and columns -->
         <div class="container-fluid">
+            
+            <!-- The full contents of this page
+                    For medium and larger screens, it's half the screen. -->
             <div class="row">
-                <div class="col-md-6 mx-auto px-0">
-                    <!-- The Header on top -->
-                    <div class="row text-end border border-3 border-black bg-body px-5 pt-3">
-                        <div class="col px-0">
+                <div class="col-md-6 mx-auto">
+                    
+                    <!-- The Header on top, 
+                            with a 3px border and some padding on top and the sides -->
+                    <div class="row text-end border border-3 border-black bg-body">
+                        <div class="col px-5 pt-3">
+                            
+                            <!-- The Banner and version number --> 
                             <img class="img-fluid" src="img/Mafiani_wit.png" alt="Mafiani"/>
                             <?php getString("global.version"); ?>
                         </div>
                     </div>
 
-                    <!-- The middle part (content) -->
-                    <div class="row bg-body-secondary" style="height: 500px">
-                        <div class="col-3">
-                            <!-- Menu -->
-                            <div class="row bg-body-tertiary text-center border border-3 border-black border-top-0">
+                    <!-- The middle part (page contents) -->
+                    <div class="row bg-body-secondary">
+                        <!-- Menu -->
+                        <div class="col-3 border border-3 border-black border-top-0">
+                            <!-- The Menu has 3 rows:
+                                    1. Menu titel
+                                    2. Menu items
+                                    3. Number of users online -->
+                            
+                            <!-- Menu titel -->
+                            <div class="row bg-body-tertiary text-center border-bottom border-3 border-black">
                                 <b><?php getString("global.menu"); ?></b>
                             </div>
+                            
+                            <!-- Menu items -->
                             <div class="row">
                                 <button type="button" class="btn btn-link text-start" onclick="onClickHome()"><?php getString("menu.home"); ?></button>
                                 <button type="button" class="btn btn-link text-start" data-bs-toggle="modal" data-bs-target="#loginModal"><?php getString("menu.login"); ?></button>
@@ -55,25 +71,33 @@
                                 <button type="button" class="btn btn-link text-start" onclick="onClickRules()"><?php getString("menu.rules"); ?></button>
                                 <button type="button" class="btn btn-link text-start" onclick="onClickAboutUs()"><?php getString("menu.aboutus"); ?></button>
                             </div>
+                            
+                            <!-- Number of users online -->
+                            <div class="row">
+                                <?php getString("menu.users"); ?>
+                            </div>
                         </div>
-                        <div id="content" class="col-6">
-                            <!-- Content -->
+                        
+                        <!-- Content -->
+                        <div id="content" class="col-6 border-bottom border-3 border-black" style="min-height: 500px">
+                            
                         </div>
-                        <div class="col-3">
-                            <!-- News -->
-                            <div class="row bg-body-tertiary text-center border border-3 border-black border-top-0">
+                        
+                        <!-- News -->
+                        <div class="col-3 border border-3 border-black  border-top-0">
+                            <!-- News has 2 rows:
+                                    1. News titel
+                                    2. News items -->
+                            
+                            <!-- News titel -->
+                            <div class="row bg-body-tertiary text-center border-bottom border-3 border-black">
                                 <b><?php getString("global.news"); ?></b>
                             </div>
+                            
+                            <!-- News items -->
                             <div class="row">
                                 <?php getNews(); ?>
                             </div>
-                        </div>
-                    </div>
-                    
-                     <!-- The bottom part (x users online) -->
-                    <div class="row bg-body-secondary">
-                        <div class="col-3">
-                            <?php getString("menu.users"); ?>
                         </div>
                     </div>
                 </div>
@@ -82,7 +106,7 @@
 
         <!-- The Footer -->
         <footer class="text-center text-black">
-                <b>Copyright</b>
+            <?php getString("global.copyright"); ?>
         </footer>
     </body>
     
