@@ -128,37 +128,68 @@
         </div>
     </body>
     
+    <!-- The Login Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border border-3 border-white">
+                
+                <!-- The Modal header -->
                 <div class="modal-header bg-body-tertiary">
-                    <h5 class="modal-title fs-5 " id="loginModalLabel">Logging in</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title fs-5 " id="loginModalLabel"><?php getString("login.title"); ?></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                  ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Login</button>
+                
+                <!-- The Modal body -->
+                <div id="modal-body" class="modal-body">
+                    <!-- Filled in by JS -->
                 </div>
             </div>
         </div>
     </div>
     
+    <!-- The Register Modal -->
     <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border border-3 border-white">
+                
+                <!-- The Modal header -->
                 <div class="modal-header bg-body-tertiary">
-                    <h5 class="modal-title fs-5" id="registerModalLabel">Signing up</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title fs-5" id="registerModalLabel"><?php getString("signup.title"); ?></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                
+                <!-- The Modal body -->
                 <div class="modal-body">
-                  ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Sign up</button>
+                    <form action="register" method="post" name="register">
+                        <!-- Email address -->
+                        <div class="mb-3 mx-3">
+                            <label for="inputEmail" class="form-label"><?php getString("login.email"); ?></label>
+                            <input type="email" class="form-control" id="inputEmail" required>
+                        </div>
+                        
+                        <!-- Username -->
+                        <div class="mb-3 mx-3">
+                            <label for="inputUser" class="form-label"><?php getString("signup.username"); ?></label>
+                            <input type="text" class="form-control" id="inputUser" required>
+                        </div>
+                        
+                        <!-- Password -->
+                        <div class="mb-3 mx-3">
+                            <label for="inputPassword" class="form-label"><?php getString("signup.password"); ?></label>
+                            <input type="password" class="form-control" id="inputPassword" required>
+                        </div>
+                        
+                        <!-- Confirm password -->
+                        <div class="mb-4 mx-3">
+                            <label for="inputPassword2" class="form-label"><?php getString("signup.confirm"); ?></label>
+                            <input type="password" class="form-control" id="inputPassword2" required>
+                        </div>
+                        
+                        <!-- Register button -->
+                        <div class="mb-3 mx-5 row">
+                            <button type="submit" class="btn btn-primary"><?php getString("menu.signup"); ?></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -184,8 +215,78 @@
         $("#content").html(text);
     }
     
+    function onClickLogin() {
+        var html = `<form action="login" method="post" name="login">
+                        <!-- Email address -->
+                        <div class="mb-3 row">
+                            <label for="inputEmail" class="col-2 col-form-label"><?php getString("login.email"); ?></label>
+                            <div class="col-10">
+                                <input type="email" class="form-control" id="inputEmail" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Password -->
+                        <div class="mb-3 row">
+                            <label for="inputPassword" class="col-2 col-form-label"><?php getString("login.password"); ?></label>
+                            <div class="col-10">
+                                <input type="password" class="form-control" id="inputPassword" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Forgot password option -->
+                        <div class="mb-3 row">
+                            <button type="button" class="btn btn-link" onclick="onClickForgotten()"><?php getString("login.forgotpass"); ?></button>
+                        </div>
+                        
+                        <!-- Login button -->
+                        <div class="mb-3 mx-3 row">
+                            <button type="submit" class="btn btn-primary"><?php getString("menu.login"); ?></button>
+                        </div>
+                    </form>`
+    
+        $("#modal-body").html(html);
+    }
+    
+    function onClickForgotten() {
+        var html = `
+                    <form action="reset" method="post" name="reset">
+                        <!-- Explanation on resetting your password -->
+                        <div class="row text-center">
+                            <p><?php getString("reset.email"); ?></p>
+                        </div>
+                        
+                        <!-- Email address -->
+                        <div class="mb-3 row">
+                            <label for="resetEmail" class="col-2 col-form-label"><?php getString("login.email"); ?></label>
+                            <div class="col-10">
+                                <input type="email" class="form-control" id="resetEmail" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Forgot password button -->
+                        <div class="mb-3 mx-3 row">
+                            <button type="submit" class="btn btn-primary"><?php getString("login.reset"); ?></button>
+                        </div>
+                        
+                        <!-- Login option -->
+                        <div class="mb-3 row">
+                            <button type="button" class="btn btn-link" onclick="onClickLogin()"><?php getString("menu.login"); ?></button>
+                        </div>
+                    </form>`
+    
+        $("#modal-body").html(html);
+    }
+    
     $(function() {
+        // Make sure the login modal gets reset whenever it gets hidden
+        $("#loginModal").on("hidden.bs.modal", function(){
+            onClickLogin();
+        });
+    
         // Show the welcome message
         onClickHome();
+        
+        // Show the login modal
+        onClickLogin();
     });
 </script>
