@@ -30,7 +30,7 @@
         <title><?php getString("global.title"); ?></title>
     </head>
     
-    <body class="bg-body fst-italic">
+    <body class="bg-body vh-100 fst-italic bg-gradient">
         
         <!-- Debugging stuff for myself -->
         <div class="d-sm-none">XS screen size</div>
@@ -140,8 +140,16 @@
                 </div>
                 
                 <!-- The Modal body -->
-                <div id="modal-body" class="modal-body">
-                    <!-- Filled in by JS -->
+                <div class="modal-body">
+                    <!-- Login form -->
+                    <form id="login-form" class="d-none">
+                        <!-- Filled in by JS -->
+                    </form>
+                    
+                    <!-- Forgot password form -->
+                    <form id="reset-form" class="d-none">
+                        <!-- Filled in by JS -->
+                    </form>
                 </div>
             </div>
         </div>
@@ -160,36 +168,12 @@
                 
                 <!-- The Modal body -->
                 <div class="modal-body">
-                    <form action="register" method="post" name="register">
-                        <!-- Email address -->
-                        <div class="mb-3 mx-3">
-                            <label for="inputEmail" class="form-label"><?php getString("login.email"); ?></label>
-                            <input type="email" class="form-control" id="inputEmail" required>
-                        </div>
+                    <form id="register-form">
                         
-                        <!-- Username -->
-                        <div class="mb-3 mx-3">
-                            <label for="inputUser" class="form-label"><?php getString("signup.username"); ?></label>
-                            <input type="text" class="form-control" id="inputUser" required>
-                        </div>
-                        
-                        <!-- Password -->
-                        <div class="mb-3 mx-3">
-                            <label for="inputPassword" class="form-label"><?php getString("signup.password"); ?></label>
-                            <input type="password" class="form-control" id="inputPassword" required>
-                        </div>
-                        
-                        <!-- Confirm password -->
-                        <div class="mb-4 mx-3">
-                            <label for="inputPassword2" class="form-label"><?php getString("signup.confirm"); ?></label>
-                            <input type="password" class="form-control" id="inputPassword2" required>
-                        </div>
-                        
-                        <!-- Register button -->
-                        <div class="mb-3 mx-5 row">
-                            <button type="submit" class="btn btn-primary"><?php getString("menu.signup"); ?></button>
-                        </div>
                     </form>
+                    
+                    <div id="verify-div">
+                    </div>
                 </div>
             </div>
         </div>
@@ -197,68 +181,77 @@
 </html>
 
 <script>
+    // Show the contents of the home page
     function onClickHome() {
         var text = `<?php getString("home.content"); ?>`;
         
         $("#content").html(text);
     }
     
+    // Show the contents of the rules page
     function onClickRules() {
         var text = `<?php getString("rules.content"); ?>`;
                 
         $("#content").html(text);
     }
     
+    // Show the contents of the about us page
     function onClickAboutUs() {
         var text = `<?php getString("aboutus.content"); ?>`;
                 
         $("#content").html(text);
     }
     
+    // Load the form for logging in
     function onClickLogin() {
-        var html = `<form action="login" method="post" name="login">
-                        <!-- Email address -->
-                        <div class="mb-3 row">
-                            <label for="inputEmail" class="col-2 col-form-label"><?php getString("login.email"); ?></label>
-                            <div class="col-10">
-                                <input type="email" class="form-control" id="inputEmail" required>
-                            </div>
+        var html = `<!-- Email address -->
+                    <div class="mb-3 row">
+                        <label for="loginEmail" class="col-4 col-sm-2 col-form-label"><?php getString("login.email"); ?></label>
+                        <div class="col-8 col-sm-10">
+                            <input type="email" class="form-control" id="loginEmail" required>
                         </div>
-                        
-                        <!-- Password -->
-                        <div class="mb-3 row">
-                            <label for="inputPassword" class="col-2 col-form-label"><?php getString("login.password"); ?></label>
-                            <div class="col-10">
-                                <input type="password" class="form-control" id="inputPassword" required>
-                            </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3 row">
+                        <label for="loginPassword" class="col-4 col-sm-2 col-form-label"><?php getString("login.password"); ?></label>
+                        <div class="col-8 col-sm-10">
+                            <input type="password" class="form-control" id="loginPassword" required>
                         </div>
-                        
-                        <!-- Forgot password option -->
-                        <div class="mb-3 row">
-                            <button type="button" class="btn btn-link" onclick="onClickForgotten()"><?php getString("login.forgotpass"); ?></button>
-                        </div>
-                        
-                        <!-- Login button -->
-                        <div class="mb-3 mx-3 row">
-                            <button type="submit" class="btn btn-primary"><?php getString("menu.login"); ?></button>
-                        </div>
-                    </form>`
+                    </div>
+
+                    <!-- Forgot password option -->
+                    <div class="mb-3 row">
+                        <button type="button" class="btn btn-link" onclick="onClickForgotten()"><?php getString("login.forgotpass"); ?></button>
+                    </div>
+
+                    <!-- Login button -->
+                    <div class="mb-3 mx-3 row">
+                        <button type="submit" class="btn btn-primary"><?php getString("menu.login"); ?></button>
+                    </div>
+
+                    <!-- Error message -->
+                    <div id="loginError" class="mb-4 mx-3 text-warning d-none">
+                        <!-- Filled in later in case of error -->
+                    </div>`;
     
-        $("#modal-body").html(html);
+        // Hide the other form
+        $("#reset-form").addClass("d-none");
+        $("#login-form").html(html)
+        $("#login-form").removeClass("d-none");
     }
     
+    // Load the form for resetting password
     function onClickForgotten() {
-        var html = `
-                    <form action="reset" method="post" name="reset">
-                        <!-- Explanation on resetting your password -->
+        var html = `<!-- Explanation on resetting your password -->
                         <div class="row text-center">
                             <p><?php getString("reset.email"); ?></p>
                         </div>
                         
                         <!-- Email address -->
                         <div class="mb-3 row">
-                            <label for="resetEmail" class="col-2 col-form-label"><?php getString("login.email"); ?></label>
-                            <div class="col-10">
+                            <label for="resetEmail" class="col-4 col-sm-2 col-form-label"><?php getString("login.email"); ?></label>
+                            <div class="col-8 col-sm-10">
                                 <input type="email" class="form-control" id="resetEmail" required>
                             </div>
                         </div>
@@ -272,9 +265,92 @@
                         <div class="mb-3 row">
                             <button type="button" class="btn btn-link" onclick="onClickLogin()"><?php getString("menu.login"); ?></button>
                         </div>
-                    </form>`
+
+                        <!-- Error message -->
+                        <div id="ResetError" class="mb-4 mx-3 text-warning d-none">
+                            <!-- Filled in later in case of error -->
+                        </div>`;
     
-        $("#modal-body").html(html);
+        // Hide the other form
+        $("#login-form").addClass("d-none");
+        $("#reset-form").html(html)
+        $("#reset-form").removeClass("d-none");
+    }
+    
+    // Load the form for registering an account
+    function onClickRegister() {
+        var html = `<!-- Email address -->
+                    <div class="mb-3 mx-3">
+                        <label for="registerEmail" class="form-label"><?php getString("login.email"); ?></label>
+                        <input type="email" class="form-control" id="registerEmail" required>
+                    </div>
+
+                    <!-- Username -->
+                    <div class="mb-3 mx-3">
+                        <label for="registerUser" class="form-label"><?php getString("signup.username"); ?></label>
+                        <input type="text" class="form-control" id="registerUser" required>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3 mx-3">
+                        <label for="registerPassword" class="form-label"><?php getString("signup.password"); ?></label>
+                        <input type="password" class="form-control" id="registerPassword" required>
+                    </div>
+
+                    <!-- Confirm password -->
+                    <div class="mb-4 mx-3">
+                        <label for="registerPassword2" class="form-label"><?php getString("signup.confirm"); ?></label>
+                        <input type="password" class="form-control" id="registerPassword2" required>
+                    </div>
+
+                    <!-- Register button -->
+                    <div class="mb-3 mx-5 row">
+                        <button type="submit" class="btn btn-primary"><?php getString("menu.signup"); ?></button>
+                    </div>
+
+                    <!-- Error message -->
+                    <div id="registerError" class="mb-4 mx-3 text-warning d-none">
+                        <!-- Filled in later in case of error -->
+                    </div>`;
+    
+        // Hide the other form
+        $("#verify-div").addClass("d-none");
+        $("#register-form").html(html)
+        $("#register-form").removeClass("d-none");
+    }
+    
+    // Load the div to inform the user their account needs verification
+    function onClickVerify() {
+        var html = `<!-- Inform user that account creation was successfull
+                        Now they'll need to verify their email address -->
+                        <div class="row text-center">
+                            <p><?php getString("signup.success"); ?></p>
+                        </div>
+                        
+                        <!-- Done -->
+                        <div class="mb-3 mx-3 row">
+                            <button type="submit" class="btn btn-primary"><?php getString("signup.verified"); ?></button>
+                        </div>`;
+    
+        // Hide the other form
+        $("#register-form").addClass("d-none");
+        $("#verify-div").html(html)
+        $("#verify-div").removeClass("d-none");
+    }
+    
+    // Create a fetch call to prevent reloading the page
+    function onSubmitLogin(event) {
+        event.preventDefault();
+    }
+    
+    // Create a fetch call to prevent reloading the page
+    function onSubmitReset(event) {
+        event.preventDefault();
+    }
+    
+    // Create a fetch call to prevent reloading the page
+    function onSubmitRegister(event) {
+        event.preventDefault();
     }
     
     $(function() {
@@ -282,11 +358,24 @@
         $("#loginModal").on("hidden.bs.modal", function(){
             onClickLogin();
         });
+        
+        // Make sure the register modal gets reset whenever it gets hidden
+        $("#registerModal").on("hidden.bs.modal", function(){
+            onClickRegister();
+        });
+        
+        // Set prevent page reloading when submitting form
+        $("#login-form").on("submit", function(e) {onSubmitLogin(e)});
+        $("#reset-form").on("submit", function(e) {onSubmitReset(e)});
+        $("#register-form").on("submit", function(e) {onSubmitRegister(e)});
     
         // Show the welcome message
         onClickHome();
         
-        // Show the login modal
+        // Show the login content in the login modal
         onClickLogin();
+        
+        // Show the register content in the register modal
+        onClickRegister();
     });
 </script>
