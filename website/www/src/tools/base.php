@@ -50,6 +50,7 @@ $strings = array(
     "auth.email.taken" => "There is already an account with this e-mail address. Try logging in",
     "auth.pass1.invalid" => "The password is too short, please use at least 8 characters",
     "auth.pass2.invalid" => "Both passwords must match",
+    "auth.token.invalid" => "Something went wrong while verifying your e-mail address",
     
     // Misc
     "global.copyright" => "<b>Copyright 2026 - ??</b>",

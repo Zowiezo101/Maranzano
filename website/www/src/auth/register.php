@@ -1,13 +1,8 @@
 <?php
-
-// PHP Mailer
-require "../PHPMailer/PHPMailer.php";
-require "../PHPMailer/Exception.php";
-require "../PHPMailer/SMTP.php";
   
-// Include core and object files
+// Include login details and functions that are used by multiple files
 require '../../../settings.conf';
-require '../tools/base.php';
+require 'base.php';
 
 // Required headers
 header("Access-Control-Allow-Origin: http://localhost");
@@ -15,10 +10,6 @@ header("Access-Control-Allow-Origin: ".$domain_name);
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: access");
-
-// Needed to use PHPMailer
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\Exception;
 
 $conn = null;
 $error = null;
@@ -34,12 +25,12 @@ $pass1 = trim($input["pass1"]);
 $pass2 = trim($input["pass2"]);
 
 // Validate the information
-if (connectDatabase() && validateEmail($email) && validateUser($user) && validatePass($pass1, $pass2)) {    
+if (connectDatabase($conn, $error) && validateEmail($conn, $email, $error) && validateUser($conn, $user, $error) && validatePass($conn, $pass1, $pass2, $error)) {    
     // Insert the data into the database
-    $token = registerUser($email, $user, $pass1);
+    $token = registerUser($conn, $email, $user, $pass1, $error);
     
     // In case of no errors, send a verification code
-    sendVerificationCode($email, $user, $token);
+    sendVerificationCode($email, $user, $token, $error);
 }
 
 // The message to be sent
@@ -54,28 +45,8 @@ echo json_encode($message);
 /* 
  * The functions 
  */
-function connectDatabase() {
-    global $servername, $db_username, 
-           $db_password, $db_database;
-    global $conn;
-    global $error;
-    
-    try {
-        // First make sure we can connect to the database
-        $conn = new PDO("mysql:host={$servername};dbname={$db_database};charset=utf8", 
-                        $db_username, $db_password,
-                        [PDO::ATTR_EMULATE_PREPARES => false, 
-                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-    } catch (PDOException) {
-        $error = "auth.db_error";
-    }
-    
-    return $error === null;
-}
 
-function validateEmail($email) {
-    global $conn;
-    global $error;
+function validateEmail($conn, $email, &$error) {
     
     // Check if this e-mail address is a proper e-mail address
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -102,9 +73,7 @@ function validateEmail($email) {
     return $error === null;
 }
 
-function validateUser($user) {
-    global $conn;
-    global $error;
+function validateUser($conn, $user, &$error) {
     
     // Check if this username is a proper username
     if (preg_match('/^[a-zA-Z0-9_]+$/', $user)) {
@@ -131,8 +100,7 @@ function validateUser($user) {
     return $error === null;
 }
 
-function validatePass($pass1, $pass2) {
-    global $error;
+function validatePass($pass1, $pass2, &$error) {
     
     // Check that the password is longer than 8 characters and
     // make sure both passwords are the same
@@ -145,9 +113,7 @@ function validatePass($pass1, $pass2) {
     return $error === null;
 }
 
-function registerUser($email, $user, $pass) {
-    global $conn;
-    global $error;
+function registerUser($conn, $email, $user, $pass, &$error) {
     
     // Generate the password hash
     $hash = password_hash($pass, PASSWORD_DEFAULT);
@@ -178,81 +144,6 @@ function registerUser($email, $user, $pass) {
     }
     
     return $token;
-}
-
-function sendVerificationCode($email, $user, $token) {
-    global $email_host, $email_user, $email_pass;
-    global $error;
-    global $domain_name;
-    
-    // PHPMailer Object
-    $mail = new PHPMailer(true); //Argument true in constructor enables exceptions
-
-    // Enable SMTP debugging
-    // 0 = off (for production use)
-    // 1 = client messages
-    // 2 = client and server messages
-    $mail->SMTPDebug = 0;
-
-    // Tell PHPMailer to use SMTP
-    $mail->isSMTP();
-
-    // Set the hostname of the mail server
-    $mail->Host = $email_host;
-
-    // Making sure we are using UTF-8
-    $mail->CharSet = PHPMailer::CHARSET_UTF8;
-
-    $mail->SMTPOptions = array(
-        'ssl' => array(
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-            'allow_self_signed' => true
-        )
-    );
-
-    // Use $mail->Host = gethostbyname('smtp.gmail.com');
-    // if your network does not support SMTP over IPv6
-    // Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
-    $mail->Port = 587;
-
-    // Set the encryption system to use - ssl (deprecated) or tls
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-
-    // Whether to use SMTP authentication
-    $mail->SMTPAuth = true;
-
-    // Username to use for SMTP authentication - use full email address for gmail
-    $mail->Username = $email_user;
-
-    // Password to use for SMTP authentication
-    $mail->Password = $email_pass;
-    
-    // TODO: Use variables isntead of hardcoded strings
-
-    // Set who the message is to be sent from
-    $mail->setFrom($email_user, 'The Mafiani Team');
-
-    // Set who the message is to be sent to
-    $mail->addAddress($email);
-    
-    // Use HTML for this email
-    $mail->isHTML(true);
-
-    // Set the subject line
-    $mail->Subject = 'Please verify your e-mail address';
-    
-    // The URL to verify the account
-    $url = $domain_name."/src/auth/verify?token=".$token;
-
-    // Set the email body
-    $mail->Body = "<h3>Welcome ".$user."!</h3><p>Click <a href='".$url."'>here</a> to verify your e-mail address or copy-paste this link into your browser:<br/>".$url."</p>";
-
-    try {
-        $mail->send();
-    } catch (Exception) {
-        $error = $mail->ErrorInfo;
-    }
 }
 
 
