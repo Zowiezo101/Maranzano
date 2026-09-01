@@ -13,10 +13,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        
-        <!-- Imports (Scripts) -->
+        <!-- Imports (External scripts) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+        
+        <!-- Imports (Local scripts) -->
+        <script src="src/tools/base.js"></script>
 
         <!-- Imports (CSS) -->
         <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
@@ -83,7 +85,7 @@
                                 <!-- Menu items -->
                                 <div class="btn-group-vertical">
                                     <button type="button" class="btn btn-link text-start" onclick="onClickHome()"><?php getString("menu.home"); ?></button>
-                                    <button type="button" class="btn btn-link text-start" data-bs-toggle="modal" data-bs-target="#loginModal"><?php getString("menu.login"); ?></button>
+                                    <button id="loginBtn" type="button" class="btn btn-link text-start" data-bs-toggle="modal" data-bs-target="#loginModal"><?php getString("menu.login"); ?></button>
                                     <button type="button" class="btn btn-link text-start" data-bs-toggle="modal" data-bs-target="#registerModal"><?php getString("menu.signup"); ?></button>
                                     <button type="button" class="btn btn-link text-start" onclick="onClickRules()"><?php getString("menu.rules"); ?></button>
                                     <button type="button" class="btn btn-link text-start" onclick="onClickAboutUs()"><?php getString("menu.aboutus"); ?></button>
@@ -309,7 +311,7 @@
                     </div>
 
                     <!-- Error message -->
-                    <div id="registerError" class="mb-4 mx-3 text-warning d-none">
+                    <div id="registerError" class="mb-4 mx-3 text-center text-warning d-none">
                         <!-- Filled in later in case of error -->
                     </div>`;
     
@@ -329,7 +331,7 @@
                         
                         <!-- Done -->
                         <div class="mb-3 mx-3 row">
-                            <button type="submit" class="btn btn-primary"><?php getString("signup.verified"); ?></button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="onSubmitVerify()" ><?php getString("signup.verified"); ?></button>
                         </div>`;
     
         // Hide the other form
@@ -351,6 +353,54 @@
     // Create a fetch call to prevent reloading the page
     function onSubmitRegister(event) {
         event.preventDefault();
+        
+        // Remove any previous errors
+        onResetError("#registerError");
+        
+        // The data for registering
+        var registerEmail = $("#registerEmail").val();
+        var registerUser = $("#registerUser").val();
+        var registerPassword = $("#registerPassword").val();
+        var registerPassword2 = $("#registerPassword2").val();
+        
+        // Put the data in an easier-to-send format
+        var data = {
+            "email": registerEmail,
+            "user": registerUser,
+            "pass1": registerPassword,
+            "pass2": registerPassword2,
+        };
+
+        // The fetch call
+        var results = fetchPost("src/auth/register.php", data).then(function(results) {
+            // Handle the results of the fetch call
+
+            if (results.error !== "" && results.error !== null) {
+                // Something went wrong, show an error message
+                onReturnedError(results.error, "#registerError");
+            } else {
+                // Success, show the verify content
+                onClickVerify();
+            }
+
+        }).catch(function(results) {
+            // Show an error if anything went wrong
+            alert("error: " + results);
+        });
+    }
+    
+    function onSubmitVerify() {
+        // The Register modal is hidden by the button,
+        // now open the Login Modal
+        $("#loginBtn").click();
+    }
+    
+    function onReturnedError(message, element) {
+        $(element).html(message).removeClass("d-none");
+    }
+    
+    function onResetError(element) {
+        $(element).html("").addClass("d-none");
     }
     
     $(function() {
@@ -368,7 +418,7 @@
         $("#login-form").on("submit", function(e) {onSubmitLogin(e)});
         $("#reset-form").on("submit", function(e) {onSubmitReset(e)});
         $("#register-form").on("submit", function(e) {onSubmitRegister(e)});
-    
+        
         // Show the welcome message
         onClickHome();
         
