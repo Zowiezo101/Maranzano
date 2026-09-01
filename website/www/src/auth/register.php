@@ -25,7 +25,7 @@ $pass1 = trim($input["pass1"]);
 $pass2 = trim($input["pass2"]);
 
 // Validate the information
-if (connectDatabase($conn, $error) && validateEmail($conn, $email, $error) && validateUser($conn, $user, $error) && validatePass($conn, $pass1, $pass2, $error)) {    
+if (connectDatabase($conn, $error) && validateEmail($conn, $email, $error) && validateUser($conn, $user, $error) && validatePass($pass1, $pass2, $error)) {    
     // Insert the data into the database
     $token = registerUser($conn, $email, $user, $pass1, $error);
     

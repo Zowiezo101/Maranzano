@@ -90,7 +90,7 @@ function sendVerificationCode($email, $user, $token, &$error=null) {
     $mail->Subject = 'Please verify your e-mail address';
     
     // The URL to verify the account
-    $url = $domain_name."/src/auth/verify?token=".$token;
+    $url = $domain_name."/src/auth/verify.php?token=".$token;
 
     // Set the email body
     $mail->Body = "<h3>Welcome ".$user."!</h3><p>Click <a href='".$url."'>here</a> to verify your e-mail address or copy-paste this link into your browser:<br/>".$url."</p>";
