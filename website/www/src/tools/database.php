@@ -8,4 +8,3 @@
 function getNews() {
     echo "<p>Hier komen nieuws artikelen vanuit de database</p>";
 }
-

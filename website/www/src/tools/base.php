@@ -5,7 +5,9 @@
  * 
  */
 
-$strings = array(
+require "database.php";
+
+$strings = [
     // Global
     "global.title" => "Mafiani",
     "global.version" => "v1.0a",
@@ -42,8 +44,11 @@ $strings = array(
     "signup.confirm" => "Please confirm your password",
     "signup.success" => "You've successfully created an account!<br/>We've send you an e-mail to the provided e-mail address. Please verify your e-mail address by clicking the link in the sent e-mail.",
     "signup.verified" => "Done",
-    
-    // API sutff
+    "verify.from" => "The Mafiani Team",
+    "verify.subject" => "Please verify your e-mail address",
+    "verify.body" => "<h3>Welcome [user]!</h3><p>Click <a href='[url]'>here</a> to verify your e-mail address or copy-paste this link into your browser:<br/>[url]</p>",
+
+    // API stuff
     "auth.db_error" => "It seems we currently can't reach the database.. Please try again later",
     "auth.user.invalid" => "This username is invalid, please only use underscores, letters and numbers",
     "auth.email.invalid" => "This e-mail address is invalid, please use a valid e-mail address",
@@ -53,11 +58,31 @@ $strings = array(
     "auth.token.invalid" => "Something went wrong while verifying your e-mail address",
     
     // Misc
-    "global.copyright" => "<b>Copyright 2026 - ??</b>",
-);
+    "global.copyright" => "<b>Copyright 2026 - ??</b>"
+];
 
-function getString($string) {
+function hasString($name) {
     global $strings;
     
-    echo $strings[$string];
+    return array_key_exists($name, $strings);
+}
+
+// Return a single string with the given name
+function getString($name) {
+    global $strings;
+    
+    $string = $strings[$name];
+    
+    return $string;
+}
+
+// Print a single string with the given name
+function printString($name, $json = false) {
+    $string = getString($name);
+    
+    if ($json == true) {
+        $string = json_encode($string, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+    }
+    
+    echo $string;
 }

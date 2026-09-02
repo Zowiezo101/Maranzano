@@ -35,7 +35,7 @@ if (connectDatabase($conn, $error) && validateEmail($conn, $email, $error) && va
 
 // The message to be sent
 $message = [
-    "error" => (isset($strings[$error]) ? $strings[$error] : $error)
+    "error" => (hasString($error) ? getString($error) : $error)
 ];
 
 // Send the message
@@ -145,11 +145,3 @@ function registerUser($conn, $email, $user, $pass, &$error) {
     
     return $token;
 }
-
-
-
-
-
-
-
-

@@ -1,9 +1,11 @@
 <?php
 
 // PHP Mailer
-require "../PHPMailer/PHPMailer.php";
-require "../PHPMailer/Exception.php";
-require "../PHPMailer/SMTP.php";
+require "../../src/PHPMailer/PHPMailer.php";
+require "../../src/PHPMailer/Exception.php";
+require "../../src/PHPMailer/SMTP.php";
+
+require "../../src/tools/base.php";
 
 // Needed to use PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
@@ -29,11 +31,55 @@ function connectDatabase(&$conn, &$error=null) {
 
 // Function to send a verification code
 function sendVerificationCode($email, $user, $token, &$error=null) {
-    global $email_host, $email_user, $email_pass;
+    global $email_user;
     global $domain_name;
+    global $local_ip;
     
     // PHPMailer Object
     $mail = new PHPMailer(true); //Argument true in constructor enables exceptions
+    
+    // Set the mail options in a different function
+    setMailOptions($mail);
+
+    // Set who the message is to be sent from
+    $mail->setFrom($email_user, getString("verify.from"));
+
+    // Set who the message is to be sent to
+    $mail->addAddress($email, $user);
+    
+    // Use HTML for this email
+    $mail->isHTML(true);
+
+    // Set the subject line
+    $mail->Subject = getString("verify.subject");
+    
+    // The URL to verify the account
+//    $url = $domain_name."/api/auth/verify.php?token=".$token;
+    // TODO:
+    // In case of debugging, use the local IP address of the host
+    $url = $local_ip."/api/auth/verify.php?token=".$token;
+
+    // Get the email body
+    $body = getString("verify.body");
+    
+    // Insert the name and token
+    $body_user = str_replace("[user]", $user, $body);
+    $body_url = str_replace("[url]", $url, $body_user);
+    
+    // Set the email body
+    $mail->Body = $body_url;
+
+    try {
+        $mail->send();
+    } catch (Exception) {
+        $error = $mail->ErrorInfo;
+    }
+}
+
+function setMailOptions(&$mail) {
+    global $email_host;
+    global $email_user;
+    global $email_pass;
 
     // Enable SMTP debugging
     // 0 = off (for production use)
@@ -74,31 +120,4 @@ function sendVerificationCode($email, $user, $token, &$error=null) {
 
     // Password to use for SMTP authentication
     $mail->Password = $email_pass;
-    
-    // TODO: Use variables isntead of hardcoded strings
-
-    // Set who the message is to be sent from
-    $mail->setFrom($email_user, 'The Mafiani Team');
-
-    // Set who the message is to be sent to
-    $mail->addAddress($email);
-    
-    // Use HTML for this email
-    $mail->isHTML(true);
-
-    // Set the subject line
-    $mail->Subject = 'Please verify your e-mail address';
-    
-    // The URL to verify the account
-    $url = $domain_name."/src/auth/verify.php?token=".$token;
-
-    // Set the email body
-    $mail->Body = "<h3>Welcome ".$user."!</h3><p>Click <a href='".$url."'>here</a> to verify your e-mail address or copy-paste this link into your browser:<br/>".$url."</p>";
-
-    try {
-        $mail->send();
-    } catch (Exception) {
-        $error = $mail->ErrorInfo;
-    }
 }
-
