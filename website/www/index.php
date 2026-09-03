@@ -143,12 +143,12 @@
                 <!-- The Modal body -->
                 <div class="modal-body">
                     <!-- Login form -->
-                    <form id="login-form" class="d-none">
+                    <form id="login-form">
                         <!-- Filled in by JS -->
                     </form>
                     
                     <!-- Forgot password form -->
-                    <form id="reset-form" class="d-none">
+                    <form id="reset-form">
                         <!-- Filled in by JS -->
                     </form>
                 </div>
@@ -170,11 +170,8 @@
                 <!-- The Modal body -->
                 <div class="modal-body">
                     <form id="register-form">
-                        
+                        <!-- Filled in by JS -->
                     </form>
-                    
-                    <div id="verify-div">
-                    </div>
                 </div>
             </div>
         </div>
@@ -224,7 +221,7 @@
 
                     <-- Forgot password option -->
                     <div class="mb-3 row">
-                        <button type="button" class="btn btn-link" onclick="onClickForgotten()"><?php printString("login.forgotpass"); ?></button>
+                        <button type="button" class="btn btn-link" onclick="onClickReset()"><?php printString("login.forgotpass"); ?></button>
                     </div>
 
                     <-- Login button -->
@@ -239,12 +236,14 @@
     
         // Hide the other form
         $("#reset-form").addClass("d-none");
+        
+        // Update the information
         $("#login-form").html(html);
         $("#login-form").removeClass("d-none");
     }
     
     // Load the form for resetting password
-    function onClickForgotten() {
+    function onClickReset() {
         var html = getHTML(`
                         <-- Explanation on resetting your password -->
                         <div class="row text-center">
@@ -276,6 +275,8 @@
     
         // Hide the other form
         $("#login-form").addClass("d-none");
+        
+        // Update the information
         $("#reset-form").html(html);
         $("#reset-form").removeClass("d-none");
     }
@@ -317,30 +318,8 @@
                         <-- Filled in later in case of error -->
                     </div>`);
     
-        // Hide the other form
-        $("#verify-div").addClass("d-none");
+        // Update the information
         $("#register-form").html(html);
-        $("#register-form").removeClass("d-none");
-    }
-    
-    // Load the div to inform the user their account needs verification
-    function onClickVerify() {
-        var html = getHTML(`
-                        <-- Inform user that account creation was successfull
-                        Now they'll need to verify their email address -->
-                        <div class="row text-center">
-                            <p><?php printString("signup.success"); ?></p>
-                        </div>
-                        
-                        <-- Done -->
-                        <div class="mb-3 mx-3 row">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><?php printString("signup.verified"); ?></button>
-                        </div>`);
-    
-        // Hide the other form
-        $("#register-form").addClass("d-none");
-        $("#verify-div").html(html);
-        $("#verify-div").removeClass("d-none");
     }
     
     // Create a fetch call to prevent reloading the page
@@ -351,6 +330,34 @@
     // Create a fetch call to prevent reloading the page
     function onSubmitReset(event) {
         event.preventDefault();
+        
+        // Remove any previous errors
+        onResetError("#ResetError");
+        
+        // The data for registering
+        var resetEmail = $("#resetEmail").val();
+        
+        // Put the data in an easier-to-send format
+        var data = {
+            "email": resetEmail
+        };
+
+        // The fetch call
+        fetchPost("forgot.php", data).then(function(results) {
+            // Handle the results of the fetch call
+
+            if (results.error !== "" && results.error !== null) {
+                // Something went wrong, show an error message
+                onReturnedError(results.error, "#resetError");
+            } else {
+                // Success, show the confirm content
+                onInformReset();
+            }
+
+        }).catch(function(results) {
+            // Show an error if anything went wrong
+            alert("error: " + results);
+        });
     }
     
     // Create a fetch call to prevent reloading the page
@@ -383,13 +390,49 @@
                 onReturnedError(results.error, "#registerError");
             } else {
                 // Success, show the verify content
-                onClickVerify();
+                onInformRegister();
             }
 
         }).catch(function(results) {
             // Show an error if anything went wrong
             alert("error: " + results);
         });
+    }
+    
+    // Load the div to inform the user that an email has been sent
+    function onInformReset() {
+        var html = getHTML(`
+                        <-- Inform user that account creation was successfull
+                        Now they'll need to verify their email address -->
+                        <div class="row text-center">
+                            <p><?php printString("signup.success"); ?></p>
+                        </div>
+                        
+                        <-- Done -->
+                        <div class="mb-3 mx-3 row">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><?php printString("signup.verified"); ?></button>
+                        </div>`);
+    
+        // Update the information
+        $("#reset-form").html(html);
+    }
+    
+    // Load the div to inform the user their account needs verification
+    function onInformRegister() {
+        var html = getHTML(`
+                        <-- Inform user that account creation was successfull
+                        Now they'll need to verify their email address -->
+                        <div class="row text-center">
+                            <p><?php printString("signup.success"); ?></p>
+                        </div>
+                        
+                        <-- Done -->
+                        <div class="mb-3 mx-3 row">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><?php printString("signup.verified"); ?></button>
+                        </div>`);
+    
+        // Update the information
+        $("#register-form").html(html);
     }
     
     function onReturnedError(message, element) {
