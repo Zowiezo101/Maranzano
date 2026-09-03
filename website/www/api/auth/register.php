@@ -34,7 +34,7 @@ if (connectDatabase($conn, $error) &&
     $user_id = registerUser($conn, $email, $user, $pass1, $error);
     
     // Generate the token to verify this user
-    $token = createToken($conn, $user_id, $error);
+    $token = createVerifyToken($conn, $user_id, $error);
     
     // In case of no errors, send a verification code
     sendVerificationCode($email, $user, $token, $error);
@@ -150,7 +150,7 @@ function registerUser($conn, $email, $user, $pass, &$error) {
     return $user_id;
 }
 
-function createToken($conn, $user_id, &$error) {
+function createVerifyToken($conn, $user_id, &$error) {
     // Generate the token to verify the email-address
     $token = bin2hex(random_bytes(50));
     

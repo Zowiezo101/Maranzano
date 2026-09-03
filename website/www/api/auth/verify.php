@@ -12,11 +12,11 @@ $token = filter_input(INPUT_GET, "token");
 
 // Connect to the database
 if (validateToken($token, $error) && connectDatabase($conn, $error)) {
-    $token = retrieveVerifyToken($conn, $token, $error);
+    $result = retrieveVerifyToken($conn, $token, $error);
     
-    if (isset($token)) {
-        updateVerifyToken($conn, $token, $error);
-        updateUser($conn, $token, $error);
+    if (isset($result)) {
+        updateVerifyToken($conn, $result, $error);
+        updateUser($conn, $result, $error);
     }
 }
 
