@@ -25,9 +25,16 @@ $pass1 = trim($input["pass1"]);
 $pass2 = trim($input["pass2"]);
 
 // Validate the information
-if (connectDatabase($conn, $error) && validateEmail($conn, $email, $error) && validateUser($conn, $user, $error) && validatePass($pass1, $pass2, $error)) {    
+if (connectDatabase($conn, $error) && 
+        validateEmail($conn, $email, $error) && 
+        validateUser($conn, $user, $error) && 
+        validatePass($pass1, $pass2, $error)) {    
+    
     // Insert the data into the database
-    $token = registerUser($conn, $email, $user, $pass1, $error);
+    $user_id = registerUser($conn, $email, $user, $pass1, $error);
+    
+    // Generate the token to verify this user
+    $token = createToken($conn, $user_id, $error);
     
     // In case of no errors, send a verification code
     sendVerificationCode($email, $user, $token, $error);
@@ -112,14 +119,14 @@ function registerUser($conn, $email, $user, $pass, &$error) {
     // Generate the password hash
     $hash = password_hash($pass, PASSWORD_DEFAULT);
     
-    // Generate the token to verify the email-address
-    $token = bin2hex(random_bytes(50));
+    // Variable for user_id
+    $user_id = null;
     
     try {
     
         // All the data has been checked, meaning that we can now safely create a new user
-        $sql = "INSERT INTO users (name, email, pass_hash, token, is_verified) "
-                . "VALUES (:name, :email, :pass_hash, :token, :is_verified)";
+        $sql = "INSERT INTO users (name, email, pass_hash, is_verified) "
+                . "VALUES (:name, :email, :pass_hash, :is_verified)";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);
@@ -128,8 +135,42 @@ function registerUser($conn, $email, $user, $pass, &$error) {
         $stmt->bindValue(":email", $email, PDO::PARAM_STR);
         $stmt->bindValue(":name", $user, PDO::PARAM_STR);
         $stmt->bindValue(":pass_hash", $hash, PDO::PARAM_STR);
-        $stmt->bindValue(":token", $token, PDO::PARAM_STR);
         $stmt->bindValue(":is_verified", 0, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $user_id = $conn->lastInsertId();
+        }
+    } catch (Exception) {
+        $error = "auth.db_error";
+    }
+    
+    return $user_id;
+}
+
+function createToken($conn, $user_id, &$error) {
+    // Generate the token to verify the email-address
+    $token = bin2hex(random_bytes(50));
+    
+    // Genereate the expire date for the verification
+    $expiry_date = (new DateTimeImmutable('now', new DateTimeZone('UTC')))
+                        ->modify('+' . 30 . ' minutes')
+                        ->format('Y-m-d H:i:s');
+    
+    try {
+        // All the data has been checked, meaning that we can now safely create a new user
+        $sql = "INSERT INTO verify_user (user_id, token, expires_at) "
+                . "VALUES (:user_id, :token, :expires_at)";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(":token", hash('sha256', $token), PDO::PARAM_STR);
+        $stmt->bindValue(":expires_at", $expiry_date, PDO::PARAM_STR);
 
         // Execute the statement
         $stmt->execute();

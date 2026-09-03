@@ -12,10 +12,11 @@ $token = filter_input(INPUT_GET, "token");
 
 // Connect to the database
 if (validateToken($token, $error) && connectDatabase($conn, $error)) {
-    $user = retrieveUser($conn, $token, $error);
+    $token = retrieveVerifyToken($conn, $token, $error);
     
-    if (isset($user)) {
-        updateUser($conn, $user, $error);
+    if (isset($token)) {
+        updateVerifyToken($conn, $token, $error);
+        updateUser($conn, $token, $error);
     }
 }
 
@@ -32,25 +33,26 @@ function validateToken($token, &$error) {
     return $error === null;
 }
 
-function retrieveUser($conn, $token, &$error) {
-    $user = null;
+function retrieveVerifyToken($conn, $token, &$error) {
+    $result = null;
     
-    // Retrieve the user where this token belongs to
-    $sql = "SELECT * FROM users WHERE token = :token LIMIT 1";
+    // Retrieve the token from the verify token table
+    $sql = "SELECT id, user_id FROM verify_user "
+            . "WHERE token = :token AND used = 0 AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
 
     try {
         // Prepare query statement
         $stmt = $conn->prepare($sql);    
 
         // Bind the parameter
-        $stmt->bindValue(":token", $token, PDO::PARAM_STR);  
+        $stmt->bindValue(":token", hash('sha256', $token), PDO::PARAM_STR);  
 
         // Execute the statement
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) { 
             // There is a user in the database with this token
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
         } else {
             $error = "auth.token.invalid";
         }
@@ -58,19 +60,37 @@ function retrieveUser($conn, $token, &$error) {
         $error = "auth.db_error";
     }
     
-    return $user;
+    return $result;
 }
 
-function updateUser($conn, $user, &$error) {    
-    // Create a query to update this user
-    $sql = "UPDATE users SET is_verified=1, token=NULL WHERE id = :id";
+function updateVerifyToken($conn, $token, &$error) {
+    // The token is found, update it in the register token table
+    $sql = "UPDATE verify_user SET used=1 WHERE id = :id";
 
     try {
         // Prepare query statement
         $stmt = $conn->prepare($sql);    
 
         // Bind the parameter
-        $stmt->bindValue(":id", $user["id"], PDO::PARAM_INT);  
+        $stmt->bindValue(":id", $token["id"], PDO::PARAM_INT);  
+
+        // Execute the statement
+        $stmt->execute();
+    } catch (Exception) {
+        $error = "auth.db_error";
+    }
+}
+
+function updateUser($conn, $token, &$error) {    
+    // Create a query to update this user
+    $sql = "UPDATE users SET is_verified=1 WHERE id = :id";
+
+    try {
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);    
+
+        // Bind the parameter
+        $stmt->bindValue(":id", $token["user_id"], PDO::PARAM_INT);  
 
         // Execute the statement
         $stmt->execute();

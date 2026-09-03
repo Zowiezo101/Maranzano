@@ -57,7 +57,7 @@ $strings = [
     "verify.title" => "Verifying your e-mail address",
     "verify.success" => "Successfully verified!",
     "verify.close" => "You can now close this page or go back to the homepage",
-    "verify.again" => "You can try again or contact us to help you out",
+    "verify.again" => "Maybe your account is already verified. You can try logging in or contact us to help you out",
     "verify.home" => "Go back to the homepage",
     "verify.from" => "The Mafiani Team",
     "verify.subject" => "Please verify your e-mail address",
@@ -66,6 +66,7 @@ $strings = [
     // API stuff
     "auth.db_error" => "It seems we currently can't reach the database.. Please try again later",
     "auth.user.invalid" => "This username is invalid, please only use underscores, letters and numbers",
+    "auth.user.taken" => "This username is already taken",
     "auth.email.invalid" => "This e-mail address is invalid, please use a valid e-mail address",
     "auth.email.taken" => "There is already an account with this e-mail address. Try logging in",
     "auth.pass1.invalid" => "The password is too short, please use at least 8 characters",
@@ -97,7 +98,7 @@ function printString($name, $json = false) {
     $string = getString($name);
     
     if ($json == true) {
-        $string = json_encode($string, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+        $string = json_encode($string);
     }
     
     echo $string;

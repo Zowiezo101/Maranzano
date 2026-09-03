@@ -31,9 +31,6 @@ function connectDatabase(&$conn, &$error=null) {
 
 // Function to send a verification code
 function sendVerificationCode($email, $user, $token, &$error=null) {
-    global $email_user;
-    global $domain_name;
-    global $local_ip;
     
     // PHPMailer Object
     $mail = new PHPMailer(true); //Argument true in constructor enables exceptions
@@ -41,27 +38,14 @@ function sendVerificationCode($email, $user, $token, &$error=null) {
     // Set the mail options in a different function
     setMailOptions($mail);
 
-    // Set who the message is to be sent from
-    $mail->setFrom($email_user, getString("verify.from"));
-
     // Set who the message is to be sent to
     $mail->addAddress($email, $user);
-    
-    // Use HTML for this email
-    $mail->isHTML(true);
 
     // Set the subject line
     $mail->Subject = getString("verify.subject");
     
     // The URL to verify the account
-    $url = "/api/auth/verify.php?token=".$token;
-    if (str_contains($domain_name, "localhost")) {
-        // In case of debugging, use the local IP address of the host
-        $url = $local_ip.$url;
-    } else {
-        // Otherwise, use the actual DNS
-        $url = $domain_name.$url;
-    }
+    $url = getURL("/api/auth/verify.php?token=".$token);
 
     // Get the email body
     $body = getString("verify.body");
@@ -81,9 +65,7 @@ function sendVerificationCode($email, $user, $token, &$error=null) {
 }
 
 function setMailOptions(&$mail) {
-    global $email_host;
-    global $email_user;
-    global $email_pass;
+    global $email_host, $email_user, $email_pass;
 
     // Enable SMTP debugging
     // 0 = off (for production use)
@@ -124,6 +106,12 @@ function setMailOptions(&$mail) {
 
     // Password to use for SMTP authentication
     $mail->Password = $email_pass;
+
+    // Set who the message is to be sent from
+    $mail->setFrom($email_user, getString("verify.from"));
+    
+    // Use HTML for this email
+    $mail->isHTML(true);
 }
 
 function sendMessage($error) {
@@ -134,4 +122,19 @@ function sendMessage($error) {
 
     // Send the message
     echo json_encode($message);
+}
+
+function getURL($url) {
+    global $domain_name;
+    global $local_ip;
+    
+    if (str_contains($domain_name, "localhost")) {
+        // In case of debugging, use the local IP address of the host
+        $url = $local_ip.$url;
+    } else {
+        // Otherwise, use the actual DNS
+        $url = $domain_name.$url;
+    }
+    
+    return $url;
 }
