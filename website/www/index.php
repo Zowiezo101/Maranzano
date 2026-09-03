@@ -334,7 +334,7 @@
                         
                         <-- Done -->
                         <div class="mb-3 mx-3 row">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="onSubmitVerify()" ><?php printString("signup.verified"); ?></button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><?php printString("signup.verified"); ?></button>
                         </div>`);
     
         // Hide the other form
@@ -390,12 +390,6 @@
             // Show an error if anything went wrong
             alert("error: " + results);
         });
-    }
-    
-    function onSubmitVerify() {
-        // The Register modal is hidden by the button,
-        // now open the Login Modal
-        $("#loginBtn").click();
     }
     
     function onReturnedError(message, element) {

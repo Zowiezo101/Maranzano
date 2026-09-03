@@ -135,23 +135,3 @@ function sendMessage($error) {
     // Send the message
     echo json_encode($message);
 }
-
-function redirectPage($url) {
-    global $domain_name;
-    global $local_ip;
-    
-    if (str_contains($domain_name, "localhost")) {
-        // In case of debugging, use the local IP address of the host
-        $url = $local_ip.$url;
-    } else {
-        // Otherwise, use the actual DNS
-        $url = $domain_name.$url;
-    }
-
-    // The actual redirect
-    if( headers_sent() ) { 
-        echo("<script>location.href=".$url."</script>"); 
-    } else { 
-        header("Location: $url"); 
-    }
-}
