@@ -19,14 +19,15 @@ if (validateToken($token, $error) && connectDatabase($conn, $error)) {
     }
 }
 
-// The message to be sent
-$message = [
-    "error" => (isset($strings[$error]) ? $strings[$error] : $error)
-];
+// Redirect to the verified page to show whether it succeeded or didnt succeed
+$url = "/src/user/verified.php";
+if (isset($error)) {
+    // Add an error if something went wrong
+    $url = $url."?e={$error}";
+}
 
-// Send the message
-echo json_encode($message);
-
+// The actual redirect
+redirectPage($url);
 
 /* 
  * The functions 
@@ -70,10 +71,7 @@ function retrieveUser($conn, $token, &$error) {
     return $user;
 }
 
-function updateUser($conn, $user, &$error) {
-    global $domain_name;
-    global $local_ip;
-    
+function updateUser($conn, $user, &$error) {    
     // Create a query to update this user
     $sql = "UPDATE users SET is_verified=1, token=NULL WHERE id = :id";
 
@@ -86,19 +84,6 @@ function updateUser($conn, $user, &$error) {
 
         // Execute the statement
         $stmt->execute();
-
-        // If we are still in this block, it means things have succeeded
-        // Go to the members page
-        // TODO: Login
-//        $url = $domain_name."\src\user\member.php";
-        // TODO:
-        // In case of debugging, use the local IP address of the host
-        $url = $local_ip."\src\user\member.php";
-        if( headers_sent() ) { 
-            echo("<script>location.href=".$url."</script>"); 
-        } else { 
-            header("Location: $url"); 
-        }
     } catch (Exception) {
         $error = "auth.db_error";
     }

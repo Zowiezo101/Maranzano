@@ -54,10 +54,14 @@ function sendVerificationCode($email, $user, $token, &$error=null) {
     $mail->Subject = getString("verify.subject");
     
     // The URL to verify the account
-//    $url = $domain_name."/api/auth/verify.php?token=".$token;
-    // TODO:
-    // In case of debugging, use the local IP address of the host
-    $url = $local_ip."/api/auth/verify.php?token=".$token;
+    $url = "/api/auth/verify.php?token=".$token;
+    if (str_contains($domain_name, "localhost")) {
+        // In case of debugging, use the local IP address of the host
+        $url = $local_ip.$url;
+    } else {
+        // Otherwise, use the actual DNS
+        $url = $domain_name.$url;
+    }
 
     // Get the email body
     $body = getString("verify.body");
@@ -72,7 +76,7 @@ function sendVerificationCode($email, $user, $token, &$error=null) {
     try {
         $mail->send();
     } catch (Exception) {
-        $error = $mail->ErrorInfo;
+        $error = "auth.mail_error";
     }
 }
 
@@ -120,4 +124,34 @@ function setMailOptions(&$mail) {
 
     // Password to use for SMTP authentication
     $mail->Password = $email_pass;
+}
+
+function sendMessage($error) {
+    // The message to be sent
+    $message = [
+        "error" => (hasString($error) ? getString($error) : $error)
+    ];
+
+    // Send the message
+    echo json_encode($message);
+}
+
+function redirectPage($url) {
+    global $domain_name;
+    global $local_ip;
+    
+    if (str_contains($domain_name, "localhost")) {
+        // In case of debugging, use the local IP address of the host
+        $url = $local_ip.$url;
+    } else {
+        // Otherwise, use the actual DNS
+        $url = $domain_name.$url;
+    }
+
+    // The actual redirect
+    if( headers_sent() ) { 
+        echo("<script>location.href=".$url."</script>"); 
+    } else { 
+        header("Location: $url"); 
+    }
 }

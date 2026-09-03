@@ -33,14 +33,8 @@ if (connectDatabase($conn, $error) && validateEmail($conn, $email, $error) && va
     sendVerificationCode($email, $user, $token, $error);
 }
 
-// The message to be sent
-$message = [
-    "error" => (hasString($error) ? getString($error) : $error)
-];
-
-// Send the message
-echo json_encode($message);
-
+// Send the results back to the requester
+sendMessage($error);
 
 /* 
  * The functions 

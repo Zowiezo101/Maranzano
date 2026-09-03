@@ -31,7 +31,7 @@
         <title><?php printString("global.title"); ?></title>
     </head>
     
-    <body class="bg-body vh-100 fst-italic bg-gradient">
+    <body class="vh-100 fst-italic bg-gradient">
         
         <!-- TODO: Debugging stuff for myself -->
         <div class="d-sm-none">XS screen size</div>
