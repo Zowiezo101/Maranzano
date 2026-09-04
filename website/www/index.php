@@ -247,7 +247,7 @@
         var html = getHTML(`
                         <-- Explanation on resetting your password -->
                         <div class="row text-center">
-                            <p><?php printString("reset.email"); ?></p>
+                            <p><?php printString("reset.info"); ?></p>
                         </div>
                         
                         <-- Email address -->
@@ -399,25 +399,24 @@
         });
     }
     
-    // Load the div to inform the user that an email has been sent
+    // Update the form to inform the user that an email has been sent
     function onInformReset() {
         var html = getHTML(`
-                        <-- Inform user that account creation was successfull
-                        Now they'll need to verify their email address -->
+                        <-- Inform user that an e-mail has been send for password reset -->
                         <div class="row text-center">
-                            <p><?php printString("signup.success"); ?></p>
+                            <p><?php printString("reset.email"); ?></p>
                         </div>
                         
                         <-- Done -->
                         <div class="mb-3 mx-3 row">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><?php printString("signup.verified"); ?></button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><?php printString("global.done"); ?></button>
                         </div>`);
     
         // Update the information
         $("#reset-form").html(html);
     }
     
-    // Load the div to inform the user their account needs verification
+    // Update the form to inform the user their account needs verification
     function onInformRegister() {
         var html = getHTML(`
                         <-- Inform user that account creation was successfull
@@ -428,17 +427,19 @@
                         
                         <-- Done -->
                         <div class="mb-3 mx-3 row">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><?php printString("signup.verified"); ?></button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><?php printString("global.done"); ?></button>
                         </div>`);
     
         // Update the information
         $("#register-form").html(html);
     }
     
+    // If there is an error
     function onReturnedError(message, element) {
         $(element).html(message).removeClass("d-none");
     }
     
+    // Remove the error
     function onResetError(element) {
         $(element).html("").addClass("d-none");
     }

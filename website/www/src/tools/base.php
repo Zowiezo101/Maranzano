@@ -14,6 +14,7 @@ $strings = [
     "global.menu" => "Menu",
     "global.news" => "News",
     "global.error" => "Something went wrong..",
+    "global.done" => "Done",
     
     // Menu
     "menu.home" => "Home",
@@ -47,24 +48,24 @@ $strings = [
     "login.password" => "Password",
     "login.forgotpass" => "Forgotten your password?",
     "login.reset" => "Reset password",
-    "reset.email" => "If there is an account linked to the inserted e-mail address, an e-mail will be send with a link to reset your password.<br/>This link will be valid for 15 minutes.",
+    "reset.info" => "Enter the e-mail address linked to your account to reset your password",
+    "reset.email" => "If there is an account linked to the inserted e-mail address, an e-mail will be send with a link to reset your password.<br/>This link will be valid for 30 minutes.",
     "signup.title" => "Signing up",
     "signup.username" => "Username",
     "signup.password" => "Password (has to be at least 8 characters)",
     "signup.confirm" => "Please confirm your password",
     "signup.success" => "You've successfully created an account!<br/>We've send you an e-mail to the provided e-mail address. Please verify your e-mail address by clicking the link in the sent e-mail.",
-    "signup.verified" => "Done",
     "verify.title" => "Verifying your e-mail address",
     "verify.success" => "Successfully verified!",
     "verify.close" => "You can now close this page or go back to the homepage",
-    "verify.again" => "Maybe your account is already verified. You can try logging in or contact us to help you out",
+    "verify.again" => "Maybe your account is already verified or the link is no longer valid. You can try logging in or contact us to help you out",
     "verify.home" => "Go back to the homepage",
     "verify.from" => "The Mafiani Team",
     "verify.subject" => "Please verify your e-mail address",
-    "verify.body" => "<h3>Welcome [user]!</h3><p>Click <a href='[url]'>here</a> to verify your e-mail address or copy-paste this link into your browser:<br/>[url]</p>",
+    "verify.body" => "<h3>Welcome [user]!</h3><p>Click <a href='[url]'>here</a> to verify your e-mail address or copy-paste this link into your browser:<br/>[url]. This link will be valid for 30 minutes.</p>",
 
     // API stuff
-    "auth.db_error" => "It seems we currently can't reach the database.. Please try again later",
+    "auth.db_error" => "It seems we currently have some issues with the database.. Please try again later",
     "auth.user.invalid" => "This username is invalid, please only use underscores, letters and numbers",
     "auth.user.taken" => "This username is already taken",
     "auth.email.invalid" => "This e-mail address is invalid, please use a valid e-mail address",
@@ -78,6 +79,7 @@ $strings = [
     "global.copyright" => "<b>Copyright 2026 - ??</b>"
 ];
 
+// Check if a key exists in Strings
 function hasString($name) {
     global $strings;
     
@@ -98,7 +100,13 @@ function printString($name, $json = false) {
     $string = getString($name);
     
     if ($json == true) {
-        $string = json_encode($string);
+        // Escape the string
+        $string_e = json_encode($string);
+        
+        // Unescape characters for the following tags
+        $string_br = str_replace("<br\/>", "<br/>", $string_e);
+        $string_b = str_replace("<\/b>", "</b>", $string_br);
+        $string = str_replace("<\/p>", "</p>", $string_b);
     }
     
     echo $string;

@@ -5,18 +5,20 @@ require '../../../settings.conf';
 require 'base.php';
 
 $conn = null;
-$error = null;
 
 // Get the input data
 $token = filter_input(INPUT_GET, "token");
 
 // Connect to the database
-if (validateToken($token, $error) && connectDatabase($conn, $error)) {
-    $result = retrieveVerifyToken($conn, $token, $error);
+if (validateToken($token) && connectDatabase($conn)) {
+    $result = retrieveVerifyToken($conn, $token);
     
-    if (isset($result)) {
-        updateVerifyToken($conn, $result, $error);
-        updateUser($conn, $result, $error);
+    if (!isset($error)) {
+        updateVerifyToken($conn, $result);
+    }
+    
+    if(!isset($error)) {
+        updateUser($conn, $result);
     }
 }
 
@@ -24,7 +26,9 @@ if (validateToken($token, $error) && connectDatabase($conn, $error)) {
  * The functions 
  */
 
-function validateToken($token, &$error) {
+function validateToken($token) {
+    global $error;
+    
     // Check if the token is set
     if (!isset($token)) {
         $error = "auth.token.invalid";
@@ -33,14 +37,14 @@ function validateToken($token, &$error) {
     return $error === null;
 }
 
-function retrieveVerifyToken($conn, $token, &$error) {
-    $result = null;
-    
-    // Retrieve the token from the verify token table
-    $sql = "SELECT id, user_id FROM verify_user "
-            . "WHERE token = :token AND used = 0 AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
+function retrieveVerifyToken($conn, $token) {
+    global $error;
 
     try {
+        // Retrieve the token from the verify token table
+        $sql = "SELECT id, user_id FROM verify_user "
+                . "WHERE token = :token AND used = 0 AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
+    
         // Prepare query statement
         $stmt = $conn->prepare($sql);    
 
@@ -50,24 +54,26 @@ function retrieveVerifyToken($conn, $token, &$error) {
         // Execute the statement
         $stmt->execute();
 
-        if ($stmt->rowCount() > 0) { 
-            // There is a user in the database with this token
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        } else {
+        // Get the user in the database with this token
+        $result = getResults($stmt);
+        if (!isset($result)) {
             $error = "auth.token.invalid";
         }
     } catch (Exception) {
+        $result = null;
         $error = "auth.db_error";
     }
     
     return $result;
 }
 
-function updateVerifyToken($conn, $token, &$error) {
-    // The token is found, update it in the register token table
-    $sql = "UPDATE verify_user SET used=1 WHERE id = :id";
+function updateVerifyToken($conn, $token) {
+    global $error;
 
     try {
+        // The token is found, update it in the register token table
+        $sql = "UPDATE verify_user SET used=1 WHERE id = :id";
+    
         // Prepare query statement
         $stmt = $conn->prepare($sql);    
 
@@ -81,11 +87,13 @@ function updateVerifyToken($conn, $token, &$error) {
     }
 }
 
-function updateUser($conn, $token, &$error) {    
-    // Create a query to update this user
-    $sql = "UPDATE users SET is_verified=1 WHERE id = :id";
+function updateUser($conn, $token) {    
+    global $error;
 
     try {
+        // Create a query to update this user
+        $sql = "UPDATE users SET is_verified=1 WHERE id = :id";
+    
         // Prepare query statement
         $stmt = $conn->prepare($sql);    
 
@@ -175,8 +183,8 @@ function updateUser($conn, $token, &$error) {
             title = <?php printString("verify.close", true); ?>;
         }
         
-        $("#card-header").text(header);        
-        $("#card-title").text(title);        
-        $("#card-text").text(text);        
+        $("#card-header").html(header);        
+        $("#card-title").html(title);        
+        $("#card-text").html(text);        
     });
 </script>

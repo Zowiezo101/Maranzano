@@ -11,10 +11,17 @@ require "../../src/tools/base.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\Exception;
 
+/**
+ * Global variable
+ */
+
+$error = null;
+
 // Function to connect to the database
-function connectDatabase(&$conn, &$error=null) {
+function connectDatabase(&$conn) {
     global $servername, $db_username, 
            $db_password, $db_database;
+    global $error;
     
     try {
         // First make sure we can connect to the database
@@ -29,8 +36,31 @@ function connectDatabase(&$conn, &$error=null) {
     return $error === null;
 }
 
-// Function to send a verification code
-function sendVerificationCode($email, $user, $token, &$error=null) {
+// Function to retrieve results from database
+function getResults($stmt) {
+    $result = null;
+
+    if ($stmt->rowCount() > 0) {
+        // Convert the results into an associative array
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    return $result;
+}
+
+// Function to retrieve results from database
+function isTaken($stmt, $message) {
+    global $error;
+    
+    // Make sure there are no results
+    if (null !== getResults($stmt)) {
+        // If there are, set an error
+        $error = $message;
+    }
+}
+
+function sendMail($recipient, $subject, $body) {
+    global $error;
     
     // PHPMailer Object
     $mail = new PHPMailer(true); //Argument true in constructor enables exceptions
@@ -39,27 +69,17 @@ function sendVerificationCode($email, $user, $token, &$error=null) {
     setMailOptions($mail);
 
     // Set who the message is to be sent to
-    $mail->addAddress($email, $user);
+    $mail->addAddress($recipient["email"], $recipient["name"]);
 
     // Set the subject line
-    $mail->Subject = getString("verify.subject");
-    
-    // The URL to verify the account
-    $url = getURL("/api/auth/verify.php?token=".$token);
-
-    // Get the email body
-    $body = getString("verify.body");
-    
-    // Insert the name and token
-    $body_user = str_replace("[user]", $user, $body);
-    $body_url = str_replace("[url]", $url, $body_user);
+    $mail->Subject = $subject;
     
     // Set the email body
-    $mail->Body = $body_url;
+    $mail->Body = $body;
 
     try {
         $mail->send();
-    } catch (Exception) {
+    } catch (\Exception) {
         $error = "auth.mail_error";
     }
 }
@@ -137,4 +157,37 @@ function getURL($url) {
     }
     
     return $url;
+}
+
+function createToken($conn, $table, $user_id) {    
+    global $error;
+        
+    // Generate the token to verify the email-address
+    $token = bin2hex(random_bytes(50));
+    
+    try {
+        // All the data has been checked, meaning that we can now safely create a new user
+        $sql = "INSERT INTO {$table} (user_id, token, expires_at) "
+                . "VALUES (:user_id, :token, :expires_at)";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Genereate the expire date for the verification
+        $expiry_date = (new DateTimeImmutable('now', new DateTimeZone('UTC')))
+                            ->modify('+' . 30 . ' minutes')
+                            ->format('Y-m-d H:i:s');
+
+        // Bind the parameter
+        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(":token", hash('sha256', $token), PDO::PARAM_STR);
+        $stmt->bindValue(":expires_at", $expiry_date, PDO::PARAM_STR);
+
+        // Execute the statement
+        $stmt->execute();
+    } catch (PDOException) {
+        $error = "auth.db_error";
+    }
+    
+    return $token;
 }
