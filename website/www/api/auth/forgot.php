@@ -11,8 +11,8 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: access");
 
+// Global connection paramater for this file
 $conn = null;
-$error = null;
 
 // Get the input data
 $input_raw = (array) json_decode(file_get_contents('php://input'));
@@ -22,39 +22,55 @@ $input = filter_var_array($input_raw);
 $email = trim($input["email"]);
 
 // Validate the information
-if (connectDatabase($conn, $error)) {
-    $result = validateEmail($conn, $email, $error);
+if (connectDatabase($conn)) {
+    $user = retrieveUserFromEmail($conn, $email);
     
-    if (isset($result)) {
-//        updateVerifyToken($conn, $token, $error);
-//        updateUser($conn, $token, $error);
+    // Send an e-mail IF the user has an account
+    if (isset($user)) {
+        // Generate the token to reset the password
+        $token = createResetToken($conn, $user);
+        
+        if (!isset($error)) {
+            // In case of no errors, send a reset token
+            sendResetToken($user, $token);
+        }
+    } else {
+        // Keep response timing similar even when the email is not found.
+        usleep(500000);
     }
 } 
+
+// Send the results back to the requester
+sendMessage($error);
 
 /* 
  * The functions 
  */
 
-function validateEmail($conn, $email, &$error) {
+function retrieveUserFromEmail($conn, $email) {
+    global $error;
+    
     $result = null;
     
     // Check if this e-mail address is a proper e-mail address
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        // See if the email address already exists
-        $sql = "SELECT id, name, email FROM users WHERE email = :email";
-        
-        // Prepare query statement
-        $stmt = $conn->prepare($sql);
-        
-        // Bind the parameter
-        $stmt->bindValue(":email", $email, PDO::PARAM_STR);
+        try {
+            // See if the email address already exists
+            $sql = "SELECT id, name, email FROM users WHERE email = :email";
 
-        // Execute the statement
-        $stmt->execute();
+            // Prepare query statement
+            $stmt = $conn->prepare($sql);
 
-        if ($stmt->rowCount() > 0) {
-            // This is a registered user
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Bind the parameter
+            $stmt->bindValue(":email", $email, PDO::PARAM_STR);
+
+            // Execute the statement
+            $stmt->execute();
+            
+            // Get the results
+            $result = getResults($stmt);
+        } catch (Exception) {
+            $error = "auth.db_error";
         }
     } else {
         // Not a valid email address
@@ -64,13 +80,30 @@ function validateEmail($conn, $email, &$error) {
     return $result;
 }
 
-// Send an e-mail IF the user has an account
+function createResetToken($conn, $user) {
+    
+    // Create the token for the verification
+    $token = createToken($conn, "reset_pass", $user["id"]);
+    
+    return $token;
+}
 
-// Add a token to the email and to the user in the database
+// Function to send a verification token
+function sendResetToken($recipient, $token) {
 
-// Use the token in the email to verify the user
+    // Set the subject line
+    $subject = getString("reset.subject");
+    
+    // The URL to verify the account
+    $url = getURL("/api/auth/reset.php?token=".$token);
 
-// Show them the reset option and use that same token to send the data back
-
-// Send the results back to the requester
-sendMessage($error);
+    // Get the email body
+    $body = getString("reset.body");
+    
+    // Insert the name and token
+    $body_user = str_replace("[user]", $recipient["name"], $body);
+    $body_url = str_replace("[url]", $url, $body_user);
+    
+    // Insert all the data to send the mail
+    sendMail($recipient, $subject, $body_url);
+}

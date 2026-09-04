@@ -4,6 +4,7 @@
 require '../../../settings.conf';
 require 'base.php';
 
+// Global connection paramater for this file
 $conn = null;
 
 // Get the input data

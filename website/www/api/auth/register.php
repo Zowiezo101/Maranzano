@@ -40,7 +40,7 @@ if (connectDatabase($conn) &&
     
     if (!isset($error)) {
         // In case of no errors, send a verification token
-        sendVerificationToken($email, $user, $token);
+        sendVerifyToken($email, $user, $token);
     }
 }
 
@@ -172,7 +172,7 @@ function createVerifyToken($conn, $user_id) {
 }
 
 // Function to send a verification token
-function sendVerificationToken($email, $user, $token) {
+function sendVerifyToken($email, $user, $token) {
     
     // The recipient to send the email to
     $recipient = [

@@ -50,6 +50,8 @@ $strings = [
     "login.reset" => "Reset password",
     "reset.info" => "Enter the e-mail address linked to your account to reset your password",
     "reset.email" => "If there is an account linked to the inserted e-mail address, an e-mail will be send with a link to reset your password.<br/>This link will be valid for 30 minutes.",
+    "reset.subject" => "Request for a password reset on Mafiani",
+    "reset.body" => "<h3>Welcome [user]!</h3><p>Click <a href='[url]'>here</a> to reset your password or copy-paste this link into your browser:<br/>[url]. This link will be valid for 30 minutes.</p><br/>If you did not request a password reset, you can safely ignore this mail.",
     "signup.title" => "Signing up",
     "signup.username" => "Username",
     "signup.password" => "Password (has to be at least 8 characters)",

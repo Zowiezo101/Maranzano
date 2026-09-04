@@ -230,7 +230,7 @@
                     </div>
 
                     <-- Error message -->
-                    <div id="loginError" class="mb-4 mx-3 text-warning d-none">
+                    <div id="loginError" class="mb-4 mx-3 text-center text-warning d-none">
                         <-- Filled in later in case of error -->
                     </div>`);
     
@@ -269,7 +269,7 @@
                         </div>
 
                         <-- Error message -->
-                        <div id="ResetError" class="mb-4 mx-3 text-warning d-none">
+                        <div id="resetError" class="mb-4 mx-3 text-center text-warning d-none">
                             <-- Filled in later in case of error -->
                         </div>`);
     
@@ -332,7 +332,7 @@
         event.preventDefault();
         
         // Remove any previous errors
-        onResetError("#ResetError");
+        onResetError("#resetError");
         
         // The data for registering
         var resetEmail = $("#resetEmail").val();
