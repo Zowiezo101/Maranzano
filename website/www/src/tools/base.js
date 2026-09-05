@@ -29,3 +29,13 @@ function getHTML(html) {
     // Get the HTML comments back
     return html.replaceAll("<--", "<!--");
 }
+    
+// If there is an error
+function onReturnedError(message, element) {
+    $(element).html(message).removeClass("d-none");
+}
+
+// Remove the error
+function onResetError(element) {
+    $(element).html("").addClass("d-none");
+}

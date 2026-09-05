@@ -434,16 +434,6 @@
         $("#register-form").html(html);
     }
     
-    // If there is an error
-    function onReturnedError(message, element) {
-        $(element).html(message).removeClass("d-none");
-    }
-    
-    // Remove the error
-    function onResetError(element) {
-        $(element).html("").addClass("d-none");
-    }
-    
     $(function() {
         // Make sure the login modal gets reset whenever it gets hidden
         $("#loginModal").on("hidden.bs.modal", function(){
