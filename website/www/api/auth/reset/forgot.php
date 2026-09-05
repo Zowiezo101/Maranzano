@@ -26,8 +26,16 @@ if (connectDatabase($conn)) {
     
     // Send an e-mail IF the user has an account
     if (isset($user)) {
-        // Generate the token to reset the password
-        $token = createResetToken($conn, $user);
+    
+        if (!isset($error)) {
+            // Invalidate all previous tokens for this user
+            invalidateResetTokens($conn, $user);
+        }
+        
+        if (!isset($error)) {
+            // Generate the token to reset the password
+            $token = createResetToken($conn, $user);
+        }
         
         if (!isset($error)) {
             // In case of no errors, send a reset token
@@ -77,6 +85,13 @@ function retrieveUserFromEmail($conn, $email) {
     }
     
     return $result;
+}
+
+// Function to invalidate all previous tokens
+function invalidateResetTokens($conn, $user) {
+    
+    // Invalidate previous tokens
+    invalidateTokens($conn, "reset_pass", $user["id"]);
 }
 
 function createResetToken($conn, $user) {

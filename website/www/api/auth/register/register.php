@@ -33,6 +33,11 @@ if (connectDatabase($conn) &&
     $user_id = registerUser($conn, $email, $user, $pass1);
     
     if (!isset($error)) {
+        // Invalidate all previous tokens for this user
+        invalidateVerifyTokens($conn, $user_id);
+    }
+    
+    if (!isset($error)) {
         // Generate the token to verify this user
         $token = createVerifyToken($conn, $user_id);
     }
@@ -159,6 +164,13 @@ function registerUser($conn, $email, $user, $pass) {
     }
     
     return $user_id;
+}
+
+// Function to invalidate all previous tokens
+function invalidateVerifyTokens($conn, $user_id) {
+    
+    // Invalidate previous tokens
+    invalidateTokens($conn, "verify_user", $user_id);
 }
 
 // Function to create a verification token

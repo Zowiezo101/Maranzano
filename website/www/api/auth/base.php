@@ -160,6 +160,26 @@ function getURL($url) {
     return $url;
 }
 
+function invalidateTokens($conn, $table, $user_id) {
+    global $error;
+    
+    try {
+        // Invalidate all tokens of this user
+        $sql = "UPDATE {$table} SET used = 1 WHERE user_id = :user_id AND used = 0";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
+
+        // Execute the statement
+        $stmt->execute();
+    } catch (PDOException) {
+        $error = "auth.db_error";
+    }
+}
+
 function createToken($conn, $table, $user_id) {    
     global $error;
         
@@ -167,7 +187,7 @@ function createToken($conn, $table, $user_id) {
     $token = bin2hex(random_bytes(50));
     
     try {
-        // All the data has been checked, meaning that we can now safely create a new user
+        // Create a new token
         $sql = "INSERT INTO {$table} (user_id, token, expires_at) "
                 . "VALUES (:user_id, :token, :expires_at)";
 
