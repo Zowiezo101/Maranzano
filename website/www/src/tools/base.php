@@ -49,6 +49,7 @@ $strings = [
     "login.password" => "Password",
     "login.forgotpass" => "Forgotten your password?",
     "login.reset" => "Reset password",
+    "reset.title" => "Resetting your password",
     "reset.info" => "Enter the e-mail address linked to your account to reset your password",
     "reset.email" => "If there is an account linked to the inserted e-mail address, an e-mail will be send with a link to reset your password.<br/>This link will be valid for 30 minutes.",
     "reset.subject" => "Request for a password reset on Mafiani",
