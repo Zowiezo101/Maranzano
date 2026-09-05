@@ -1,8 +1,7 @@
 <?php
-  
+
 // Include login details and functions that are used by multiple files
-require '../../../settings.conf';
-require 'base.php';
+require __DIR__ . "/../base.php";
 
 // Required headers
 header("Access-Control-Allow-Origin: http://localhost");
@@ -184,7 +183,7 @@ function sendVerifyToken($email, $user, $token) {
     $subject = getString("verify.subject");
     
     // The URL to verify the account
-    $url = getURL("/api/auth/verify.php?token=".$token);
+    $url = getURL("/api/verify?token=".$token);
 
     // Get the email body
     $body = getString("verify.body");

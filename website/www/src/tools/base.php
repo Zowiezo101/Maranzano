@@ -5,7 +5,8 @@
  * 
  */
 
-require "database.php";
+require __DIR__ . "/../../../settings.conf";
+require __DIR__ . "/database.php";
 
 $strings = [
     // Global

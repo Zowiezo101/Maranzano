@@ -14,6 +14,22 @@ RewriteEngine On
 # RewriteCond %{HTTP_HOST} !=localhost
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301] 
 
+# API links
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^(.*)/register$ $1/auth/register/register [QSA,DPI]
+
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^(.*)/verify$ $1/auth/register/verify [QSA,DPI]
+
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^(.*)/forgot$ $1/auth/reset/forgot [QSA,DPI]
+
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^(.*)/reset$ $1/auth/reset/reset [QSA,DPI]
+
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^(.*)/update$ $1/auth/reset/update [QSA,DPI]
+
 # Making sure things are redirected to the correct file types
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f

@@ -2,7 +2,7 @@
     // This needs to be started at the very beginning
     session_start();
     
-    require "src/tools/base.php";
+    require __DIR__ . "/src/tools/base.php";
 ?>
 
 <!doctype html>
@@ -343,7 +343,7 @@
         };
 
         // The fetch call
-        fetchPost("forgot.php", data).then(function(results) {
+        fetchPost("forgot", data).then(function(results) {
             // Handle the results of the fetch call
 
             if (results.error !== "" && results.error !== null) {
@@ -382,7 +382,7 @@
         };
 
         // The fetch call
-        fetchPost("register.php", data).then(function(results) {
+        fetchPost("register", data).then(function(results) {
             // Handle the results of the fetch call
 
             if (results.error !== "" && results.error !== null) {

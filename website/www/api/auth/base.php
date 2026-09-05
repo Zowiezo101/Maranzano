@@ -1,11 +1,12 @@
 <?php
 
 // PHP Mailer
-require "../../src/PHPMailer/PHPMailer.php";
-require "../../src/PHPMailer/Exception.php";
-require "../../src/PHPMailer/SMTP.php";
+require __DIR__ . "/../../src/PHPMailer/PHPMailer.php";
+require __DIR__ . "/../../src/PHPMailer/Exception.php";
+require __DIR__ . "/../../src/PHPMailer/SMTP.php";
 
-require "../../src/tools/base.php";
+// Global base file
+require __DIR__ . "/../../src/tools/base.php";
 
 // Needed to use PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;

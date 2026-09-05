@@ -1,8 +1,7 @@
 <?php
 
 // Include login details and functions that are used by multiple files
-require '../../../settings.conf';
-require 'base.php';
+require __DIR__ . "/../base.php";
 
 // Global connection paramater for this file
 $conn = null;
