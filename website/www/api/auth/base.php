@@ -5,6 +5,9 @@ require __DIR__ . "/../../src/PHPMailer/PHPMailer.php";
 require __DIR__ . "/../../src/PHPMailer/Exception.php";
 require __DIR__ . "/../../src/PHPMailer/SMTP.php";
 
+// Card
+require __DIR__ . "/card.php";
+
 // Global base file
 require __DIR__ . "/../../src/tools/base.php";
 

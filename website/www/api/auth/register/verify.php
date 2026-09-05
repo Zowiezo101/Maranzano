@@ -21,6 +21,8 @@ if (validateToken($token) && connectDatabase($conn)) {
         updateUser($conn, $result);
     }
 }
+        
+$card = prepareCard();
 
 /* 
  * The functions 
@@ -58,6 +60,27 @@ function updateUser($conn, $token) {
     } catch (Exception) {
         $error = "auth.db_error";
     }
+}
+
+function prepareCard() {
+    global $error;
+    
+    if(isset($error)) {
+        // There's an error
+        $header = getString("global.error");
+        $title = getString($error);
+        $body = getString("verify.again");
+    } else {
+        // No error
+        $header = getString("verify.success");
+        $title = getString("verify.close");
+        $body = "";
+    }
+    
+    $button = ["text" => getString("verify.home"), "url" => "/"];
+    
+    $card = ["header" => $header, "title" => $title, "body" => $body, "button" => $button];
+    return $card;
 }
 ?>
 
@@ -98,46 +121,9 @@ function updateUser($conn, $token) {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6 mx-auto">
-                    <div class="card bg-body-secondary text-center" data-error=<?php hasString($error) ? printString($error, true) : json_encode(""); ?>>
-                        <div id="card-header" class="card-header bg-body-tertiary">
-                            <!-- Filled in by JS -->
-                        </div>
-                        <div class="card-body">
-                            <!-- Filled in by JS -->
-                            
-                            <h5 id="card-title" class="card-title"></h5>
-                            <p  id="card-text"  class="card-text"></p>
-                            <a href="/" class="btn btn-primary"><?php printString("verify.home"); ?></a>
-                        </div>
-                    </div>
+                    <?php showCard($card); ?>
                 </div>
             </div>
         </div>
     </body>
 </html>
-
-<script>
-    $(function () {
-        var header = "";
-        var title = "";
-        var text = "";
-        
-        // Get the error message (if any)
-        var error = $(".card").data("error");
-        
-        if (error !== "") {
-            // There's an error
-            header = <?php printString("global.error", true); ?>;
-            title = error;
-            text = <?php printString("verify.again", true); ?>;
-        } else {
-            // No error
-            header = <?php printString("verify.success", true); ?>;
-            title = <?php printString("verify.close", true); ?>;
-        }
-        
-        $("#card-header").html(header);        
-        $("#card-title").html(title);        
-        $("#card-text").html(text);        
-    });
-</script>
