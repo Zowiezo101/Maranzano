@@ -14,7 +14,7 @@ if (validateToken($token) && connectDatabase($conn)) {
     $result = retrieveVerifyToken($conn, $token);
     
     if (!isset($error)) {
-        updateVerifyToken($conn, $result);
+        invalidateVerifyToken($conn, $result);
     }
     
     if(!isset($error)) {
@@ -26,65 +26,18 @@ if (validateToken($token) && connectDatabase($conn)) {
  * The functions 
  */
 
-function validateToken($token) {
-    global $error;
-    
-    // Check if the token is set
-    if (!isset($token)) {
-        $error = "auth.token.invalid";
-    }
-    
-    return $error === null;
-}
-
 function retrieveVerifyToken($conn, $token) {
-    global $error;
-
-    try {
-        // Retrieve the token from the verify token table
-        $sql = "SELECT id, user_id FROM verify_user "
-                . "WHERE token = :token AND used = 0 AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
     
-        // Prepare query statement
-        $stmt = $conn->prepare($sql);    
-
-        // Bind the parameter
-        $stmt->bindValue(":token", hash('sha256', $token), PDO::PARAM_STR);  
-
-        // Execute the statement
-        $stmt->execute();
-
-        // Get the user in the database with this token
-        $result = getResults($stmt);
-        if (!isset($result)) {
-            $error = "auth.token.invalid";
-        }
-    } catch (Exception) {
-        $result = null;
-        $error = "auth.db_error";
-    }
+    // Retrieve an existing token
+    $result = retrieveToken($conn, "verify_user", $token);
     
     return $result;
 }
 
-function updateVerifyToken($conn, $token) {
-    global $error;
-
-    try {
-        // The token is found, update it in the register token table
-        $sql = "UPDATE verify_user SET used=1 WHERE id = :id";
+function invalidateVerifyToken($conn, $token) {
     
-        // Prepare query statement
-        $stmt = $conn->prepare($sql);    
-
-        // Bind the parameter
-        $stmt->bindValue(":id", $token["id"], PDO::PARAM_INT);  
-
-        // Execute the statement
-        $stmt->execute();
-    } catch (Exception) {
-        $error = "auth.db_error";
-    }
+    // Invalidate the token
+    invalidateToken($conn, "verify_user", $token);
 }
 
 function updateUser($conn, $token) {    

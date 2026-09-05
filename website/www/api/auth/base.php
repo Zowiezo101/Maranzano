@@ -160,6 +160,37 @@ function getURL($url) {
     return $url;
 }
 
+function validateToken($token) {
+    global $error;
+    
+    // Check if the token is set
+    if (!isset($token) || (strlen($token) !== 100)) {
+        $error = "auth.token.invalid";
+    }
+    
+    return $error === null;
+}
+
+function invalidateToken($conn, $table, $token) {
+    global $error;
+
+    try {
+        // The token is found, update it in the register token table
+        $sql = "UPDATE {$table} SET used=1 WHERE id = :id";
+    
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);    
+
+        // Bind the parameter
+        $stmt->bindValue(":id", $token["id"], PDO::PARAM_INT);  
+
+        // Execute the statement
+        $stmt->execute();
+    } catch (PDOException) {
+        $error = "auth.db_error";
+    }
+}
+
 function invalidateTokens($conn, $table, $user_id) {
     global $error;
     
@@ -211,4 +242,34 @@ function createToken($conn, $table, $user_id) {
     }
     
     return $token;
+}
+
+function retrieveToken($conn, $table, $token) {
+    global $error;
+
+    try {
+        // Retrieve the token from the verify token table
+        $sql = "SELECT id, user_id FROM {$table} "
+                . "WHERE token = :token AND used = 0 AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
+    
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);    
+
+        // Bind the parameter
+        $stmt->bindValue(":token", hash('sha256', $token), PDO::PARAM_STR);  
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the user in the database with this token
+        $result = getResults($stmt);
+        if (!isset($result)) {
+            $error = "auth.token.invalid";
+        }
+    } catch (PDOException) {
+        $result = null;
+        $error = "auth.db_error";
+    }
+    
+    return $result;
 }
