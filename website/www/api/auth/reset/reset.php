@@ -50,32 +50,6 @@ function retrieveResetToken($conn, $token) {
     return $result;
 }
 
-function retrieveUserFromId($conn, $id) {
-    global $error;
-    
-    try {
-        // Retrieve the user
-        $sql = "SELECT id, name, email FROM users WHERE id = :id";
-
-        // Prepare query statement
-        $stmt = $conn->prepare($sql);
-
-        // Bind the parameter
-        $stmt->bindValue(":id", $id, PDO::PARAM_STR);
-
-        // Execute the statement
-        $stmt->execute();
-
-        // Get the results
-        $result = getResults($stmt);
-    } catch (Exception) {
-        $result = null;
-        $error = "auth.db_error";
-    }
-
-    return $result;
-}
-
 function prepareCard($user) {
     $form = '
                     <form id="reset-form">

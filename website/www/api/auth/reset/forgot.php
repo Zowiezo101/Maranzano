@@ -54,39 +54,6 @@ sendMessage($error);
  * The functions 
  */
 
-function retrieveUserFromEmail($conn, $email) {
-    global $error;
-    
-    $result = null;
-    
-    // Check if this e-mail address is a proper e-mail address
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        try {
-            // See if the email address already exists
-            $sql = "SELECT id, name, email FROM users WHERE email = :email";
-
-            // Prepare query statement
-            $stmt = $conn->prepare($sql);
-
-            // Bind the parameter
-            $stmt->bindValue(":email", $email, PDO::PARAM_STR);
-
-            // Execute the statement
-            $stmt->execute();
-            
-            // Get the results
-            $result = getResults($stmt);
-        } catch (Exception) {
-            $error = "auth.db_error";
-        }
-    } else {
-        // Not a valid email address
-        $error = "auth.email.invalid";
-    }
-    
-    return $result;
-}
-
 // Function to invalidate all previous tokens
 function invalidateResetTokens($conn, $user) {
     

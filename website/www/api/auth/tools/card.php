@@ -5,6 +5,7 @@
         $body = $card["body"];
         
         $button = "";
+        // We don't always want this button
         if (isset($card["button"])) {
             $button_url = $card["button"]["url"];
             $button_text = $card["button"]["text"];
@@ -15,8 +16,7 @@
         }
         
         // The card to show if something has succeeded or not
-        $output =  '
-                    <div class="card bg-body-secondary text-center">
+        $output =  '<div class="card bg-body-secondary text-center">
                         <div id="card-header" class="card-header bg-body-tertiary">
                             '.$header.'
                         </div>
@@ -29,8 +29,7 @@
                             </p>
                             '.$button.'
                         </div>
-                    </div>
-                    ';
+                    </div>';
                                 
         echo $output;
     }

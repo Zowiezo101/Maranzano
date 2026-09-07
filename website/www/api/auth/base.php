@@ -6,7 +6,10 @@ require __DIR__ . "/../../src/PHPMailer/Exception.php";
 require __DIR__ . "/../../src/PHPMailer/SMTP.php";
 
 // Card
-require __DIR__ . "/card.php";
+require __DIR__ . "/tools/card.php";
+require __DIR__ . "/tools/database.php";
+require __DIR__ . "/tools/token.php";
+require __DIR__ . "/tools/user.php";
 
 // Global base file
 require __DIR__ . "/../../src/tools/base.php";
@@ -20,48 +23,6 @@ use PHPMailer\Exception;
  */
 
 $error = null;
-
-// Function to connect to the database
-function connectDatabase(&$conn) {
-    global $servername, $db_username, 
-           $db_password, $db_database;
-    global $error;
-    
-    try {
-        // First make sure we can connect to the database
-        $conn = new PDO("mysql:host={$servername};dbname={$db_database};charset=utf8", 
-                        $db_username, $db_password,
-                        [PDO::ATTR_EMULATE_PREPARES => false, 
-                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-    } catch (PDOException) {
-        $error = "auth.db_error";
-    }
-    
-    return $error === null;
-}
-
-// Function to retrieve results from database
-function getResults($stmt) {
-    $result = null;
-
-    if ($stmt->rowCount() > 0) {
-        // Convert the results into an associative array
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-    
-    return $result;
-}
-
-// Function to retrieve results from database
-function isTaken($stmt, $message) {
-    global $error;
-    
-    // Make sure there are no results
-    if (null !== getResults($stmt)) {
-        // If there are, set an error
-        $error = $message;
-    }
-}
 
 function sendMail($recipient, $subject, $body) {
     global $error;
@@ -161,118 +122,4 @@ function getURL($url) {
     }
     
     return $url;
-}
-
-function validateToken($token) {
-    global $error;
-    
-    // Check if the token is set
-    if (!isset($token) || (strlen($token) !== 100)) {
-        $error = "auth.token.invalid";
-    }
-    
-    return $error === null;
-}
-
-function invalidateToken($conn, $table, $token) {
-    global $error;
-
-    try {
-        // The token is found, update it in the register token table
-        $sql = "UPDATE {$table} SET used=1 WHERE id = :id";
-    
-        // Prepare query statement
-        $stmt = $conn->prepare($sql);    
-
-        // Bind the parameter
-        $stmt->bindValue(":id", $token["id"], PDO::PARAM_INT);  
-
-        // Execute the statement
-        $stmt->execute();
-    } catch (PDOException) {
-        $error = "auth.db_error";
-    }
-}
-
-function invalidateTokens($conn, $table, $user_id) {
-    global $error;
-    
-    try {
-        // Invalidate all tokens of this user
-        $sql = "UPDATE {$table} SET used = 1 WHERE user_id = :user_id AND used = 0";
-
-        // Prepare query statement
-        $stmt = $conn->prepare($sql);
-
-        // Bind the parameter
-        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
-
-        // Execute the statement
-        $stmt->execute();
-    } catch (PDOException) {
-        $error = "auth.db_error";
-    }
-}
-
-function createToken($conn, $table, $user_id) {    
-    global $error;
-        
-    // Generate the token to verify the email-address
-    $token = bin2hex(random_bytes(50));
-    
-    try {
-        // Create a new token
-        $sql = "INSERT INTO {$table} (user_id, token, expires_at) "
-                . "VALUES (:user_id, :token, :expires_at)";
-
-        // Prepare query statement
-        $stmt = $conn->prepare($sql);
-
-        // Genereate the expire date for the verification
-        $expiry_date = (new DateTimeImmutable('now', new DateTimeZone('UTC')))
-                            ->modify('+' . 30 . ' minutes')
-                            ->format('Y-m-d H:i:s');
-
-        // Bind the parameter
-        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
-        $stmt->bindValue(":token", hash('sha256', $token), PDO::PARAM_STR);
-        $stmt->bindValue(":expires_at", $expiry_date, PDO::PARAM_STR);
-
-        // Execute the statement
-        $stmt->execute();
-    } catch (PDOException) {
-        $error = "auth.db_error";
-    }
-    
-    return $token;
-}
-
-function retrieveToken($conn, $table, $token) {
-    global $error;
-
-    try {
-        // Retrieve the token from the verify token table
-        $sql = "SELECT id, user_id FROM {$table} "
-                . "WHERE token = :token AND used = 0 AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
-    
-        // Prepare query statement
-        $stmt = $conn->prepare($sql);    
-
-        // Bind the parameter
-        $stmt->bindValue(":token", hash('sha256', $token), PDO::PARAM_STR);  
-
-        // Execute the statement
-        $stmt->execute();
-
-        // Get the user in the database with this token
-        $result = getResults($stmt);
-        if (!isset($result)) {
-            $error = "auth.token.invalid";
-        }
-    } catch (PDOException) {
-        $result = null;
-        $error = "auth.db_error";
-    }
-    
-    return $result;
 }

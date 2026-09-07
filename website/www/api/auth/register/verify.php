@@ -18,7 +18,7 @@ if (validateToken($token) && connectDatabase($conn)) {
     }
     
     if(!isset($error)) {
-        updateUser($conn, $result);
+        updateUserVerified($conn, $result);
     }
 }
         
@@ -40,26 +40,6 @@ function invalidateVerifyToken($conn, $token) {
     
     // Invalidate the token
     invalidateToken($conn, "verify_user", $token);
-}
-
-function updateUser($conn, $token) {    
-    global $error;
-
-    try {
-        // Create a query to update this user
-        $sql = "UPDATE users SET is_verified=1 WHERE id = :id";
-    
-        // Prepare query statement
-        $stmt = $conn->prepare($sql);    
-
-        // Bind the parameter
-        $stmt->bindValue(":id", $token["user_id"], PDO::PARAM_INT);  
-
-        // Execute the statement
-        $stmt->execute();
-    } catch (Exception) {
-        $error = "auth.db_error";
-    }
 }
 
 function prepareCard() {
