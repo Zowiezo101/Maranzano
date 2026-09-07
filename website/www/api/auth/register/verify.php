@@ -10,18 +10,24 @@ $conn = null;
 $token = filter_input(INPUT_GET, "token");
 
 // Connect to the database
-if (validateToken($token) && connectDatabase($conn)) {
+if (connectDatabase($conn) && 
+        validateToken($token)) {
+    
+    // Retrieve the token
     $result = retrieveVerifyToken($conn, $token);
     
-    if (!isset($error)) {
-        invalidateVerifyToken($conn, $result);
-    }
-    
     if(!isset($error)) {
+        // Set the user as verified
         updateUserVerified($conn, $result);
     }
+    
+    if (!isset($error)) {
+        // Invalidate the token
+        invalidateVerifyToken($conn, $result);
+    }
 }
-        
+
+// Show the results to the user
 $card = prepareCard();
 
 /* 
@@ -53,7 +59,7 @@ function prepareCard() {
     } else {
         // No error
         $header = getString("verify.success");
-        $title = getString("verify.close");
+        $title = getString("global.close");
         $body = "";
     }
     

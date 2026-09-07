@@ -99,11 +99,15 @@ function setMailOptions(&$mail) {
     $mail->isHTML(true);
 }
 
-function sendMessage($error) {
+function sendMessage($error, $data = null) {
     // The message to be sent
     $message = [
         "error" => (hasString($error) ? getString($error) : $error)
     ];
+    
+    if(isset($data)) {
+        $message["data"] = $data;
+    }
 
     // Send the message
     echo json_encode($message);

@@ -30,6 +30,9 @@ RewriteRule ^(.*)/reset$ $1/auth/reset/reset [QSA,DPI]
 RewriteCond %{REQUEST_URI} ^/api/
 RewriteRule ^(.*)/update$ $1/auth/reset/update [QSA,DPI]
 
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^(.*)/login$ $1/auth/login/login [QSA,DPI]
+
 # Making sure things are redirected to the correct file types
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f

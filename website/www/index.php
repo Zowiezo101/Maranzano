@@ -27,7 +27,6 @@
         <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
 
-
         <title><?php printString("global.title"); ?></title>
     </head>
     
@@ -325,6 +324,42 @@
     // Create a fetch call to prevent reloading the page
     function onSubmitLogin(event) {
         event.preventDefault();
+        
+        // Remove any previous errors
+        onResetError("#loginError");
+        
+        // The data for resetting password
+        var loginEmail = $("#loginEmail").val();
+        var loginPassword = $("#loginPassword").val();
+        
+        // Put the data in an easier-to-send format
+        var data = {
+            "email": loginEmail,
+            "pass": loginPassword
+        };
+
+        // The fetch call
+        fetchPost("login", data).then(function(result) {
+            // Handle the results of the fetch call
+
+            if (result.error !== "" && result.error !== null) {
+                // Something went wrong, show an error message
+                onReturnedError(result.error, "#loginError");
+                sessionStorage.clear();
+            } else {
+                // Store the token in the sessionStorage
+                // TODO: Prefer to do this with setCookie & HttpOnly
+                sessionStorage.setItem("data", result.data);
+                
+                // Redirect to the member page
+                window.location.href = "member";
+            }
+
+        }).catch(function(result) {
+            // Show an error if anything went wrong
+            alert("error: " + result);
+            sessionStorage.clear();
+        });
     }
     
     // Create a fetch call to prevent reloading the page
@@ -334,7 +369,7 @@
         // Remove any previous errors
         onResetError("#resetError");
         
-        // The data for registering
+        // The data for resetting password
         var resetEmail = $("#resetEmail").val();
         
         // Put the data in an easier-to-send format

@@ -18,7 +18,7 @@ $input_raw = (array) json_decode(file_get_contents('php://input'));
 $input = filter_var_array($input_raw);
 
 // Trim it and put it in seperate vars
-$email = trim($input["email"]);
+$email = trim(isset($input["email"]) ? $input["email"] : "");
 
 // Validate the information
 if (connectDatabase($conn)) {

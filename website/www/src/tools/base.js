@@ -2,7 +2,7 @@
 // Send a post request to the given URL with fetch
 function fetchPost(url, data) {
     // Makes it easier in case the file is moved
-    var base_url = "api/";
+    var base_url = "/api/";
 
     // Prepend these to the given URL
     url = base_url + url;

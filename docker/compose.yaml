@@ -31,16 +31,9 @@ services:
       - ./config/php/php.ini:/usr/local/etc/php/php.ini
       - ./config/vhosts:/etc/apache2/sites-enabled
       
-      # The startup script to set up some data (Currently not needed)
-      # - ./bin/php/startup.sh:/usr/local/bin/startup.sh
-      
       # These are log directories mapped to the VMs log directories
       - ./logs/apache2:/var/log/apache2
       - ./logs/xdebug:/var/log/xdebug
-      
-    # This script inserts the blog user into the database (Currently not needed)
-    # entrypoint:
-    #   - /usr/local/bin/startup.sh
       
     environment:
       # Settings for the Apache webserver
@@ -80,7 +73,7 @@ services:
       
     volumes:      
       # This allows the database to be initialized with our sql files (Currently not used)
-      # - ../database/sql:/docker-entrypoint-initdb.d
+      # - ../database:/docker-entrypoint-initdb.d
       
       # The 'database' directory will be mapped to the container directory "/var/lib/mysql"
       - ./database:/var/lib/mysql
