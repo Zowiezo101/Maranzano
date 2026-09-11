@@ -2,6 +2,8 @@
     // This needs to be started at the very beginning
     session_start();
     
+    $page_title = "global.title";
+    
     require __DIR__ . "/src/tools/base.php";
 ?>
 
@@ -27,18 +29,13 @@
         <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
 
-        <title><?php printString("global.title"); ?></title>
+        <title><?php printString($page_title); ?></title>
     </head>
     
     <body class="vh-100 fst-italic bg-gradient">
         
-        <!-- TODO: Debugging stuff for myself -->
-        <div class="d-sm-none">XS screen size</div>
-        <div class="d-none d-sm-block d-md-none">S screen size</div>
-        <div class="d-none d-md-block d-lg-none">M screen size</div>
-        <div class="d-none d-lg-block d-xl-none">L screen size</div>
-        <div class="d-none d-xl-block d-xxl-none">XL screen size</div>
-        <div class="d-none d-xxl-block">XXL screen size</div>
+        <!-- TODO: This is for debugging purposes -->
+        <?php require __DIR__ . "/src/page/debug.php" ?>
         
         <!-- The container with all the rows and columns -->
         <div class="container-fluid">
@@ -351,7 +348,8 @@
                 // TODO: Prefer to do this with setCookie & HttpOnly
                 sessionStorage.setItem("data", result.data);
                 
-                // Redirect to the member page
+                // Redirect to the member page 
+                // (if the user isn't logged in, they'll be redirected back here)
                 window.location.href = "member";
             }
 
@@ -378,7 +376,7 @@
         };
 
         // The fetch call
-        fetchPost("forgot", data).then(function(results) {
+        fetchPost("reset", data).then(function(results) {
             // Handle the results of the fetch call
 
             if (results.error !== "" && results.error !== null) {
@@ -412,7 +410,7 @@
         var data = {
             "email": registerEmail,
             "user": registerUser,
-            "pass1": registerPassword,
+            "pass": registerPassword,
             "pass2": registerPassword2
         };
 
