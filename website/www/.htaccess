@@ -16,22 +16,51 @@ RewriteEngine On
 
 # API links
 RewriteCond %{REQUEST_URI} ^/api/
-RewriteRule ^(.*)/register$ $1/auth/register/register [QSA,DPI]
+RewriteRule ^(.*)/register$ $1/auth/register_user [QSA,DPI]
 
 RewriteCond %{REQUEST_URI} ^/api/
-RewriteRule ^(.*)/verify$ $1/auth/register/verify [QSA,DPI]
+RewriteRule ^(.*)/verify$ $1/auth/verify_user [QSA,DPI]
 
 RewriteCond %{REQUEST_URI} ^/api/
-RewriteRule ^(.*)/forgot$ $1/auth/reset/forgot [QSA,DPI]
+RewriteRule ^(.*)/reset$ $1/auth/reset_password [QSA,DPI]
 
 RewriteCond %{REQUEST_URI} ^/api/
-RewriteRule ^(.*)/reset$ $1/auth/reset/reset [QSA,DPI]
+RewriteRule ^(.*)/validate$ $1/auth/validate_password [QSA,DPI]
 
 RewriteCond %{REQUEST_URI} ^/api/
-RewriteRule ^(.*)/update$ $1/auth/reset/update [QSA,DPI]
+RewriteRule ^(.*)/update$ $1/auth/update_password [QSA,DPI]
 
 RewriteCond %{REQUEST_URI} ^/api/
-RewriteRule ^(.*)/login$ $1/auth/login/login [QSA,DPI]
+RewriteRule ^(.*)/login$ $1/auth/login [QSA,DPI]
+
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^(.*)/logout$ $1/auth/logout [QSA,DPI]
+
+# Authentication links
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{REQUEST_URI} !^/src/
+RewriteRule ^(.*)auth/verify$ $1/src/auth/verify [QSA,DPI]
+
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{REQUEST_URI} !^/src/
+RewriteRule ^(.*)auth/reset$ $1/src/auth/reset [QSA,DPI]
+
+# Member pages
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{REQUEST_URI} !^/src/
+RewriteRule ^(.*)member$ $1/src/user/member [QSA,DPI]
+
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{REQUEST_URI} !^/src/
+RewriteRule ^(.*)moderator$ $1/src/user/moderator [QSA,DPI]
+
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{REQUEST_URI} !^/src/
+RewriteRule ^(.*)admin$ $1/src/user/admin [QSA,DPI]
+
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{REQUEST_URI} !^/src/
+RewriteRule ^(.*)owner$ $1/src/user/owner [QSA,DPI]
 
 # Making sure things are redirected to the correct file types
 RewriteCond %{REQUEST_FILENAME} !-d
