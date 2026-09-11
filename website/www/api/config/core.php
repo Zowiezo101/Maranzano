@@ -1,9 +1,9 @@
 <?php
 
 // PHP Mailer
-require __DIR__ . "/../../src/PHPMailer/PHPMailer.php";
-require __DIR__ . "/../../src/PHPMailer/Exception.php";
-require __DIR__ . "/../../src/PHPMailer/SMTP.php";
+require __DIR__ . "/../tools/PHPMailer/PHPMailer.php";
+require __DIR__ . "/../tools/PHPMailer/Exception.php";
+require __DIR__ . "/../tools/PHPMailer/SMTP.php";
 
 // Card
 require __DIR__ . "/tools/card.php";
