@@ -20,6 +20,7 @@
         
         <!-- Imports (Local scripts) -->
         <script src="src/tools/base.js"></script>
+        <script src="src/tools/database.js"></script>
 
         <!-- Imports (CSS) -->
         <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
@@ -342,12 +343,7 @@
             if (result.error !== "" && result.error !== null) {
                 // Something went wrong, show an error message
                 onReturnedError(result.error, "#loginError");
-                sessionStorage.clear();
             } else {
-                // Store the token in the sessionStorage
-                // TODO: Prefer to do this with setCookie & HttpOnly
-                sessionStorage.setItem("data", result.data);
-                
                 // Redirect to the member page 
                 // (if the user isn't logged in, they'll be redirected back here)
                 window.location.href = "member";

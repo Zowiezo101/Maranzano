@@ -187,7 +187,7 @@ class Token {
         // Execute the statement
         $stmt->execute();
 
-        // Insert the ID into the parameter array
+        // Check that the token has been properly created
         $id = $this->conn->lastInsertId();
         
         if (!isset($id)) {

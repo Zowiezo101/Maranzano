@@ -42,9 +42,11 @@ class Login extends Auth {
                 // Insert the token into the parameter array
                 $parameters[self::PARAM_TOKEN] = $token;
                 
+                // Create a cookie
+                $this->createCookie($parameters);
+                
                 // The data to send to the user
                 $data = [
-                    "token" => $parameters[self::PARAM_TOKEN],
                     "user_id" => $parameters[self::PARAM_ID],
                     "user_name" => $parameters[self::PARAM_USER]
                 ];
@@ -60,6 +62,17 @@ class Login extends Auth {
             // Something went wrong
             $this->setError("login.error", Message::CODE_ERROR);
         }
+    }
+    
+    protected function validateSession() {
+        // Check if the session is still valid
+        //      - Log user in
+        // 
+        // Check if a cookie exists
+        //      - Do a quick check if the login details are still correct
+        //      - Check if the expiry date is still valid
+        //          - All checks valid = log in
+        //          - Not all valid = clear auth cookie & mark as expired & no log in
     }
     
     public function logoutUser() {
@@ -115,5 +128,32 @@ class Login extends Auth {
             $this->message->setError("auth.login.invalid");
             $this->message->throwError();
         }
+    }
+    
+    private function createCookie($parameters) {
+        
+        // The token from the parameters
+        $token = $parameters[self::PARAM_TOKEN];
+        
+        // Name and value
+        $name = "token";
+        $value = $token;
+        
+        $options = [
+            // 30 hours expiration time TODO: 30 seconds
+            "expires" => time() + (60*60*30),
+        
+            // Cookie should be valid through-out the server
+            "path" => "/",
+            "domain" => ".localhost",
+        
+            // Security
+            "secure" => true,
+            "httponly" => true,
+            "samesite" => "Lax"
+        ];        
+        
+        // Set the cookie
+        setcookie($name, $value, $options); 
     }
 }

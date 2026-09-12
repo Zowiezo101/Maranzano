@@ -31,10 +31,13 @@ RewriteCond %{REQUEST_URI} ^/api/
 RewriteRule ^(.*)/update$ $1/auth/update_password [QSA,DPI]
 
 RewriteCond %{REQUEST_URI} ^/api/
-RewriteRule ^(.*)/login$ $1/auth/login [QSA,DPI]
+RewriteRule ^(.*)/login$ $1/auth/login_session [QSA,DPI]
 
 RewriteCond %{REQUEST_URI} ^/api/
-RewriteRule ^(.*)/logout$ $1/auth/logout [QSA,DPI]
+RewriteRule ^(.*)/session$ $1/auth/validate_session [QSA,DPI]
+
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^(.*)/logout$ $1/auth/logout_session [QSA,DPI]
 
 # Authentication links
 RewriteCond %{REQUEST_URI} !^/api/

@@ -9,12 +9,13 @@ header("Access-Control-Allow-Origin: ".$domain_name);
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: access");
+header("Access-Control-Allow-Credentials: true");
 
 // Helper class to authenticate a user
 $auth = new Classes\Login();
 
-// Log this user in
-$auth->loginUser();
+// Log this user out
+$auth->logoutUser();
 
 // Send a message back to the client
 $auth->sendMessage();
