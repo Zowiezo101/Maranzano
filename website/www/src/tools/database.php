@@ -60,9 +60,6 @@ function curlRequest($url, $method, $data = false) {
     // String to set cookies with curl
     $cookies = [];
     
-    // TODO: Debugging (xDebug)
-    $cookies[] = "XDEBUG_SESSION=netbeans-xdebug";
-    
     // If a cookie has been set
     if (filter_input(INPUT_COOKIE, "token")) {
         // Send the cookie back to the API
