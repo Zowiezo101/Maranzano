@@ -41,7 +41,7 @@ function checkLoggedIn($url_if_true="", $url_if_false="") {
     
     // Check if there is already a session where the user is logged in
     $member_name = isset($_SESSION["member_name"]) ? 
-                       $_SESSION["member_name"] : null;
+                         $_SESSION["member_name"] : null;
     
     print_r("Session: " . $member_name . "<br/>");
     
