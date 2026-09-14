@@ -3,6 +3,7 @@
 namespace Classes;
 
 class Login extends Auth {
+    
     public function loginUser() {
         
         // Possible database error, do NOT continue
@@ -43,36 +44,61 @@ class Login extends Auth {
                 $parameters[self::PARAM_TOKEN] = $token;
                 
                 // Create a cookie
-                $this->createCookie($parameters);
-                
-                // The data to send to the user
-                $data = [
-                    "user_id" => $parameters[self::PARAM_ID],
-                    "user_name" => $parameters[self::PARAM_USER]
-                ];
-                
-                $this->message->setData($data);
+                $this->createCookies($parameters);
             } else {
-                // We're not gonna let the client know what went wrong while validating
-                $this->clearError();
-                $this->setError("auth.login.invalid");
+                // Throw an error to get into the catch part of the code
+                $this->throwError();
             }
             
         } catch (\Exception) {
-            // Something went wrong
+            // We're not gonna let the client know what went wrong while validating
+            $this->clearError();
             $this->setError("login.error", Message::CODE_ERROR);
         }
     }
     
-    protected function validateSession() {
-        // Check if the session is still valid
-        //      - Log user in
-        // 
-        // Check if a cookie exists
-        //      - Do a quick check if the login details are still correct
-        //      - Check if the expiry date is still valid
-        //          - All checks valid = log in
-        //          - Not all valid = clear auth cookie & mark as expired & no log in
+    public function validateSession() {
+        
+        // Possible database error, do NOT continue
+        if ($this->hasError()) {
+            return;
+        }
+        
+        // Get only these parameters, all other parameters are ignored
+        $param_list = [
+            self::PARAM_TOKEN,
+            self::PARAM_USER
+        ];
+            
+        // Retrieve the cookies
+        $parameters = $this->getCookies($param_list);
+        
+        try {            
+            // Validate parameters
+            if ($this->validateParameters($param_list, $parameters)) {
+        
+                // Get the token from the database
+                $token = $this->token->retrieveLoginTokenFromUser($parameters);
+                    
+                // Update the parameters with the user
+                $parameters[self::PARAM_TOKEN_ID]   = $token["id"];
+                $parameters[self::PARAM_TOKEN_HASH] = $token["token"];
+                
+                $this->verifyToken($parameters);
+            } else {
+                // Throw an error to get into the catch part of the code
+                $this->throwError();
+            }
+            
+        } catch (\Exception) {
+            // We're not gonna let the client know what went wrong while validating
+            $this->clearError();
+            $this->setError("session.error", Message::CODE_ERROR);
+            
+            // Clear the cookies
+            $invalidate_cookie = true;
+            $this->createCookies($parameters, $invalidate_cookie);
+        }
     }
     
     public function logoutUser() {
@@ -130,30 +156,79 @@ class Login extends Auth {
         }
     }
     
-    private function createCookie($parameters) {
+    private function verifyToken($parameters) {
+        $pass = $parameters[self::PARAM_TOKEN];
+        $hash = $parameters[self::PARAM_TOKEN_HASH];
+    
+        if (!password_verify($pass, $hash)) {
+            // The password doesn't match the hash
+            $this->message->setError("auth.token.invalid");
+            $this->message->throwError();
+        }
+    }
+    
+    /**
+     * Cookie functions
+     */
+    
+    private function createCookies($parameters, $invalidate = false) {
         
-        // The token from the parameters
-        $token = $parameters[self::PARAM_TOKEN];
+        // Names for the cookies
+        $name1 = self::PARAM_TOKEN;
+        $name2 = self::PARAM_USER;
         
-        // Name and value
-        $name = "token";
-        $value = $token;
+        if ($invalidate == true) {
+            // Set the values to null
+            $value1 = "";
+            $value2 = "";
+        } else {
+            // Values for the cookies
+            $value1 = $parameters[self::PARAM_TOKEN];
+            $value2 = $parameters[self::PARAM_USER];
+        }
         
         $options = [
-            // 30 hours expiration time TODO: 30 seconds
+            // 30 hours expiration time
             "expires" => time() + (60*60*30),
         
             // Cookie should be valid through-out the server
             "path" => "/",
-            "domain" => ".localhost",
         
             // Security
-            "secure" => true,
+            // TODO: As long as we are in debugging mode, this will be false
+            // "secure" =>  true,
+            "secure" =>  false,
             "httponly" => true,
             "samesite" => "Lax"
-        ];        
+        ];   
         
-        // Set the cookie
-        setcookie($name, $value, $options); 
+        if ($invalidate == true) {            
+            // Set the expiration date 1 year in the past
+            $options["expires"] = time() - (60 * 60 * 24 * 365);
+        }
+        
+        // Set the cookies
+        setcookie($name1, $value1, $options); 
+        setcookie($name2, $value2, $options); 
+    }
+    
+    private function getCookies($param_list) {
+        $parameters = [];
+        
+        // Filter the input data
+        $input = filter_input_array(INPUT_COOKIE);
+        
+        // Get each parameter
+        foreach ($param_list as $key) {
+            
+            // If the parameter is actually in the POST body
+            if (isset($input[$key])) {
+                
+                // Trim it and put it in the parameters array
+                $parameters[$key] = trim($input[$key]);
+            }
+        }
+        
+        return $parameters;
     }
 }

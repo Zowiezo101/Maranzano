@@ -19,8 +19,9 @@ class Auth {
     public const PARAM_TOKEN = "token";
     
     // These values will not be accepted as external parameter
-    protected const PARAM_PASS_HASH = "pass_hash";
-    public const PARAM_TOKEN_ID  = "token_id";
+    public const PARAM_PASS_HASH   = "pass_hash";
+    public const PARAM_TOKEN_HASH  = "token_hash";
+    public const PARAM_TOKEN_ID    = "token_id";
     
     public function __construct() {
         $this->message = new Message();
@@ -234,6 +235,11 @@ class Auth {
     public function getError() {
         // Return any saved errors
         return $this->message->getError();
+    }
+    
+    public function throwError() {
+        // Return any saved errors
+        return $this->message->throwError();
     }
     
     public function clearError() {

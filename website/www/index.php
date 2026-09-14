@@ -1,10 +1,12 @@
-<?php 
-    // This needs to be started at the very beginning
-    session_start();
-    
-    $page_title = "global.title";
+<?php
     
     require __DIR__ . "/src/tools/base.php";
+    
+    // If we are logged in, go to the members page
+    // Otherwise, do nothing
+    checkLoggedIn("member", "");
+    
+    $page_title = "global.title";
 ?>
 
 <!doctype html>
@@ -344,8 +346,7 @@
                 // Something went wrong, show an error message
                 onReturnedError(result.error, "#loginError");
             } else {
-                // Redirect to the member page 
-                // (if the user isn't logged in, they'll be redirected back here)
+                // Go to the member page
                 window.location.href = "member";
             }
 

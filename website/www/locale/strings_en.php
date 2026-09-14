@@ -79,11 +79,13 @@ $strings = [
     "auth.token.invalid" => "This link is invalid or has expired",
     "auth.mail_error" => "Something went wrong trying to send your verification e-mail.. Please try again later",
     "auth.login.invalid" => "We couldn't find an account with these credentials. Perhaps you've entered an incorrect password",
+    "auth.session.invalid" => "Invalid token",
     "signup.error" => "Something went wrong while trying to create your account",
     "verify.error" => "Something went wrong while trying to verify your account",
     "reset.error" => "Something went wrong while trying to send you a reset link",
     "validate.error" => "Something went wrong while trying to validate your new password",
     "update.error" => "Something went wrong while trying to update your password",
+    "session.error" => "Something went wrong while trying to validate session",
     "login.error" => "Something went wrong while trying to log you in",
     "logout.error" => "Something went wrong while trying to log you out",
     

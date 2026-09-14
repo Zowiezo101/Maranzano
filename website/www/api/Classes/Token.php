@@ -137,17 +137,20 @@ class Token {
      */
     
     public function createLoginToken($params) {
+        // Use password_hash instead of SHA256
+        $password_hash = true;
+        
         // This token expires in 30 hours (60 min * 30 hours)
         $expiry_time = 60 * 30;
-        return $this->createToken("login_user", $params, $expiry_time);
+        return $this->createToken("login_user", $params, $expiry_time, $password_hash);
     }
     
     public function updateLoginToken($params) {
         $this->updateToken("login_user", $params);
     }
     
-    public function retrieveLoginToken($params) {
-        return $this->retrieveToken("login_user", $params);
+    public function retrieveLoginTokenFromUser($params) {
+        return $this->retrieveTokenFromUser("login_user", $params);
     }
     
     public function invalidateLoginTokens($params) {
@@ -162,7 +165,7 @@ class Token {
      * General tokens
      */
     
-    public function createToken($table, $params, $expiry_time) {
+    public function createToken($table, $params, $expiry_time, $password_hash = false) {
         
         // Create a new token
         $sql = "INSERT INTO {$table} (user_id, token, expires_at) "
@@ -178,10 +181,18 @@ class Token {
         $expiry_date = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
                             ->modify('+' . $expiry_time . ' minutes')
                             ->format('Y-m-d H:i:s');
+        
+        if ($password_hash == true) {
+            // Use password_hash (Can only retrieve tokens using user info)
+            $hash = password_hash($token, PASSWORD_DEFAULT);
+        } else {
+            // Use SHA256 (Can retrieve token using token value)
+            $hash = hash('sha256', $token);
+        }
 
         // Bind the parameter
         $stmt->bindValue(":user_id", $params[Auth::PARAM_ID], PDO::PARAM_STR);
-        $stmt->bindValue(":token", hash('sha256', $token), PDO::PARAM_STR);
+        $stmt->bindValue(":token", $hash, PDO::PARAM_STR);
         $stmt->bindValue(":expires_at", $expiry_date, PDO::PARAM_STR);
 
         // Execute the statement
@@ -199,7 +210,7 @@ class Token {
     }
     
     public function updateToken($table, $params) {
-        // The token is found, update it in the register token table
+        // The token is found, update it in the token table
         $sql = "UPDATE {$table} SET used=1 WHERE id = :id";
     
         // Prepare query statement
@@ -214,8 +225,8 @@ class Token {
     
     public function retrieveToken($table, $params) {
         
-        // Retrieve the token from the verify token table
-        $sql = "SELECT id, user_id FROM {$table} "
+        // Retrieve the token from the token table
+        $sql = "SELECT id, user_id, token FROM {$table} "
                 . "WHERE token = :token AND used = 0 AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
     
         // Prepare query statement
@@ -223,6 +234,34 @@ class Token {
 
         // Bind the parameter
         $stmt->bindValue(":token", hash('sha256', $params[Auth::PARAM_TOKEN]), PDO::PARAM_STR);  
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = getResults($stmt);
+        
+        if (!isset($result)) {
+            // If no token could be found, then it's invalid
+            $this->message->setError("auth.token.invalid", Message::CODE_INVALID);
+            $this->message->throwError();
+        }
+        
+        return $result;
+    }
+    
+    public function retrieveTokenFromUser($table, $params) {
+        
+        // Retrieve the token from the token table
+        $sql = "SELECT {$table}.id, {$table}.token FROM {$table} "
+                . "JOIN users ON users.id = {$table}.user_id "
+                . "WHERE users.name = :name AND used = 0 AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
+    
+        // Prepare query statement
+        $stmt = $this->conn->prepare($sql);    
+
+        // Bind the parameter
+        $stmt->bindValue(":name", $params[Auth::PARAM_USER], PDO::PARAM_STR);
 
         // Execute the statement
         $stmt->execute();
