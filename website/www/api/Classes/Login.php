@@ -31,8 +31,13 @@ class Login extends Auth {
                 $parameters[self::PARAM_ID]         = $user["id"];
                 $parameters[self::PARAM_USER]       = $user["name"];
                 $parameters[self::PARAM_PASS_HASH]  = $user["pass_hash"];
+                $parameters[self::PARAM_VERIFIED]   = $user["is_verified"];
                 
                 $this->verifyPass($parameters);
+
+                // Check if the user is verified
+                // If not, send the verification email again
+                $this->verifyVerified($parameters);
 
                 // Invalidate all previous tokens
                 $this->token->invalidateLoginTokens($parameters);
@@ -165,6 +170,29 @@ class Login extends Auth {
             $this->message->setError("auth.token.invalid");
             $this->message->throwError();
         }
+    }
+    
+    private function verifyVerified($parameters) {
+         if ($parameters[self::PARAM_VERIFIED] == false) {
+
+            // Invalidate all previous tokens
+            $this->token->invalidateVerifyTokens($parameters);
+
+            // Genereate new token
+            $token = $this->token->createVerifyToken($parameters);
+
+            // Insert the token into the parameter array
+            $parameters[self::PARAM_TOKEN] = $token;
+
+            // Send the new token via email
+            $this->token->sendVerifyToken($parameters);
+            
+            // We're not verified, send the email again and notify the user
+            // by throwing an error
+            $this->clearError();
+            $this->setError("login.verify");
+            $this->throwError();
+         }
     }
     
     /**

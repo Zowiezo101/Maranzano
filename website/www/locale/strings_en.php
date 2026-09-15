@@ -42,6 +42,7 @@ $strings = [
     "login.password" => "Password",
     "login.forgotpass" => "Forgotten your password?",
     "login.reset" => "Reset password",
+    "login.verify" => "You haven't verified your e-mail address yet. We've sent you a new verification e-mail",
     "reset.title" => "Resetting your password",
     "reset.success" => "Successfully updated password!",
     "reset.again" => "Please try requesting another password reset or contact us to help you out",

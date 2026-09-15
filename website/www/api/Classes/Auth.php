@@ -19,6 +19,7 @@ class Auth {
     public const PARAM_TOKEN = "token";
     
     // These values will not be accepted as external parameter
+    public const PARAM_VERIFIED    = "is_verified";
     public const PARAM_PASS_HASH   = "pass_hash";
     public const PARAM_TOKEN_HASH  = "token_hash";
     public const PARAM_TOKEN_ID    = "token_id";
