@@ -243,9 +243,9 @@ class Auth {
         return $this->message->throwError();
     }
     
-    public function clearError() {
+    public function clearError($white_list = []) {
         // Return any saved errors
-        return $this->message->clearError();
+        return $this->message->clearError($white_list);
     }
     
     public function setError($error, $code = Message::CODE_INVALID) {

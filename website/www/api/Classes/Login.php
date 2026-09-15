@@ -52,12 +52,18 @@ class Login extends Auth {
                 $this->createCookies($parameters);
             } else {
                 // Throw an error to get into the catch part of the code
+                $this->setError("auth.login.invalid", Message::CODE_INVALID);
                 $this->throwError();
             }
             
         } catch (\Exception) {
-            // We're not gonna let the client know what went wrong while validating
-            $this->clearError();
+            // Only allow the following error messages
+            $white_list = [
+                "login.verify",
+                "auth.login.invalid"
+            ];
+            
+            $this->clearError($white_list);
             $this->setError("login.error", Message::CODE_ERROR);
         }
     }
@@ -156,7 +162,7 @@ class Login extends Auth {
     
         if (!password_verify($pass, $hash)) {
             // The password doesn't match the hash
-            $this->message->setError("auth.login.invalid");
+            $this->message->setError("auth.login.invalid", Message::CODE_INVALID);
             $this->message->throwError();
         }
     }

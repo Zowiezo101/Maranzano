@@ -21,8 +21,8 @@ class Message {
         // Meaning we don't update the error after more errors have been received
         // since the first error might have caused more errors
         if ($this->error == "") {
-            $this->error = hasString($error) ? getString($error) : $error;
-            $this->code = $code;
+            $this->error = $error;
+            $this->code  = $code;
         }
     }
     
@@ -30,10 +30,15 @@ class Message {
         return $this->error;
     }
     
-    public function clearError() {
-        // Clear any error or error code
-        $this->error = "";
-        $this->code = self::CODE_SUCCESS;
+    public function clearError($white_list = []) {
+        
+        // If the whitelist is empty or this value is not in the whitelist
+        if (count($white_list) == 0 || 
+                !in_array($this->error, $white_list)) {
+            // Clear any error or error code
+            $this->error = "";
+            $this->code = self::CODE_SUCCESS;
+        }
     }
 
     // Function to throw an exception
@@ -48,7 +53,7 @@ class Message {
     
     public function sendMessage() {
         $message = [
-            "error" => $this->error,
+            "error" => hasString($this->error) ? getString($this->error) : $this->error,
             "data" => $this->data
         ];
         
