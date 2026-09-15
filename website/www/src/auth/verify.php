@@ -48,9 +48,6 @@
     
     <body>
         
-        <!-- TODO: This is for debugging purposes -->
-        <?php require __DIR__ . "/../page/debug.php" ?>
-        
         <!-- The container with all the rows and columns -->
         <div class="container-fluid">
             <div class="row">

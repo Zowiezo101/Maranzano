@@ -35,10 +35,7 @@
         <title><?php printString($page_title); ?></title>
     </head>
     
-    <body class="vh-100 fst-italic bg-gradient">
-        
-        <!-- TODO: This is for debugging purposes -->
-        <?php require __DIR__ . "/src/page/debug.php" ?>
+    <body class="min-vh-100 h-100 fst-italic bg-gradient">
         
         <!-- The container with all the rows and columns -->
         <div class="container-fluid">
@@ -81,12 +78,12 @@
                                 </div>
 
                                 <!-- Menu items -->
-                                <div class="btn-group-vertical">
-                                    <button type="button" class="btn btn-link text-start" onclick="onClickHome()"><?php printString("menu.home"); ?></button>
-                                    <button id="loginBtn" type="button" class="btn btn-link text-start" data-bs-toggle="modal" data-bs-target="#loginModal"><?php printString("menu.login"); ?></button>
-                                    <button type="button" class="btn btn-link text-start" data-bs-toggle="modal" data-bs-target="#registerModal"><?php printString("menu.signup"); ?></button>
-                                    <button type="button" class="btn btn-link text-start" onclick="onClickRules()"><?php printString("menu.rules"); ?></button>
-                                    <button type="button" class="btn btn-link text-start" onclick="onClickAboutUs()"><?php printString("menu.aboutus"); ?></button>
+                                <div class="btn-group-vertical" role="tablist">
+                                    <button type="button" class="btn btn-link text-start active" data-bs-toggle="tab"   data-bs-target="#tabHome"    role="tab"><?php printString("menu.home");    ?></button>
+                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="modal" data-bs-target="#loginModal"   ><?php printString("menu.login");   ?></button>
+                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="modal" data-bs-target="#registerModal"><?php printString("menu.signup");  ?></button>
+                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="tab"   data-bs-target="#tabRules"   role="tab"><?php printString("menu.rules");   ?></button>
+                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="tab"   data-bs-target="#tabAboutUs" role="tab"><?php printString("menu.aboutus"); ?></button>
                                 </div>
 
                                 <!-- Number of users online -->
@@ -97,8 +94,21 @@
                         </div>
                         
                         <!-- Content -->
-                        <div id="content" class="col-6 border-bottom border-3 border-black">
+                        <div id="content" class="col-6 border-bottom border-3 border-black tab-content" role="tab-content">
+                            <!-- The Home Tab -->
+                            <div class="tab-pane show active" id="tabHome" role="tabpanel">
+                                <?php printString("home.content"); ?>
+                            </div>
                             
+                            <!-- The Rules Tab -->
+                            <div class="tab-pane" id="tabRules" role="tabpanel">
+                                <?php printString("rules.content"); ?>
+                            </div>
+                            
+                            <!-- The About Us Tab -->
+                            <div class="tab-pane" id="tabAboutUs" role="tabpanel">
+                                <?php printString("aboutus.content"); ?>
+                            </div>
                         </div>
                         
                         <!-- News -->
@@ -178,26 +188,6 @@
 </html>
 
 <script>
-    // Show the contents of the home page
-    function onClickHome() {
-        var text = <?php printString("home.content", true); ?>;
-        
-        $("#content").html(text);
-    }
-    
-    // Show the contents of the rules page
-    function onClickRules() {
-        var text = <?php printString("rules.content", true); ?>;
-                
-        $("#content").html(text);
-    }
-    
-    // Show the contents of the about us page
-    function onClickAboutUs() {
-        var text = <?php printString("aboutus.content", true); ?>;
-                
-        $("#content").html(text);
-    }
     
     // Load the form for logging in
     function onClickLogin() {
@@ -479,9 +469,6 @@
         $("#login-form").on("submit", function(e) {onSubmitLogin(e);});
         $("#reset-form").on("submit", function(e) {onSubmitReset(e);});
         $("#register-form").on("submit", function(e) {onSubmitRegister(e);});
-
-        // Show the welcome message
-        onClickHome();
 
         // Show the login content in the login modal
         onClickLogin();

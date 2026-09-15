@@ -46,10 +46,7 @@
         <title><?php printString($page_title); ?></title>
     </head>
     
-    <body>
-        
-        <!-- TODO: This is for debugging purposes -->
-        <?php require __DIR__ . "/../page/debug.php" ?>
+    <body>        
         
         <!-- The container with all the rows and columns -->
         <div class="container-fluid">

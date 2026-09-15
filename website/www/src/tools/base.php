@@ -35,15 +35,9 @@ function printString($name, $json = false) {
 function checkLoggedIn($url_if_true="", $url_if_false="") {
     $loggedIn = false;
     
-    // TODO: Print the cookies to see if we have login cookies
-    print_r("Token: " .filter_input(INPUT_COOKIE, "token"). "<br/>");
-    print_r("User: " . filter_input(INPUT_COOKIE, "user") . "<br/>");
-    
     // Check if there is already a session where the user is logged in
     $member_name = isset($_SESSION["member_name"]) ? 
                          $_SESSION["member_name"] : null;
-    
-    print_r("Session: " . $member_name . "<br/>");
     
     if (isset($member_name)) {
         // The user is already logged in

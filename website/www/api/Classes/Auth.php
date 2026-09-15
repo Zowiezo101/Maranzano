@@ -2,8 +2,6 @@
 
 namespace Classes;
 
-// TODO: Resend verification email if necessary
-
 class Auth {
     // Other classes
     protected $db;

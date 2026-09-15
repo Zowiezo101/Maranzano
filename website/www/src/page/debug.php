@@ -1,5 +1,5 @@
 
-        <!-- TODO: Debugging stuff for myself -->
+        <!-- Debugging stuff for myself -->
         <div class="d-sm-none">XS screen size</div>
         <div class="d-none d-sm-block d-md-none">S screen size</div>
         <div class="d-none d-md-block d-lg-none">M screen size</div>
