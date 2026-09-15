@@ -109,6 +109,9 @@ class Login extends Auth {
             // Clear the cookies
             $invalidate_cookie = true;
             $this->createCookies($parameters, $invalidate_cookie);
+            
+            // Now clear the session as well
+            session_reset();
         }
     }
     

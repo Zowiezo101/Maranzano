@@ -24,6 +24,40 @@ function isValidCookie() {
     return $isValid;
 }
 
+function verifyUser() {
+    
+    // Get the token from the URL
+    $token = filter_input(INPUT_GET, "token");
+    
+    // Set the data for the cURL request
+    $data = [
+        "token" => (isset($token) ? $token : "")
+    ];
+    
+    // Try to make the POST request using cURL
+    $result = curlPost("verify", $data);
+    
+    // Return the result
+    return $result;
+}
+
+function validateReset() {
+    
+    // Get the token from the URL
+    $token = filter_input(INPUT_GET, "token");
+    
+    // Set the data for the cURL request
+    $data = [
+        "token" => (isset($token) ? $token : "")
+    ];
+    
+    // Try to make the POST request using cURL
+    $result = curlPost("validate", $data);
+    
+    // Return the result
+    return $result;
+}
+
 // Send a post request to the given URL with curl
 function curlPost($url, $data) {
     $response = curlRequest($url, "POST", $data);
@@ -53,7 +87,7 @@ function curlRequest($url, $method, $data = false) {
     if ($method == "POST") {
         // Posting data
         curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
     }
     

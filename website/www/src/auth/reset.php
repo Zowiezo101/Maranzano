@@ -2,6 +2,21 @@
     require __DIR__ . "/../tools/base.php";
     
     $page_title = "reset.title";
+    
+    $result = validateReset();
+    
+    // check the result for errors
+    if (isset($result) && ($result->error == "")) {
+        // This request is valid
+        $user = $result->data->name;
+        $header = getString("reset.title");
+        $title = "";
+    } else {
+        // The request is not valid
+        $user = "";
+        $header = getString("global.error");
+        $title = $result->error;
+    }
 ?>
 
 <!doctype html>
@@ -18,6 +33,7 @@
         
         <!-- Imports (Local scripts) -->
         <script src="../src/tools/base.js"></script>
+        <script src="../src/tools/database.js"></script>
 
         <!-- Imports (CSS) -->
         <link rel="stylesheet" href="../../css/bootstrap.css" type="text/css"/>
@@ -41,18 +57,21 @@
                 <div class="col-md-6 mx-auto">
                     <div class="card bg-body-secondary text-center">
                         <div id="card-header" class="card-header bg-body-tertiary">
-                            <?php printString("reset.title"); ?>
+                            <?php echo $header; ?>
                         </div>
-                        <div class="card-body">                            
+                        <div class="card-body">
                             <h5 id="card-title" class="card-title">
-                                
+                                <?php echo $title; ?>
                             </h5>
                             <p id="card-text"  class="card-text">
+<?php if ($user == "") { ?>
+                                <?php printString("reset.again"); ?>
+<?php } else { ?>
                                 <form id="resetForm">
                                     <!-- Username -->
                                     <div class="mb-3 mx-3">
                                         <label for="resetUser" class="form-label"><?php printString("signup.username")?></label>
-                                        <input type="text" disabled class="form-control text-center" id="resetUser">
+                                        <input type="text" disabled class="form-control text-center" id="resetUser" value=<?php echo json_encode($user); ?>>
                                     </div>
 
                                     <!-- Password -->
@@ -77,6 +96,7 @@
                                         <!-- Filled in later in case of error -->
                                     </div>
                                 </form>
+<?php } ?>                            
                             </p>
                         </div>
                     </div>
@@ -151,45 +171,6 @@
     }
 
     $(function() {
-        // Get the parameters from the URL
-        var params = new URLSearchParams(document.location.search);
-        
-        // Put the data in an easier-to-send format
-        var data = {};
-        if (params.has("token")) {
-            // Insert the token parameter if this is available
-            data["token"] = params.get("token");
-        }
-
-        // The fetch call
-        fetchPost("validate", data).then(function(results) {
-            // Handle the results of the fetch call
-            if (results.error !== "" && results.error !== null) {
-                var header = <?php printString("global.error", true); ?>;
-                var title = results.error;
-                var body = <?php printString("reset.again", true); ?>;
-            
-                // Show the results of the fetch call
-                $("#card-header").html(header);
-                $("#card-title").html(title);
-                $("#card-body").html(body);
-        
-                // Remove the reset form
-                $("#resetForm").html("");
-            } else {
-                // No errors, so we can now fill in the 
-                // username we received from the fetch
-                var user = results.data["name"];
-                
-                // Show the results of the fetch call
-                $("#resetUser").val(user);
-            }
-
-        }).catch(function(results) {
-            // Show an error if anything went wrong
-            alert("error: " + results);
-        });
-        
         // Set prevent page reloading when submitting form
         $("#resetForm").on("submit", function(e) {onSubmitReset(e);});
     });

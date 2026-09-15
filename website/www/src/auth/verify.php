@@ -2,6 +2,21 @@
     require __DIR__ . "/../tools/base.php";
     
     $page_title = "verify.title";
+    
+    $result = verifyUser();
+    
+    // check the result for errors
+    if (isset($result) && ($result->error == "")) {
+        // This request is valid
+        $header = getString("verify.success");
+        $title = getString("global.close");
+        $text = "";
+    } else {
+        // The request is not valid
+        $header = getString("global.error");
+        $title = $result->error;
+        $text = getString("verify.again");
+    }
 ?>
 
 <!doctype html>
@@ -18,6 +33,7 @@
         
         <!-- Imports (Local scripts) -->
         <script src="../src/tools/base.js"></script>
+        <script src="../src/tools/database.js"></script>
 
         <!-- Imports (CSS) -->
         <link rel="stylesheet" href="../../css/bootstrap.css" type="text/css"/>
@@ -41,14 +57,14 @@
                 <div class="col-md-6 mx-auto">
                     <div class="card bg-body-secondary text-center">
                         <div id="card-header" class="card-header bg-body-tertiary">
-                            <?php printString("verify.success"); ?>
+                            <?php echo $header; ?>
                         </div>
                         <div class="card-body">                            
                             <h5 id="card-title" class="card-title">
-                                <?php printString("global.close"); ?>
+                                <?php echo $title; ?>
                             </h5>
                             <p  id="card-text"  class="card-text">
-                                
+                                <?php echo $text; ?>
                             </p>
                             
                             <a href="/" class="btn btn-primary">
@@ -61,38 +77,3 @@
         </div>
     </body>
 </html>
-
-<script>
-
-    $(function() {
-        // Get the parameters from the URL
-        var params = new URLSearchParams(document.location.search);
-        
-        // Put the data in an easier-to-send format
-        var data = {};
-        if (params.has("token")) {
-            // Insert the token parameter if this is available
-            data["token"] = params.get("token");
-        }
-
-        // The fetch call
-        fetchPost("verify", data).then(function(results) {
-            // Handle the results of the fetch call
-            if (results.error !== "" && results.error !== null) {
-                var header = <?php printString("global.error", true); ?>;
-                var title = results.error;
-                var body = <?php printString("verify.again", true); ?>;
-            
-                // Show the results of the fetch call
-                $("#card-header").html(header);
-                $("#card-title").html(title);
-                $("#card-body").html(body);
-            }
-
-        }).catch(function(results) {
-            // Show an error if anything went wrong
-            alert("error: " + results);
-        });
-    });
-
-</script>
