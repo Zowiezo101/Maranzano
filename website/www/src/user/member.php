@@ -93,7 +93,7 @@
                             
                             <!-- Menu -->
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-12" role="tablist">
                                     
                                     <!-- Main menu -->
                                     <div class="mt-4">
@@ -105,7 +105,7 @@
                                         <!-- Menu items -->
                                         <div class="row justify-content-end">
                                             <div class="col-10">
-                                                <div class="btn-group-vertical" role="tablist">
+                                                <div class="btn-group-vertical">
                                                     <button type="button" class="btn btn-link fw-bold text-start active" data-bs-toggle="tab"   data-bs-target="#tabHome"     role="tab"><?php printString("main.home");     ?></button>
                                                     <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="tab"   data-bs-target="#tabTravel"   role="tab"><?php printString("main.travel");   ?></button>
                                                     <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="tab"   data-bs-target="#tabJail"     role="tab"><?php printString("main.jail");     ?></button>
@@ -127,7 +127,7 @@
                                         <!-- Menu items -->
                                         <div class="row justify-content-end">
                                             <div class="col-10">
-                                                <div class="btn-group-vertical" role="tablist">
+                                                <div class="btn-group-vertical">
                                                     <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabBike"   role="tab"><?php printString("crimes.bike");   ?></button>
                                                     <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabCar"    role="tab"><?php printString("crimes.car");    ?></button>
                                                     <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabStore"  role="tab"><?php printString("crimes.store");  ?></button>
@@ -147,7 +147,7 @@
                                         <!-- Menu items -->
                                         <div class="row justify-content-end">
                                             <div class="col-10">
-                                                <div class="btn-group-vertical" role="tablist">
+                                                <div class="btn-group-vertical">
                                                     <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabForum"   role="tab"><?php printString("comms.forum");   ?></button>
                                                     <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabFamily"  role="tab"><?php printString("comms.family");  ?></button>
                                                     <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabContact" role="tab"><?php printString("comms.contact"); ?></button>
@@ -166,7 +166,7 @@
                                         <!-- Menu items -->
                                         <div class="row justify-content-end">
                                             <div class="col-10">
-                                                <div class="btn-group-vertical" role="tablist">
+                                                <div class="btn-group-vertical">
                                                     <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabInfo"   role="tab"><?php printString("settings.info");   ?></button>
                                                     <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabUser"   role="tab"><?php printString("settings.user");   ?></button>
                                                     <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabLogout" role="tab"><?php printString("settings.logout"); ?></button>
