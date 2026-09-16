@@ -44,7 +44,7 @@
                     For medium and larger screens, it's half the screen
                     For smaller than medium, it's the full screen -->
             <div class="row">
-                <div class="col-md-6 mx-auto">
+                <div class="col-md-8 col-lg-6 mx-auto">
                     
                     <!-- The Header on top, 
                             with a 3px border and some padding on top and the sides -->
@@ -79,22 +79,22 @@
 
                                 <!-- Menu items -->
                                 <div class="btn-group-vertical" role="tablist">
-                                    <button type="button" class="btn btn-link text-start active" data-bs-toggle="tab"   data-bs-target="#tabHome"    role="tab"><?php printString("menu.home");    ?></button>
-                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="modal" data-bs-target="#loginModal"   ><?php printString("menu.login");   ?></button>
-                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="modal" data-bs-target="#registerModal"><?php printString("menu.signup");  ?></button>
-                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="tab"   data-bs-target="#tabRules"   role="tab"><?php printString("menu.rules");   ?></button>
-                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="tab"   data-bs-target="#tabAboutUs" role="tab"><?php printString("menu.aboutus"); ?></button>
+                                    <button type="button" class="btn btn-link fw-bold text-start active" data-bs-toggle="tab"   data-bs-target="#tabHome"    role="tab"><?php printString("menu.home");    ?></button>
+                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="modal" data-bs-target="#loginModal"   ><?php printString("menu.login");   ?></button>
+                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="modal" data-bs-target="#registerModal"><?php printString("menu.signup");  ?></button>
+                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="tab"   data-bs-target="#tabRules"   role="tab"><?php printString("menu.rules");   ?></button>
+                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="tab"   data-bs-target="#tabAboutUs" role="tab"><?php printString("menu.aboutus"); ?></button>
                                 </div>
 
                                 <!-- Number of users online -->
                                 <div class="mt-auto">
-                                    <?php printString("menu.users"); ?>
+                                    <?php getUserAmount(); ?>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Content -->
-                        <div id="content" class="col-6 border-bottom border-3 border-black tab-content" role="tab-content">
+                        <div class="col-6 border-bottom border-3 border-black tab-content" role="tab-content">
                             <!-- The Home Tab -->
                             <div class="tab-pane show active" id="tabHome" role="tabpanel">
                                 <?php printString("home.content"); ?>

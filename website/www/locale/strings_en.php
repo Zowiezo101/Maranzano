@@ -16,7 +16,37 @@ $strings = [
     "menu.signup" => "Sign up",
     "menu.rules" => "Rules",
     "menu.aboutus" => "About us",
-    "menu.users" => "X users online",
+    "menu.users" => "users online",
+    
+    // Member Menu
+    "menu.main" => "Main",
+    "menu.crimes" => "Crimes",
+    "menu.comms" => "Communication",
+    "menu.settings" => "Settings",
+    
+    // Main menu
+    "main.home" => "Home",
+    "main.travel" => "Travel",
+    "main.jail" => "Jail",
+    "main.hospital" => "Hospital",
+    "main.friends" => "Friend list",
+    "main.online" => "Online users",
+    
+    // Crimes menu
+    "crimes.bike" => "Steal a bike",
+    "crimes.car" => "Steal a car",
+    "crimes.store" => "Rob a store",
+    "crimes.garage" => "Garage",
+    
+    // Communication menu"
+    "comms.forum" => "Forum",
+    "comms.family" => "Family",
+    "comms.contact" => "Contact us",
+    
+    // Settings menu
+    "settings.info" => "Info",
+    "settings.user" => "User settings",
+    "settings.logout" => "Log out",
     
     // Homepage
     "home.content" => "
@@ -35,6 +65,18 @@ $strings = [
             <p>We (Mister & Missus) are a married couple who decided to recreate an old-school Mafia browser-based text game. The kind that Mister used to play with his father, and which heavily inspired him to start this project. The game that started it all is called \"Deluccio\".</p>
             <p>We started creating this website in late August of the year of our Lord, 2026. The site is still in super early development as of now, but we are looking forward to where the road ahead takes us with this project.</p>
             <p>Missus wants you to know that no vibe coding was used in the making of this website. Code is either written by Missus or \"yoinked\" from 13 year old forum pages.</p>",
+    
+    // Member Home
+    "info.cash" => "Cash",
+    "info.bank" => "Bank",
+    "info.rank" => "Rank",
+    "info.progress" => "Progress",
+    "info.family" => "Family",
+    "info.city" => "City",
+    "info.country" => "Country",
+    "info.health" => "Health",
+    "info.bullets" => "Offensive bullets",
+    "info.shields" => "Defensive bullets",
     
     // Authentication
     "login.title" => "Logging in",

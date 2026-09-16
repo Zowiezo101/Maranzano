@@ -58,6 +58,13 @@ function validateReset() {
     return $result;
 }
 
+function getUserAmount() {
+    // Get the amount of users from the database
+    $amount = "X";
+    
+    echo "{$amount} ".getString("menu.users");
+}
+
 // Send a post request to the given URL with curl
 function curlPost($url, $data) {
     $response = curlRequest($url, "POST", $data);
