@@ -79,11 +79,11 @@
 
                                 <!-- Menu items -->
                                 <div class="btn-group-vertical" role="tablist">
-                                    <button type="button" class="btn btn-link fw-bold text-start active" data-bs-toggle="tab"   data-bs-target="#tabHome"    role="tab"><?php printString("menu.home");    ?></button>
-                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="modal" data-bs-target="#loginModal"   ><?php printString("menu.login");   ?></button>
-                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="modal" data-bs-target="#registerModal"><?php printString("menu.signup");  ?></button>
-                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="tab"   data-bs-target="#tabRules"   role="tab"><?php printString("menu.rules");   ?></button>
-                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="tab"   data-bs-target="#tabAboutUs" role="tab"><?php printString("menu.aboutus"); ?></button>
+                                    <button type="button" class="btn btn-link active" data-bs-toggle="tab"   data-bs-target="#tabHome"    role="tab"><?php printString("menu.home");    ?></button>
+                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="modal" data-bs-target="#loginModal"   ><?php printString("menu.login");   ?></button>
+                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="modal" data-bs-target="#registerModal"><?php printString("menu.signup");  ?></button>
+                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="tab"   data-bs-target="#tabRules"   role="tab"><?php printString("menu.rules");   ?></button>
+                                    <button type="button" class="btn btn-link text-start"        data-bs-toggle="tab"   data-bs-target="#tabAboutUs" role="tab"><?php printString("menu.aboutus"); ?></button>
                                 </div>
 
                                 <!-- Number of users online -->

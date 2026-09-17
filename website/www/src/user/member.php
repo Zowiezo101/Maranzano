@@ -37,6 +37,48 @@
         echo $table_row;
     }
     
+    function printMenu($category, $tab_names) {
+        
+        $tabs = [];
+        // Get all the tab names and create a tablist with them
+        foreach ($tab_names as $tab_name) {
+            $tabs[] = getTab($category, $tab_name);
+        }
+
+        // The menu
+        $menu = '                                 
+                                    <!-- '.ucfirst($category).' menu -->
+                                    <div class="mt-2">
+                                        <!-- Menu titel -->
+                                        <div class="bg-body-tertiary fst-normal fw-bold text-center border border-3 border-black">
+                                            <button type="button" class="btn bg-body-tertiary collapsible" data-bs-toggle="collapse" data-bs-target="#acc-'.$category.'" aria-expanded="true" aria-controls="acc-'.$category.'">
+                                                <b>'.getString("menu.$category").'</b>
+                                            </button>
+                                        </div>
+
+                                        <!-- Menu items -->
+                                        <div id="acc-'.$category.'" class="show row justify-content-end">
+                                            <div class="col-10">
+                                                <div class="btn-group-vertical">
+                                                    '. join("
+                                                    ", $tabs).'
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>';
+        
+        echo $menu;
+    }
+    
+    function getTab($category, $tab) {
+        // The hometab is active on each reload
+        $active = $tab == "home";
+        
+        // Create the tab
+        $tab = '<button type="button" class="btn btn-link'.($active ? " active" : "").'" data-bs-toggle="tab" data-bs-target="#tab'. ucfirst($tab).'" role="tab">'.getString("$category.$tab").'</button>';
+        return $tab;
+    }
+    
 ?>
 
 <!doctype html>
@@ -93,87 +135,36 @@
                             
                             <!-- Menu -->
                             <div class="row">
-                                <div class="col-12" role="tablist">
+                                <div class="col-12 mt-2 accordion" role="tablist">
+                                    <?php printMenu("main", ["home", 
+                                                             "travel", 
+                                                             "jail", 
+                                                             "hospital"]) ?>
                                     
-                                    <!-- Main menu -->
-                                    <div class="mt-4">
-                                        <!-- Menu titel -->
-                                        <div class="bg-body-tertiary fst-normal fw-bold text-center border border-3 border-black">
-                                            <b><?php printString("menu.main"); ?></b>
-                                        </div>
-
-                                        <!-- Menu items -->
-                                        <div class="row justify-content-end">
-                                            <div class="col-10">
-                                                <div class="btn-group-vertical">
-                                                    <button type="button" class="btn btn-link fw-bold text-start active" data-bs-toggle="tab"   data-bs-target="#tabHome"     role="tab"><?php printString("main.home");     ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="tab"   data-bs-target="#tabTravel"   role="tab"><?php printString("main.travel");   ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="tab"   data-bs-target="#tabJail"     role="tab"><?php printString("main.jail");     ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="tab"   data-bs-target="#tabHospital" role="tab"><?php printString("main.hospital"); ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="tab"   data-bs-target="#tabFriends"  role="tab"><?php printString("main.friends");  ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start"        data-bs-toggle="tab"   data-bs-target="#tabOnline"   role="tab"><?php printString("main.online");   ?></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Crimes menu -->
-                                    <div class="mt-2">
-                                        <!-- Menu titel -->
-                                        <div class="bg-body-tertiary fst-normal fw-bold text-center border border-3 border-black">
-                                            <b><?php printString("menu.crimes"); ?></b>
-                                        </div>
-
-                                        <!-- Menu items -->
-                                        <div class="row justify-content-end">
-                                            <div class="col-10">
-                                                <div class="btn-group-vertical">
-                                                    <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabBike"   role="tab"><?php printString("crimes.bike");   ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabCar"    role="tab"><?php printString("crimes.car");    ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabStore"  role="tab"><?php printString("crimes.store");  ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabGarage" role="tab"><?php printString("crimes.garage"); ?></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Comunication menu -->
-                                    <div class="mt-2">
-                                        <!-- Menu titel -->
-                                        <div class="bg-body-tertiary fst-normal fw-bold text-center border border-3 border-black">
-                                            <b><?php printString("menu.comms"); ?></b>
-                                        </div>
-
-                                        <!-- Menu items -->
-                                        <div class="row justify-content-end">
-                                            <div class="col-10">
-                                                <div class="btn-group-vertical">
-                                                    <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabForum"   role="tab"><?php printString("comms.forum");   ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabFamily"  role="tab"><?php printString("comms.family");  ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabContact" role="tab"><?php printString("comms.contact"); ?></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Settings menu -->
-                                    <div class="mt-2">
-                                        <!-- Menu titel -->
-                                        <div class="bg-body-tertiary fst-normal fw-bold text-center border border-3 border-black">
-                                            <b><?php printString("menu.settings"); ?></b>
-                                        </div>
-
-                                        <!-- Menu items -->
-                                        <div class="row justify-content-end">
-                                            <div class="col-10">
-                                                <div class="btn-group-vertical">
-                                                    <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabInfo"   role="tab"><?php printString("settings.info");   ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabUser"   role="tab"><?php printString("settings.user");   ?></button>
-                                                    <button type="button" class="btn btn-link fw-bold text-start" data-bs-toggle="tab"   data-bs-target="#tabLogout" role="tab"><?php printString("settings.logout"); ?></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <?php printMenu("business", ["bank", 
+                                                                 "bullet", 
+                                                                 "garage", 
+                                                                 "family", 
+                                                                 "manage"]) ?>
+                                    
+                                    <?php printMenu("crimes", ["bike", 
+                                                               "car", 
+                                                               "store", 
+                                                               "kill"]) ?>
+                                    
+                                    <?php printMenu("casino", ["roulette", 
+                                                               "scratch"]) ?>
+                                    
+                                    <?php printMenu("comms", ["online", 
+                                                              "friends", 
+                                                              "userlist", 
+                                                              "mail"]) ?>
+                                    
+                                    <?php printMenu("help", ["contact", 
+                                                             "donate", 
+                                                             "rules", 
+                                                             "info", 
+                                                             "settings"]) ?>
 
                                     <!-- X Users online -->
                                     <div class="mt-3 px-3">
@@ -197,6 +188,10 @@
                             <!-- Selected tab -->
                             <div class="row">
                                 <div class="col tab-content" role="tab-content">
+                                    <!--
+                                        Main menu
+                                    -->
+                                    
                                     <!-- The Home Tab -->
                                     <div class="tab-pane show active" id="tabHome" role="tabpanel">
                                         Home
@@ -217,15 +212,38 @@
                                         Hospital
                                     </div>
                                     
-                                    <!-- The Friend list Tab -->
-                                    <div class="tab-pane" id="tabFriends" role="tabpanel">
-                                        Friend list
+                                    <!--
+                                        Businesses menu
+                                    -->
+                                    
+                                    <!-- The Bank Tab -->
+                                    <div class="tab-pane" id="tabBank" role="tabpanel">
+                                        Bank
                                     </div>
                                     
-                                    <!-- The Online users Tab -->
-                                    <div class="tab-pane" id="tabOnline" role="tabpanel">
-                                        Online users
+                                    <!-- The Bullet shop Tab -->
+                                    <div class="tab-pane" id="tabBullet" role="tabpanel">
+                                        Bullet shop
                                     </div>
+                                    
+                                    <!-- The Garage Tab -->
+                                    <div class="tab-pane" id="tabGarage" role="tabpanel">
+                                        Garage
+                                    </div>
+                                    
+                                    <!-- The Family Tab -->
+                                    <div class="tab-pane" id="tabFamily" role="tabpanel">
+                                        Family
+                                    </div>
+                                    
+                                    <!-- The Manage family Tab -->
+                                    <div class="tab-pane" id="tabManage" role="tabpanel">
+                                        Manage family
+                                    </div>
+                                    
+                                    <!--
+                                        Crimes menu
+                                    -->
                                     
                                     <!-- The Steal a bike Tab -->
                                     <div class="tab-pane" id="tabBike" role="tabpanel">
@@ -242,24 +260,66 @@
                                         Store
                                     </div>
                                     
-                                    <!-- The Garage Tab -->
-                                    <div class="tab-pane" id="tabGarage" role="tabpanel">
-                                        Garage
+                                    <!-- The Kill player Tab -->
+                                    <div class="tab-pane" id="tabKill" role="tabpanel">
+                                        Kill player
                                     </div>
                                     
-                                    <!-- The Forum Tab -->
-                                    <div class="tab-pane" id="tabForum" role="tabpanel">
-                                        Forum
+                                    <!--
+                                        Casino menu
+                                    -->
+                                    
+                                    <!-- The Roulette Tab -->
+                                    <div class="tab-pane" id="tabRoulette" role="tabpanel">
+                                        Roulette
                                     </div>
                                     
-                                    <!-- The Family Tab -->
-                                    <div class="tab-pane" id="tabFamily" role="tabpanel">
-                                        Family
+                                    <!-- The Scratch & Match Tab -->
+                                    <div class="tab-pane" id="tabScratch" role="tabpanel">
+                                        Scratch & Match
                                     </div>
                                     
-                                    <!-- The Contact us Tab -->
+                                    <!--
+                                        Communication menu
+                                    -->
+                                    
+                                    <!-- The Online users Tab -->
+                                    <div class="tab-pane" id="tabOnline" role="tabpanel">
+                                        Online users
+                                    </div>
+                                    
+                                    <!-- The Friend list Tab -->
+                                    <div class="tab-pane" id="tabFriends" role="tabpanel">
+                                        Friend list
+                                    </div>
+                                    
+                                    <!-- The User list Tab -->
+                                    <div class="tab-pane" id="tabUserlist" role="tabpanel">
+                                        User list
+                                    </div>
+                                    
+                                    <!-- The Mailbox Tab -->
+                                    <div class="tab-pane" id="tabMail" role="tabpanel">
+                                        Mailbox
+                                    </div>
+                                    
+                                    <!--
+                                        Help menu
+                                    -->
+                                    
+                                    <!-- The Contact Tab -->
                                     <div class="tab-pane" id="tabContact" role="tabpanel">
-                                        Contact us
+                                        Contact
+                                    </div>
+                                    
+                                    <!-- The Donate Tab -->
+                                    <div class="tab-pane" id="tabDonate" role="tabpanel">
+                                        Donate
+                                    </div>
+                                    
+                                    <!-- The Rules Tab -->
+                                    <div class="tab-pane" id="tabRules" role="tabpanel">
+                                        Rules
                                     </div>
                                     
                                     <!-- The Info Tab -->
@@ -267,14 +327,9 @@
                                         Info
                                     </div>
                                     
-                                    <!-- The User settings Tab -->
-                                    <div class="tab-pane" id="tabUser" role="tabpanel">
-                                        User settings
-                                    </div>
-                                    
-                                    <!-- The Log out Tab -->
-                                    <div class="tab-pane" id="tabLogout" role="tabpanel">
-                                        Log out
+                                    <!-- The Settings Tab -->
+                                    <div class="tab-pane" id="tabSettings" role="tabpanel">
+                                        Settings
                                     </div>
                                 </div>
                             </div>
@@ -285,6 +340,7 @@
                     <div class="row text-center text-black">
                         <?php printString("global.copyright"); ?>
                     </div>
+                    
                 </div>
             </div>
         </div>

@@ -20,33 +20,47 @@ $strings = [
     
     // Member Menu
     "menu.main" => "Main",
+    "menu.business" => "Businesses",
     "menu.crimes" => "Crimes",
+    "menu.casino" => "Casino",
     "menu.comms" => "Communication",
-    "menu.settings" => "Settings",
+    "menu.help" => "Help",
     
     // Main menu
     "main.home" => "Home",
     "main.travel" => "Travel",
     "main.jail" => "Jail",
     "main.hospital" => "Hospital",
-    "main.friends" => "Friend list",
-    "main.online" => "Online users",
+    
+    // Business menu
+    "business.bank" => "Bank",
+    "business.bullet" => "Bullet shop",
+    "business.garage" => "Garage",
+    "business.family" => "Family",
+    "business.manage" => "Manage family",
     
     // Crimes menu
     "crimes.bike" => "Steal a bike",
     "crimes.car" => "Steal a car",
     "crimes.store" => "Rob a store",
-    "crimes.garage" => "Garage",
+    "crimes.kill" => "Kill player",
+    
+    // Casino menu
+    "casino.roulette" => "Roulette",
+    "casino.scratch" => "Scratch & Match",
     
     // Communication menu"
-    "comms.forum" => "Forum",
-    "comms.family" => "Family",
-    "comms.contact" => "Contact us",
+    "comms.online" => "Online users",
+    "comms.friends" => "Friend list",
+    "comms.userlist" => "User list",
+    "comms.mail" => "Mailbox",
     
-    // Settings menu
-    "settings.info" => "Info",
-    "settings.user" => "User settings",
-    "settings.logout" => "Log out",
+    // Help menu
+    "help.contact" => "Contact",
+    "help.donate" => "Donate",
+    "help.rules" => "Rules",
+    "help.info" => "Game info",
+    "help.settings" => "Settings",
     
     // Homepage
     "home.content" => "
@@ -75,8 +89,8 @@ $strings = [
     "info.city" => "City",
     "info.country" => "Country",
     "info.health" => "Health",
-    "info.bullets" => "Offensive bullets",
-    "info.shields" => "Defensive bullets",
+    "info.bullets" => "Off. bullets",
+    "info.shields" => "Def. bullets",
     
     // Authentication
     "login.title" => "Logging in",
