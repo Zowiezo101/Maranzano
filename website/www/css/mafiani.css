@@ -42,6 +42,7 @@ form .btn-link:not(hover) {
     color: var(--bs-white);
 }
 
+/* Collapsibles have the little arrow from Bootstrap */
 .collapsible {
     position: relative;
     display: flex;
@@ -49,12 +50,14 @@ form .btn-link:not(hover) {
     width: 100%;
 }
 
+/* Keeping the title in the center */
 .collapsible b {
     padding-left: var(--bs-accordion-btn-icon-width);
     margin-left: auto;
     margin-right: auto;
 }
 
+/* The bootstrap arrow (on the right side) */
 .collapsible::after {
     width: var(--bs-accordion-btn-icon-width);
     height: var(--bs-accordion-btn-icon-width);
@@ -65,11 +68,15 @@ form .btn-link:not(hover) {
     background-size: var(--bs-accordion-btn-icon-width);
 }
 
+/* Turn the arrow upside down */
 .collapsible:not(.collapsed)::after {
-  background-image: var(--bs-accordion-btn-icon);
   transform: var(--bs-accordion-btn-icon-transform);
 }
 
+/**
+ * Adding some bootstrap classes together
+ * to prevent Class-itis
+ */
 .btn-group-vertical > button {    
     /* fw-bold */
     font-weight: 700;

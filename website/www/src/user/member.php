@@ -6,78 +6,14 @@
     // Otherwise, go to the homepage
     checkLoggedIn("", "/");
     
+    // Title of this page
     $page_title = "global.title";
     
-//    $user = getUserInfo();
-    $user = [
-        "cash" => "€100",
-        "bank" => "€10",
-        "rank" => "Godfather",
-        "progress" => "98.7%",
-        "family" => "-None-",
-        "city" => "Gouda",
-        "country" => "Netherlands",
-        "health" => "100%",
-        "bullets" => "10.050",
-        "shields" => "20.000",
-    ];
+    // Get User information from the database
+    $user = getUserInfo();
     
-    function printTable($user) {
-        if (isset($user)) {
-            foreach ($user as $key => $value) {
-                getTableRow($key, $value);
-            }
-        }
-    }
-    
-    function getTableRow($key, $value) {
-        $table_row = '
-                                    <tr><th class="fst-normal text-black">'.getString("info.{$key}").':</th>
-                                        <td class="text-center">'.$value.'</td></tr>';
-        echo $table_row;
-    }
-    
-    function printMenu($category, $tab_names) {
-        
-        $tabs = [];
-        // Get all the tab names and create a tablist with them
-        foreach ($tab_names as $tab_name) {
-            $tabs[] = getTab($category, $tab_name);
-        }
-
-        // The menu
-        $menu = '                                 
-                                    <!-- '.ucfirst($category).' menu -->
-                                    <div class="mt-2">
-                                        <!-- Menu titel -->
-                                        <div class="bg-body-tertiary fst-normal fw-bold text-center border border-3 border-black">
-                                            <button type="button" class="btn bg-body-tertiary collapsible" data-bs-toggle="collapse" data-bs-target="#acc-'.$category.'" aria-expanded="true" aria-controls="acc-'.$category.'">
-                                                <b>'.getString("menu.$category").'</b>
-                                            </button>
-                                        </div>
-
-                                        <!-- Menu items -->
-                                        <div id="acc-'.$category.'" class="show row justify-content-end">
-                                            <div class="col-10">
-                                                <div class="btn-group-vertical">
-                                                    '. join("
-                                                    ", $tabs).'
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>';
-        
-        echo $menu;
-    }
-    
-    function getTab($category, $tab) {
-        // The hometab is active on each reload
-        $active = $tab == "home";
-        
-        // Create the tab
-        $tab = '<button type="button" class="btn btn-link'.($active ? " active" : "").'" data-bs-toggle="tab" data-bs-target="#tab'. ucfirst($tab).'" role="tab">'.getString("$category.$tab").'</button>';
-        return $tab;
-    }
+    // Get the rank as an integer value of base 10
+    $rank = intval($user["rank"], 10);
     
 ?>
 
@@ -136,35 +72,35 @@
                             <!-- Menu -->
                             <div class="row">
                                 <div class="col-12 mt-2 accordion" role="tablist">
-                                    <?php printMenu("main", ["home", 
-                                                             "travel", 
-                                                             "jail", 
-                                                             "hospital"]) ?>
+                                    <?php printMenu("main", ["home"     => $RANK_ROOKIE, 
+                                                             "travel"   => $RANK_ROOKIE, 
+                                                             "jail"     => $RANK_ROOKIE, 
+                                                             "hospital" => $RANK_ROOKIE]) ?>
                                     
-                                    <?php printMenu("business", ["bank", 
-                                                                 "bullet", 
-                                                                 "garage", 
-                                                                 "family", 
-                                                                 "manage"]) ?>
+                                    <?php printMenu("business", ["bank"  => $RANK_ROOKIE, 
+                                                                 "bullet" => $RANK_ROOKIE, 
+                                                                 "garage" => $RANK_ROOKIE, 
+                                                                 "family" => $RANK_ROOKIE, 
+                                                                 "manage" => $RANK_DON]) ?>
                                     
-                                    <?php printMenu("crimes", ["bike", 
-                                                               "car", 
-                                                               "store", 
-                                                               "kill"]) ?>
+                                    <?php printMenu("crimes", ["bike"  => $RANK_ROOKIE, 
+                                                               "car"   => $RANK_MAFIOSO, 
+                                                               "store" => $RANK_ROOKIE, 
+                                                               "kill"  => $RANK_HITMAN]) ?>
                                     
-                                    <?php printMenu("casino", ["roulette", 
-                                                               "scratch"]) ?>
+                                    <?php printMenu("casino", ["roulette" => $RANK_ROOKIE, 
+                                                               "scratch"  => $RANK_ROOKIE]) ?>
                                     
-                                    <?php printMenu("comms", ["online", 
-                                                              "friends", 
-                                                              "userlist", 
-                                                              "mail"]) ?>
+                                    <?php printMenu("comms", ["online"   => $RANK_ROOKIE, 
+                                                              "friends"  => $RANK_ROOKIE, 
+                                                              "userlist" => $RANK_ROOKIE, 
+                                                              "mail"     => $RANK_ROOKIE]) ?>
                                     
-                                    <?php printMenu("help", ["contact", 
-                                                             "donate", 
-                                                             "rules", 
-                                                             "info", 
-                                                             "settings"]) ?>
+                                    <?php printMenu("help", ["contact"  => $RANK_ROOKIE, 
+                                                             "donate"   => $RANK_ROOKIE, 
+                                                             "rules"    => $RANK_ROOKIE, 
+                                                             "info"     => $RANK_ROOKIE, 
+                                                             "settings" => $RANK_ROOKIE]) ?>
 
                                     <!-- X Users online -->
                                     <div class="mt-3 px-3">
@@ -191,146 +127,32 @@
                                     <!--
                                         Main menu
                                     -->
-                                    
-                                    <!-- The Home Tab -->
-                                    <div class="tab-pane show active" id="tabHome" role="tabpanel">
-                                        Home
-                                    </div>
-                                    
-                                    <!-- The Travel Tab -->
-                                    <div class="tab-pane" id="tabTravel" role="tabpanel">
-                                        Travel
-                                    </div>
-                                    
-                                    <!-- The Jail Tab -->
-                                    <div class="tab-pane" id="tabJail" role="tabpanel">
-                                        Jail
-                                    </div>
-                                    
-                                    <!-- The Hospital Tab -->
-                                    <div class="tab-pane" id="tabHospital" role="tabpanel">
-                                        Hospital
-                                    </div>
+                                    <?php require __DIR__ . "/../tabs/tab_main.php"; ?>
                                     
                                     <!--
                                         Businesses menu
                                     -->
-                                    
-                                    <!-- The Bank Tab -->
-                                    <div class="tab-pane" id="tabBank" role="tabpanel">
-                                        Bank
-                                    </div>
-                                    
-                                    <!-- The Bullet shop Tab -->
-                                    <div class="tab-pane" id="tabBullet" role="tabpanel">
-                                        Bullet shop
-                                    </div>
-                                    
-                                    <!-- The Garage Tab -->
-                                    <div class="tab-pane" id="tabGarage" role="tabpanel">
-                                        Garage
-                                    </div>
-                                    
-                                    <!-- The Family Tab -->
-                                    <div class="tab-pane" id="tabFamily" role="tabpanel">
-                                        Family
-                                    </div>
-                                    
-                                    <!-- The Manage family Tab -->
-                                    <div class="tab-pane" id="tabManage" role="tabpanel">
-                                        Manage family
-                                    </div>
+                                    <?php require __DIR__ . "/../tabs/tab_business.php"; ?>
                                     
                                     <!--
                                         Crimes menu
                                     -->
-                                    
-                                    <!-- The Steal a bike Tab -->
-                                    <div class="tab-pane" id="tabBike" role="tabpanel">
-                                        Bike
-                                    </div>
-                                    
-                                    <!-- The Steal a car Tab -->
-                                    <div class="tab-pane" id="tabCar" role="tabpanel">
-                                        Car
-                                    </div>
-                                    
-                                    <!-- The Rob a store Tab -->
-                                    <div class="tab-pane" id="tabStore" role="tabpanel">
-                                        Store
-                                    </div>
-                                    
-                                    <!-- The Kill player Tab -->
-                                    <div class="tab-pane" id="tabKill" role="tabpanel">
-                                        Kill player
-                                    </div>
+                                    <?php require __DIR__ . "/../tabs/tab_crimes.php"; ?>
                                     
                                     <!--
                                         Casino menu
                                     -->
-                                    
-                                    <!-- The Roulette Tab -->
-                                    <div class="tab-pane" id="tabRoulette" role="tabpanel">
-                                        Roulette
-                                    </div>
-                                    
-                                    <!-- The Scratch & Match Tab -->
-                                    <div class="tab-pane" id="tabScratch" role="tabpanel">
-                                        Scratch & Match
-                                    </div>
+                                    <?php require __DIR__ . "/../tabs/tab_casino.php"; ?>
                                     
                                     <!--
                                         Communication menu
                                     -->
-                                    
-                                    <!-- The Online users Tab -->
-                                    <div class="tab-pane" id="tabOnline" role="tabpanel">
-                                        Online users
-                                    </div>
-                                    
-                                    <!-- The Friend list Tab -->
-                                    <div class="tab-pane" id="tabFriends" role="tabpanel">
-                                        Friend list
-                                    </div>
-                                    
-                                    <!-- The User list Tab -->
-                                    <div class="tab-pane" id="tabUserlist" role="tabpanel">
-                                        User list
-                                    </div>
-                                    
-                                    <!-- The Mailbox Tab -->
-                                    <div class="tab-pane" id="tabMail" role="tabpanel">
-                                        Mailbox
-                                    </div>
+                                    <?php require __DIR__ . "/../tabs/tab_comm.php"; ?>
                                     
                                     <!--
                                         Help menu
                                     -->
-                                    
-                                    <!-- The Contact Tab -->
-                                    <div class="tab-pane" id="tabContact" role="tabpanel">
-                                        Contact
-                                    </div>
-                                    
-                                    <!-- The Donate Tab -->
-                                    <div class="tab-pane" id="tabDonate" role="tabpanel">
-                                        Donate
-                                    </div>
-                                    
-                                    <!-- The Rules Tab -->
-                                    <div class="tab-pane" id="tabRules" role="tabpanel">
-                                        Rules
-                                    </div>
-                                    
-                                    <!-- The Info Tab -->
-                                    <div class="tab-pane" id="tabInfo" role="tabpanel">
-                                        Info
-                                    </div>
-                                    
-                                    <!-- The Settings Tab -->
-                                    <div class="tab-pane" id="tabSettings" role="tabpanel">
-                                        Settings
-                                    </div>
+                                    <?php require __DIR__ . "/../tabs/tab_help.php"; ?>
                                 </div>
                             </div>
                         </div>
@@ -344,6 +166,5 @@
                 </div>
             </div>
         </div>
-        
     </body>
 </html>

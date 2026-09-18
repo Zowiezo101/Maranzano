@@ -12,8 +12,9 @@ session_start();
 require __DIR__ . "/../../../settings.conf";
 require __DIR__ . "/../../locale/strings_en.php";
 
-// Other files to be used
+// Other tools to be used
 require __DIR__ . "/database.php";
+require __DIR__ . "/tabs.php";
 
 // Print a single string with the given name
 function printString($name, $json = false) {

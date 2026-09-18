@@ -58,6 +58,25 @@ function validateReset() {
     return $result;
 }
 
+function getUserInfo() {
+    // TODO: This needs to be updated if the user does anything. 
+    // Make sure it is updated after actions!
+    // TODO: Also make sure to display the tabs that are available at new ranks
+    
+    return $user = [
+        "cash" => "€100",
+        "bank" => "€10",
+        "rank" => "1",
+        "progress" => "98.7%",
+        "family" => "-None-",
+        "city" => "Gouda",
+        "country" => "Netherlands",
+        "health" => "100%",
+        "bullets" => "10.050",
+        "shields" => "20.000",
+    ];
+}
+
 function getUserAmount() {
     // Get the amount of users from the database
     $amount = "X";

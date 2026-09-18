@@ -92,6 +92,28 @@ $strings = [
     "info.bullets" => "Off. bullets",
     "info.shields" => "Def. bullets",
     
+    // Ranks
+    "rank.1" => "Rookie",
+    "rank.2" => "Hustler",
+    "rank.3" => "Thug",
+    "rank.4" => "Enforcer",
+    "rank.5" => "Associate",
+    "rank.6" => "Runner",
+    "rank.7" => "Mafioso",
+    "rank.8" => "Soldier",
+    "rank.9" => "Hitman",
+    "rank.10" => "Veteran",
+    "rank.11" => "Captain",
+    "rank.12" => "Lieutenant",
+    "rank.13" => "Consigliere",
+    "rank.14" => "Underboss",
+    "rank.15" => "Boss",
+    "rank.16" => "Don",
+    "rank.17" => "Kingpin",
+    "rank.18" => "Mafia Lod",
+    "rank.19" => "Supreme Boss",
+    "rank.20" => "Godfather",
+    
     // Authentication
     "login.title" => "Logging in",
     "login.email" => "E-mail",
