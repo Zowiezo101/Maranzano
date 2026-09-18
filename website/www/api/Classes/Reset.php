@@ -172,7 +172,7 @@ class Reset extends Auth {
         ];
 
         // Get the email subject and body
-        $subject = getString("update.success");
+        $subject = getString("reset.success");
         $body    = getString("update.confirm");
         
         // The user name

@@ -151,8 +151,9 @@
     function onReturnedSuccess() {
         
         var header = <?php printString("reset.success", true); ?>;
-        var title  = <?php printString("global.close", true); ?>;
-        var body = `<div class="mb-3 mx-3 row">
+        var title  = <?php printString("update.success", true); ?>;
+        var text = `<p><?php printString("global.close"); ?></p>
+                    <div class="my-3 mx-3 row">
                         <a href="/" class="btn btn-primary">
                             <?php printString("verify.home"); ?>
                         </a>
@@ -161,7 +162,7 @@
         // Show the results of the fetch call
         $("#card-header").html(header);
         $("#card-title").html(title);
-        $("#card-body").html(body);
+        $("#card-text").html(text);
         
         // Remove the reset form
         $("#resetForm").html("");
