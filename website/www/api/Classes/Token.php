@@ -7,14 +7,21 @@ use Classes\Mailer;
 use PDO;
 
 class Token {
-    private $conn;
+    private $db;
     private $message;
     private $mailer;
     
-    public function __construct($message) {
+    public function __construct($message = null) {
         
         // For the error messages
-        $this->setMessage($message);
+        if (isset($message)) {
+            $this->setMessage($message);
+        } else {
+            $this->message = new Message();
+        }
+        
+        // Link the message class for error messages
+        $this->db = new Database($this->message);
         
         // To send emails
         $this->mailer = new Mailer();
@@ -166,13 +173,14 @@ class Token {
      */
     
     public function createToken($table, $params, $expiry_time, $password_hash = false) {
+        $conn = $this->db->getConnection();
         
         // Create a new token
         $sql = "INSERT INTO {$table} (user_id, token, expires_at) "
                 . "VALUES (:user_id, :token, :expires_at)";
 
         // Prepare query statement
-        $stmt = $this->conn->prepare($sql);
+        $stmt = $conn->prepare($sql);
         
         // Generating the token
         $token = bin2hex(random_bytes(50));
@@ -199,7 +207,7 @@ class Token {
         $stmt->execute();
 
         // Check that the token has been properly created
-        $id = $this->conn->lastInsertId();
+        $id = $conn->lastInsertId();
         
         if (!isset($id)) {
             // Do NOT continue is the token hasn't been created
@@ -210,11 +218,13 @@ class Token {
     }
     
     public function updateToken($table, $params) {
+        $conn = $this->db->getConnection();
+        
         // The token is found, update it in the token table
         $sql = "UPDATE {$table} SET used=1 WHERE id = :id";
     
         // Prepare query statement
-        $stmt = $this->conn->prepare($sql);    
+        $stmt = $conn->prepare($sql);    
 
         // Bind the parameter
         $stmt->bindValue(":id", $params[Auth::PARAM_TOKEN_ID], PDO::PARAM_INT);  
@@ -224,13 +234,14 @@ class Token {
     }
     
     public function retrieveToken($table, $params) {
+        $conn = $this->db->getConnection();
         
         // Retrieve the token from the token table
         $sql = "SELECT id, user_id, token FROM {$table} "
                 . "WHERE token = :token AND used = 0 AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
     
         // Prepare query statement
-        $stmt = $this->conn->prepare($sql);    
+        $stmt = $conn->prepare($sql);    
 
         // Bind the parameter
         $stmt->bindValue(":token", hash('sha256', $params[Auth::PARAM_TOKEN]), PDO::PARAM_STR);  
@@ -251,6 +262,7 @@ class Token {
     }
     
     public function retrieveTokenFromUser($table, $params) {
+        $conn = $this->db->getConnection();
         
         // Retrieve the token from the token table
         $sql = "SELECT {$table}.id, {$table}.token FROM {$table} "
@@ -258,7 +270,7 @@ class Token {
                 . "WHERE users.name = :name AND used = 0 AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
     
         // Prepare query statement
-        $stmt = $this->conn->prepare($sql);    
+        $stmt = $conn->prepare($sql);    
 
         // Bind the parameter
         $stmt->bindValue(":name", $params[Auth::PARAM_USER], PDO::PARAM_STR);
@@ -279,12 +291,13 @@ class Token {
     }
     
     public function invalidateTokens($table, $params) {
+        $conn = $this->db->getConnection();
         
         // Invalidate all tokens of this user
         $sql = "UPDATE {$table} SET used = 1 WHERE user_id = :user_id AND used = 0";
 
         // Prepare query statement
-        $stmt = $this->conn->prepare($sql);
+        $stmt = $conn->prepare($sql);
 
         // Bind the parameter
         $stmt->bindValue(":user_id", $params[Auth::PARAM_ID], PDO::PARAM_INT);

@@ -4,7 +4,7 @@ namespace Classes;
 
 class Auth {
     // Other classes
-    protected $db;
+    protected $user;
     protected $token;
     protected $message;
     
@@ -25,17 +25,14 @@ class Auth {
     public function __construct() {
         $this->message = new Message();
         
-        // Link the message class for error messages
-        $this->db = new Database($this->message);        
+        // Link the message class for error messages    
+        $this->user = new User($this->message);   
         $this->token = new Token($this->message);
-        
-        // Set the created database connection in the token object
-        $this->token->setConnection($this->db->getConnection());
     }
     
     public function __destruct() {
         // This will call their destructors as well
-        $this->db = null;
+        $this->user = null;
         $this->token = null;
         $this->message = null;
     }
@@ -136,7 +133,7 @@ class Auth {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             
             // See if the email address already exists
-            $user = $this->db->retrieveUserFromEmail($email);
+            $user = $this->user->retrieveUserFromEmail($email);
 
             if (isset($user) && $check_available) {
                 // This email address is not available
@@ -164,7 +161,7 @@ class Auth {
         if (preg_match('/^[a-zA-Z0-9_]+$/', $user_name)) {
             
             // See if the username already exists
-            $user = $this->db->retrieveUserFromName($user_name);
+            $user = $this->user->retrieveUserFromName($user_name);
 
             if (isset($user) && $check_available) {
                 // This username is not available

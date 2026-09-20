@@ -24,7 +24,7 @@ class Reset extends Auth {
             if ($this->validateParameters($param_list, $parameters)) {                
         
                 // Get user from database
-                $user = $this->db->getUser($parameters);
+                $user = $this->user->getUser($parameters);
                     
                 // Update the parameters with the user
                 $parameters[self::PARAM_ID]   = $user["id"];
@@ -82,7 +82,7 @@ class Reset extends Auth {
                 $parameters[self::PARAM_TOKEN_ID] = $token["id"];      
         
                 // Get user from database
-                $user = $this->db->getUser($parameters);
+                $user = $this->user->getUser($parameters);
                     
                 // Update the parameters with the user
                 $parameters[self::PARAM_EMAIL] = $user["email"];
@@ -131,7 +131,7 @@ class Reset extends Auth {
                 $parameters[self::PARAM_TOKEN_ID] = $token["id"];
         
                 // Get user from database
-                $user = $this->db->getUser($parameters);
+                $user = $this->user->getUser($parameters);
                     
                 // Update the parameters with the user
                 $parameters[self::PARAM_EMAIL] = $user["email"];
@@ -142,7 +142,7 @@ class Reset extends Auth {
     
                 // Update the password
                 $update = ["pass_hash" => $hash];
-                $this->db->updateUser($parameters[self::PARAM_ID], $update);
+                $this->user->updateUser($parameters[self::PARAM_ID], $update);
 
                 // In case of no errors, send an update mail
                 $this->sendResetConfirmation($parameters);

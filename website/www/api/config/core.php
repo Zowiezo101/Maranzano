@@ -7,6 +7,8 @@ require __DIR__ . "/../../../settings.conf";
 require __DIR__ . "/../../locale/strings_en.php";
 
 // The classes to make the API work
+require __DIR__ . "/../Classes/User.php";
+require __DIR__ . "/../Classes/Player.php";
 require __DIR__ . "/../Classes/Auth.php";
 require __DIR__ . "/../Classes/Register.php";
 require __DIR__ . "/../Classes/Reset.php";

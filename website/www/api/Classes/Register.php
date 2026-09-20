@@ -30,10 +30,11 @@ class Register extends Auth {
             if ($this->validateParameters($param_list, $parameters, $check_available)) {
         
                 // Insert user in database
-                $id = $this->db->createUser($parameters);
+                $id = $this->user->createUser($parameters);
                 
                 // Create a new player for this user
-                // TODO:
+                $playerObj = new Player();
+                $playerObj->createPlayer($id);
                 
                 // Insert the ID into the parameter array
                 $parameters[self::PARAM_ID] = $id;
@@ -89,7 +90,7 @@ class Register extends Auth {
     
                 // Set the user as verified
                 $update = ["is_verified" => true];
-                $this->db->updateUser($parameters[self::PARAM_ID], $update);
+                $this->user->updateUser($parameters[self::PARAM_ID], $update);
 
                 // Invalidate the token
                 $this->token->updateVerifyToken($parameters);

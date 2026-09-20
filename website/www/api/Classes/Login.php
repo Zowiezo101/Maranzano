@@ -25,7 +25,7 @@ class Login extends Auth {
             if ($this->validateParameters($param_list, $parameters)) {
         
                 // Insert user in database
-                $user = $this->db->getUser($parameters);
+                $user = $this->user->getUser($parameters);
                     
                 // Update the parameters with the user
                 $parameters[self::PARAM_ID]         = $user["id"];
@@ -209,6 +209,7 @@ class Login extends Auth {
      */
     
     private function createCookies($parameters, $invalidate = false) {
+        global $domain_name;
         
         // Names for the cookies
         $name1 = self::PARAM_TOKEN;
@@ -231,10 +232,8 @@ class Login extends Auth {
             // Cookie should be valid through-out the server
             "path" => "/",
         
-            // Security
-            // TODO: As long as we are in debugging mode, this will be false
-            // "secure" =>  true,
-            "secure" =>  false,
+            // Security (in debugging mode, this is false
+            "secure" => !str_contains($domain_name, "localhost"),
             "httponly" => true,
             "samesite" => "Lax"
         ];   
