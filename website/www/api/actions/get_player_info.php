@@ -7,7 +7,7 @@
         "data" => [
             "cash" => "€100",
             "bank" => "€10",
-            "rank" => "1",
+            "rank" => "15",
             "progress" => "98.7%",
             "family" => "-None-",
             "city" => "Gouda",
@@ -15,5 +15,7 @@
             "health" => "100%",
             "bullets" => "10.050",
             "shields" => "20.000",
+            "deceased" => "false",
+            "killed_by" => ""
         ]
     ]);

@@ -9,6 +9,11 @@
                                         Friends
                                     </div>
                                     
+                                    <!-- The Newspaper Tab -->
+                                    <div class="tab-pane" id="tabNews" role="tabpanel">
+                                        News
+                                    </div>
+                                    
                                     <!-- The User list Tab -->
                                     <div class="tab-pane" id="tabUserlist" role="tabpanel">
                                         Userlist

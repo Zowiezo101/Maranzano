@@ -92,7 +92,8 @@
                                     <?php printMenu("main", ["home"     => $RANK_ROOKIE, 
                                                              "travel"   => $RANK_ROOKIE, 
                                                              "jail"     => $RANK_ROOKIE, 
-                                                             "hospital" => $RANK_ROOKIE]) ?>
+                                                             "hospital" => $RANK_ROOKIE,
+                                                             "deceased" => 999]) ?>
                                     
                                     <?php printMenu("business", ["bank"  => $RANK_ROOKIE, 
                                                                  "bullet" => $RANK_ROOKIE, 
@@ -110,6 +111,7 @@
                                     
                                     <?php printMenu("comms", ["online"   => $RANK_ROOKIE, 
                                                               "friends"  => $RANK_ROOKIE, 
+                                                              "news"     => $RANK_ROOKIE, 
                                                               "userlist" => $RANK_ROOKIE, 
                                                               "mail"     => $RANK_ROOKIE]) ?>
                                     

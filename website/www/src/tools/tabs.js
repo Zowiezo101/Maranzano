@@ -3,31 +3,31 @@
 
 var ranks = {
     // Ranks
-    "rank.1": "Rookie",
-    "rank.2": "Hustler",
-    "rank.3": "Thug",
-    "rank.4": "Enforcer",
-    "rank.5": "Associate",
-    "rank.6": "Runner",
-    "rank.7": "Mafioso",
-    "rank.8": "Soldier",
-    "rank.9": "Hitman",
-    "rank.10": "Veteran",
-    "rank.11": "Captain",
-    "rank.12": "Lieutenant",
-    "rank.13": "Consigliere",
-    "rank.14": "Underboss",
-    "rank.15": "Boss",
-    "rank.16": "Don",
-    "rank.17": "Kingpin",
-    "rank.18": "Mafia Lod",
-    "rank.19": "Supreme Boss",
-    "rank.20": "Godfather"
+    "rank-1": "Rookie",
+    "rank-2": "Hustler",
+    "rank-3": "Thug",
+    "rank-4": "Enforcer",
+    "rank-5": "Associate",
+    "rank-6": "Runner",
+    "rank-7": "Mafioso",
+    "rank-8": "Soldier",
+    "rank-9": "Hitman",
+    "rank-10": "Veteran",
+    "rank-11": "Captain",
+    "rank-12": "Lieutenant",
+    "rank-13": "Consigliere",
+    "rank-14": "Underboss",
+    "rank-15": "Boss",
+    "rank-16": "Don",
+    "rank-17": "Kingpin",
+    "rank-18": "Mafia Lod",
+    "rank-19": "Supreme Boss",
+    "rank-20": "Godfather"
 };
 
 function getRankName(level) {
     // Insert the level into the string
-    var name = "rank." + level;
+    var name = "rank-" + level;
 
     // And use it as a key into $strings
     return ranks[name];
@@ -37,22 +37,12 @@ function onShowTab(event) {
     // Update the player info table
     updatePlayerInfo();
 
+    // Insert the data per tab
     switch(event.target.id) {
         case "btnHome":
             insertHomeData();
             break;
     }
-}
-
-function updateTable(table, data) {
-    for (var [key, value] of Object.entries(data)) {
-        if (key === "rank" || key === "prank") {
-            // Use the rank name
-            value = getRankName(value);
-        }
-
-        $("#data" + ucfirst(table) + ucfirst(key)).text(value);
-    };
 }
 
 function updatePlayerInfo() {
@@ -68,6 +58,9 @@ function updatePlayerInfo() {
             infoError.removeClass("d-none");
             infoTable.addClass("d-none");
         } else {
+            // Is the player still alive?
+            isAlive(results.data);
+            
             // Remove the error message
             infoError.addClass("d-none");
             infoTable.removeClass("d-none");
@@ -75,13 +68,47 @@ function updatePlayerInfo() {
             // Success, update the table
             updateTable("info", results.data);
 
-            // TODO: Update the tabs
+            // Update the tabs
+            updateTabs(results.data);
         }
 
     }).catch(function(results) {
         // Show an error if anything went wrong
         alert("error: " + results);
     });
+}
+
+function updateTable(table, data) {
+    for (var [key, value] of Object.entries(data)) {
+        if (key === "rank" || key === "prank") {
+            // Use the rank name
+            value = getRankName(value);
+        }
+
+        $("#data" + ucfirst(table) + ucfirst(key)).text(value);
+    };
+}
+
+function updateTabs(data) {
+    var rank = parseInt(data["rank"]);
+    
+    // For all ranks
+    for (var i = 1; i <= Object.keys(ranks).length; i++) {
+        // If the player's rank is high enough
+        if (rank >= i) {
+            // Show the corresponding tabs
+            $("[data-rank=" + i + "]").removeClass("d-none");
+        }
+    }
+}
+
+function isAlive(data) {
+    
+    if (data["deceased"] === "true") {
+        // You died!
+        $("#killerName").text(data["killed_by"]);
+        $("#btnDeceased").tab('show');
+    }
 }
 
 $(function () {

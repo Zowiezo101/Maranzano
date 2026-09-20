@@ -73,3 +73,10 @@
                                     <div class="tab-pane" id="tabHospital" role="tabpanel">
                                         Hospital
                                     </div>
+                                    
+                                    <!-- The Deceased Tab -->
+                                    <div class="tab-pane" id="tabDeceased" role="tabpanel">
+                                        You died!!
+                                        
+                                        You were killed by <b id="killerName"></b>
+                                    </div>

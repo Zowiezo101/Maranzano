@@ -84,14 +84,11 @@
     }
     
     function getTab($category, $tab_name, $tab_rank) {
-        global $rank;
-        
-        // Is this tab visible with the current rank?
-        // TODO: Make sure API also respects these ranks and abilities
-        $visible = $rank >= $tab_rank;
         
         // Create the tab
-        $tab = '<button id="btn'.ucfirst($tab_name).'" type="button" class="btn btn-link'.($visible ? "" : " d-none").'" data-bs-toggle="tab" data-bs-target="#tab'. ucfirst($tab_name).'" role="tab">'.getString("$category.$tab_name").'</button>';
+        // All tabs for higher ranks are invisible by default
+        // They will be made visible by JS in updateTabs
+        $tab = '<button id="btn'.ucfirst($tab_name).'" type="button" class="btn btn-link'.($tab_rank > 1 ? " d-none" : "").'" data-rank="'.$tab_rank.'" data-bs-toggle="tab" data-bs-target="#tab'. ucfirst($tab_name).'" role="tab">'.getString("$category.$tab_name").'</button>';
         
         return $tab;
     }

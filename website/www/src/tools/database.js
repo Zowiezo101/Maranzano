@@ -1,10 +1,6 @@
 
 // Get the player info for the member page
 function fetchPlayerInfo() {
-    
-    // TODO: This needs to be updated if the user does anything. 
-    // Make sure it is updated after actions!
-    // TODO: Also make sure to display the tabs that are available at new ranks
     return fetchGet("get_player_info");
 }
 

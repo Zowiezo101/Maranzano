@@ -31,6 +31,7 @@ $strings = [
     "main.travel" => "Travel",
     "main.jail" => "Jail",
     "main.hospital" => "Hospital",
+    "main.deceased" => "Deceased",
     
     // Business menu
     "business.bank" => "Bank",
@@ -52,6 +53,7 @@ $strings = [
     // Communication menu"
     "comms.online" => "Online users",
     "comms.friends" => "Friend list",
+    "comms.news" => "Newspaper",
     "comms.userlist" => "User list",
     "comms.mail" => "Mailbox",
     
