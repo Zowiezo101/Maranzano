@@ -81,6 +81,7 @@ $strings = [
             <p>Missus wants you to know that no vibe coding was used in the making of this website. Code is either written by Missus or \"yoinked\" from 13 year old forum pages.</p>",
     
     // Member Home
+    "info.no-player" => "Player information currently isn't available",
     "info.cash" => "Cash",
     "info.bank" => "Bank",
     "info.rank" => "Rank",
@@ -113,6 +114,19 @@ $strings = [
     "rank.18" => "Mafia Lod",
     "rank.19" => "Supreme Boss",
     "rank.20" => "Godfather",
+    
+    // Member Home
+    "info.name" => "Username",
+    "info.prank" => "Player Rank",
+    "info.created" => "Member since",
+    "info.friends" => "Friends online",
+    "info.bikes" => "Bikes stolen",
+    "info.cars" => "Cars stolen",
+    "info.stores" => "Succesful roberies",
+    "info.kills" => "Kills made",
+    "info.jail" => "Time spent in Jail (Minutes)",
+    "info.hospital" => "Time spent in Hospital (Minutes)",
+    
     
     // Authentication
     "login.title" => "Logging in",

@@ -88,7 +88,7 @@
 
                                 <!-- Number of users online -->
                                 <div class="mt-auto">
-                                    <?php getUserAmount(); ?>
+                                    <?php getOnlineUsers(); ?>
                                 </div>
                             </div>
                         </div>

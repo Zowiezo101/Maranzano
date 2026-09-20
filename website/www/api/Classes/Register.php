@@ -32,6 +32,9 @@ class Register extends Auth {
                 // Insert user in database
                 $id = $this->db->createUser($parameters);
                 
+                // Create a new player for this user
+                // TODO:
+                
                 // Insert the ID into the parameter array
                 $parameters[self::PARAM_ID] = $id;
 

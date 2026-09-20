@@ -9,11 +9,11 @@
     // Title of this page
     $page_title = "global.title";
     
-    // Get User information from the database
-    $user = getUserInfo();
+    // Get Player information from the database
+    $player = getPlayerInfo();
     
     // Get the rank as an integer value of base 10
-    $rank = intval($user["rank"], 10);
+    $rank = isset($player) ? intval($player->rank, 10) : 1;
     
 ?>
 
@@ -31,6 +31,15 @@
         <!-- Imports (Local scripts) -->
         <script src="src/tools/base.js"></script>
         <script src="src/tools/database.js"></script>
+        <script src="src/tools/tabs.js"></script>
+        
+        <!-- The functions for the different tabs -->
+        <script src="src/tabs/tab_main.js"></script>
+        <script src="src/tabs/tab_business.js"></script>
+        <script src="src/tabs/tab_crimes.js"></script>
+        <script src="src/tabs/tab_casino.js"></script>
+        <script src="src/tabs/tab_comm.js"></script>
+        <script src="src/tabs/tab_help.js"></script>
 
         <!-- Imports (CSS) -->
         <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
@@ -54,6 +63,7 @@
             <div class="row">
                 <div class="col-md-8 col-lg-6 mx-auto">
                     <div class="row bg-body-secondary">
+                        
                         <!-- Sidebar -->
                         <div class="col-4 col-lg-3 border border-3 border-black">
                             
@@ -64,9 +74,16 @@
                             
                             <!-- Player info -->
                             <div class="row pt-2 pb-3 px-1 border-bottom border-3 border-black">
-                                <table class="fw-bold">
-                                    <?php printTable($user); ?>
+                                <table id="playerInfo" class="fw-bold">
+                                    <?php printTableTemplate("info", ["cash", "bank",
+                                                                      "rank", "progress",
+                                                                      "family", "city",
+                                                                      "country", "health",
+                                                                      "bullets", "shields"]); ?>
                                 </table>
+                
+                                <!-- In case the information can't be found -->
+                                <p id="playerInfoError" class="<?php echo ($player) ? "d-none " : ""; ?>text-center"><?php printString("info.no-player"); ?></p>
                             </div>
                             
                             <!-- Menu -->
@@ -85,7 +102,7 @@
                                     
                                     <?php printMenu("crimes", ["bike"  => $RANK_ROOKIE, 
                                                                "car"   => $RANK_MAFIOSO, 
-                                                               "store" => $RANK_ROOKIE, 
+                                                               "store" => $RANK_MAFIOSO, 
                                                                "kill"  => $RANK_HITMAN]) ?>
                                     
                                     <?php printMenu("casino", ["roulette" => $RANK_ROOKIE, 
@@ -104,8 +121,9 @@
 
                                     <!-- X Users online -->
                                     <div class="mt-3 px-3">
-                                        <?php getUserAmount(); ?>
+                                        <?php getOnlineUsers(); ?>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -123,7 +141,7 @@
                             
                             <!-- Selected tab -->
                             <div class="row">
-                                <div class="col tab-content" role="tab-content">
+                                <div class="col-10 mx-auto tab-content" role="tab-content">
                                     <!--
                                         Main menu
                                     -->
@@ -161,6 +179,7 @@
                     <!-- The Footer -->
                     <div class="row text-center text-black">
                         <?php printString("global.copyright"); ?>
+                        
                     </div>
                     
                 </div>

@@ -26,24 +26,27 @@
         return getString($name);
     }
     
-    function printTable($user) {
-        if (isset($user)) {
-            foreach ($user as $key => $value) {
-                getTableRow($key, $value);
+    function printTableTemplate($table, $fields) {
+        // Make sure the information is actually avaialbe
+        if (isset($fields)) {            
+            
+            // Show every property of this player per row
+            foreach ($fields as $key) {
+                
+                // Creating the row for this property
+                getTableTemplateRow($table, $key);
             }
         }
     }
     
-    function getTableRow($key, $value) {
-        // TODO: Make sure API also respects these ranks and abilities
-        $data = $value;
-        if ($key == "rank") {
-            $data = getRankName($value);
-        } 
+    function getTableTemplateRow($table, $key) {
         
+        // The row with information
         $table_row = '
                                     <tr><th class="fst-normal text-black">'.getString("info.{$key}").':</th>
-                                        <td class="text-center">'.$data.'</td></tr>';
+                                        <td id="data'.ucfirst($table).ucfirst($key).'" class="text-center"></td></tr>';
+        
+        // Print the row
         echo $table_row;
     }
 
@@ -83,14 +86,12 @@
     function getTab($category, $tab_name, $tab_rank) {
         global $rank;
         
-        // The hometab is active on each reload
-        $active = $tab_name == "home";
-        
         // Is this tab visible with the current rank?
+        // TODO: Make sure API also respects these ranks and abilities
         $visible = $rank >= $tab_rank;
         
         // Create the tab
-        $tab = '<button type="button" class="btn btn-link'.($active ? " active" : "").($visible ? "" : " d-none").'" data-bs-toggle="tab" data-bs-target="#tab'. ucfirst($tab_name).'" role="tab">'.getString("$category.$tab_name").'</button>';
+        $tab = '<button id="btn'.ucfirst($tab_name).'" type="button" class="btn btn-link'.($visible ? "" : " d-none").'" data-bs-toggle="tab" data-bs-target="#tab'. ucfirst($tab_name).'" role="tab">'.getString("$category.$tab_name").'</button>';
         
         return $tab;
     }

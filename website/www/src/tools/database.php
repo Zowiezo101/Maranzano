@@ -6,6 +6,7 @@
  */
 
 function getNews() {
+    // TODO
     echo "<p>Hier komen nieuws artikelen vanuit de database</p>";
 }
 
@@ -58,27 +59,25 @@ function validateReset() {
     return $result;
 }
 
-function getUserInfo() {
-    // TODO: This needs to be updated if the user does anything. 
-    // Make sure it is updated after actions!
-    // TODO: Also make sure to display the tabs that are available at new ranks
+function getPlayerInfo() {
     
-    return $user = [
-        "cash" => "€100",
-        "bank" => "€10",
-        "rank" => "1",
-        "progress" => "98.7%",
-        "family" => "-None-",
-        "city" => "Gouda",
-        "country" => "Netherlands",
-        "health" => "100%",
-        "bullets" => "10.050",
-        "shields" => "20.000",
-    ];
+    // Try to make the POST request using cURL
+    $result = curlGet("get_player_info");
+    
+    $player = null;
+    // Retrieve the player if there aren't any errors
+    if (isset($result) && $result->error === "") {
+        $player = $result->data;
+    }
+    
+    // Return the result
+    return $player;
+    
 }
 
-function getUserAmount() {
+function getOnlineUsers() {
     // Get the amount of users from the database
+    // TODO
     $amount = "X";
     
     echo "{$amount} ".getString("menu.users");

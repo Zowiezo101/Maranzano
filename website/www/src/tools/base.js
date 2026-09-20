@@ -15,3 +15,8 @@ function onReturnedError(message, element) {
 function onResetError(element) {
     $(element).html("").addClass("d-none");
 }
+
+// A rewrite of a PHP function
+function ucfirst(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
