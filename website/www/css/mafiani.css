@@ -96,3 +96,11 @@ form .btn-link:not(hover) {
     padding-bottom: 0;
 }
 
+.bg-gradient-center {
+    background-image: linear-gradient(90deg,
+        rgba(36, 32, 30, 1) 0%, 
+        rgba(69, 64, 53, 1) 15%, 
+        rgba(69, 64, 53, 1) 85%, 
+        rgba(36, 32, 30, 1) 100%);
+}
+

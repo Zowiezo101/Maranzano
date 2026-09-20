@@ -35,7 +35,7 @@
         <title><?php printString($page_title); ?></title>
     </head>
     
-    <body class="min-vh-100 h-100 fst-italic bg-gradient">
+    <body class="min-vh-100 h-100 fst-italic bg-gradient-center">
         
         <!-- The container with all the rows and columns -->
         <div class="container-fluid">
