@@ -33,7 +33,7 @@ class Register extends Auth {
                 $id = $this->user->createUser($parameters);
                 
                 // Create a new player for this user
-                $playerObj = new Player();
+                $playerObj = new Player($this->message);
                 $playerObj->createPlayer($id);
                 
                 // Insert the ID into the parameter array

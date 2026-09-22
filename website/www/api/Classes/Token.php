@@ -265,7 +265,7 @@ class Token {
         $conn = $this->db->getConnection();
         
         // Retrieve the token from the token table
-        $sql = "SELECT {$table}.id, {$table}.token FROM {$table} "
+        $sql = "SELECT {$table}.id, {$table}.user_id, {$table}.token FROM {$table} "
                 . "JOIN users ON users.id = {$table}.user_id "
                 . "WHERE users.name = :name AND used = 0 AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
     

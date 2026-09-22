@@ -17,6 +17,10 @@ require __DIR__ . "/../Classes/Database.php";
 require __DIR__ . "/../Classes/Mailer.php";
 require __DIR__ . "/../Classes/Message.php";
 require __DIR__ . "/../Classes/Token.php";
+require __DIR__ . "/../Classes/Location.php";
+require __DIR__ . "/../Classes/Crime.php";
+require __DIR__ . "/../Classes/Hospital.php";
+require __DIR__ . "/../Classes/Jail.php";
 
 // PHP Mailer
 require __DIR__ . "/../tools/PHPMailer/PHPMailer.php";

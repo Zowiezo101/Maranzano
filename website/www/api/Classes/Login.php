@@ -4,6 +4,8 @@ namespace Classes;
 
 class Login extends Auth {
     
+    private $user_id;
+    
     public function loginUser() {
         
         // Possible database error, do NOT continue
@@ -90,7 +92,10 @@ class Login extends Auth {
         
                 // Get the token from the database
                 $token = $this->token->retrieveLoginTokenFromUser($parameters);
-                    
+                
+                // Store the user ID for later use
+                $this->user_id = $token["user_id"];
+                
                 // Update the parameters with the user
                 $parameters[self::PARAM_TOKEN_ID]   = $token["id"];
                 $parameters[self::PARAM_TOKEN_HASH] = $token["token"];
@@ -113,6 +118,17 @@ class Login extends Auth {
             // Now clear the session as well
             session_reset();
         }
+    }
+    
+    public function getUserIdFromSession() {
+        $this->validateSession();
+        
+        $user_id = null;
+        if (!$this->hasError()) {
+            $user_id = $this->user_id;
+        }
+        
+        return $user_id;
     }
     
     public function logoutUser() {

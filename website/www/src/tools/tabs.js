@@ -104,10 +104,28 @@ function updateTabs(data) {
 
 function isAlive(data) {
     
-    if (data["deceased"] === "true") {
+    if (data["deceased"] === true) {
         // You died!
         $("#killerName").text(data["killed_by"]);
         $("#btnDeceased").tab('show');
+        
+        // Get the player name to add a cross to their name
+        var playerName = $("#playerName").html();
+        
+        // The cross that will be added
+        var cross = '<i class="fa-solid fa-cross"></i>';
+
+        // Make sure the cross isn't added twice
+        if (!playerName.includes(cross)) {
+            // Add a cross to the persons name
+            $("#playerName").html(playerName + cross);
+        }
+        
+        // Disable all other tabs temporarily
+        $('[role="tab"]').attr("disabled", true);
+    } else {
+        // Enable all tabs again
+        $('[role="tab"]').attr("disabled", false);
     }
 }
 

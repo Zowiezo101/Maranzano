@@ -42,6 +42,7 @@
         <script src="src/tabs/tab_help.js"></script>
 
         <!-- Imports (CSS) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" type="text/css"/>
         <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
         <link rel="stylesheet" href="css/mafiani.css" type="text/css"/>
 
@@ -69,7 +70,7 @@
                             
                             <!-- Player name -->
                             <div class="row fst-normal bg-body-tertiary border-bottom border-3 border-black">
-                                <b><?php echo $_SESSION["member_name"]; ?></b>
+                                <b id="playerName"><?php echo $_SESSION["member_name"]; ?></b>
                             </div>
                             
                             <!-- Player info -->
