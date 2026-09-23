@@ -1,7 +1,15 @@
 <?php
 
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
- */
+namespace Classes;
 
+class Crime {
+    public function getCrimes($player_id) {
+        // TODO:
+        return [
+            "bikes" => 1,
+            "cars" => 4,
+            "stores" => 3,
+            "kills" => 2
+        ];
+    }
+}

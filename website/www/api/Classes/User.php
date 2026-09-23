@@ -132,7 +132,7 @@ class User {
         $conn = $this->db->getConnection();
         
         // See if the email address already exists
-        $sql = "SELECT id, name, email, pass_hash, is_verified FROM users WHERE email = :email";
+        $sql = "SELECT id, name, email, pass_hash, is_verified, type, created_at FROM users WHERE email = :email";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);
@@ -153,7 +153,7 @@ class User {
         $conn = $this->db->getConnection();
         
         // Retrieve the user with this ID
-        $sql = "SELECT id, name, email, pass_hash, is_verified FROM users WHERE id = :id";
+        $sql = "SELECT id, name, email, pass_hash, is_verified, type, created_at FROM users WHERE id = :id";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);
@@ -174,7 +174,7 @@ class User {
         $conn = $this->db->getConnection();
         
         // See if the name already exists
-        $sql = "SELECT id, name, email, pass_hash, is_verified FROM users WHERE name = :name";
+        $sql = "SELECT id, name, email, pass_hash, is_verified, type, created_at FROM users WHERE name = :name";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);

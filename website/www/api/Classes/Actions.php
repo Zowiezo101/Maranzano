@@ -2,74 +2,47 @@
 
 namespace Classes;
 
-class Actions extends Login {
+class Actions {
+    // Other classes
+    protected $db;
+    private $user;  
+    private $token;    
+    private $parameters; 
     
     public function __construct() {
-        parent::__construct();
-
-        // Make sure the session is still valid
-        $this->getUserIdFromSession();
+        $this->parameters = new Parameters();
+        $this->user = new User();
+        $this->token = new Token();
+        
+        // To connect to the database
+        $this->db = new Database();
     }
     
-    public function route($route) {
+    public function route($route, $data) {
+        // These actions need to have the cookie checked
+        // TODO: Rewrite to only use cookie data?
+        $auth = new Login();
+        $auth->route("login_validate", $data);
+        
         $result = null;
+        
+        // Parse the input data
+        $this->parameters->setData($data);
+        
+        switch($route) {
+            case "player_reset":
+                $result = $this->resetPlayer();
+                break;
+        }
         
         return $result;
     }
     
     /**
-     * GET requests
+     * API functions
      */
     
-    public function getPlayerInfo() {
-        $this->player->getPlayerInfo($this->user_id);
-    }
-    
-    public function getPlayerStats() {
-        $this->player->getPlayerStats($this->user_id);
-    }
-    
-    /**
-     * POST requests (has parameters)
-     */
-    
-    public function createNewPlayer() {
+    private function resetPlayer() {
         
-        // Possible database error, do NOT continue
-        if ($this->hasError()) {
-            return;
-        }
-        
-        // Get only these parameters, all other parameters are ignored
-        $param_list = [
-            self::PARAM_PLAYER
-        ];
-            
-        // Retrieve the parameters
-        $parameters = $this->getParameters($param_list);
-        
-        try {            
-            // Validate parameters
-            if ($this->validateParameters($param_list, $parameters)) {
-                // Insert the user ID
-                $parameters[Auth::PARAM_ID] = $this->user_id;
-                
-                $this->player->createNewPlayer($parameters);
-            } else {
-                // Throw an error to get into the catch part of the code
-                $this->setError("auth.login.invalid", Message::CODE_INVALID);
-                $this->throwError();
-            }
-            
-        } catch (\Exception) {
-            // Only allow the following error messages
-            $white_list = [
-                "login.verify",
-                "auth.login.invalid"
-            ];
-            
-            $this->clearError($white_list);
-            $this->setError("login.error", Message::CODE_ERROR);
-        }
     }
 }

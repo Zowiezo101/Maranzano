@@ -7,9 +7,9 @@ use PDO;
 class Player {
     // Other classes
     protected $db;
-    private $user;  
-    private $token;    
-    private $parameters;    
+    private $user;
+    private $token;
+    private $parameters;
     
     // All data per rank
     public const RANKS = [
@@ -45,6 +45,10 @@ class Player {
     }
     
     public function route($route, $data) {
+        // These actions need to have the cookie checked
+        $auth = new Login();
+        $auth->route("login_validate", $data);
+        
         $result = null;
         
         // Parse the input data
@@ -79,10 +83,6 @@ class Player {
      * API functions
      */
     
-    public function createNewPlayer() {
-        
-    }
-    
     public function getPlayerInfo() {
         $result = null;
         
@@ -111,9 +111,55 @@ class Player {
         return $result;
     }
     
-    public function getPlayerStats() {        
+    public function getPlayerStats() {
+        $result = null;
         
+        // The username that is given via the cookie
+        $user_name = $this->parameters->getUser();
         
+        // Get the user using the username
+        $user = $this->user->getUser(name: $user_name);
+        
+        if (isset($user)) {
+        
+            // Get the user_id
+            $user_id = $user["id"];
+            
+            // Get the player that belongs to this user
+            $player = $this->getPlayer($user_id);
+            
+            // The player ID
+            $id = $player["id"];
+            
+            // Get the crimes this player commited
+            $crimeObj = new Crime();
+            $crimes = $crimeObj->getCrimes($id);
+            
+            $player["bikes"]  = $crimes["bikes"];
+            $player["cars"]   = $crimes["cars"];
+            $player["stores"] = $crimes["stores"];
+            $player["kills"]  = $crimes["kills"];
+            
+            // Get the Hospital & Jail time for this player
+            $jail = new Jail();
+            $player["jail"] = $jail->getJailTime($id);
+            
+            $hospital = new Hospital();
+            $player["hospital"] = $hospital->getHospitalTime($id);
+                    
+            // Get the online friends of this player
+            $player["friends"] = $this->getOnlineFriends($id);
+
+            // Prepare the data and make it human readable
+            $data = $this->formatPlayerStats($player, $user);
+
+            // Prepare a message
+            $result = $data;
+        } else {
+            throwError();
+        }
+        
+        return $result;        
     }
     
     /**
@@ -189,6 +235,11 @@ class Player {
         return $result;
     }
     
+    public function getOnlineFriends() {
+        // TODO:
+        return 67;
+    }
+    
     /**
      * Data conversion functions
      */
@@ -212,6 +263,28 @@ class Player {
             "deceased" => $player["deceased"] == "1",
             "killed_by" => $player["killed_by"],
             "killer_deceased" => $player["killer_deceased"] == "1"
+        ];
+        
+        return $data;
+    }
+    
+    private function formatPlayerStats($player, $user) {
+        $rank = $player["rank"];
+        
+        $data = [
+            "u-name" => $user["name"],
+            "name" => $player["name"],
+            "prank" => $rank,
+            "created" => $this->formatTime($user["created_at"]),
+            
+            // This information is from other tables
+            "friends" => $player["friends"],
+            "bikes" => $player["bikes"],
+            "cars" => $player["cars"],
+            "stores" => $player["stores"],
+            "kills" => $player["kills"],
+            "jail" => $player["jail"],
+            "hospital" => $player["hospital"],
         ];
         
         return $data;
@@ -249,6 +322,16 @@ class Player {
         } else {
             $result = "-None-";
         }
+        
+        return $result;
+    }
+    
+    private function formatTime($value) {   
+        // Convert the string to a timestamp     
+        $time = strtotime($value);
+
+        // Format the timestamp
+        $result = date("d-m-Y", $time);
         
         return $result;
     }
