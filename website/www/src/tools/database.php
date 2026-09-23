@@ -59,22 +59,6 @@ function validateReset() {
     return $result;
 }
 
-function getPlayerInfo() {
-    
-    // Try to make the POST request using cURL
-    $result = curlGet("get_player_info");
-    
-    $player = null;
-    // Retrieve the player if there aren't any errors
-    if (isset($result) && $result->error === "") {
-        $player = $result->data;
-    }
-    
-    // Return the result
-    return $player;
-    
-}
-
 function getOnlineUsers() {
     // Get the amount of users from the database
     // TODO

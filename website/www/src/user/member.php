@@ -7,14 +7,7 @@
     checkLoggedIn("", "/");
     
     // Title of this page
-    $page_title = "global.title";
-    
-    // Get Player information from the database
-    $player = getPlayerInfo();
-    
-    // Get the rank as an integer value of base 10
-    $rank = isset($player) ? intval($player->rank, 10) : 1;
-    
+    $page_title = "global.title";    
 ?>
 
 <!doctype html>
@@ -70,7 +63,7 @@
                             
                             <!-- Player name -->
                             <div class="row fst-normal bg-body-tertiary border-bottom border-3 border-black">
-                                <b id="playerName"><?php echo $_SESSION["member_name"]; ?></b>
+                                <b id="playerName"></b>
                             </div>
                             
                             <!-- Player info -->
@@ -84,7 +77,7 @@
                                 </table>
                 
                                 <!-- In case the information can't be found -->
-                                <p id="playerInfoError" class="<?php echo ($player) ? "d-none " : ""; ?>text-center"><?php printString("info.no-player"); ?></p>
+                                <p id="playerInfoError" class="d-none text-center"><?php printString("info.no-player"); ?></p>
                             </div>
                             
                             <!-- Menu -->

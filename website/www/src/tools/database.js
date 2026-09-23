@@ -9,6 +9,10 @@ function fetchPlayerStats() {
     return fetchGet("get_player_stats");
 }
 
+function fetchNewPlayer(data) {
+    return fetchPost("get_new_player", data);
+}
+
 // Send a post request to the given URL with fetch
 function fetchGet(url) {
     var response = fetchRequest(url, "GET");

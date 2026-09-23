@@ -58,24 +58,36 @@ function updatePlayerInfo() {
             infoError.removeClass("d-none");
             infoTable.addClass("d-none");
         } else {
-            // Is the player still alive?
-            isAlive(results.data);
-            
+            insertPlayerInfo(results.data);
+
             // Remove the error message
             infoError.addClass("d-none");
             infoTable.removeClass("d-none");
-
-            // Success, update the table
-            updateTable("info", results.data);
-
-            // Update the tabs
-            updateTabs(results.data);
         }
 
     }).catch(function(results) {
         // Show an error if anything went wrong
         alert("error: " + results);
     });
+}
+
+function insertPlayerInfo(data) {
+    
+    // First add the player name
+    $("#playerName").html(data["name"]);
+
+    // This is for the tombstone
+    $("#tombName").html(data["name"]);
+    $("#tombRank").html(getRankName(data["rank"]));
+
+    // Is the player still alive?
+    isAlive(data);
+
+    // Success, update the table
+    updateTable("info", data);
+
+    // Update the tabs
+    updateTabs(data);
 }
 
 function updateTable(table, data) {
@@ -105,27 +117,40 @@ function updateTabs(data) {
 function isAlive(data) {
     
     if (data["deceased"] === true) {
-        // You died!
+        // Add a cross to your name
+        addCross("playerName");
+        
+        // Your killer
         $("#killerName").text(data["killed_by"]);
-        $("#btnDeceased").tab('show');
         
-        // Get the player name to add a cross to their name
-        var playerName = $("#playerName").html();
-        
-        // The cross that will be added
-        var cross = '<i class="fa-solid fa-cross"></i>';
-
-        // Make sure the cross isn't added twice
-        if (!playerName.includes(cross)) {
-            // Add a cross to the persons name
-            $("#playerName").html(playerName + cross);
+        // In case your killer is already dead
+        if (data["killer_deceased"] === true) {
+            addCross("killerName");
         }
         
-        // Disable all other tabs temporarily
+        // Disable some tabs temporarily
         $('[role="tab"]').attr("disabled", true);
+        
+        // Show the deceased tab
+        $("#btnDeceased").tab('show');
     } else {
         // Enable all tabs again
         $('[role="tab"]').attr("disabled", false);
+    }
+}
+
+function addCross(name) {
+        
+    // Get the player name to add a cross to their name
+    var playerName = $("#" + name).html();
+
+    // The cross that will be added
+    var cross = '<i class="fa-solid fa-cross"></i>';
+
+    // Make sure the cross isn't added twice
+    if (!playerName.includes(cross)) {
+        // Add a cross to the persons name
+        $("#" + name).html(playerName + cross);
     }
 }
 

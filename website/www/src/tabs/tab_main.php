@@ -17,7 +17,8 @@
                                                     <div class="d-flex align-content-center col-8 col-lg-9 mt-1">
                                                         <table id="playerStats" class="fw-bold">
                                                             <!-- Further filled in by JS -->
-                                                            <?php printTableTemplate("home", ["name", 
+                                                            <?php printTableTemplate("home", ["u-name", 
+                                                                                              "name", 
                                                                                               "prank", 
                                                                                               "created", 
                                                                                               "friends"])?>
@@ -76,7 +77,47 @@
                                     
                                     <!-- The Deceased Tab -->
                                     <div class="tab-pane" id="tabDeceased" role="tabpanel">
-                                        You died!!
+                                        <!-- Message -->
+                                        <div class="row mt-5 text-center">
+                                            <h3 class="fst-normal"><b><?php printString("info.died"); ?><u id="killerName"></u></b><h3>
+                                        </div>
                                         
-                                        You were killed by <b id="killerName"></b>
+                                        <!-- Tombstone -->
+                                        <div class="row mt-5">
+                                            <div class="col-10 mx-auto">
+                                                <!--<img class="img-fluid" src="../img/Player_died.png"/>-->
+                                                <div class="card bg-transparent border-0">
+                                                    <img class="card-img" src="../img/Player_died.png"/>
+                                                    <div class="card-img-overlay me-3 d-flex justify-content-center align-items-center text-center">
+                                                        <p class="card-text">
+                                                            <h5 class="mt-3">
+                                                                <span id="tombName"></span><br/>
+                                                                -<span id="tombRank"></span>-
+                                                            </h5>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Start over button -->
+                                        <div class="row my-5">
+                                            <form id="newPlayerForm">
+                                                <!-- Username -->
+                                                <div class="mb-3 mx-3 text-center">
+                                                    <label for="newPlayer" class="form-label"><?php printString("info.new-name")?></label>
+                                                    <input type="text" class="form-control text-center" id="newPlayer">
+                                                </div>
+
+                                                <!-- New Player button -->
+                                                <div class="mb-3 mx-5 row">
+                                                    <button type="submit" class="btn btn-secondary border border-3 border-black"><?php printString("info.startover")?></button>
+                                                </div>
+
+                                                <!-- Error message -->
+                                                <div id="newPlayerError" class="mb-4 mx-3 text-center text-warning d-none">
+                                                    <!-- Filled in later in case of error -->
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>

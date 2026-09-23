@@ -118,7 +118,8 @@ $strings = [
     "rank.20" => "Godfather",
     
     // Member Home
-    "info.name" => "Username",
+    "info.u-name" => "Username",
+    "info.name" => "Mafia Name",
     "info.prank" => "Player Rank",
     "info.created" => "Member since",
     "info.friends" => "Friends online",
@@ -129,6 +130,10 @@ $strings = [
     "info.jail" => "Time spent in Jail (Minutes)",
     "info.hospital" => "Time spent in Hospital (Minutes)",
     
+    // You died
+    "info.died" => "You died!! You were killed by ",
+    "info.new-name" => "Your new Mafia name",
+    "info.startover" => "Start over",
     
     // Authentication
     "login.title" => "Logging in",
@@ -183,6 +188,7 @@ $strings = [
     "session.error" => "Something went wrong while trying to validate session",
     "login.error" => "Something went wrong while trying to log you in",
     "logout.error" => "Something went wrong while trying to log you out",
+    "player.error" => "Something went wrong while trying to create a new player",
     
     // Misc
     "global.copyright" => "<b>Copyright 2026 - ??</b>"
