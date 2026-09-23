@@ -2,26 +2,16 @@
 
 namespace Classes;
 
-use Classes\Auth;
-use Classes\Mailer;
 use PDO;
 
 class Token {
     private $db;
-    private $message;
     private $mailer;
     
-    public function __construct($message = null) {
+    public function __construct() {
         
-        // For the error messages
-        if (isset($message)) {
-            $this->setMessage($message);
-        } else {
-            $this->message = new Message();
-        }
-        
-        // Link the message class for error messages
-        $this->db = new Database($this->message);
+        // To connect to the database
+        $this->db = new Database();
         
         // To send emails
         $this->mailer = new Mailer();
@@ -31,10 +21,6 @@ class Token {
      * Setters & Getters
      */
     
-    public function setMessage($message) {
-        $this->message = $message;
-    }
-    
     public function setConnection($conn) {
         $this->conn = $conn;
     }
@@ -43,45 +29,41 @@ class Token {
      * Verify tokens
      */
     
-    public function createVerifyToken($params) {
+    public function createVerifyToken($user_id) {
         // This token expires in 30 minutes
         $expiry_time = 30;
-        return $this->createToken("verify_user", $params, $expiry_time);
+        return $this->createToken("verify_user", $user_id, $expiry_time);
     }
     
-    public function updateVerifyToken($params) {
-        $this->updateToken("verify_user", $params);
+    public function updateVerifyToken($token_id) {
+        $this->updateToken("verify_user", $token_id);
     }
     
-    public function retrieveVerifyToken($params) {
-        return $this->retrieveToken("verify_user", $params);
+    public function retrieveVerifyToken($token) {
+        return $this->retrieveToken("verify_user", $token);
     }
     
-    public function invalidateVerifyTokens($params) {
-        $this->invalidateTokens("verify_user", $params);
+    public function invalidateVerifyTokens($user_id) {
+        $this->invalidateTokens("verify_user", $user_id);
     }
     
-    public function sendVerifyToken($params) {
+    public function sendVerifyToken($email, $name, $token) {
     
         // The recipient to send the email to
         $recipient = [
-            "email" => $params[Auth::PARAM_EMAIL],
-            "name"  => $params[Auth::PARAM_USER]
+            "email" => $email,
+            "name"  => $name
         ];
 
         // Get the email subject and body
         $subject = getString("verify.subject");
         $body    = getString("verify.body");
         
-        // The user name and token
-        $user  = $params[Auth::PARAM_USER];
-        $token = $params[Auth::PARAM_TOKEN];
-        
         // The URL to insert
         $url = getURL("/auth/verify?token=".$token);
 
         // Insert the name and url
-        $body1 = str_replace("[user]", $user, $body);
+        $body1 = str_replace("[user]", $name, $body);
         $body2 = str_replace("[url]",  $url,  $body1);
 
         // Insert all the data to send the mail
@@ -93,45 +75,41 @@ class Token {
      * Reset tokens
      */
     
-    public function createResetToken($params) {
+    public function createResetToken($user_id) {
         // This token expires in 30 minutes
         $expiry_time = 30;
-        return $this->createToken("reset_pass", $params, $expiry_time);
+        return $this->createToken("reset_pass", $user_id, $expiry_time);
     }
     
-    public function updateResetToken($params) {
-        $this->updateToken("reset_pass", $params);
+    public function updateResetToken($token_id) {
+        $this->updateToken("reset_pass", $token_id);
     }
     
-    public function retrieveResetToken($params) {
-        return $this->retrieveToken("reset_pass", $params);
+    public function retrieveResetToken($token) {
+        return $this->retrieveToken("reset_pass", $token);
     }
     
-    public function invalidateResetTokens($params) {
-        $this->invalidateTokens("reset_pass", $params);
+    public function invalidateResetTokens($user_id) {
+        $this->invalidateTokens("reset_pass", $user_id);
     }
     
-    public function sendResetToken($params) {
+    public function sendResetToken($email, $name, $token) {
     
         // The recipient to send the email to
         $recipient = [
-            "email" => $params[Auth::PARAM_EMAIL],
-            "name"  => $params[Auth::PARAM_USER]
+            "email" => $email,
+            "name"  => $name
         ];
 
         // Get the email subject and body
         $subject = getString("reset.subject");
         $body    = getString("reset.body");
         
-        // The user name and token
-        $user  = $params[Auth::PARAM_USER];
-        $token = $params[Auth::PARAM_TOKEN];
-        
         // The URL to insert
         $url = getURL("/auth/reset?token=".$token);
 
         // Insert the name and url
-        $body1 = str_replace("[user]", $user, $body);
+        $body1 = str_replace("[user]", $name, $body);
         $body2 = str_replace("[url]",  $url,  $body1);
 
         // Insert all the data to send the mail
@@ -143,36 +121,32 @@ class Token {
      * Login tokens
      */
     
-    public function createLoginToken($params) {
+    public function createLoginToken($user_id) {
         // Use password_hash instead of SHA256
         $password_hash = true;
         
         // This token expires in 30 hours (60 min * 30 hours)
         $expiry_time = 60 * 30;
-        return $this->createToken("login_user", $params, $expiry_time, $password_hash);
+        return $this->createToken("login_user", $user_id, $expiry_time, $password_hash);
     }
     
-    public function updateLoginToken($params) {
-        $this->updateToken("login_user", $params);
+    public function updateLoginToken($token_id) {
+        $this->updateToken("login_user", $token_id);
     }
     
-    public function retrieveLoginTokenFromUser($params) {
-        return $this->retrieveTokenFromUser("login_user", $params);
+    public function retrieveLoginTokenFromUser($user_name) {
+        return $this->retrieveTokenFromUser("login_user", $user_name);
     }
     
-    public function invalidateLoginTokens($params) {
-        $this->invalidateTokens("login_user", $params);
-    }
-    
-    public function sendLoginToken($params) {
-        $this->sendToken("login_user", $params);
+    public function invalidateLoginTokens($user_id) {
+        $this->invalidateTokens("login_user", $user_id);
     }
     
     /**
      * General tokens
      */
     
-    public function createToken($table, $params, $expiry_time, $password_hash = false) {
+    public function createToken($table, $user_id, $expiry_time, $password_hash = false) {
         $conn = $this->db->getConnection();
         
         // Create a new token
@@ -199,7 +173,7 @@ class Token {
         }
 
         // Bind the parameter
-        $stmt->bindValue(":user_id", $params[Auth::PARAM_ID], PDO::PARAM_STR);
+        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
         $stmt->bindValue(":token", $hash, PDO::PARAM_STR);
         $stmt->bindValue(":expires_at", $expiry_date, PDO::PARAM_STR);
 
@@ -211,13 +185,13 @@ class Token {
         
         if (!isset($id)) {
             // Do NOT continue is the token hasn't been created
-            $this->message->throwError();
+            throwError();
         }
         
         return $token;
     }
     
-    public function updateToken($table, $params) {
+    public function updateToken($table, $token_id) {
         $conn = $this->db->getConnection();
         
         // The token is found, update it in the token table
@@ -227,13 +201,13 @@ class Token {
         $stmt = $conn->prepare($sql);    
 
         // Bind the parameter
-        $stmt->bindValue(":id", $params[Auth::PARAM_TOKEN_ID], PDO::PARAM_INT);  
+        $stmt->bindValue(":id", $token_id, PDO::PARAM_INT);  
 
         // Execute the statement
         $stmt->execute();
     }
     
-    public function retrieveToken($table, $params) {
+    public function retrieveToken($table, $token) {
         $conn = $this->db->getConnection();
         
         // Retrieve the token from the token table
@@ -244,7 +218,7 @@ class Token {
         $stmt = $conn->prepare($sql);    
 
         // Bind the parameter
-        $stmt->bindValue(":token", hash('sha256', $params[Auth::PARAM_TOKEN]), PDO::PARAM_STR);  
+        $stmt->bindValue(":token", hash('sha256', $token), PDO::PARAM_STR);  
 
         // Execute the statement
         $stmt->execute();
@@ -254,14 +228,13 @@ class Token {
         
         if (!isset($result)) {
             // If no token could be found, then it's invalid
-            $this->message->setError("auth.token.invalid", Message::CODE_INVALID);
-            $this->message->throwError();
+            throwError("auth.token.invalid", Message::CODE_INVALID);
         }
         
         return $result;
     }
     
-    public function retrieveTokenFromUser($table, $params) {
+    public function retrieveTokenFromUser($table, $user_name) {
         $conn = $this->db->getConnection();
         
         // Retrieve the token from the token table
@@ -273,7 +246,7 @@ class Token {
         $stmt = $conn->prepare($sql);    
 
         // Bind the parameter
-        $stmt->bindValue(":name", $params[Auth::PARAM_USER], PDO::PARAM_STR);
+        $stmt->bindValue(":name", $user_name, PDO::PARAM_STR);
 
         // Execute the statement
         $stmt->execute();
@@ -281,16 +254,10 @@ class Token {
         // Get the results
         $result = getResults($stmt);
         
-        if (!isset($result)) {
-            // If no token could be found, then it's invalid
-            $this->message->setError("auth.token.invalid", Message::CODE_INVALID);
-            $this->message->throwError();
-        }
-        
         return $result;
     }
     
-    public function invalidateTokens($table, $params) {
+    public function invalidateTokens($table, $user_id) {
         $conn = $this->db->getConnection();
         
         // Invalidate all tokens of this user
@@ -300,7 +267,7 @@ class Token {
         $stmt = $conn->prepare($sql);
 
         // Bind the parameter
-        $stmt->bindValue(":user_id", $params[Auth::PARAM_ID], PDO::PARAM_INT);
+        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
 
         // Execute the statement
         $stmt->execute();

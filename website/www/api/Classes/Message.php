@@ -16,34 +16,9 @@ class Message {
     private $error = "";
     private $data = [];
     
-    public function setError($error, $code = self::CODE_INVALID) {
-        // Always show the first code first
-        // Meaning we don't update the error after more errors have been received
-        // since the first error might have caused more errors
-        if ($this->error == "") {
-            $this->error = $error;
-            $this->code  = $code;
-        }
-    }
-    
-    public function getError() {
-        return $this->error;
-    }
-    
-    public function clearError($white_list = []) {
-        
-        // If the whitelist is empty or this value is not in the whitelist
-        if (count($white_list) == 0 || 
-                !in_array($this->error, $white_list)) {
-            // Clear any error or error code
-            $this->error = "";
-            $this->code = self::CODE_SUCCESS;
-        }
-    }
-
-    // Function to throw an exception
-    public function throwError() {
-        throw new \Exception($this->error, $this->code);
+    public function setError($error, $code) {
+        $this->error = $error;
+        $this->code  = $code;
     }
     
     // Function to set the data to return
@@ -54,7 +29,7 @@ class Message {
     public function sendMessage() {
         $message = [
             "error" => hasString($this->error) ? getString($this->error) : $this->error,
-            "data" => $this->data
+            "data" => $this->data ? $this->data : ""
         ];
         
         http_response_code($this->code);

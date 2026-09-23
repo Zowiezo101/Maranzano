@@ -2,184 +2,146 @@
 
 namespace Classes;
 
-class Reset extends Auth {
+class Reset {
+    // Other classes
+    private $user;    
+    private $player;    
+    private $token;    
+    private $parameters;      
+    
+    public function __construct() {
+        $this->parameters = new Parameters();
+        $this->user = new User();
+        $this->player = new Player();
+        $this->token = new Token();
+    }
+    
+    public function route($route, $data) {
+        $result = null;
+        
+        // Parse the input data
+        $this->parameters->setData($data);
+        
+        switch($route) {
+            case "reset_password":
+                $result = $this->resetPassword();
+                break;
+            
+            case "reset_validate":
+                $result = $this->validatePassword();
+                break;
+            
+            case "reset_update":
+                $result = $this->updatePassword();
+                break;
+        }
+        
+        return $result;
+    }
     
     public function resetPassword() {
         
-        // Possible database error, do NOT continue
-        if ($this->hasError()) {
-            return;
-        }
+        // Try to get the expected parameters
+        $email = $this->parameters->getEmail();
         
-        // Get only these parameters, all other parameters are ignored
-        $param_list = [
-            self::PARAM_EMAIL
-        ];
+        // Retrieve the user if it exists with this email address
+        $user = $this->user->retrieveUserFromEmail($email);
+        if (isset($user)) {
+
+            // Update the parameters with the user
+            $id   = $user["id"];
+            $name = $user["name"];
+
+            // Invalidate all previous tokens
+            $this->token->invalidateResetTokens($id);
+
+            // Generate new token
+            $token = $this->token->createResetToken($id);
+
+            // Send the new token via email
+            $this->token->sendResetToken($email, $name, $token);
             
-        // Retrieve the parameters
-        $parameters = $this->getParameters($param_list);
-        
-        try {
-            // Validate parameters
-            if ($this->validateParameters($param_list, $parameters)) {                
-        
-                // Get user from database
-                $user = $this->user->getUser($parameters);
-                    
-                // Update the parameters with the user
-                $parameters[self::PARAM_ID]   = $user["id"];
-                $parameters[self::PARAM_USER] = $user["name"];
-                    
-                // Invalidate all previous tokens
-                $this->token->invalidateResetTokens($parameters);
-
-                // Generate new token
-                $token = $this->token->createResetToken($parameters);
-
-                // Insert the token into the parameter array
-                $parameters[self::PARAM_TOKEN] = $token;
-
-                // Send the new token via email
-                $this->token->sendResetToken($parameters);
-            } else {
-                // We're not gonna let the client know if anything went wrong
-                $this->clearError();
-                
-                // Keep response timing similar even when the email is not found.
-                usleep(500000);
-            }
-            
-        } catch (\Exception) {
-            // Something went wrong
-            $this->setError("reset.error", Message::CODE_ERROR);
+        } else {
+            // Keep response timing similar even when the email is not found.
+            usleep(500000);
         }
     }
     
     public function validatePassword() {
         
-        // Possible database error, do NOT continue
-        if ($this->hasError()) {
-            return;
-        }
+        // Try to get the expected parameters
+        $token_hex = $this->parameters->getToken();
         
-        // Get only these parameters, all other parameters are ignored
-        $param_list = [
-            self::PARAM_TOKEN
+        // Retrieve the token
+        $token = $this->token->retrieveResetToken($token_hex);   
+
+        // Store the user ID of this token (if set)
+        $id = $token["user_id"];    
+
+        // Get user from database
+        $user = $this->user->getUser(id:$id);
+
+        // Update the parameters with the user
+        $name = $user["name"];
+
+        // Set the data
+        return [
+            "name" => $name
         ];
-            
-        // Retrieve the parameters
-        $parameters = $this->getParameters($param_list);
-        
-        try {            
-            // Validate parameters
-            if ($this->validateParameters($param_list, $parameters)) {  
-        
-                // Retrieve the token
-                $token = $this->token->retrieveResetToken($parameters);   
-                
-                // Store the user ID and token ID of this token (if set)
-                $parameters[self::PARAM_ID]       = $token["user_id"];
-                $parameters[self::PARAM_TOKEN_ID] = $token["id"];      
-        
-                // Get user from database
-                $user = $this->user->getUser($parameters);
-                    
-                // Update the parameters with the user
-                $parameters[self::PARAM_EMAIL] = $user["email"];
-                $parameters[self::PARAM_USER]  = $user["name"];
-                
-                // Set the data
-                $this->message->setData([
-                    "name" => $parameters[self::PARAM_USER]
-                ]);
-            } else {
-                $this->setError("validate.error");
-            }
-            
-        } catch (\Exception) {
-            // Something went wrong
-            $this->setError("validate.error", Message::CODE_ERROR);
-        }
     }
     
     public function updatePassword() {
         
-        // Possible database error, do NOT continue
-        if ($this->hasError()) {
-            return;
-        }
+        // Try to get the expected parameters
+        $token_hex = $this->parameters->getToken();
+        $pass = $this->parameters->getPass2(); 
         
-        // Get only these parameters, all other parameters are ignored
-        $param_list = [
-            self::PARAM_TOKEN,
-            self::PARAM_PASS,
-            self::PARAM_PASS2
-        ];
-            
-        // Retrieve the parameters
-        $parameters = $this->getParameters($param_list);
-        
-        try {            
-            // Validate parameters
-            if ($this->validateParameters($param_list, $parameters)) {  
-        
-                // Retrieve the token
-                $token = $this->token->retrieveResetToken($parameters);   
-                
-                // Store the user ID and token ID of this token (if set)
-                $parameters[self::PARAM_ID]       = $token["user_id"];
-                $parameters[self::PARAM_TOKEN_ID] = $token["id"];
-        
-                // Get user from database
-                $user = $this->user->getUser($parameters);
-                    
-                // Update the parameters with the user
-                $parameters[self::PARAM_EMAIL] = $user["email"];
-                $parameters[self::PARAM_USER]  = $user["name"];
-    
-                // Generate the password hash
-                $hash = password_hash($parameters[self::PARAM_PASS], PASSWORD_DEFAULT);
-    
-                // Update the password
-                $update = ["pass_hash" => $hash];
-                $this->user->updateUser($parameters[self::PARAM_ID], $update);
+        // Retrieve the token
+        $token = $this->token->retrieveResetToken($token_hex);   
 
-                // In case of no errors, send an update mail
-                $this->sendResetConfirmation($parameters);
+        // Store the user ID and token ID of this token (if set)
+        $id       = $token["user_id"];
+        $token_id = $token["id"];
 
-                // Invalidate the token
-                $this->token->updateResetToken($parameters);
-            } else {
-                $this->setError("update.error");
-            }
-            
-        } catch (\Exception) {
-            // Something went wrong
-            $this->setError("update.error", Message::CODE_ERROR);
-        }
+        // Get user from database
+        $user = $this->user->getUser(id:$id);
+
+        // Update the parameters with the user
+        $email = $user["email"];
+        $name  = $user["name"];
+
+        // Generate the password hash
+        $hash = password_hash($pass, PASSWORD_DEFAULT);
+
+        // Update the password
+        $update = ["pass_hash" => $hash];
+        $this->user->updateUser($id, $update);
+
+        // In case of no errors, send an update mail
+        $this->sendResetConfirmation($email, $name);
+
+        // Invalidate the token
+        $this->token->updateResetToken($token_id);
     }
     
     // Function to send a verification token
-    private function sendResetConfirmation($params) {
+    private function sendResetConfirmation($email, $name) {
         
         // To send emails
         $mailer = new Mailer();
     
         // The recipient to send the email to
         $recipient = [
-            "email" => $params[Auth::PARAM_EMAIL],
-            "name"  => $params[Auth::PARAM_USER]
+            "email" => $email,
+            "name"  => $name
         ];
 
         // Get the email subject and body
         $subject = getString("reset.success");
         $body    = getString("update.confirm");
-        
-        // The user name
-        $user  = $params[Auth::PARAM_USER];
 
         // Insert the name and token
-        $body1 = str_replace("[user]", $user, $body);
+        $body1 = str_replace("[user]", $name, $body);
 
         // Insert all the data to send the mail
         $mailer->sendMail($recipient, $subject, $body1);

@@ -396,7 +396,7 @@
         // Put the data in an easier-to-send format
         var data = {
             "email": registerEmail,
-            "user": registerUser,
+            "player": registerUser,
             "pass": registerPassword,
             "pass2": registerPassword2
         };

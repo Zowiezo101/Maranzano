@@ -7,32 +7,30 @@ use PDO;
 class User {
     // Other classes
     protected $db;
-    protected $message;
     
-    public function __construct($message = null) {
+    public function __construct() {
+        // To connect to the database
+        $this->db = new Database();
+    }
+    
+    /**
+     * Availabilty function
+     */
+    public function isEmailAvailable($email) {
+        $user = $this->retrieveUserFromEmail($email);
         
-        // For the error messages
-        if (isset($message)) {
-            $this->setMessage($message);
-        } else {
-            $this->message = new Message();
+        if (isset($user)) {
+            // This email address is not available
+            throwError("auth.email.taken", Message::CODE_INVALID);
         }
-        
-        // Link the message class for error messages
-        $this->db = new Database($this->message);
     }
     
     /**
      * User data function
      */
 
-    public function createUser($params) {
+    public function createUser($email, $user, $pass) {
         $conn = $this->db->getConnection();
-        
-        // The parameters
-        $email = $params[Auth::PARAM_EMAIL];
-        $user  = $params[Auth::PARAM_USER];
-        $pass  = $params[Auth::PARAM_PASS];
 
         // Generate the password hash
         $hash = password_hash($pass, PASSWORD_DEFAULT);
@@ -58,7 +56,7 @@ class User {
         
         if (!isset($id)) {
             // Do NOT continue is the user hasn't been created
-            $this->message->throwError();
+            throwError();
         }
         
         return $id;
@@ -94,20 +92,20 @@ class User {
         $stmt->execute();
     }
     
-    public function getUser($parameters) {        
+    public function getUser($email = null, $id = null, $name = null) {        
         // Try to get the user with the email address
-        if (isset($parameters[Auth::PARAM_EMAIL])) {
-            $email_user = $this->retrieveUserFromEmail($parameters[Auth::PARAM_EMAIL]);
+        if (isset($email)) {
+            $email_user = $this->retrieveUserFromEmail($email);
         }
         
         // Try to get the user with the ID
-        if (isset($parameters[Auth::PARAM_ID])) {
-            $id_user = $this->retrieveUserFromId($parameters[Auth::PARAM_ID]);
+        if (isset($id)) {
+            $id_user = $this->retrieveUserFromId($id);
         }
         
         // Try to get the user with the username
-        if (isset($parameters[Auth::PARAM_USER])) {
-            $name_user = $this->retrieveUserFromName($parameters[Auth::PARAM_USER]);
+        if (isset($name)) {
+            $name_user = $this->retrieveUserFromName($name);
         }
         
         // If one of them has a match, the first one will be returned
@@ -119,7 +117,7 @@ class User {
         
         if (!isset($user)) {                
             // Do NOT continue if this user isn't found
-            $this->message->throwError();
+            throwError();
         }
         
         // Return the user
@@ -191,13 +189,5 @@ class User {
         $result = getResults($stmt);
         
         return $result;
-    }
-    
-    /**
-     * Setters & Getters
-     */
-    
-    public function setMessage($message) {
-        $this->message = $message;
     }
 }

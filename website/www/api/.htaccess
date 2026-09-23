@@ -1,0 +1,45 @@
+
+RewriteEngine On
+
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
+
+# TODO: Pas nodig als de website eenmaal live gaat 
+# (Anders kan je niet met andere apparaten erop)
+# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+# RewriteRule ^ %{REQUEST_SCHEME}://%1%{REQUEST_URI} [R=301,L]
+
+# RewriteCond %{HTTPS} off
+# RewriteCond %{HTTP_HOST} !=localhost
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301] 
+
+# Authentication actions
+RewriteRule ^(.*)register$ $1/api/index?route=register_user [QSA,DPI]
+RewriteRule ^(.*)verify$   $1/api/index?route=register_verify [QSA,DPI]
+RewriteRule ^(.*)reset$    $1/api/index?route=reset_password [QSA,DPI]
+RewriteRule ^(.*)validate$ $1/api/index?route=reset_validate [QSA,DPI]
+RewriteRule ^(.*)update$   $1/api/index?route=reset_update [QSA,DPI]
+RewriteRule ^(.*)login$    $1/api/index?route=login_session [QSA,DPI]
+RewriteRule ^(.*)session$  $1/api/index?route=login_validate [QSA,DPI]
+RewriteRule ^(.*)logout$   $1/api/index?route=login_logout [QSA,DPI]
+
+# Player info
+RewriteRule ^(.*)get_player_info$   $1/api/index?route=get_info [QSA,DPI]
+RewriteRule ^(.*)get_player_stats$  $1/api/index?route=get_stats [QSA,DPI]
+
+# Player actions
+RewriteRule ^(.*)create_new_player$ $1/api/index?route=player_reset [QSA,DPI]
+
+# Making sure things are redirected to the correct file types
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.htm -f
+RewriteRule ^(.*)$ $1.htm
