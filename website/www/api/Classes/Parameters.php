@@ -22,7 +22,12 @@ class Parameters {
         $COOKIE = $this->getCOOKIEData();
         $POST = $this->getPOSTData();
         
-        return array_merge($COOKIE, $POST);
+        $data = [
+            "POST" => $POST,
+            "COOKIE" => $COOKIE
+        ];
+        
+        return $data;
     }
     
     private function getPOSTData() {
@@ -88,19 +93,26 @@ class Parameters {
     /**
      * Getters for data
      */
-    public function getToken() {
+    public function getToken($from_cookie = false) {
         $result = null;
         
+        // Normally get everything from the POST parameters
+        $source = "POST";
+        if ($from_cookie === true) {
+            // Try to get token from cookie
+            $source = "COOKIE";
+        }
+        
         // Validate the token
-        if (!isset($this->data["token"])) {
+        if (!isset($this->data[$source]["token"])) {
             // Token isn't set
             throwError("auth.token.invalid", Message::CODE_INVALID);
-        } else if((strlen($this->data["token"]) !== 100) || !ctype_xdigit($this->data["token"])){
+        } else if((strlen($this->data[$source]["token"]) !== 100) || !ctype_xdigit($this->data[$source]["token"])){
             // The token needs to be 100 characters (50 hexadecimal bytes)
             throwError("auth.token.invalid", Message::CODE_INVALID);
         } else {
             // Valid token
-            $result = $this->data["token"];
+            $result = $this->data[$source]["token"];
         }
         
         return $result;
@@ -110,35 +122,45 @@ class Parameters {
         
         $result = null;
         
+        // Get everything from the POST body
+        $source = "POST";
+        
         // Validate the email
-        if (!isset($this->data["email"])) {
+        if (!isset($this->data[$source]["email"])) {
             // Email isn't set
             throwError("auth.email.invalid", Message::CODE_INVALID);
-        } else if (!filter_var($this->data["email"], FILTER_VALIDATE_EMAIL)) {
+        } else if (!filter_var($this->data[$source]["email"], FILTER_VALIDATE_EMAIL)) {
             // Not a valid email address
             throwError("auth.email.invalid", Message::CODE_INVALID);
         } else {
             // This email address is valid
-            $result = $this->data["email"];
+            $result = $this->data[$source]["email"];
         }
         
         return $result;
     }
     
-    public function getUser() {
+    public function getUser($from_cookie = false) {
         
         $result = null;
         
+        // Normally get everything from the POST parameters
+        $source = "POST";
+        if ($from_cookie === true) {
+            // Try to get token from cookie
+            $source = "COOKIE";
+        }
+        
         // Validate the username
-        if (!isset($this->data["user"])) {
+        if (!isset($this->data[$source]["user"])) {
             // Username isn't set
             throwError("auth.user.invalid", Message::CODE_INVALID);
-        } else if (!preg_match('/^[a-zA-Z0-9_]+$/', $this->data["user"])) {
+        } else if (!preg_match('/^[a-zA-Z0-9_]+$/', $this->data[$source]["user"])) {
             // Not a valid username
             throwError("auth.user.invalid", Message::CODE_INVALID);
         } else {
             // This username is valid
-            $result = $this->data["user"];
+            $result = $this->data[$source]["user"];
         }
         
         return $result;
@@ -148,16 +170,19 @@ class Parameters {
         
         $result = null;
         
+        // Get everything from the POST body
+        $source = "POST";
+        
         // Validate the playername
-        if (!isset($this->data["player"])) {
+        if (!isset($this->data[$source]["player"])) {
             // Playername isn't set
             throwError("auth.user.invalid", Message::CODE_INVALID);
-        } else if (!preg_match('/^[a-zA-Z0-9_]+$/', $this->data["player"])) {
+        } else if (!preg_match('/^[a-zA-Z0-9_]+$/', $this->data[$source]["player"])) {
             // Not a valid playername
             throwError("auth.user.invalid", Message::CODE_INVALID);
         } else {
             // This playername is valid
-            $result = $this->data["player"];
+            $result = $this->data[$source]["player"];
         }
         
         return $result;
@@ -166,16 +191,19 @@ class Parameters {
     public function getPass() {
         $result = null;
         
+        // Get everything from the POST body
+        $source = "POST";
+        
         // Validate the password
-        if (!isset($this->data["pass"])) {
+        if (!isset($this->data[$source]["pass"])) {
             // Password isn't set
             throwError("auth.pass1.invalid", Message::CODE_INVALID);
-        } else if(strlen($this->data["pass"]) < 8){
+        } else if(strlen($this->data[$source]["pass"]) < 8){
             // The password needs to be at least 8 characters
             throwError("auth.pass1.invalid", Message::CODE_INVALID);
         } else {
             // Valid password
-            $result = $this->data["pass"];
+            $result = $this->data[$source]["pass"];
         }
         
         return $result;
@@ -184,19 +212,22 @@ class Parameters {
     public function getPass2() {
         $result = null;
         
+        // Get everything from the POST body
+        $source = "POST";
+        
         // Validate the first password first
         $this->getPass();
         
         // Validate the password
-        if (!isset($this->data["pass2"])) {
+        if (!isset($this->data[$source]["pass2"])) {
             // Password isn't set
             throwError("auth.pass2.invalid", Message::CODE_INVALID);
-        } else if($this->data["pass"] !== $this->data["pass2"]){
+        } else if($this->data[$source]["pass"] !== $this->data[$source]["pass2"]){
             // The password and confirmation need to match
             throwError("auth.pass2.invalid", Message::CODE_INVALID);
         } else {
             // Valid password
-            $result = $this->data["pass2"];
+            $result = $this->data[$source]["pass2"];
         }
         
         return $result;
@@ -206,7 +237,7 @@ class Parameters {
      * Validation functions
      */
     
-    protected function validatePass2($pass1, $pass2) {
+    public function validatePass2($pass1, $pass2) {
         $result = null;
         
         if($pass1 !== $pass2){
@@ -217,6 +248,24 @@ class Parameters {
             $result = $pass1;
         }
         
+        return $result;
+    }
+    
+    /**
+     * Functions to check if a parameter is set
+     */
+    
+    public function hasTokenCookie() {
+        $result = isset($this->data["COOKIE"]["token"]) && ($this->data["COOKIE"]["token"] !== "");
+
+        // Return is this cookie is set
+        return $result;
+    }
+    
+    public function hasUserCookie() {        
+        $result = isset($this->data["COOKIE"]["user"]) && ($this->data["COOKIE"]["user"] !== "");
+
+        // Return is this cookie is set
         return $result;
     }
 }

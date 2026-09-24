@@ -79,12 +79,17 @@ class Login {
     public function validateSession() {
         
         // Try to get the expected parameters
-        $token_hex = $this->parameters->getToken();
-        $user = $this->parameters->getUser();
+        if ($this->parameters->hasTokenCookie()) {
+            $token_hex = $this->parameters->getToken(from_cookie: true);
+        }
+        
+        if ($this->parameters->hasUserCookie()) {
+            $user = $this->parameters->getUser(from_cookie: true);
+        }
         
         // Get the token from the database
         $token = $this->token->retrieveLoginTokenFromUser($user);
-        if (isset($token)) {
+        if (isset($token) && isset($token_hex) && isset($user)) {
             
             // Update the parameters with the user
             $token_hash = $token["token"];

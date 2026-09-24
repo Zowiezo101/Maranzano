@@ -87,7 +87,7 @@ class Player {
         $result = null;
         
         // The username that is given via the cookie
-        $user_name = $this->parameters->getUser();
+        $user_name = $this->parameters->getUser(from_cookie: true);
         
         // Get the user using the username
         $user = $this->user->getUser(name: $user_name);
@@ -115,7 +115,7 @@ class Player {
         $result = null;
         
         // The username that is given via the cookie
-        $user_name = $this->parameters->getUser();
+        $user_name = $this->parameters->getUser(from_cookie: true);
         
         // Get the user using the username
         $user = $this->user->getUser(name: $user_name);
