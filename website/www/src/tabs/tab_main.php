@@ -62,7 +62,36 @@
                                     
                                     <!-- The Travel Tab -->
                                     <div class="tab-pane" id="tabTravel" role="tabpanel">
-                                        Travel
+                                        <div class="row">
+                                            <div class="col p-0">
+                                                <!-- The travel header -->
+                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-bold bg-body-tertiary border border-3 border-black"><?php printString("main.travel"); ?></h3>
+                                                
+                                                <!-- The travel image -->
+                                                <img class="img-fluid mb-3 border border-3 border-black border-top-0" src="../img/Travel.jpg"/>
+                                                
+                                                <!-- The travel body -->
+                                                <form id="travelForm">
+                                                    <!-- The location -->
+                                                    <div class="mb-3 mx-3 text-center">
+                                                        <label for="travel" class="form-label"><b class="fst-normal"><?php printString("travel.where_to")?></b></label>
+                                                        <select class="form-select bg-body-secondary" id="travel">
+                                                            <option selected><?php printString("travel.select"); ?></option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Travel button -->
+                                                    <div class="mb-3 mx-5 row">
+                                                        <button type="submit" class="btn btn-primary border border-3 border-black"><?php printString("main.travel")?></button>
+                                                    </div>
+
+                                                    <!-- Error message -->
+                                                    <div id="travelError" class="mb-4 mx-3 text-center text-warning d-none">
+                                                        <!-- Filled in later in case of error -->
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <!-- The Jail Tab -->

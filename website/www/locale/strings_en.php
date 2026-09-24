@@ -130,6 +130,10 @@ $strings = [
     "info.jail" => "Time spent in Jail (Minutes)",
     "info.hospital" => "Time spent in Hospital (Minutes)",
     
+    // Travel page
+    "travel.where_to" => "Where do you want to travel to?",
+    "travel.select" => "Select a new location",
+    
     // You died
     "info.died" => "You died!! You were killed by ",
     "info.new-name" => "Your new Mafia name",
@@ -170,6 +174,8 @@ $strings = [
 
     // API stuff
     "auth.db_error" => "It seems we currently have some issues with the database.. Please try again later",
+    "auth.player.invalid" => "This name is invalid, please only use underscores, letters and numbers",
+    "auth.player.taken" => "This name is already taken",
     "auth.user.invalid" => "This username is invalid, please only use underscores, letters and numbers",
     "auth.user.taken" => "This username is already taken",
     "auth.email.invalid" => "This e-mail address is invalid, please use a valid e-mail address",

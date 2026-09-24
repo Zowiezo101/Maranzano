@@ -39,6 +39,7 @@ class Parameters {
             "pass",
             "pass2",
             "token",
+            "location",
         ];
         
         $parameters = [];
@@ -176,10 +177,10 @@ class Parameters {
         // Validate the playername
         if (!isset($this->data[$source]["player"])) {
             // Playername isn't set
-            throwError("auth.user.invalid", Message::CODE_INVALID);
+            throwError("auth.player.invalid", Message::CODE_INVALID);
         } else if (!preg_match('/^[a-zA-Z0-9_]+$/', $this->data[$source]["player"])) {
             // Not a valid playername
-            throwError("auth.user.invalid", Message::CODE_INVALID);
+            throwError("auth.player.invalid", Message::CODE_INVALID);
         } else {
             // This playername is valid
             $result = $this->data[$source]["player"];

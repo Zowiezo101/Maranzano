@@ -14,7 +14,7 @@ RewriteEngine On
 # RewriteCond %{HTTP_HOST} !=localhost
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301] 
 
-# Authentication actions
+# Authentication requests
 RewriteRule ^(.*)register$ $1/api/index?route=register_user [QSA,DPI]
 RewriteRule ^(.*)verify$   $1/api/index?route=register_verify [QSA,DPI]
 RewriteRule ^(.*)reset$    $1/api/index?route=reset_password [QSA,DPI]
@@ -24,12 +24,17 @@ RewriteRule ^(.*)login$    $1/api/index?route=login_session [QSA,DPI]
 RewriteRule ^(.*)session$  $1/api/index?route=login_validate [QSA,DPI]
 RewriteRule ^(.*)logout$   $1/api/index?route=login_logout [QSA,DPI]
 
-# Player info
-RewriteRule ^(.*)get_player_info$   $1/api/index?route=get_info [QSA,DPI]
-RewriteRule ^(.*)get_player_stats$  $1/api/index?route=get_stats [QSA,DPI]
+# Player requests
+RewriteRule ^(.*)get_player_info$   $1/api/index?route=player_info [QSA,DPI]
+RewriteRule ^(.*)get_player_stats$  $1/api/index?route=player_stats [QSA,DPI]
 
-# Player actions
-RewriteRule ^(.*)create_new_player$ $1/api/index?route=player_reset [QSA,DPI]
+# Action requests
+RewriteRule ^(.*)create_new_player$ $1/api/index?route=action_player_reset [QSA,DPI]
+
+# Location requests
+RewriteRule ^(.*)get_locations$   $1/api/index?route=location_all [QSA,DPI]
+RewriteRule ^(.*)move_to_location $1/api/index?route=location_update [QSA,DPI]
+
 
 # Making sure things are redirected to the correct file types
 RewriteCond %{REQUEST_FILENAME} !-d

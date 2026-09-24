@@ -55,12 +55,16 @@ class Player {
         $this->parameters->setData($data);
         
         switch($route) {
-            case "get_info":
+            case "player_info":
                 $result = $this->getPlayerInfo();
                 break;
             
-            case "get_stats":
+            case "player_stats":
                 $result = $this->getPlayerStats();
+                break;
+            
+            case "player_reset":
+                $result = $this->resetPlayer();
                 break;
         }
         
@@ -75,7 +79,7 @@ class Player {
         
         if (isset($player)) {
             // This email address is not available
-            throwError("auth.user.taken", Message::CODE_INVALID);
+            throwError("auth.player.taken", Message::CODE_INVALID);
         }
     }
     
@@ -234,6 +238,10 @@ class Player {
         
         return $result;
     }
+    
+    /**
+     * Player properties
+     */
     
     public function getOnlineFriends() {
         // TODO:

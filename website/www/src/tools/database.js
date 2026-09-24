@@ -9,8 +9,17 @@ function fetchPlayerStats() {
     return fetchGet("get_player_stats");
 }
 
+// Get the list of locations to travel to
+function fetchAllLocations() {
+    return fetchGet("get_locations");
+}
+
 function fetchNewPlayer(data) {
-    return fetchPost("get_new_player", data);
+    return fetchPost("create_new_player", data);
+}
+
+function fetchTravel(data) {
+    return fetchPost("move_to_location", data);
 }
 
 // Send a post request to the given URL with fetch
@@ -47,12 +56,20 @@ function fetchRequest(url, method, data = null) {
     var response = fetch(base_url + url, fetch_options);
 
     // The response
-    return response.then(
-        response => response.text()
-    ).then (function (response) {
+    return response.then(function (response) {
+        isCookieValid(response);
+        return response.text();
+    }).then (function (response) {
         console.log(response);
         return JSON.parse(response);
     });
+}
+
+function isCookieValid(response) {
+    if(response.status === 401) {
+        // Cookie is no longer valid, we need to refresh the page
+        window.location.href = "\\";
+    }
 }
 
 

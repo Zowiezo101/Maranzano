@@ -32,13 +32,18 @@ class Controller {
         }
         
         // Player info
-        else if (str_starts_with($route, "get")) {
+        else if (str_starts_with($route, "player")) {
             $controller = new Player();
         }
         
         // Player actions
-        else if (str_starts_with($route, "player")) {
+        else if (str_starts_with($route, "action")) {
             $controller = new Action();
+        }
+        
+        // Player actions
+        else if (str_starts_with($route, "location")) {
+            $controller = new Location();
         }
         
         if (isset($controller)) {

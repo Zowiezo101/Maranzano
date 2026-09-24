@@ -1,5 +1,5 @@
 
-function insertHomeData() {
+function onHomeTab() {
     var statsError = $("#playerStatsError");
     var crimeError = $("#playerCrimeError");
     var statsTable = $("#playerStats");
@@ -32,9 +32,26 @@ function insertHomeData() {
     });
 }
 
+function onTravelTab() {
+    
+    // The fetch call
+    fetchAllLocations().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong
+        } else {
+            // Success, update the select list
+            updateSelect("travel", results.data);
+        }
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
     
 // Create a fetch call to prevent reloading the page
-function onSubmitReset(event) {
+function onSubmitNewPlayer(event) {
     event.preventDefault();
         
     // Remove any previous errors
@@ -65,9 +82,41 @@ function onSubmitReset(event) {
         alert("error: " + results);
     });
 }
+// Create a fetch call to prevent reloading the page
+function onSubmitTravel(event) {
+    event.preventDefault();
+        
+    // Remove any previous errors
+    onResetError("#travelError");
+        
+    // The new location for this player
+    var location = $("#travel").val();
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "location" : location
+    };
+    
+    fetchTravel(data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#travelError");
+        } else {
+            // Successfully traveled
+            // TODO: Show success message
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
 
 $(function() {
     // Set prevent page reloading when submitting form
     $("#newPlayerForm").on("submit", function(e) {onSubmitNewPlayer(e);});
+    $("#travelForm").on("submit", function(e) {onSubmitTravel(e);});
 });
 

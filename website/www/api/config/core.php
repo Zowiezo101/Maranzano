@@ -1,5 +1,8 @@
 <?php
 
+// This needs to be started at the very beginning
+session_start();
+
 // Settings
 require __DIR__ . "/../../../settings.conf";
 
@@ -14,6 +17,7 @@ require __DIR__ . "/../Classes/Reset.php";
 require __DIR__ . "/../Classes/Login.php";
 require __DIR__ . "/../Classes/User.php";
 require __DIR__ . "/../Classes/Player.php";
+require __DIR__ . "/../Classes/Action.php";
 require __DIR__ . "/../Classes/Database.php";
 require __DIR__ . "/../Classes/Mailer.php";
 require __DIR__ . "/../Classes/Message.php";

@@ -79,10 +79,12 @@ class Login {
     public function validateSession() {
         
         // Try to get the expected parameters
+        $token_hex = null;
         if ($this->parameters->hasTokenCookie()) {
             $token_hex = $this->parameters->getToken(from_cookie: true);
         }
         
+        $user = null;
         if ($this->parameters->hasUserCookie()) {
             $user = $this->parameters->getUser(from_cookie: true);
         }
@@ -103,10 +105,11 @@ class Login {
             $this->createCookies($token_hex, $user, $invalidate_cookie);
             
             // Clear the session as well
-            session_reset();
+            $_SESSION = [];
+            session_destroy();
             
             // Throw the rror
-            throwError("session.error", Message::CODE_ERROR);
+            throwError("auth.token.invalid", Message::CODE_UNAUTHETICATED);
         }
     }
     

@@ -40,7 +40,11 @@ function onShowTab(event) {
     // Insert the data per tab
     switch(event.target.id) {
         case "btnHome":
-            insertHomeData();
+            onHomeTab();
+            break;
+            
+        case "btnTravel":
+            onTravelTab();
             break;
     }
 }
@@ -88,30 +92,6 @@ function insertPlayerInfo(data) {
 
     // Update the tabs
     updateTabs(data);
-}
-
-function updateTable(table, data) {
-    for (var [key, value] of Object.entries(data)) {
-        if (key === "rank" || key === "prank") {
-            // Use the rank name
-            value = getRankName(value);
-        }
-
-        $("#data" + ucfirst(table) + ucfirst(key)).text(value);
-    };
-}
-
-function updateTabs(data) {
-    var rank = parseInt(data["rank"]);
-    
-    // For all ranks
-    for (var i = 1; i <= Object.keys(ranks).length; i++) {
-        // If the player's rank is high enough
-        if (rank >= i) {
-            // Show the corresponding tabs
-            $("[data-rank=" + i + "]").removeClass("d-none");
-        }
-    }
 }
 
 function isAlive(data) {
@@ -163,6 +143,9 @@ $(function () {
 
     // Load the home tab after the page has loaded
     $("#btnHome").tab('show');
+    
+    // TODO: Temp different starting tab
+    $("#btnTravel").tab('show');
 });
 
 
