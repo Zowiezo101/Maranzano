@@ -131,8 +131,12 @@ $strings = [
     "info.hospital" => "Time spent in Hospital (Minutes)",
     
     // Travel page
+    "travel.info" => "A traveling ticket costs €3.000. You can travel once every 30 minutes.",
     "travel.where_to" => "Where do you want to travel to?",
     "travel.select" => "Select a new location",
+    "travel.broke" => "You don't have enough cash to buy a ticket",
+    "travel.current" => "You already are in this city",
+    "travel.cooldown" => "You traveled less than [cooldown] minutes ago, you still need to wait [time] minute(s)",
     
     // You died
     "info.died" => "You died!! You were killed by ",
@@ -195,6 +199,9 @@ $strings = [
     "login.error" => "Something went wrong while trying to log you in",
     "logout.error" => "Something went wrong while trying to log you out",
     "player.error" => "Something went wrong while trying to create a new player",
+    
+    // Data stuff
+    "data.location.invalid" => "Please select a valid location",
     
     // Misc
     "global.copyright" => "<b>Copyright 2026 - ??</b>"

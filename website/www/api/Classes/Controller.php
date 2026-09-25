@@ -36,9 +36,9 @@ class Controller {
             $controller = new Player();
         }
         
-        // Player actions
-        else if (str_starts_with($route, "action")) {
-            $controller = new Action();
+        // Travel actions
+        else if (str_starts_with($route, "travel")) {
+            $controller = new Travel();
         }
         
         // Player actions

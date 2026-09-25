@@ -106,6 +106,12 @@ function onSubmitTravel(event) {
         } else {
             // Successfully traveled
             // TODO: Show success message
+            
+            // Update the table with the new location
+            updatePlayerInfo();
+            
+            // Update this tab as well
+            onTravelTab();
         }
 
     }).catch(function(results) {

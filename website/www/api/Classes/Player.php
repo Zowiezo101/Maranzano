@@ -166,6 +166,31 @@ class Player {
         return $result;        
     }
     
+    private function resetPlayer() {
+        
+        // The username that is given via the cookie
+        $user_name = $this->parameters->getUser(from_cookie: true);
+        
+        // Get the user using the username
+        $user = $this->user->getUser(name: $user_name);
+        
+        if (isset($user)) {
+            // Get the user_id
+            $user_id = $user["id"];
+        
+            // Try to get the expected parameters
+            $player = $this->parameters->getPlayer();
+
+            // Check if the player name is available
+            $this->isPlayerAvailable($player);
+
+            // Create a new player for this user
+            $this->createPlayer($user_id, $player);
+        } else {
+            throwError();
+        }
+    }
+    
     /**
      * Player functions
      */
@@ -195,6 +220,36 @@ class Player {
         }
         
         return $id;
+    }
+    
+    public function updatePlayer($id, $update) {  
+        $conn = $this->db->getConnection();
+        
+        // The values to update for the player
+        $update_arr = [];
+        foreach ($update as $key => $value) {
+            $update_arr[] = "{$key} = :{$key}";
+        }
+        
+        // The SQL for updating the values
+        $update_sql = implode(', ', $update_arr);
+        
+        // Set the SQL
+        $sql = "UPDATE players SET {$update_sql} WHERE id = :id";
+    
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);    
+
+        // Bind the parameter
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);  
+        
+        // Bind the new values as well
+        foreach ($update as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+
+        // Execute the statement
+        $stmt->execute();
     }
     
     public function getPlayer($user_id) {

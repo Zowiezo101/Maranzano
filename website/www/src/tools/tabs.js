@@ -1,6 +1,4 @@
 
-// TODO: update main player info table as well if needed after certain action}
-
 var ranks = {
     // Ranks
     "rank-1": "Rookie",

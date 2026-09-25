@@ -27,13 +27,13 @@ RewriteRule ^(.*)logout$   $1/api/index?route=login_logout [QSA,DPI]
 # Player requests
 RewriteRule ^(.*)get_player_info$   $1/api/index?route=player_info [QSA,DPI]
 RewriteRule ^(.*)get_player_stats$  $1/api/index?route=player_stats [QSA,DPI]
+RewriteRule ^(.*)create_new_player$ $1/api/index?route=player_reset [QSA,DPI]
 
-# Action requests
-RewriteRule ^(.*)create_new_player$ $1/api/index?route=action_player_reset [QSA,DPI]
+# Travel request
+RewriteRule ^(.*)move_to_location   $1/api/index?route=travel_player [QSA,DPI]
 
 # Location requests
 RewriteRule ^(.*)get_locations$   $1/api/index?route=location_all [QSA,DPI]
-RewriteRule ^(.*)move_to_location $1/api/index?route=location_update [QSA,DPI]
 
 
 # Making sure things are redirected to the correct file types

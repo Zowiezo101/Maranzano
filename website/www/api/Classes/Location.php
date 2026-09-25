@@ -42,9 +42,6 @@ class Location {
             case "location_all":
                 $result = $this->getAllLocations();
                 break;
-            case "location_update":
-                $result = $this->updateLocation();
-                break;
         }
         
         return $result;
@@ -85,35 +82,6 @@ class Location {
         return $results;
     }
     
-    public function updateLocation() {
-        $results = null;
-        
-        // The username that is given via the cookie
-        $user_name = $this->parameters->getUser(from_cookie: true);
-        
-        // Get the user using the username
-        $user = $this->user->getUser(name: $user_name);   
-        
-        if (isset($user)) {
-            // Get the user_id
-            $user_id = $user["id"];
-            
-            // Get the player that belongs to this user
-            $player = $this->player->getPlayer($user_id);
-
-            // The location ID
-            // TODO:
-//            $location_id = $this->parameters->getLocation();
-            
-            // Update the player location
-//            $this->player->updatePlayer($player["id"], location:$location_id);
-        } else {
-            throwError();
-        }
-        
-        return $results;
-    }
-    
     /**
      * getters and setters
      */
@@ -126,5 +94,13 @@ class Location {
     public function getCountry($value) {        
         $result = self::LOCATIONS[$value][self::IDX_COUNTRY];
         return $result;
+    }
+    
+    /**
+     * Misc function
+     */
+    
+    public function isValidLocation($location_id) {
+        return array_key_exists($location_id, self::LOCATIONS);
     }
 }

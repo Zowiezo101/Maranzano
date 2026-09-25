@@ -70,13 +70,15 @@
                                                 <!-- The travel image -->
                                                 <img class="img-fluid mb-3 border border-3 border-black border-top-0" src="../img/Travel.jpg"/>
                                                 
+                                                <p class="text-center mb-5"><?php printString("travel.info"); ?></p>
+                                                
                                                 <!-- The travel body -->
                                                 <form id="travelForm">
                                                     <!-- The location -->
                                                     <div class="mb-3 mx-3 text-center">
                                                         <label for="travel" class="form-label"><b class="fst-normal"><?php printString("travel.where_to")?></b></label>
                                                         <select class="form-select bg-body-secondary" id="travel">
-                                                            <option selected><?php printString("travel.select"); ?></option>
+                                                            <option selected disabled><?php printString("travel.select"); ?></option>
                                                         </select>
                                                     </div>
 
