@@ -92,6 +92,10 @@
                                                         <!-- Filled in later in case of error -->
                                                     </div>
                                                 </form>
+                                                
+                                                <div id="travelSuccess" class="text-center d-none">
+                                                    <p><b><?php printString("travel.success"); ?></b></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

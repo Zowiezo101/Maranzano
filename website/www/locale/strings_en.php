@@ -137,6 +137,7 @@ $strings = [
     "travel.broke" => "You don't have enough cash to buy a ticket",
     "travel.current" => "You already are in this city",
     "travel.cooldown" => "You traveled less than [cooldown] minutes ago, you still need to wait [time] minute(s)",
+    "travel.success" => "You have successfully traveled to another location",
     
     // You died
     "info.died" => "You died!! You were killed by ",

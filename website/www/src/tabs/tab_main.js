@@ -33,6 +33,13 @@ function onHomeTab() {
 }
 
 function onTravelTab() {
+            
+    // Remove any lingering messages
+    onResetError("#travelError");
+    
+    // And make sure the form is shown
+    $("#travelSuccess").addClass("d-none");
+    $("#travelForm").removeClass("d-none");
     
     // The fetch call
     fetchAllLocations().then(function(results) {
@@ -43,6 +50,7 @@ function onTravelTab() {
         } else {
             // Success, update the select list
             updateSelect("travel", results.data);
+            
         }
     }).catch(function(results) {
         // Show an error if anything went wrong
@@ -105,13 +113,13 @@ function onSubmitTravel(event) {
             onReturnedError(results.error, "#travelError");
         } else {
             // Successfully traveled
-            // TODO: Show success message
+    
+            // Show the success message
+            $("#travelForm").addClass("d-none");
+            $("#travelSuccess").removeClass("d-none");
             
             // Update the table with the new location
             updatePlayerInfo();
-            
-            // Update this tab as well
-            onTravelTab();
         }
 
     }).catch(function(results) {
