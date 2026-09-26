@@ -43,6 +43,7 @@ class Parameters {
             "pass2",
             "token",
             "location",
+            "amount",
         ];
         
         $parameters = [];
@@ -209,6 +210,28 @@ class Parameters {
         } else {
             // This playername is valid
             $result = $this->data[$source]["player"];
+        }
+        
+        return $result;
+    }
+    
+    public function getAmount() {
+        
+        $result = null;
+        
+        // Get everything from the POST body
+        $source = "POST";
+        
+        // Validate the amount
+        if (!isset($this->data[$source]["amount"])) {
+            // Amount isn't set
+            throwError("data.amount.invalid", Message::CODE_INVALID);
+        } else if (!preg_match('/^[0-9]+$/', $this->data[$source]["amount"])) {
+            // Not a valid amount
+            throwError("data.amount.invalid", Message::CODE_INVALID);
+        } else {
+            // This amount is valid
+            $result = $this->data[$source]["amount"];
         }
         
         return $result;

@@ -23,6 +23,7 @@ require __DIR__ . "/../Classes/Message.php";
 require __DIR__ . "/../Classes/Token.php";
 require __DIR__ . "/../Classes/Action.php";
 require __DIR__ . "/../Classes/Location.php";
+require __DIR__ . "/../Classes/Shop.php";
 require __DIR__ . "/../Classes/Travel.php";
 require __DIR__ . "/../Classes/Crime.php";
 require __DIR__ . "/../Classes/Hospital.php";

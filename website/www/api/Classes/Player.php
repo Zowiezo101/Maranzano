@@ -49,10 +49,10 @@ class Player {
         $auth = new Login();
         $auth->route("login_validate", $data);
         
-        $result = null;
-        
         // Parse the input data
         $this->parameters->setData($data);
+        
+        $result = null;
         
         switch($route) {
             case "player_info":

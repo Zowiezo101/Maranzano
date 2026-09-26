@@ -39,15 +39,25 @@ class Action {
         // Get the user using the username
         $user = $this->user->getUser(name: $user_name);   
         
-        if (isset($user)) {
-            // Get the user_id
-            $user_id = $user["id"];
-            
-            // Get the player that belongs to this user
-            $this->player_data = $this->player->getPlayer($user_id);
-        } else {
+        if (!isset($user)) {
             throwError("player.data.error");
         }
+        
+        // Get the user_id
+        $user_id = $user["id"];
+
+        // Get the player that belongs to this user
+        $this->player_data = $this->player->getPlayer($user_id);
+        
+        // Make sure the player isn't in jail or in the hospital
+        $this->hasCooldown($this->player_data["id"], 
+                Jail::ACTION_TABLE, 
+                null, 
+                "jail.cooldown");
+        $this->hasCooldown($this->player_data["id"], 
+                Hospital::ACTION_TABLE, 
+                null, 
+                "hospital.cooldown");
         
         return $route;
     }
@@ -56,13 +66,13 @@ class Action {
      * Misc functions
      */
     
-    protected function enoughFunds($cash, $cost) {
+    protected function enoughFunds($cash, $cost, $error) {
         if (intval($cash, 10) < $cost) {
-            throwError("travel.broke");
+            throwError($error);
         }
     }
     
-    protected function hasCooldown($player_id, $table, $cooldown) {
+    protected function hasCooldown($player_id, $table, $cooldown, $error) {
         $conn = $this->db->getConnection();
         
         // Retrieve the token from the token table
@@ -84,7 +94,7 @@ class Action {
         if (isset($result)) {
             // A result means that the user still has a cooldown
             // Prepare an error
-            $error = getString("travel.cooldown");
+            $error = getString($error);
             
             // Calculate the time left to wait
             $time = $this->calculateWaitingTime($result["expires_at"]);

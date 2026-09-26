@@ -29,6 +29,10 @@ RewriteRule ^(.*)get_player_info$   $1/api/index?route=player_info [QSA,DPI]
 RewriteRule ^(.*)get_player_stats$  $1/api/index?route=player_stats [QSA,DPI]
 RewriteRule ^(.*)create_new_player$ $1/api/index?route=player_reset [QSA,DPI]
 
+# Shop request
+RewriteRule ^(.*)buy_bullets  $1/api/index?route=shop_offensive [QSA,DPI]
+RewriteRule ^(.*)swap_bullets $1/api/index?route=shop_defensive [QSA,DPI]
+
 # Travel request
 RewriteRule ^(.*)move_to_location   $1/api/index?route=travel_player [QSA,DPI]
 

@@ -34,10 +34,13 @@ class Travel extends Action {
         $location_id = $this->parameters->getLocation();
 
         // Make sure the player has enough cash to pay for their ticket
-        $this->enoughFunds($player["cash"], self::ACTION_COST);
+        $this->enoughFunds($player["cash"], self::ACTION_COST, "travel.broke");
 
         // Make sure the player isn't on a cooldown
-        $this->hasCooldown($player["id"], self::ACTION_TABLE, self::ACTION_COOLDOWN);
+        $this->hasCooldown($player["id"], 
+                self::ACTION_TABLE, 
+                self::ACTION_COOLDOWN, 
+                "travel.cooldown");
 
         // Make sure we're not traveling to the city we're already in
         $this->differentLocation($player["location"], $location_id);

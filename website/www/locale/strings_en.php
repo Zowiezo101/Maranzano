@@ -139,6 +139,18 @@ $strings = [
     "travel.cooldown" => "You traveled less than [cooldown] minutes ago, you still need to wait [time] minute(s)",
     "travel.success" => "You have successfully traveled to another location",
     
+    // Jail page
+    "jail.cooldown" => "You can't do that right now, you are still in jail for [time] minutes",
+    
+    // Hospital page
+    "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] minutes",
+    
+    // Bullet shop page
+    "bullet.broke" => "You don't have enough cash to buy this amount of bullets",
+    "bullet.cooldown" => "You bought bullets less than [cooldown] minutes ago, you still need to wait [time] minute(s)",
+    "bullet.success" => "You have successfully bought bullets",
+    "bullet.short" => "You don't have enough bullets to swap this amount",
+    
     // You died
     "info.died" => "You died!! You were killed by ",
     "info.new-name" => "Your new Mafia name",
@@ -204,6 +216,7 @@ $strings = [
     
     // Data stuff
     "data.location.invalid" => "Please select a valid location",
+    "data.amount.invalid" => "Please select a valid amount",
     
     // Misc
     "global.copyright" => "<b>Copyright 2026 - ??</b>"
