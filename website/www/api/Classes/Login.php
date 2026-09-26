@@ -41,7 +41,7 @@ class Login {
         return $result;
     }
     
-    public function loginUser() {
+    private function loginUser() {
         
         // Try to get the expected parameters
         $email = $this->parameters->getEmail();
@@ -76,7 +76,7 @@ class Login {
         }
     }
     
-    public function validateSession() {
+    private function validateSession() {
         
         // Try to get the expected parameters
         $token_hex = null;
@@ -113,7 +113,7 @@ class Login {
         }
     }
     
-    public function logoutUser() {
+    private function logoutUser() {
         
     }
     

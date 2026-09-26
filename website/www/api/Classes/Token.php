@@ -18,14 +18,6 @@ class Token {
     }
     
     /**
-     * Setters & Getters
-     */
-    
-    public function setConnection($conn) {
-        $this->conn = $conn;
-    }
-    
-    /**
      * Verify tokens
      */
     
@@ -146,7 +138,7 @@ class Token {
      * General tokens
      */
     
-    public function createToken($table, $user_id, $expiry_time, $password_hash = false) {
+    private function createToken($table, $user_id, $expiry_time, $password_hash = false) {
         $conn = $this->db->getConnection();
         
         // Create a new token
@@ -191,7 +183,7 @@ class Token {
         return $token;
     }
     
-    public function updateToken($table, $token_id) {
+    private function updateToken($table, $token_id) {
         $conn = $this->db->getConnection();
         
         // The token is found, update it in the token table
@@ -207,7 +199,7 @@ class Token {
         $stmt->execute();
     }
     
-    public function retrieveToken($table, $token) {
+    private function retrieveToken($table, $token) {
         $conn = $this->db->getConnection();
         
         // Retrieve the token from the token table
@@ -234,7 +226,7 @@ class Token {
         return $result;
     }
     
-    public function retrieveTokenFromUser($table, $user_name) {
+    private function retrieveTokenFromUser($table, $user_name) {
         $conn = $this->db->getConnection();
         
         // Retrieve the token from the token table
@@ -257,7 +249,7 @@ class Token {
         return $result;
     }
     
-    public function invalidateTokens($table, $user_id) {
+    private function invalidateTokens($table, $user_id) {
         $conn = $this->db->getConnection();
         
         // Invalidate all tokens of this user

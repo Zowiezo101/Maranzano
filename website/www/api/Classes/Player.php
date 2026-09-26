@@ -12,7 +12,7 @@ class Player {
     private $parameters;
     
     // All data per rank
-    public const RANKS = [
+    private const RANKS = [
         1 =>  ["health" => 1000,   "jail" => 15,  "bike" => 2,  "car" => 0,  "store" => 0,  "xp" => 1500],
         2 =>  ["health" => 1300,   "jail" => 18,  "bike" => 7,  "car" => 0,  "store" => 0,  "xp" => 2250],
         3 =>  ["health" => 1700,   "jail" => 21,  "bike" => 12, "car" => 0,  "store" => 0,  "xp" => 3375],
@@ -87,7 +87,7 @@ class Player {
      * API functions
      */
     
-    public function getPlayerInfo() {
+    private function getPlayerInfo() {
         $result = null;
         
         // The username that is given via the cookie
@@ -273,7 +273,7 @@ class Player {
         return $result;
     }
     
-    public function retrievePlayerFromName($name) {
+    private function retrievePlayerFromName($name) {
         $conn = $this->db->getConnection();
         
         // Get the player using the user_id
@@ -298,7 +298,7 @@ class Player {
      * Player properties
      */
     
-    public function getOnlineFriends() {
+    private function getOnlineFriends() {
         // TODO:
         return 67;
     }

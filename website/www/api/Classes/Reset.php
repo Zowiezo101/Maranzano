@@ -39,7 +39,7 @@ class Reset {
         return $result;
     }
     
-    public function resetPassword() {
+    private function resetPassword() {
         
         // Try to get the expected parameters
         $email = $this->parameters->getEmail();
@@ -67,7 +67,7 @@ class Reset {
         }
     }
     
-    public function validatePassword() {
+    private function validatePassword() {
         
         // Try to get the expected parameters
         $token_hex = $this->parameters->getToken();
@@ -90,7 +90,7 @@ class Reset {
         ];
     }
     
-    public function updatePassword() {
+    private function updatePassword() {
         
         // Try to get the expected parameters
         $token_hex = $this->parameters->getToken();

@@ -2,7 +2,7 @@
 
 namespace Classes;
 
-class Jail {
+class Jail extends Action {
     public function getJailTime($player_id) {
         // TODO:
         return 512;

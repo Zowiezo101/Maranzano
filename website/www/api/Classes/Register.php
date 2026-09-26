@@ -35,7 +35,7 @@ class Register {
         return $result;
     }
     
-    public function registerUser() {
+    private function registerUser() {
         
         // Try to get the expected parameters
         $email = $this->parameters->getEmail();
@@ -57,7 +57,7 @@ class Register {
         $this->sendVerificationToken();
     }
     
-    public function verifyUser() {
+    private function verifyUser() {
         
         // Try to get the expected parameters
         $token_hex = $this->parameters->getToken();

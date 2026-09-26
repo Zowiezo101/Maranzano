@@ -260,24 +260,6 @@ class Parameters {
     }
     
     /**
-     * Validation functions
-     */
-    
-    public function validatePass2($pass1, $pass2) {
-        $result = null;
-        
-        if($pass1 !== $pass2){
-            // The password and confirmation need to match
-            throwError("auth.pass2.invalid", Message::CODE_INVALID);
-        } else {
-            // Valid password
-            $result = $pass1;
-        }
-        
-        return $result;
-    }
-    
-    /**
      * Functions to check if a parameter is set
      */
     

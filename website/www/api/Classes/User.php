@@ -149,7 +149,7 @@ class User {
         return $result;
     }
     
-    public function retrieveUserFromId($id) {
+    private function retrieveUserFromId($id) {
         $conn = $this->db->getConnection();
         
         // Retrieve the user with this ID
@@ -170,7 +170,7 @@ class User {
         return $result;
     }
     
-    public function retrieveUserFromName($name) {
+    private function retrieveUserFromName($name) {
         $conn = $this->db->getConnection();
         
         // See if the name already exists

@@ -2,7 +2,7 @@
 
 namespace Classes;
 
-class Crime {
+class Crime extends Action {
     public function getCrimes($player_id) {
         // TODO:
         return [

@@ -7,10 +7,13 @@ use PDO;
 class Action {
     // Other classes
     protected $db;
-    private $user;
-    private $player;
-    private $token;    
-    private $parameters; 
+    protected $user;
+    protected $player;
+    protected $token;    
+    protected $parameters; 
+    
+    // The player
+    public $player_data;
     
     public function __construct() {
         $this->parameters = new Parameters();
@@ -20,6 +23,33 @@ class Action {
         
         // To connect to the database
         $this->db = new Database();
+    }
+    
+    protected function route($route, $data) {
+        // These actions need to have the cookie checked
+        $auth = new Login();
+        $auth->route("login_validate", $data);
+        
+        // Parse the input data
+        $this->parameters->setData($data);
+        
+        // The username that is given via the cookie
+        $user_name = $this->parameters->getUser(from_cookie: true);
+        
+        // Get the user using the username
+        $user = $this->user->getUser(name: $user_name);   
+        
+        if (isset($user)) {
+            // Get the user_id
+            $user_id = $user["id"];
+            
+            // Get the player that belongs to this user
+            $this->player_data = $this->player->getPlayer($user_id);
+        } else {
+            throwError("player.data.error");
+        }
+        
+        return $route;
     }
     
     /**

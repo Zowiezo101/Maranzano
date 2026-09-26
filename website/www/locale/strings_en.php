@@ -200,6 +200,7 @@ $strings = [
     "login.error" => "Something went wrong while trying to log you in",
     "logout.error" => "Something went wrong while trying to log you out",
     "player.error" => "Something went wrong while trying to create a new player",
+    "player.data.error" => "Something went wrong while trying to fetch your player data",
     
     // Data stuff
     "data.location.invalid" => "Please select a valid location",
