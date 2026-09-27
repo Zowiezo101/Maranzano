@@ -141,6 +141,16 @@ class Action {
         }
     }
     
+    protected function isValidAmount($amount, $min = null, $max = null) {
+        if (isset($min) && ($amount < $min)) {
+            // Throw the error for the user to receive
+            throwError("data.amount.invalid");
+        } else if (isset($max) && ($amount > $max)) {
+            // Throw the error for the user to receive
+            throwError("data.amount.invalid");
+        }
+    }
+    
     private function calculateWaitingTime($expires_at) {
         // Convert the string to a timestamp     
         $expiry_time = strtotime($expires_at);

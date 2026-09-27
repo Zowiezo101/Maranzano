@@ -8,6 +8,8 @@ class Shop extends Action {
     private const ACTION_PACK = 50;
     private const ACTION_TABLE = "shop_session";
     private const ACTION_COOLDOWN = 120;
+    private const ACTION_MIN = 1;
+    private const ACTION_MAX = 20;
     
     public function route($route, $data) {
         parent::route($route, $data);
@@ -37,6 +39,8 @@ class Shop extends Action {
         
         // The amount of packets the player wants to buy
         $amount = $this->parameters->getAmount();
+        
+        $this->isValidAmount($amount, min:self::ACTION_MIN, max:self::ACTION_MAX);
 
         // Make sure the player has enough cash to pay for their bullets
         $this->enoughFunds($player["cash"], $amount * self::ACTION_COST, "bullet.broke");
@@ -52,8 +56,8 @@ class Shop extends Action {
 
         // Update the player bullets and cash
         $update = [
-            "bullets" => $amount * self::ACTION_PACK,
-            "cash" => $player["cash"] - 3000
+            "bullets" => $player["bullets"] + $amount * self::ACTION_PACK,
+            "cash" => $player["cash"] - $amount * self::ACTION_COST
         ];
         $this->player->updatePlayer($player["id"], $update);
     }
@@ -64,6 +68,8 @@ class Shop extends Action {
         
         // The amount of packets the player wants to swap
         $amount = $this->parameters->getAmount();
+        
+        $this->isValidAmount($amount, min:self::ACTION_MIN);
         
         // Make sure the player has enough bullets to swap this amount
         $this->enoughFunds($player["bullets"], $amount * self::ACTION_PACK, "bullet.short");

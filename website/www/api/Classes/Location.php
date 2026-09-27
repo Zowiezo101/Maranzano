@@ -2,7 +2,7 @@
 
 namespace Classes;
 
-class Location extends Action {
+class Location {
     
     public const IDX_COUNTRY = 0;
     public const IDX_CITY = 1;

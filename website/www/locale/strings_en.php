@@ -146,10 +146,17 @@ $strings = [
     "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] minutes",
     
     // Bullet shop page
+    "bullet.info" => "Bullets come in packs of 50 and a pack costs €25. You can buy bullets every 2 hours",
+    "bullet.amount" => "Enter amount (Max. 20 packs)",
     "bullet.broke" => "You don't have enough cash to buy this amount of bullets",
     "bullet.cooldown" => "You bought bullets less than [cooldown] minutes ago, you still need to wait [time] minute(s)",
+    "bullet.buy" => "Purchase",
     "bullet.success" => "You have successfully bought bullets",
     "bullet.short" => "You don't have enough bullets to swap this amount",
+    "bullet.swap" => "Swap",
+    "bullet.swap.info" => "This will transfer the selected amount of bullet packs to defensive bullets",
+    "bullet.swap.title" => "Swap bullet packs to defensive",
+    "bullet.swap.success" => "Bullet packs have been transfered",
     
     // You died
     "info.died" => "You died!! You were killed by ",

@@ -1,6 +1,6 @@
 
                                     <!-- The Home Tab -->
-                                    <div class="tab-pane show active" id="tabHome" role="tabpanel">
+                                    <div class="tab-pane" id="tabHome" role="tabpanel">
                                         <!-- Player stats -->
                                         <div class="row mt-5">
                                             <div class="col">

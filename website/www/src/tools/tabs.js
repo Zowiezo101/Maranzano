@@ -44,6 +44,10 @@ function onShowTab(event) {
         case "btnTravel":
             onTravelTab();
             break;
+            
+        case "btnBullet":
+            onBulletTab();
+            break;
     }
 }
 
@@ -143,7 +147,7 @@ $(function () {
     $("#btnHome").tab('show');
     
     // TODO: Temp different starting tab
-    $("#btnTravel").tab('show');
+    $("#btnBullet").tab('show');
 });
 
 

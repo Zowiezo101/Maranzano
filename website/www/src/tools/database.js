@@ -14,12 +14,24 @@ function fetchAllLocations() {
     return fetchGet("get_locations");
 }
 
+// Travel to a different location
+function fetchTravel(data) {
+    return fetchPost("move_to_location", data);
+}
+
+// Create a new player
 function fetchNewPlayer(data) {
     return fetchPost("create_new_player", data);
 }
 
-function fetchTravel(data) {
-    return fetchPost("move_to_location", data);
+// Create a new player
+function fetchShopBullets(data) {
+    return fetchPost("buy_bullets", data);
+}
+
+// Create a new player
+function fetchSwapBullets(data) {
+    return fetchPost("swap_bullets", data);
 }
 
 // Send a post request to the given URL with fetch
