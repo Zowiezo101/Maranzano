@@ -97,19 +97,11 @@ class Login {
             $token_hash = $token["token"];
 
             // Check that the token is still valid
-            $this->verifyToken($token_hex, $token_hash);
+            if(!password_verify($token_hex, $token_hash)) {
+                $this->invalidateCookie($token_hex, $user);
+            }
         } else {
-            
-            // Clear the cookies
-            $invalidate_cookie = true;
-            $this->createCookies($token_hex, $user, $invalidate_cookie);
-            
-            // Clear the session as well
-            $_SESSION = [];
-            session_destroy();
-            
-            // Throw the rror
-            throwError("auth.token.invalid", Message::CODE_UNAUTHETICATED);
+            $this->invalidateCookie($token_hex, $user);
         }
     }
     
@@ -121,14 +113,6 @@ class Login {
         if (!password_verify($pass, $pass_hash)) {
             // The password doesn't match the hash
             throwError("auth.login.invalid", Message::CODE_INVALID);
-        }
-    }
-    
-    private function verifyToken($token, $token_hash) {
-    
-        if (!password_verify($token, $token_hash)) {
-            // The password doesn't match the hash
-            throwError("auth.token.invalid", Message::CODE_INVALID);
         }
     }
     
@@ -182,4 +166,18 @@ class Login {
         setcookie("token", $value1, $options); 
         setcookie("user",  $value2, $options); 
     }
+    
+    private function invalidateCookie($token_hex, $user) {
+        
+        // Clear the cookies
+        $invalidate_cookie = true;
+        $this->createCookies($token_hex, $user, $invalidate_cookie);
+
+        // Clear the session as well
+        $_SESSION = [];
+        session_destroy();
+
+        // Throw the rror
+        throwError("auth.token.invalid", Message::CODE_UNAUTHETICATED);
+}
 }
