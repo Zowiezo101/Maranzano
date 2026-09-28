@@ -36,6 +36,7 @@ class Parameters {
     private function getPOSTData() {
         // These are the only allowed parameters we'll be looking for
         $white_list = [
+            "id",
             "email",
             "user",
             "player",
@@ -277,6 +278,28 @@ class Parameters {
         } else {
             // Valid password
             $result = $this->data[$source]["pass2"];
+        }
+        
+        return $result;
+    }
+    
+    public function getId() {
+        
+        $result = null;
+        
+        // Get everything from the POST body
+        $source = "POST";
+        
+        // Validate the location
+        if (!isset($this->data[$source]["id"])) {
+            // ID isn't set
+            throwError("data.id.invalid", Message::CODE_INVALID);
+        } else if (!is_numeric($this->data[$source]["id"])) {
+            // Not a valid ID
+            throwError("data.id.invalid", Message::CODE_INVALID);
+        } else {
+            // This ID is valid
+            $result = $this->data[$source]["id"];
         }
         
         return $result;

@@ -46,6 +46,11 @@ class Controller {
             $controller = new Shop();
         }
         
+        // Bank actions
+        else if (str_starts_with($route, "bank")) {
+            $controller = new Bank();
+        }
+        
         // Player actions
         else if (str_starts_with($route, "location")) {
             $controller = new Location();

@@ -24,6 +24,7 @@ require __DIR__ . "/../Classes/Token.php";
 require __DIR__ . "/../Classes/Action.php";
 require __DIR__ . "/../Classes/Location.php";
 require __DIR__ . "/../Classes/Shop.php";
+require __DIR__ . "/../Classes/Bank.php";
 require __DIR__ . "/../Classes/Travel.php";
 require __DIR__ . "/../Classes/Crime.php";
 require __DIR__ . "/../Classes/Hospital.php";
@@ -60,6 +61,18 @@ function getResults($stmt) {
     if ($stmt->rowCount() > 0) {
         // Convert the results into an associative array
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    return $result;
+}
+    
+// Function to retrieve all results from database
+function getAllResults($stmt) {
+    $result = null;
+
+    if ($stmt->rowCount() > 0) {
+        // Convert the results into an associative array
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     return $result;

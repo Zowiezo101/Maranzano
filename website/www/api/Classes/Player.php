@@ -66,6 +66,10 @@ class Player {
             case "player_reset":
                 $result = $this->resetPlayer();
                 break;
+            
+            case "player_friends":
+                $result = $this->getPlayerFriends();
+                break;
         }
         
         return $result;
@@ -88,107 +92,90 @@ class Player {
      */
     
     private function getPlayerInfo() {
-        $result = null;
         
-        // The username that is given via the cookie
-        $user_name = $this->parameters->getUser(from_cookie: true);
-        
-        // Get the user using the username
-        $user = $this->user->getUser(name: $user_name);
-        
-        if (isset($user)) {
-            // Get the user_id
-            $user_id = $user["id"];
-            
-            // Get the player that belongs to this user
-            $player = $this->getPlayer($user_id);
+        $user_id = $this->getUserId();
 
-            // Prepare the data and make it human readable
-            $data = $this->formatPlayerInfo($player);
+        // Get the player that belongs to this user
+        $player = $this->getPlayer($user_id);
 
-            // Prepare a message
-            $result = $data;
-        } else {
-            throwError();
-        }
+        // Prepare the data and make it human readable
+        $data = $this->formatPlayerInfo($player);
+
+        // Prepare a message
+        $result = $data;
         
         return $result;
     }
     
     public function getPlayerStats() {
-        $result = null;
         
-        // The username that is given via the cookie
-        $user_name = $this->parameters->getUser(from_cookie: true);
+        $user = $this->getUser();
         
-        // Get the user using the username
-        $user = $this->user->getUser(name: $user_name);
-        
-        if (isset($user)) {
-        
-            // Get the user_id
-            $user_id = $user["id"];
+        // The user_id
+        $user_id = $user["id"];
             
-            // Get the player that belongs to this user
-            $player = $this->getPlayer($user_id);
-            
-            // The player ID
-            $id = $player["id"];
-            
-            // Get the crimes this player commited
-            $crimeObj = new Crime();
-            $crimes = $crimeObj->getCrimes($id);
-            
-            $player["bikes"]  = $crimes["bikes"];
-            $player["cars"]   = $crimes["cars"];
-            $player["stores"] = $crimes["stores"];
-            $player["kills"]  = $crimes["kills"];
-            
-            // Get the Hospital & Jail time for this player
-            $jail = new Jail();
-            $player["jail"] = $jail->getJailTime($id);
-            
-            $hospital = new Hospital();
-            $player["hospital"] = $hospital->getHospitalTime($id);
-                    
-            // Get the online friends of this player
-            $player["friends"] = $this->getOnlineFriends($id);
+        // Get the player that belongs to this user
+        $player = $this->getPlayer($user_id);
 
-            // Prepare the data and make it human readable
-            $data = $this->formatPlayerStats($player, $user);
+        // The player ID
+        $id = $player["id"];
 
-            // Prepare a message
-            $result = $data;
-        } else {
-            throwError();
-        }
+        // Get the crimes this player commited
+        $crimeObj = new Crime();
+        $crimes = $crimeObj->getCrimes($id);
+
+        $player["bikes"]  = $crimes["bikes"];
+        $player["cars"]   = $crimes["cars"];
+        $player["stores"] = $crimes["stores"];
+        $player["kills"]  = $crimes["kills"];
+
+        // Get the Hospital & Jail time for this player
+        $jail = new Jail();
+        $player["jail"] = $jail->getJailTime($id);
+
+        $hospital = new Hospital();
+        $player["hospital"] = $hospital->getHospitalTime($id);
+
+        // Get the online friends of this player
+        $player["friends"] = $this->getOnlineFriends($id);
+
+        // Prepare the data and make it human readable
+        $data = $this->formatPlayerStats($player, $user);
+
+        // Prepare a message
+        $result = $data;
         
         return $result;        
     }
     
     private function resetPlayer() {
         
-        // The username that is given via the cookie
-        $user_name = $this->parameters->getUser(from_cookie: true);
+        $user_id = $this->getUserId();
         
-        // Get the user using the username
-        $user = $this->user->getUser(name: $user_name);
-        
-        if (isset($user)) {
-            // Get the user_id
-            $user_id = $user["id"];
-        
-            // Try to get the expected parameters
-            $player = $this->parameters->getPlayer();
+        // Try to get the expected parameters
+        $player = $this->parameters->getPlayer();
 
-            // Check if the player name is available
-            $this->isPlayerAvailable($player);
+        // Check if the player name is available
+        $this->isPlayerAvailable($player);
 
-            // Create a new player for this user
-            $this->createPlayer($user_id, $player);
-        } else {
-            throwError();
-        }
+        // Create a new player for this user
+        $this->createPlayer($user_id, $player);
+    }
+    
+    private function getPlayerFriends() {
+        
+        $user_id = $this->getUserId();
+            
+        // Get the player that belongs to this user
+        $player = $this->getPlayer($user_id);
+
+        // The player ID
+        $id = $player["id"];
+        
+        // Get the friends of this player
+        $friends = $this->getFriends($id);
+        
+        return $friends;
     }
     
     /**
@@ -294,9 +281,86 @@ class Player {
         return $result;
     }
     
+    public function retrieveFriendFromId($id, $friend_id) {
+        $conn = $this->db->getConnection();
+        
+        // Get the player using the user_id
+        $sql = "SELECT players.* FROM friends
+                JOIN players ON friends.friend_id = players.id
+                WHERE friends.player_id = :id AND players.id = :friend_id AND is_confirmed = 1";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":id",        $id,        PDO::PARAM_INT);
+        $stmt->bindValue(":friend_id", $friend_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = getResults($stmt);
+        
+        if (!isset($result)) {
+            // Do NOT continue if this friend can't be found
+            throwError("bank.friend_not_found");
+        }
+        
+        return $result;
+    }
+    
     /**
-     * Player properties
+     * Misc
      */
+    
+    private function getUser() {
+        
+        // The username that is given via the cookie
+        $user_name = $this->parameters->getUser(from_cookie: true);
+        
+        // Get the user using the username
+        $user = $this->user->getUser(name: $user_name);
+        
+        if (!isset($user)) {
+            throwError();
+        }
+        
+        return $user;
+    }
+    
+    private function getUserId() {
+        
+        $user = $this->getUser();
+        
+        // Get the user_id
+        $user_id = $user["id"];
+        
+        return $user_id;
+    }
+    
+    private function getFriends($player_id) {
+        $conn = $this->db->getConnection();
+        
+        // Get the list of friends using the player_id
+        $sql = "SELECT players.id, players.name FROM friends
+                    JOIN players ON friends.friend_id = players.id
+                    WHERE player_id = :player_id AND is_confirmed = 1";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = getAllResults($stmt);
+        
+        return $result;
+    }
     
     private function getOnlineFriends() {
         // TODO:
@@ -306,6 +370,7 @@ class Player {
     /**
      * Data conversion functions
      */
+    
     private function formatPlayerInfo($player) {
         $locations = new Location();
         

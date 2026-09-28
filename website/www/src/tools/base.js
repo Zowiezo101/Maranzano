@@ -11,9 +11,16 @@ function onReturnedError(message, element) {
     $(element).html(message).removeClass("d-none");
 }
 
-// Remove the error
-function onResetError(element) {
-    $(element).html("").addClass("d-none");
+// Remove all errors
+function onResetAllForms() {
+    // Remove all lingering errors
+    $("[id$='Error']").html("").addClass("d-none");
+    
+    // Remove the success messages
+    $("[id$='Success']").addClass("d-none");
+    
+    // Show all forms
+    $("[id$='Form']").removeClass("d-none");
 }
 
 // A rewrite of a PHP function
@@ -34,29 +41,6 @@ function updateTable(table, data) {
 
         $("#data" + ucfirst(table) + ucfirst(key)).text(value);
     }
-}
-
-function updateSelect(select, data) {
-    var options = [];
-    
-    for (var [key, value] of Object.entries(data)) {
-        if (value === null) {
-            // Skip this value
-            continue;
-        }
-        
-        // Get the country and the city out of the value
-        var country = value[0];
-        var city = value[1];
-        
-        options.push(`<option class="location-option" value="${key}">${city} (${country})</option>`); 
-    }
-    
-    // Remove the previous location options
-    $(".location-option").remove();
-    
-    // Insert the new location options
-    $("#" + select).append(options.join(""));
 }
 
 function updateTabs(data) {

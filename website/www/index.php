@@ -316,7 +316,7 @@
         event.preventDefault();
         
         // Remove any previous errors
-        onResetError("#loginError");
+        onResetAllForms();
         
         // The data for resetting password
         var loginEmail = $("#loginEmail").val();
@@ -352,7 +352,7 @@
         event.preventDefault();
         
         // Remove any previous errors
-        onResetError("#resetError");
+        onResetAllForms();
         
         // The data for resetting password
         var resetEmail = $("#resetEmail").val();
@@ -385,7 +385,7 @@
         event.preventDefault();
         
         // Remove any previous errors
-        onResetError("#registerError");
+        onResetAllForms();
         
         // The data for registering
         var registerEmail = $("#registerEmail").val();

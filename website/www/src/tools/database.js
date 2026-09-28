@@ -24,14 +24,34 @@ function fetchNewPlayer(data) {
     return fetchPost("create_new_player", data);
 }
 
-// Create a new player
+// Get the list of friends of this player
+function fetchFriends() {
+    return fetchGet("get_friends");
+}
+
+// Buy bullets
 function fetchShopBullets(data) {
     return fetchPost("buy_bullets", data);
 }
 
-// Create a new player
+// Swap bullets
 function fetchSwapBullets(data) {
     return fetchPost("swap_bullets", data);
+}
+
+// Deposit money
+function fetchDeposit(data) {
+    return fetchPost("deposit_money", data);
+}
+
+// Withdraw money
+function fetchWithdraw(data) {
+    return fetchPost("withdraw_money", data);
+}
+
+// Send money
+function fetchSendMoney(data) {
+    return fetchPost("send_money", data);
 }
 
 // Send a post request to the given URL with fetch

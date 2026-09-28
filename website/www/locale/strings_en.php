@@ -145,6 +145,24 @@ $strings = [
     // Hospital page
     "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] minutes",
     
+    // Bank page
+    "bank.info" => "Your bank balance will remain after death, but you can't use this balance for purchases",
+    "bank.deposit.title" => "Deposit to bank",
+    "bank.deposit" => "Deposit",
+    "bank.deposit.success" => "Cash has been send to your bank",
+    "bank.deposit.broke" => "You don't have enough cash to deposit that amount",
+    "bank.withdraw.title" => "Withdraw from bank",
+    "bank.withdraw" => "Withdraw",
+    "bank.withdraw.success" => "Cash has been added to your stash",
+    "bank.withdraw.broke" => "Your balance isn't high enough to withdraw that amount",
+    "bank.send.title" => "Send balance to friend (Max 10.000 per player per day)",
+    "bank.send" => "Send",
+    "bank.send.success" => "Money has been send to your friend",
+    "bank.send.broke" => "Your balance isn't high enough to send that amount",
+    "bank.amount" => "Amount",
+    "bank.friend" => "Select friend",
+    "bank.friend_not_found" => "It seems this player isn't in your friend list",
+    
     // Bullet shop page
     "bullet.info" => "Bullets come in packs of 50 and a pack costs €25. You can buy bullets every 2 hours",
     "bullet.amount" => "Enter amount (Max. 20 packs)",
@@ -222,6 +240,7 @@ $strings = [
     "player.data.error" => "Something went wrong while trying to fetch your player data",
     
     // Data stuff
+    "data.id.invalid" => "Please select a valid player",
     "data.location.invalid" => "Please select a valid location",
     "data.amount.invalid" => "Please select a valid amount",
     

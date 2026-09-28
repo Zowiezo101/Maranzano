@@ -110,7 +110,7 @@
         event.preventDefault();
         
         // Remove any previous errors
-        onResetError("#resetError");
+        onResetAllForms();
         
         // The data for registering
         var resetPass1 = $("#resetPassword").val();

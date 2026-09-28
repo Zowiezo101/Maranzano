@@ -32,6 +32,9 @@ function getRankName(level) {
 }
 
 function onShowTab(event) {
+    // Remove any lingering messages
+    onResetAllForms();
+    
     // Update the player info table
     updatePlayerInfo();
 
@@ -45,8 +48,8 @@ function onShowTab(event) {
             onTravelTab();
             break;
             
-        case "btnBullet":
-            onBulletTab();
+        case "btnBank":
+            onBankTab();
             break;
     }
 }
@@ -147,7 +150,7 @@ $(function () {
     $("#btnHome").tab('show');
     
     // TODO: Temp different starting tab
-    $("#btnBullet").tab('show');
+    $("#btnBank").tab('show');
 });
 
 

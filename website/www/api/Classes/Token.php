@@ -176,7 +176,7 @@ class Token {
         $id = $conn->lastInsertId();
         
         if (!isset($id)) {
-            // Do NOT continue is the token hasn't been created
+            // Do NOT continue if the token hasn't been created
             throwError();
         }
         

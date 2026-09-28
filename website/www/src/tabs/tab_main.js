@@ -15,13 +15,7 @@ function onHomeTab() {
             crimeError.removeClass("d-none");
             statsTable.addClass("d-none");
             crimeTable.addClass("d-none");
-        } else {
-            // Remove the error message
-            statsError.addClass("d-none");
-            crimeError.addClass("d-none");
-            statsTable.removeClass("d-none");
-            crimeTable.removeClass("d-none");
-            
+        } else {            
             // Success, update the table
             updateTable("home", results.data);
         }
@@ -33,13 +27,6 @@ function onHomeTab() {
 }
 
 function onTravelTab() {
-            
-    // Remove any lingering messages
-    onResetError("#travelError");
-    
-    // And make sure the form is shown
-    $("#travelSuccess").addClass("d-none");
-    $("#travelForm").removeClass("d-none");
     
     // The fetch call
     fetchAllLocations().then(function(results) {
@@ -49,7 +36,7 @@ function onTravelTab() {
             // Something went wrong
         } else {
             // Success, update the select list
-            updateSelect("travel", results.data);
+            updateLocationSelect("travel", results.data);
             
         }
     }).catch(function(results) {
@@ -63,7 +50,7 @@ function onSubmitNewPlayer(event) {
     event.preventDefault();
         
     // Remove any previous errors
-    onResetError("#newPlayerError");
+    onResetAllForms();
         
     // The data for the new player
     var newPlayerName = $("#newPlayer").val();
@@ -95,7 +82,7 @@ function onSubmitTravel(event) {
     event.preventDefault();
         
     // Remove any previous errors
-    onResetError("#travelError");
+    onResetAllForms();
         
     // The new location for this player
     var location = $("#travel").val();
@@ -133,4 +120,27 @@ $(function() {
     $("#newPlayerForm").on("submit", function(e) {onSubmitNewPlayer(e);});
     $("#travelForm").on("submit", function(e) {onSubmitTravel(e);});
 });
+
+function updateLocationSelect(select, data) {
+    var options = [];
+    
+    for (var [key, value] of Object.entries(data)) {
+        if (value === null) {
+            // Skip this value
+            continue;
+        }
+        
+        // Get the country and the city out of the value
+        var country = value[0];
+        var city = value[1];
+        
+        options.push(`<option class="location-option" value="${key}">${city} (${country})</option>`); 
+    }
+    
+    // Remove the previous location options
+    $(".location-option").remove();
+    
+    // Insert the new location options
+    $("#" + select).append(options.join(""));
+}
 
