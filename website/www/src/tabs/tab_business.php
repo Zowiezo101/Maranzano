@@ -19,7 +19,7 @@
                                                 
                                                 <!-- The bullet body -->
                                                 <form id="shopForm">
-                                                    <label for="amountSwap" class="form-label"><b class="fst-normal"><?php printString("bullet.amount")?></b></label>
+                                                    <label for="shopAmount" class="form-label"><b class="fst-normal"><?php printString("bullet.amount")?></b></label>
                                                     
                                                     <!-- The amount -->
                                                     <div class="row mb-3">
@@ -45,7 +45,7 @@
                                                 
                                                 <!-- The bullet swap form -->
                                                 <form id="swapForm">
-                                                    <label for="amountSwap" class="form-label"><b class="fst-normal"><?php printString("bullet.swap.title")?></b></label>
+                                                    <label for="swapAmount" class="form-label"><b class="fst-normal"><?php printString("bullet.swap.title")?></b></label>
                                                     
                                                     <!-- The amount -->
                                                     <div class="row mb-3">
@@ -66,11 +66,11 @@
                                                     <div id="swapError" class="mb-4 mx-3 text-center text-warning d-none">
                                                         <!-- Filled in later in case of error -->
                                                     </div>
+                                                    
+                                                    <div id="swapSuccess" class="text-center d-none">
+                                                        <p><b><?php printString("bullet.swap.success"); ?></b></p>
+                                                    </div>
                                                 </form>
-                                                
-                                                <div id="swapSuccess" class="text-center d-none">
-                                                    <p><b><?php printString("bullet.swap.success"); ?></b></p>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

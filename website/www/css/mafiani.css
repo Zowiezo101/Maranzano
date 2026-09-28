@@ -104,3 +104,11 @@ form .btn-link:not(hover) {
         rgba(36, 32, 30, 1) 100%);
 }
 
+.form-control {
+  background-color: var(--bg-color-secondary);
+}
+
+.form-select {
+  background-color: var(--bg-color-secondary);
+}
+

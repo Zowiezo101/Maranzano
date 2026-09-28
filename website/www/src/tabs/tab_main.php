@@ -77,7 +77,7 @@
                                                     <!-- The location -->
                                                     <div class="mb-3 mx-3 text-center">
                                                         <label for="travel" class="form-label"><b class="fst-normal"><?php printString("travel.where_to")?></b></label>
-                                                        <select class="form-select bg-body-secondary" id="travel">
+                                                        <select class="form-select" id="travel">
                                                             <option selected disabled><?php printString("travel.select"); ?></option>
                                                         </select>
                                                     </div>
