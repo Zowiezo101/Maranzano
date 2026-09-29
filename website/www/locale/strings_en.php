@@ -136,14 +136,14 @@ $strings = [
     "travel.select" => "Select a new location",
     "travel.broke" => "You don't have enough cash to buy a ticket",
     "travel.current" => "You already are in this city",
-    "travel.cooldown" => "You traveled less than [cooldown] minutes ago, you still need to wait [time] minute(s)",
+    "travel.cooldown" => "You traveled less than [cooldown] [units] ago, you still need to wait [time] [unit](s)",
     "travel.success" => "You have successfully traveled to another location",
     
     // Jail page
-    "jail.cooldown" => "You can't do that right now, you are still in jail for [time] minutes",
+    "jail.cooldown" => "You can't do that right now, you are still in jail for [time] [unit](s)",
     
     // Hospital page
-    "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] minutes",
+    "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] [unit](s)",
     
     // Bank page
     "bank.info" => "Your bank balance will remain after death, but you can't use this balance for purchases",
@@ -159,6 +159,7 @@ $strings = [
     "bank.send" => "Send",
     "bank.send.success" => "Money has been send to your friend",
     "bank.send.broke" => "Your balance isn't high enough to send that amount",
+    "bank.send.cooldown" => "You have sent money less than [cooldown] [units] ago to this friend. You still need to wait [time] [unit](s)",
     "bank.amount" => "Amount",
     "bank.friend" => "Select friend",
     "bank.friend_not_found" => "It seems this player isn't in your friend list",
@@ -167,7 +168,7 @@ $strings = [
     "bullet.info" => "Bullets come in packs of 50 and a pack costs €25. You can buy bullets every 2 hours",
     "bullet.amount" => "Enter amount (Max. 20 packs)",
     "bullet.broke" => "You don't have enough cash to buy this amount of bullets",
-    "bullet.cooldown" => "You bought bullets less than [cooldown] minutes ago, you still need to wait [time] minute(s)",
+    "bullet.cooldown" => "You bought bullets less than [cooldown] [units] ago, you still need to wait [time] [unit](s)",
     "bullet.buy" => "Purchase",
     "bullet.success" => "You have successfully bought bullets",
     "bullet.short" => "You don't have enough bullets to swap this amount",

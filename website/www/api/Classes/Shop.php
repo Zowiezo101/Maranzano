@@ -51,7 +51,7 @@ class Shop extends Action {
                 self::ACTION_COOLDOWN,
                 "bullet.cooldown");
 
-        // Set a cooldown in the shop session tablet
+        // Set a cooldown in the shop session table
         $this->setCooldown($player["id"], self::ACTION_TABLE, self::ACTION_COOLDOWN);
 
         // Update the player bullets and cash

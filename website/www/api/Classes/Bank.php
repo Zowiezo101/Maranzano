@@ -2,6 +2,8 @@
 
 namespace Classes;
 
+use PDO;
+
 class Bank extends Action {
     
     private const ACTION_TABLE = "bank_session";
@@ -88,23 +90,31 @@ class Bank extends Action {
         $this->isValidAmount($amount, min:self::ACTION_MIN, max:self::ACTION_MAX);
 
         // Make sure the player has enough balance to send this amount
-        $this->enoughFunds($player["cash"], $amount, "bank.send.broke");
+        $this->enoughFunds($player["bank"], $amount, "bank.send.broke");
         
         // Check this person is actually a friend of the player
         $friend = $this->player->retrieveFriendFromId($player["id"], $friend_id);
         
         // Has this friend already received money from this player?
+        $this->hasFriendCooldown($player["id"], $friend_id, 
+                self::ACTION_TABLE, 
+                self::ACTION_COOLDOWN, 
+                "bank.send.cooldown");
         
+        // Set a cooldown in the bank session table
+        $this->setFriendCooldown($player["id"], $friend_id, 
+                self::ACTION_TABLE, 
+                self::ACTION_COOLDOWN);
 
         // Update the player cash
         $update_player = [
-            "cash" => $player["cash"] - $amount
+            "cash" => $player["bank"] - $amount
         ];
         $this->player->updatePlayer($player["id"], $update_player);
         
         // And the friend cash
         $update_friend = [
-            "cash" => $friend["cash"] + $amount
+            "cash" => $friend["bank"] + $amount
         ];
         $this->player->updatePlayer($friend["id"], $update_friend);
     }
@@ -114,13 +124,14 @@ class Bank extends Action {
         
         // Retrieve the token from the token table
         $sql = "SELECT * FROM {$table} "
-                . "WHERE player_id = :player_id AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
+                . "WHERE sender_id = :player_id AND receiver_id = :friend_id AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
     
         // Prepare query statement
         $stmt = $conn->prepare($sql);    
 
         // Bind the parameter
         $stmt->bindValue(":player_id", $player_id, PDO::PARAM_INT);  
+        $stmt->bindValue(":friend_id", $friend_id, PDO::PARAM_INT);  
 
         // Execute the statement
         $stmt->execute();
@@ -133,15 +144,20 @@ class Bank extends Action {
             // Prepare an error
             $error = getString($error);
             
-            // Calculate the time left to wait
+            // Get the correct unit for this cooldown
+            $cooldown1 = $this->calculateCooldown($cooldown);
+            
+            // Calculate the time (and unit of time) left to wait
             $time = $this->calculateWaitingTime($result["expires_at"]);
 
             // Insert the name and url
-            $error1 = str_replace("[cooldown]", $cooldown, $error);
-            $error2 = str_replace("[time]",     $time,     $error1);
+            $error1 = str_replace("[cooldown]", $cooldown1[1], $error);
+            $error2 = str_replace("[units]",    $cooldown1[0], $error1);
+            $error3 = str_replace("[time]",     $time[1], $error2);
+            $error4 = str_replace("[unit]",     $time[0], $error3);
             
             // Throw the error for the user to receive
-            throwError($error2);
+            throwError($error4);
         }
         
         return $result;
@@ -151,8 +167,8 @@ class Bank extends Action {
         $conn = $this->db->getConnection();
         
         // Create a new token
-        $sql = "INSERT INTO {$table} (player_id, expires_at) "
-                . "VALUES (:player_id, :expires_at)";
+        $sql = "INSERT INTO {$table} (sender_id, receiver_id, expires_at) "
+                . "VALUES (:player_id, :friend_id, :expires_at)";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);
@@ -163,17 +179,18 @@ class Bank extends Action {
                             ->format('Y-m-d H:i:s');
 
         // Bind the parameter
-        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_STR);
+        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_INT);
+        $stmt->bindValue(":friend_id", $friend_id, PDO::PARAM_INT);
         $stmt->bindValue(":expires_at", $expiry_date, PDO::PARAM_STR);
 
         // Execute the statement
         $stmt->execute();
 
-        // Check that the token has been properly created
+        // Check that the cooldown has been properly created
         $id = $conn->lastInsertId();
         
         if (!isset($id)) {
-            // Do NOT continue is the token hasn't been created
+            // Do NOT continue is the cooldown hasn't been created
             throwError();
         }
     }

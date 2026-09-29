@@ -96,15 +96,20 @@ class Action {
             // Prepare an error
             $error = getString($error);
             
+            // Get the correct unit for this cooldown
+            $cooldown1 = $this->calculateCooldown($cooldown);
+            
             // Calculate the time left to wait
             $time = $this->calculateWaitingTime($result["expires_at"]);
 
             // Insert the name and url
-            $error1 = str_replace("[cooldown]", $cooldown, $error);
-            $error2 = str_replace("[time]",     $time,     $error1);
+            $error1 = str_replace("[cooldown]", $cooldown1[1], $error);
+            $error2 = str_replace("[units]",    $cooldown1[0], $error1);
+            $error3 = str_replace("[time]",     $time[1], $error2);
+            $error4 = str_replace("[unit]",     $time[0], $error3);
             
             // Throw the error for the user to receive
-            throwError($error2);
+            throwError($error4);
         }
         
         return $result;
@@ -126,17 +131,17 @@ class Action {
                             ->format('Y-m-d H:i:s');
 
         // Bind the parameter
-        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_STR);
+        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_INT);
         $stmt->bindValue(":expires_at", $expiry_date, PDO::PARAM_STR);
 
         // Execute the statement
         $stmt->execute();
 
-        // Check that the token has been properly created
+        // Check that the cooldown has been properly created
         $id = $conn->lastInsertId();
         
         if (!isset($id)) {
-            // Do NOT continue is the token hasn't been created
+            // Do NOT continue is the cooldown hasn't been created
             throwError();
         }
     }
@@ -151,15 +156,25 @@ class Action {
         }
     }
     
-    private function calculateWaitingTime($expires_at) {
+    protected function calculateCooldown($cooldown) {        
+        // The difference between the two (in seconds)
+        $cooldown_h = round($cooldown / 60);
+        
+        // Get the waiting time in seconds
+        return $cooldown_h > 1 ? ["hours", $cooldown_h] : ["minutes", $cooldown];
+    }
+    
+    protected function calculateWaitingTime($expires_at) {
         // Convert the string to a timestamp     
         $expiry_time = strtotime($expires_at);
         $current_time = time();
         
         // The difference between the two (in seconds)
         $waiting_time = $expiry_time - $current_time;
+        $waiting_time_m = ceil($waiting_time / 60);
+        $waiting_time_h = round($waiting_time_m / 60);
         
         // Get the waiting time in seconds
-        return ceil($waiting_time / 60);
+        return $waiting_time_h > 1 ? ["hour", $waiting_time_h] : ["minute", $waiting_time_m];
     }
 }
