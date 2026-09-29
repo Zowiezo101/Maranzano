@@ -58,7 +58,7 @@ $strings = [
     "comms.mail" => "Mailbox",
     
     // Help menu
-    "help.contact" => "Contact",
+    "help.contact" => "Contact info",
     "help.donate" => "Donate",
     "help.rules" => "Rules",
     "help.info" => "Game info",
@@ -118,11 +118,13 @@ $strings = [
     "rank.20" => "Godfather",
     
     // Member Home
+    "info.stats" => "Player Stats",
     "info.u-name" => "Username",
     "info.name" => "Mafia Name",
     "info.prank" => "Player Rank",
     "info.created" => "Member since",
     "info.friends" => "Friends online",
+    "info.record" => "Criminal Record",
     "info.bikes" => "Bikes stolen",
     "info.cars" => "Cars stolen",
     "info.stores" => "Succesful roberies",
@@ -176,6 +178,17 @@ $strings = [
     "bullet.swap.info" => "This will transfer the selected amount of bullet packs to defensive bullets",
     "bullet.swap.title" => "Swap bullet packs to defensive",
     "bullet.swap.success" => "Bullet packs have been transfered",
+    
+    // Contact page
+    "contact.email" => "Email: ",
+    "contact.email.info" => "For non-gameplay related questions",
+    "contact.donations" => "Donation Link: ",
+    "contact.donations.link" => "[URL]",
+    "contact.donations.info" => "Donations will be used for the website only (server, domain costs, etc)",
+    "contact.discord" => "Discord: ",
+    "contact.discord.link" => "[URL]",
+    "contact.socials" => "Social media: ",
+    "contact.socials.links" => "[twitter URL]<br/>[youtube URL]<br/>[facebook URL]",
     
     // You died
     "info.died" => "You died!! You were killed by ",

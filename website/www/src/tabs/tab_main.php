@@ -6,7 +6,7 @@
                                             <div class="col">
                                                 <!-- Header -->
                                                 <div class="row bg-body-tertiary border border-3 border-black">
-                                                    <b class="fs-bold fst-normal text-center">Player Stats</b>
+                                                    <b class="fst-normal text-center"><?php printString("info.stats"); ?></b>
                                                 </div>
                                                 
                                                 <!-- Stats -->
@@ -37,7 +37,7 @@
                                             <div class="col">
                                                 <!-- Header -->
                                                 <div class="row bg-body-tertiary border border-3 border-black">
-                                                    <b class="fs-bold fst-normal text-center">Criminal Record</b>
+                                                    <b class="fst-normal text-center">><?php printString("info.record"); ?></b>
                                                 </div>
                                                 
                                                 <!-- Stats -->

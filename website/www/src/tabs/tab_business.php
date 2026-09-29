@@ -4,7 +4,7 @@
                                         <div class="row">
                                             <div class="col p-0">
                                                 <!-- The bank header -->
-                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-bold bg-body-tertiary border border-3 border-black"><?php printString("business.bank"); ?></h3>
+                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-normal fst-bold bg-body-tertiary border border-3 border-black"><?php printString("business.bank"); ?></h3>
                                                 
                                                 <!-- The bank image -->
                                                 <img class="img-fluid mb-3 border border-3 border-black border-top-0" src="../img/Bank.jpg"/>
@@ -117,7 +117,7 @@
                                         <div class="row">
                                             <div class="col p-0">
                                                 <!-- The bullet header -->
-                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-bold bg-body-tertiary border border-3 border-black"><?php printString("business.bullet"); ?></h3>
+                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-normal fst-bold bg-body-tertiary border border-3 border-black"><?php printString("business.bullet"); ?></h3>
                                                 
                                                 <!-- The bullet image -->
                                                 <img class="img-fluid mb-3 border border-3 border-black border-top-0" src="../img/Bullet.jpg"/>
