@@ -1,7 +1,56 @@
 
                                     <!-- The Steal a bike Tab -->
                                     <div class="tab-pane" id="tabBike" role="tabpanel">
-                                        Bike
+                                        <div class="row">
+                                            <div class="col p-0">
+                                                <!-- The bike header -->
+                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-normal fst-bold bg-body-tertiary border border-3 border-black"><?php printString("crimes.bike"); ?></h3>
+                                                
+                                                <div id="bikeTry">
+                                                    <!-- The bike image -->
+                                                    <img class="img-fluid mb-3 border border-3 border-black border-top-0" src="../img/Bike.jpg"/>
+
+                                                    <!-- Success chance -->
+                                                    <h5 class="text-center mb-5"><?php printString("bike.info"); ?><span id="bikeRate"></span>%</h5>
+
+                                                    <!-- The bike body -->
+                                                    <form id="bikeForm">       
+                                                        <!-- Attempt button -->
+                                                        <div class="col-6 mx-auto">
+                                                            <button type="submit" class="btn btn-primary border border-3 border-black w-100"><?php printString("bike.try")?></button>
+                                                        </div>
+
+                                                        <!-- Error message -->
+                                                        <div id="bikeError" class="mb-4 mx-3 text-center text-warning d-none">
+                                                            <!-- Filled in later in case of error -->
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                
+                                                <div id="bikeSuccess" class="d-none">
+                                                    <!-- The bike image -->
+                                                    <img id="bikeImg" class="img-fluid mb-3 border border-3 border-black border-top-0"/>
+
+                                                    <!-- Bike worth -->
+                                                    <b><p class="text-center"><?php printString("bike.worth"); ?><span id="bikeWorth"></span></p></b>
+                                                    
+                                                    <!-- Link to the Garage -->
+                                                    <div class="row">
+                                                        <div class="col text-center">
+                                                            <button id="goToGarage" class="btn btn-link mt-3"><b><?php printString("business.garage"); ?></b></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div id="bikeNoSuccess" class="d-none">
+                                                    <!-- The failed image -->
+                                                    <img class="img-fluid mb-3 border border-3 border-black border-top-0" src="../img/Failed.jpg"/>
+
+                                                    <!-- Failed message -->
+                                                    <b><p class="text-center"><?php printString("crimes.failed"); ?><button id="goToJail" class="btn btn-link m-0 p-0 pb-1"><b><?php printString("main.jail"); ?></b></button></p></b>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <!-- The Steal a car Tab -->

@@ -56,6 +56,11 @@ class Controller {
             $controller = new Location();
         }
         
+        // Crime actions
+        else if (str_starts_with($route, "crime")) {
+            $controller = new Crime();
+        }
+        
         if (isset($controller)) {
             try {
                 // Executing the actual request

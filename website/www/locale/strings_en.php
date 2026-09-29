@@ -146,6 +146,14 @@ $strings = [
     // Hospital page
     "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] [unit](s)",
     
+    // Steal a bike page
+    "bike.info" => "Success rate: ",
+    "bike.try" => "Attempt to steal",
+    "bike.worth" => "Success! The bike is worth ",
+    
+    // General crime stuff
+    "crimes.failed" => "Failed! You've been caught and are being send to ",
+    
     // Bank page
     "bank.info" => "Your bank balance will remain after death, but you can't use this balance for purchases",
     "bank.deposit.title" => "Deposit to bank",
@@ -212,7 +220,7 @@ $strings = [
     "game.info.bike" => "This tab will bring you to the page where you can try your luck stealing a bike. If you succeed, you will get to see what you have stolen and the bike will be send to your garage. If you failed, you will be arrested and send to jail. The % chance increases as you level up!",
     "game.info.car" => "This tab will bring you to the page where you can try to steal a car just like stealing a bike, but with cars and higher rewards. The % chance increases as you level up!",
     "game.info.store" => "This tab will bring you to the page where you can try to rob a store. Robbing a store gives you a direct cash if succeeded! If failed, you will be send to jail.",
-    "game.info.kill" => "This tab will bring you to the kill a player page. Here you can use the search button to look for a players location. You can only search in 1 city every 10 minutes. When the player is found, you will recieve a message in your inbox. Otherwise you'll have to try searching in another city (keep in mind that your victim can travel too in that time). When you know the location of the victim, you must travel to that same city in order to attack them. You can then put in the victim's name and the amount of bullets you think is needed for killing the victim. If the other person has enough defensive bullets and is at most 2 ranks under yours or a higher rank than you are, they can kill you as well! If you didnt use enough bullets to kill the victim, they'll land in the hospital and survive the attack. If the victim's defensive bullets are not enough to kill you, then you will land in the hospital and survive the attack.", 
+    "game.info.kill" => "This tab will bring you to the kill a player page. Here you can use the search button to look for a players location. You can only search in 1 city every 10 minutes. When the player is found, you will recieve a message in your inbox. Otherwise you'll have to try searching in another city (keep in mind that your victim can travel too in that time). When you know the location of the victim, you must travel to that same city in order to attack them. You can then put in the victim's name and the amount of bullets you think is needed for killing the victim. If the other person has enough defensive bullets and is at most 1 rank under yours or a higher rank than you are, they can kill you as well! If you didnt use enough bullets to kill the victim, they'll land in the hospital and survive the attack. If the victim's defensive bullets are not enough to kill you, then you will land in the hospital and survive the attack.", 
     "game.info.roulette" => "This tab will bring you to the casino and you can try your luck out in a 50/50 chance roullete. Enter your color and hit play. 1 game cost €1500 and can be played every half hour.", 
     "game.info.scratch" => "This tab will bring you to the scratch & match card minigame. Here you can scratch your luck away on a scratchcard, which sometimes may give some prize money. A scratch card cost 1500 and can be done every half hour.", 
     "game.info.online" => "This tab will bring you to a list of online users. Thats about it.",

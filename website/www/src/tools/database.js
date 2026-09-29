@@ -54,6 +54,16 @@ function fetchSendMoney(data) {
     return fetchPost("send_money", data);
 }
 
+// Get the success rate
+function fetchBikeRate() {
+    return fetchGet("get_bike_rate");
+}
+
+// Steal the bike
+function fetchStealBike() {
+    return fetchGet("steal_bike");
+}
+
 // Send a post request to the given URL with fetch
 function fetchGet(url) {
     var response = fetchRequest(url, "GET");

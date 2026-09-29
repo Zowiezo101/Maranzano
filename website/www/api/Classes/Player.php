@@ -70,6 +70,10 @@ class Player {
             case "player_friends":
                 $result = $this->getPlayerFriends();
                 break;
+            
+            case "player_chance_bike":
+                $result = $this->getPlayerSuccessBike();
+                break;
         }
         
         return $result;
@@ -176,6 +180,19 @@ class Player {
         $friends = $this->getFriends($id);
         
         return $friends;
+    }
+    
+    public function getPlayerSuccessBike() {
+        
+        $user_id = $this->getUserId();
+
+        // Get the player that belongs to this user
+        $player = $this->getPlayer($user_id);
+        
+        // Get the current rank
+        $rank = self::RANKS[$player["rank"]];
+        
+        return $rank["bike"];
     }
     
     /**
