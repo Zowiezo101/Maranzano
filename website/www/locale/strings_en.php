@@ -199,6 +199,29 @@ $strings = [
     "rules.rule6" => "Play fair and help keep the community fun for everyone.",
     "rules.havefun" => "Have fun :)",
     
+    // Game info page
+    "game.info.home" => "This tab will get you to the first page. You will find your personal stats and criminal record here. During playing, a ton of information is also to be found on the top left corner of the screen.",
+    "game.info.travel" => "This tab brings you to the travel page. You can select a new city you want to fly to. The cost of a ticket is €3.000 and it automatically updates the your curernt country as well. You can only travel every 30 minutes.",
+    "game.info.jail" => "This tab will bring you to the jail page. Keep in mind that every citiy has its own jail. You will go to jail if a crime has failed or if you have failed to break out another player. There is also a list shown with other players currently in that jail. You have the option to attempt to break others out or buy them out with cash. This can only be attempted when not in jail (or the hospital) yourself. Breaking someone out succesfully will set them free and they will get a notification. If you fail, you end up in jail as well! Buying someone out of jail will always succeed.",
+    "game.info.hospital" => "This tab will bring you to the hospital. When you are in Mafiani's hospital you simply have to wait until you are fully recovered. You can buy yourself out of hospital, but this aint cheap. You will go to the hospital if you have taken damage from incoming bullets, after your defensive bullets have run out.",
+    // BANK
+    // BULLET SHOP
+    "game.info.garage" => "This tab will bring you to the garage, where you can sell your stolen vehicles and bikes.",
+    // FAMILY
+    "game.info.bike" => "This tab will bring you to the page where you can try your luck stealing a bike. If you succeed, you will get to see what you have stolen and the bike will be send to your garage. If you failed, you will be arrested and send to jail. The % chance increases as you level up!",
+    "game.info.car" => "This tab will bring you to the page where you can try to steal a car just like stealing a bike, but with cars and higher rewards. The % chance increases as you level up!",
+    "game.info.store" => "This tab will bring you to the page where you can try to rob a store. Robbing a store gives you a direct cash if succeeded! If failed, you will be send to jail.",
+    // KILL
+    // ROULETTE
+    // SCRATCH & MATCH
+    "game.info.online" => "This tab will bring you to a list of online users. Thats about it.",
+    "game.info.friends" => "This tab will bring you to your friend list. You can add or remove friends here. You can also can send private messages to them.",
+    // NEWSPAPER
+    // USERLIST
+    // MAILBOX
+    // SETTINGS
+    "game.info.messages" => "Messages sent to other players are not encrypted. If there is suspicion, a server admin can look into it. But only if necessary.",
+    
     // You died
     "info.died" => "You died!! You were killed by ",
     "info.new-name" => "Your new Mafia name",

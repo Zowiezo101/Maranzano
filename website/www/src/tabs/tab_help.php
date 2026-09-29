@@ -57,7 +57,39 @@
                                     
                                     <!-- The Info Tab -->
                                     <div class="tab-pane" id="tabInfo" role="tabpanel">
-                                        Info
+                                        <div class="row">
+                                            <div class="col p-0">
+                                                <!-- The info header -->
+                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-normal fst-bold bg-body-tertiary border border-3 border-black"><?php printString("help.info"); ?></h3>
+                                                
+                                                <!-- The info body -->
+                                                
+                                                <!-- Game info -->
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("main.home"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.home"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("main.travel"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.travel"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("main.jail"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.jail"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("main.hospital"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.hospital"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("business.garage"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.garage"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("crimes.bike"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.bike"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("crimes.car"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.car"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("crimes.store"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.store"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.online"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.online"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.friends"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.friends"); ?></b></p>
+                                                
+                                                <!-- Messages are not 100% private -->
+                                                <p class="mt-5"><b class="fst-normal text-black"><?php printString("game.info.messages"); ?></b></p>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <!-- The Settings Tab -->
