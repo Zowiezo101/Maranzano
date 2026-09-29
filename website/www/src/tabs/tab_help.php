@@ -29,14 +29,30 @@
                                         </div>
                                     </div>
                                     
-                                    <!-- The Donate Tab -->
-                                    <div class="tab-pane" id="tabDonate" role="tabpanel">
-                                        Donate
-                                    </div>
-                                    
                                     <!-- The Rules Tab -->
                                     <div class="tab-pane" id="tabRules" role="tabpanel">
-                                        Rules
+                                        <div class="row">
+                                            <div class="col p-0">
+                                                <!-- The rules header -->
+                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-normal fst-bold bg-body-tertiary border border-3 border-black"><?php printString("help.rules"); ?></h3>
+                                                
+                                                <!-- The rules body -->
+                                                
+                                                <!-- Title -->
+                                                <h4 class="mt-3"><b class="fst-normal"><?php printString("rules.title"); ?></b></h4>
+                                                
+                                                <!-- Rules -->
+                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">1. </span><?php printString("rules.rule1"); ?></b></p>
+                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">2. </span><?php printString("rules.rule2"); ?></b></p>
+                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">3. </span><?php printString("rules.rule3"); ?></b></p>
+                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">4. </span><?php printString("rules.rule4"); ?></b></p>
+                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">5. </span><?php printString("rules.rule5"); ?></b></p>
+                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">6. </span><?php printString("rules.rule6"); ?></b></p>
+                                                
+                                                <!-- Last but not least -->
+                                                <p class="mt-3"><b class="fst-normal text-black"><?php printString("rules.havefun"); ?></b></p>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <!-- The Info Tab -->

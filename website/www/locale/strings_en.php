@@ -59,7 +59,6 @@ $strings = [
     
     // Help menu
     "help.contact" => "Contact info",
-    "help.donate" => "Donate",
     "help.rules" => "Rules",
     "help.info" => "Game info",
     "help.settings" => "Settings",
@@ -189,6 +188,16 @@ $strings = [
     "contact.discord.link" => "[URL]",
     "contact.socials" => "Social media: ",
     "contact.socials.links" => "[twitter URL]<br/>[youtube URL]<br/>[facebook URL]",
+    
+    // Rules page
+    "rules.title" => "Game rules",
+    "rules.rule1" => "Treat other players with respect. No bullying, harassment or insults.",
+    "rules.rule2" => "No cheating - No hacks, cheats, bots, etc.",
+    "rules.rule3" => "Don't spam other players or admins.",
+    "rules.rule4" => "Don't pretend to be another player or admin.",
+    "rules.rule5" => "Don't share personal information about yourself or others.",
+    "rules.rule6" => "Play fair and help keep the community fun for everyone.",
+    "rules.havefun" => "Have fun :)",
     
     // You died
     "info.died" => "You died!! You were killed by ",

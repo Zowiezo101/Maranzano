@@ -109,8 +109,7 @@
                                                               "userlist" => $RANK_ROOKIE, 
                                                               "mail"     => $RANK_ROOKIE]) ?>
                                     
-                                    <?php printMenu("help", ["contact"  => $RANK_ROOKIE, 
-                                                             "donate"   => $RANK_ROOKIE, 
+                                    <?php printMenu("help", ["contact"  => $RANK_ROOKIE,
                                                              "rules"    => $RANK_ROOKIE, 
                                                              "info"     => $RANK_ROOKIE, 
                                                              "settings" => $RANK_ROOKIE]) ?>

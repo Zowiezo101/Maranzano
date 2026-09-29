@@ -150,7 +150,7 @@ $(function () {
     $("#btnHome").tab('show');
     
     // TODO: Temp different starting tab
-    $("#btnContact").tab('show');
+    $("#btnRules").tab('show');
 });
 
 
