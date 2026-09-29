@@ -51,10 +51,10 @@ $strings = [
     "casino.scratch" => "Scratch & Match",
     
     // Communication menu"
-    "comms.online" => "Online users",
+    "comms.online" => "Online players",
     "comms.friends" => "Friend list",
     "comms.news" => "Newspaper",
-    "comms.userlist" => "User list",
+    "comms.userlist" => "Player list",
     "comms.mail" => "Mailbox",
     
     // Help menu
@@ -204,23 +204,23 @@ $strings = [
     "game.info.travel" => "This tab brings you to the travel page. You can select a new city you want to fly to. The cost of a ticket is €3.000 and it automatically updates the your curernt country as well. You can only travel every 30 minutes.",
     "game.info.jail" => "This tab will bring you to the jail page. Keep in mind that every citiy has its own jail. You will go to jail if a crime has failed or if you have failed to break out another player. There is also a list shown with other players currently in that jail. You have the option to attempt to break others out or buy them out with cash. This can only be attempted when not in jail (or the hospital) yourself. Breaking someone out succesfully will set them free and they will get a notification. If you fail, you end up in jail as well! Buying someone out of jail will always succeed.",
     "game.info.hospital" => "This tab will bring you to the hospital. When you are in Mafiani's hospital you simply have to wait until you are fully recovered. You can buy yourself out of hospital, but this aint cheap. You will go to the hospital if you have taken damage from incoming bullets, after your defensive bullets have run out.",
-    // BANK
-    // BULLET SHOP
+    "game.info.bank" => "This tab will bring you to the bank. Where you can transfer your cash to your bank account and viceversa. You will also have the ability to send a max amount of €10.000 each day to a friend's bank account. You dont lose your bank balance when you get killed. However, what cash you had, will be gone after cash.",
+    "game.info.bullet" => "This tab will bring you to the bullet shop. Here you can buy packs of bullets with cash. Packs cost €25 a pack. You can buy a maximum of 20 packs every 2 hours. When you have bought bullets, by default they will be offensive bullets (this is for firing at players in the kill tab). You have the option to transfer your bullets to a defensive state (this is your shield against incoming attacks). Keep in mind that you can only transfer bullets to a defensive state and not the other way around!",
     "game.info.garage" => "This tab will bring you to the garage, where you can sell your stolen vehicles and bikes.",
-    // FAMILY
+    "game.info.family" => "This tab will bring you to your family page. You can join a family at any rank, but only create a family from rank 'Don'. Being in a family doesn't have any advantages, other then knowing your family has your back and you have theirs.",
+    "game.info.manage" => "This tab will bring you to your family managment. When you hit the rank 'Don' you will be able to start a family here. You can invite players to your family, Remove them, or promote existing family members as recruiters. (Recuiters will be able to invite or remove family members).",
     "game.info.bike" => "This tab will bring you to the page where you can try your luck stealing a bike. If you succeed, you will get to see what you have stolen and the bike will be send to your garage. If you failed, you will be arrested and send to jail. The % chance increases as you level up!",
     "game.info.car" => "This tab will bring you to the page where you can try to steal a car just like stealing a bike, but with cars and higher rewards. The % chance increases as you level up!",
     "game.info.store" => "This tab will bring you to the page where you can try to rob a store. Robbing a store gives you a direct cash if succeeded! If failed, you will be send to jail.",
-    // KILL
-    // ROULETTE
-    // SCRATCH & MATCH
+    "game.info.kill" => "This tab will bring you to the kill a player page. Here you can use the search button to look for a players location. You can only search in 1 city every 10 minutes. When the player is found, you will recieve a message in your inbox. Otherwise you'll have to try searching in another city (keep in mind that your victim can travel too in that time). When you know the location of the victim, you must travel to that same city in order to attack them. You can then put in the victim's name and the amount of bullets you think is needed for killing the victim. If the other person has enough defensive bullets and is at most 2 ranks under yours or a higher rank than you are, they can kill you as well! If you didnt use enough bullets to kill the victim, they'll land in the hospital and survive the attack. If the victim's defensive bullets are not enough to kill you, then you will land in the hospital and survive the attack.", 
+    "game.info.roulette" => "This tab will bring you to the casino and you can try your luck out in a 50/50 chance roullete. Enter your color and hit play. 1 game cost €1500 and can be played every half hour.", 
+    "game.info.scratch" => "This tab will bring you to the scratch & match card minigame. Here you can scratch your luck away on a scratchcard, which sometimes may give some prize money. A scratch card cost 1500 and can be done every half hour.", 
     "game.info.online" => "This tab will bring you to a list of online users. Thats about it.",
     "game.info.friends" => "This tab will bring you to your friend list. You can add or remove friends here. You can also can send private messages to them.",
-    // NEWSPAPER
-    // USERLIST
-    // MAILBOX
-    // SETTINGS
-    "game.info.messages" => "Messages sent to other players are not encrypted. If there is suspicion, a server admin can look into it. But only if necessary.",
+    "game.info.news" => "This tab will bring you to the newspaper. The newspaper gives you information about current events happening in Mafiani. Like new members, recently killed players, and if someone has reach a new rank.", 
+    "game.info.userlist" => "This tab will bring you to the player list. Look for a player you want to befriend or message. You can also see killed players.", 
+    "game.info.mail" => "This tab will bring you to your mailbox. You can send messages, reply to messages from friends or see automatic game notifications. Messages sent to other players are not encrypted. If there is suspicion, a server admin can look into it. But only if necessary.", 
+    "game.info.settings" => "This tab will bring you to the settings tab. Here you will be able to change your e-mail address or log out.",
     
     // You died
     "info.died" => "You died!! You were killed by ",

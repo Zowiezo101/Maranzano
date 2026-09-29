@@ -73,21 +73,40 @@
                                                 <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.jail"); ?></b></p>
                                                 <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("main.hospital"); ?>-</b></p>
                                                 <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.hospital"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("business.bank"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.bank"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("business.bullet"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.bullet"); ?></b></p>
                                                 <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("business.garage"); ?>-</b></p>
                                                 <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.garage"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("business.family"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.family"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("business.manage"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.manage"); ?></b></p>
                                                 <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("crimes.bike"); ?>-</b></p>
                                                 <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.bike"); ?></b></p>
                                                 <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("crimes.car"); ?>-</b></p>
                                                 <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.car"); ?></b></p>
                                                 <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("crimes.store"); ?>-</b></p>
                                                 <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.store"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("crimes.kill"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.kill"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("casino.roulette"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.roulette"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("casino.scratch"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.scratch"); ?></b></p>
                                                 <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.online"); ?>-</b></p>
                                                 <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.online"); ?></b></p>
                                                 <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.friends"); ?>-</b></p>
                                                 <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.friends"); ?></b></p>
-                                                
-                                                <!-- Messages are not 100% private -->
-                                                <p class="mt-5"><b class="fst-normal text-black"><?php printString("game.info.messages"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.news"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.news"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.userlist"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.userlist"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.mail"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.mail"); ?></b></p>
+                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("help.settings"); ?>-</b></p>
+                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.settings"); ?></b></p>
                                             </div>
                                         </div>
                                     </div>
