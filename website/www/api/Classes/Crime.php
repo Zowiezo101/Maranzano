@@ -185,6 +185,7 @@ class Crime extends Action {
         // Get the current progress and rank of the player
         $current_rank = $player["rank"];
         $current_xp = $player["progress"];
+        $current_health = $player["health"];
         
         // Get the XP ceiling for the current rank
         $xp_ceiling = $this->player->getRankXP($current_rank);
@@ -194,16 +195,21 @@ class Crime extends Action {
         
         // Is this a rank-up?
         $new_rank = $current_rank;
+        $new_health = $current_health;
         if ($new_xp >= $xp_ceiling) {
             // The XP starts clean with the bit that's left after rank-up
             $new_xp = $new_xp - $xp_ceiling;
             $new_rank = $current_rank + 1;
+            
+            // Update the health as well
+            $new_health = $this->player->getRankHealth($new_rank);
         }
         
         // Update the rank and the XP
         $update = [
             "rank" => $new_rank,
-            "progress" => $new_xp
+            "progress" => $new_xp,
+            "health" => $new_health,
         ];
         $this->player->updatePlayer($player["id"], $update);
     }

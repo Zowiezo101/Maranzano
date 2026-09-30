@@ -488,4 +488,8 @@ class Player {
     public function getRankXP($rank) {
         return self::RANKS[$rank]["xp"];
     }
+    
+    public function getRankHealth($rank) {
+        return self::RANKS[$rank]["health"];
+    }
 }
