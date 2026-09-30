@@ -150,6 +150,7 @@ $strings = [
     "bike.info" => "Success rate: ",
     "bike.try" => "Attempt to steal",
     "bike.worth" => "Success! The bike is worth ",
+    "bike.cooldown" => "You have tried to steal a bike less than [cooldown] [units] ago. You still need to wait [time] [unit](s)",
     
     // General crime stuff
     "crimes.failed" => "Failed! You've been caught and are being send to ",

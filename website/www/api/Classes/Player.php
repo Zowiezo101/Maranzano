@@ -232,14 +232,14 @@ class Player {
         // The values to update for the player
         $update_arr = [];
         foreach ($update as $key => $value) {
-            $update_arr[] = "{$key} = :{$key}";
+            $update_arr[] = "players.{$key} = :{$key}";
         }
         
         // The SQL for updating the values
         $update_sql = implode(', ', $update_arr);
         
         // Set the SQL
-        $sql = "UPDATE players SET {$update_sql} WHERE id = :id";
+        $sql = "UPDATE players SET {$update_sql} WHERE players.id = :id";
     
         // Prepare query statement
         $stmt = $conn->prepare($sql);    
@@ -446,7 +446,7 @@ class Player {
         $max_xp = self::RANKS[$rank]["xp"];
         
         // Make sure XP are converted to percentage
-        $result = round($value/$max_xp)."%";
+        $result = round($value * 100/$max_xp)."%";
         return $result;
     }
     
@@ -479,5 +479,13 @@ class Player {
         $result = date("d-m-Y", $time);
         
         return $result;
+    }
+    
+    /**
+     * RANK functions
+     */
+    
+    public function getRankXP($rank) {
+        return self::RANKS[$rank]["xp"];
     }
 }

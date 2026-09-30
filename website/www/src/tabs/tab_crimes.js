@@ -29,7 +29,7 @@ function onSubmitBike(event) {
 
         if (results.error !== "" && results.error !== null) {
             // Something went wrong, show an error message
-            onReturnedError(results.error, "#shopError");
+            onReturnedError(results.error, "#bikeError");
         } else {
             // Successfully attempted to steal a bike
             if (results.data !== "") {

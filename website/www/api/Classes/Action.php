@@ -91,26 +91,8 @@ class Action {
         // Get the results
         $result = getResults($stmt);
         
-        if (isset($result)) {
-            // A result means that the user still has a cooldown
-            // Prepare an error
-            $error = getString($error);
-            
-            // Get the correct unit for this cooldown
-            $cooldown1 = $this->calculateCooldown($cooldown);
-            
-            // Calculate the time left to wait
-            $time = $this->calculateWaitingTime($result["expires_at"]);
-
-            // Insert the name and url
-            $error1 = str_replace("[cooldown]", $cooldown1[1], $error);
-            $error2 = str_replace("[units]",    $cooldown1[0], $error1);
-            $error3 = str_replace("[time]",     $time[1], $error2);
-            $error4 = str_replace("[unit]",     $time[0], $error3);
-            
-            // Throw the error for the user to receive
-            throwError($error4);
-        }
+        // Return the cooldown to the user
+        $this->ifCooldown($result, $cooldown, $error);
         
         return $result;
     }
@@ -146,6 +128,30 @@ class Action {
         }
     }
     
+    protected function ifCooldown($result, $cooldown, $error) {
+        
+        if (isset($result)) {
+            // A result means that the user still has a cooldown
+            // Prepare an error
+            $error = getString($error);
+            
+            // Get the correct unit for this cooldown
+            $cooldown1 = $this->calculateCooldown($cooldown);
+            
+            // Calculate the time (and unit of time) left to wait
+            $time = $this->calculateWaitingTime($result["expires_at"]);
+
+            // Insert the name and url
+            $error1 = str_replace("[cooldown]", $cooldown1[1], $error);
+            $error2 = str_replace("[units]",    $cooldown1[0], $error1);
+            $error3 = str_replace("[time]",     $time[1], $error2);
+            $error4 = str_replace("[unit]",     $time[0], $error3);
+            
+            // Throw the error for the user to receive
+            throwError($error4);
+        }
+    }
+    
     protected function isValidAmount($amount, $min = null, $max = null) {
         if (isset($min) && ($amount < $min)) {
             // Throw the error for the user to receive
@@ -157,7 +163,7 @@ class Action {
     }
     
     protected function calculateCooldown($cooldown) {        
-        // The difference between the two (in seconds)
+        // The cooldown in hours
         $cooldown_h = round($cooldown / 60);
         
         // Get the waiting time in seconds

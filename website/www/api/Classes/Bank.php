@@ -124,7 +124,7 @@ class Bank extends Action {
         
         // Retrieve the token from the token table
         $sql = "SELECT * FROM {$table} "
-                . "WHERE sender_id = :player_id AND receiver_id = :friend_id AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
+                . "WHERE player_id = :player_id AND friend_id = :friend_id AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
     
         // Prepare query statement
         $stmt = $conn->prepare($sql);    
@@ -139,26 +139,8 @@ class Bank extends Action {
         // Get the results
         $result = getResults($stmt);
         
-        if (isset($result)) {
-            // A result means that the user still has a cooldown
-            // Prepare an error
-            $error = getString($error);
-            
-            // Get the correct unit for this cooldown
-            $cooldown1 = $this->calculateCooldown($cooldown);
-            
-            // Calculate the time (and unit of time) left to wait
-            $time = $this->calculateWaitingTime($result["expires_at"]);
-
-            // Insert the name and url
-            $error1 = str_replace("[cooldown]", $cooldown1[1], $error);
-            $error2 = str_replace("[units]",    $cooldown1[0], $error1);
-            $error3 = str_replace("[time]",     $time[1], $error2);
-            $error4 = str_replace("[unit]",     $time[0], $error3);
-            
-            // Throw the error for the user to receive
-            throwError($error4);
-        }
+        // Return the cooldown to the user
+        $this->ifCooldown($result, $cooldown, $error);
         
         return $result;
     }
@@ -167,7 +149,7 @@ class Bank extends Action {
         $conn = $this->db->getConnection();
         
         // Create a new token
-        $sql = "INSERT INTO {$table} (sender_id, receiver_id, expires_at) "
+        $sql = "INSERT INTO {$table} (player_id, friend_id, expires_at) "
                 . "VALUES (:player_id, :friend_id, :expires_at)";
 
         // Prepare query statement
