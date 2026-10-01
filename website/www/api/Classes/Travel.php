@@ -6,7 +6,7 @@ class Travel extends Action {
     
     private const ACTION_COST = 3000;
     private const ACTION_TABLE = "travel_session";
-    private const ACTION_COOLDOWN = 30;
+    private const ACTION_COOLDOWN = 30 * 60;
     
     public function route($route, $data) {
         parent::route($route, $data);

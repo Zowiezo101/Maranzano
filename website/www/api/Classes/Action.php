@@ -100,16 +100,16 @@ class Action {
     protected function setCooldown($player_id, $table, $cooldown) {
         $conn = $this->db->getConnection();
         
-        // Create a new token
+        // Create a new cooldown
         $sql = "INSERT INTO {$table} (player_id, expires_at) "
                 . "VALUES (:player_id, :expires_at)";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);
 
-        // Genereate the expire date for the verification
+        // Generate the expire date for the cooldown
         $expiry_date = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
-                            ->modify('+' . $cooldown . ' minutes')
+                            ->modify('+' . $cooldown . 'seconds')
                             ->format('Y-m-d H:i:s');
 
         // Bind the parameter
@@ -135,15 +135,21 @@ class Action {
             // Prepare an error
             $error = getString($error);
             
-            // Get the correct unit for this cooldown
-            $cooldown1 = $this->calculateCooldown($cooldown);
+            if (isset($cooldown)) {
+                // Get the correct unit for this cooldown
+                $cooldown1 = $this->calculateCooldown($cooldown);
+
+                // Insert the values
+                $error1 = str_replace("[cooldown]", $cooldown1[1], $error);
+                $error2 = str_replace("[units]",    $cooldown1[0], $error1);
+            } else {
+                $error2 = $error;
+            }
             
             // Calculate the time (and unit of time) left to wait
             $time = $this->calculateWaitingTime($result["expires_at"]);
 
-            // Insert the name and url
-            $error1 = str_replace("[cooldown]", $cooldown1[1], $error);
-            $error2 = str_replace("[units]",    $cooldown1[0], $error1);
+            // Insert the values
             $error3 = str_replace("[time]",     $time[1], $error2);
             $error4 = str_replace("[unit]",     $time[0], $error3);
             
@@ -164,10 +170,11 @@ class Action {
     
     protected function calculateCooldown($cooldown) {        
         // The cooldown in hours
-        $cooldown_h = round($cooldown / 60);
+        $cooldown_m = round($cooldown / 60);
+        $cooldown_h = round($cooldown_m / 60);
         
         // Get the waiting time in seconds
-        return $cooldown_h > 1 ? ["hours", $cooldown_h] : ["minutes", $cooldown];
+        return ($cooldown_h > 1 ? ["hours", $cooldown_h] : ($cooldown_m > 1 ? ["minutes", $cooldown_m] : ["seconds", $cooldown]));
     }
     
     protected function calculateWaitingTime($expires_at) {
@@ -181,6 +188,6 @@ class Action {
         $waiting_time_h = round($waiting_time_m / 60);
         
         // Get the waiting time in seconds
-        return $waiting_time_h > 1 ? ["hour", $waiting_time_h] : ["minute", $waiting_time_m];
+        return ($waiting_time_h > 1 ? ["hours", $waiting_time_h] : ($waiting_time_m > 1 ? ["minutes", $waiting_time_m] : ["seconds", $waiting_time]));
     }
 }

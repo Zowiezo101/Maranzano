@@ -492,4 +492,8 @@ class Player {
     public function getRankHealth($rank) {
         return self::RANKS[$rank]["health"];
     }
+    
+    public function getRankJailTime($rank) {
+        return self::RANKS[$rank]["jail"];
+    }
 }

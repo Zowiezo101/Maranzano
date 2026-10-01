@@ -7,7 +7,7 @@ class Shop extends Action {
     private const ACTION_COST = 25;
     private const ACTION_PACK = 50;
     private const ACTION_TABLE = "shop_session";
-    private const ACTION_COOLDOWN = 120;
+    private const ACTION_COOLDOWN = 120 * 60;
     private const ACTION_MIN = 1;
     private const ACTION_MAX = 20;
     
