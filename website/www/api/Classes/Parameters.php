@@ -30,6 +30,8 @@ class Parameters {
             "COOKIE" => $COOKIE
         ];
         
+        $this->setData($data);
+        
         return $data;
     }
     

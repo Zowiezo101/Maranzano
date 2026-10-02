@@ -41,6 +41,11 @@ class Controller {
             $controller = new Travel();
         }
         
+        // Jail actions
+        else if (str_starts_with($route, "jail")) {
+            $controller = new Jail();
+        }
+        
         // Shop actions
         else if (str_starts_with($route, "shop")) {
             $controller = new Shop();

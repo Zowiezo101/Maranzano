@@ -48,6 +48,10 @@ function onShowTab(event) {
             onTravelTab();
             break;
             
+        case "btnJail":
+            onJailTab();
+            break;
+            
         case "btnBank":
             onBankTab();
             break;
@@ -154,7 +158,7 @@ $(function () {
     $("#btnHome").tab('show');
     
     // TODO: Temp different starting tab
-    $("#btnBike").tab('show');
+    $("#btnJail").tab('show');
 });
 
 

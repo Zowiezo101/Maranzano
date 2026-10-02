@@ -32,22 +32,9 @@ class Action {
         
         // Parse the input data
         $this->parameters->setData($data);
-        
-        // The username that is given via the cookie
-        $user_name = $this->parameters->getUser(from_cookie: true);
-        
-        // Get the user using the username
-        $user = $this->user->getUser(name: $user_name);   
-        
-        if (!isset($user)) {
-            throwError("player.data.error");
-        }
-        
-        // Get the user_id
-        $user_id = $user["id"];
 
         // Get the player that belongs to this user
-        $this->player_data = $this->player->getPlayer($user_id);
+        $this->player_data = $this->player->getPlayerFromCookieData();
         
         // Make sure the player isn't in jail or in the hospital
         $this->hasCooldown($this->player_data["id"], 

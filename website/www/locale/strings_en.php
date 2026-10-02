@@ -142,6 +142,11 @@ $strings = [
     
     // Jail page
     "jail.cooldown" => "You can't do that right now, you are still in jail for [time] [unit](s)",
+    "jail.info.name" => "Name:",
+    "jail.info.time" => "Time:",
+    "jail.info.city" => "City:",
+    "jail.info.pay_bail" => "Pay bail (€[bail])",
+    "jail.info.bust_out" => "Bust out ([chance]%)",
     
     // Hospital page
     "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] [unit](s)",

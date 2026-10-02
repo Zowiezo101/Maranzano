@@ -44,6 +44,25 @@ function onTravelTab() {
         alert("error: " + results);
     });
 }
+
+function onJailTab() {
+    
+    // The fetch call
+    fetchAllInmates().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong
+        } else {
+            // Success, update the jail table
+            updateJailTable(results.data);
+            
+        }
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
     
 // Create a fetch call to prevent reloading the page
 function onSubmitNewPlayer(event) {
@@ -143,5 +162,35 @@ function updateLocationSelect(select, data) {
     
     // Insert the new location options
     $("#" + select).append(options.join(""));
+}
+
+function updateJailTable(data) {
+    $("#jail tbody").empty();
+    
+    var rows = [];
+    if (data.length > 0) {
+        for (var row in data) {
+            // Name, time, city, BUST OUT
+            rows.push(
+            `<tr>
+                <td>` + data[row]["name"] + `</td>
+                <td>` + data[row]["time"] + `</td>
+                <td><button class="btn btn-link p-0 text-black-50" onclick="payPlayerBail(` + data[row]["id"] + `)"><b>` + data[row]["bail"] + `</b></button></td>
+                <td><button class="btn btn-link p-0 text-black-50" onclick="bustPlayerOut(` + data[row]["id"] + `)"><b>` + data[row]["chance"] + `</b></button></td>
+            </tr>`);
+
+            $("#jail tbody").append(rows.join(""));
+        }
+    }
+}
+
+function payPlayerBail(id) {
+    console.log(id);
+    
+}
+
+function bustPlayerOut(id) {
+    console.log(id);
+    
 }
 

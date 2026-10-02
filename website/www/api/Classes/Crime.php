@@ -101,7 +101,7 @@ class Crime extends Action {
             $this->garage->addBike($player["id"], $bike);
         } else {
             // Add player to jail
-            $this->jail->sendToJail($player["id"], $player["rank"]);
+            $this->jail->sendToJail($player);
         }
         
         // Add the cooldown

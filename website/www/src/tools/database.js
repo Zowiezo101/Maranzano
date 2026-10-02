@@ -19,6 +19,11 @@ function fetchTravel(data) {
     return fetchPost("move_to_location", data);
 }
 
+// Get the list of inmates from this jail
+function fetchAllInmates() {
+    return fetchGet("get_inmates");
+}
+
 // Create a new player
 function fetchNewPlayer(data) {
     return fetchPost("create_new_player", data);

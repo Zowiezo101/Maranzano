@@ -4,9 +4,55 @@ namespace Classes;
 
 use PDO;
 
-class Hospital extends Action {
+class Hospital {
+    // Other classes
+    protected $db;
+    private $user;
+    private $player;
+    private $parameters;
     
+    // The player
+    public $player_data;
+    
+    // Constants
     public const ACTION_TABLE = "hospital_session";
+    
+    public function __construct() {
+        $this->parameters = new Parameters();
+        $this->user = new User();
+        $this->player = new Player();
+        
+        // To connect to the database
+        $this->db = new Database();
+    }
+    
+    public function route($route, $data) {
+        // These actions need to have the cookie checked
+        $auth = new Login();
+        $auth->route("login_validate", $data);
+        
+        // Parse the input data
+        $this->parameters->setData($data);
+
+        // Get the player that belongs to this user
+        $this->player_data = $this->player->getPlayerFromCookieData();
+        
+        $result = null;
+        
+        switch($route) {
+            
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * API functions
+     */
+    
+    /**
+     * Other functions
+     */
     
     public function getHospitalTime($player_id) {
         

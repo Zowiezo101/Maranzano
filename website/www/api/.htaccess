@@ -37,6 +37,9 @@ RewriteRule ^(.*)move_to_location$   $1/api/index?route=travel_player [QSA,DPI]
 # Location requests
 RewriteRule ^(.*)get_locations$   $1/api/index?route=location_all [QSA,DPI]
 
+# Jail requests
+RewriteRule ^(.*)get_inmates$   $1/api/index?route=jail_city [QSA,DPI]
+
 # Bank requests
 RewriteRule ^(.*)deposit_money$  $1/api/index?route=bank_deposit [QSA,DPI]
 RewriteRule ^(.*)withdraw_money$ $1/api/index?route=bank_withdraw [QSA,DPI]

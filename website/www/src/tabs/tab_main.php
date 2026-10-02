@@ -98,7 +98,26 @@
                                     
                                     <!-- The Jail Tab -->
                                     <div class="tab-pane" id="tabJail" role="tabpanel">
-                                        Jail
+                                        <div class="row">
+                                            <div class="col p-0">
+                                                <?php printHeader("main.jail", "../img/Jail.jpg"); ?>
+                                                
+                                                <!-- The jail table -->
+                                                <table id="jail" class="fw-bold table table-borderless table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="fst-normal"><?php printString("jail.info.name"); ?></th>
+                                                            <th class="fst-normal"><?php printString("jail.info.time"); ?></th>
+                                                            <th class="fst-normal"></th>
+                                                            <th class="fst-normal"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- Following rows are added using JS -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <!-- The Hospital Tab -->

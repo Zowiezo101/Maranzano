@@ -112,3 +112,9 @@ form .btn-link:not(hover) {
     background-color: var(--bg-color-secondary);
 }
 
+.table {
+    --bs-table-bg: var(--bg-color-secondary);
+    --bs-table-color: var(--bs-white);
+    --bs-table-hover-color: var(--bs-white);
+}
+

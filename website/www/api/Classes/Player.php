@@ -190,9 +190,14 @@ class Player {
         $player = $this->getPlayer($user_id);
         
         // Get the current rank
-        $rank = self::RANKS[$player["rank"]];
+        return $this->getPlayerSuccessBikeByRank($player["rank"]);
+    }
+    
+    public function getPlayerSuccessBikeByRank($rank) {
+        // Get the current rank data
+        $rank_data = self::RANKS[$rank];
         
-        return $rank["bike"];
+        return $rank_data["bike"];
     }
     
     /**
@@ -328,13 +333,16 @@ class Player {
     }
     
     /**
-     * Misc
+     * Useful functions for outside (or inside) use
      */
     
-    private function getUser() {
+    public function getUser() {
+        $parameters = new Parameters();
+        
+        $parameters->getData();
         
         // The username that is given via the cookie
-        $user_name = $this->parameters->getUser(from_cookie: true);
+        $user_name = $parameters->getUser(from_cookie: true);
         
         // Get the user using the username
         $user = $this->user->getUser(name: $user_name);
@@ -346,7 +354,7 @@ class Player {
         return $user;
     }
     
-    private function getUserId() {
+    public function getUserId() {
         
         $user = $this->getUser();
         
@@ -354,6 +362,13 @@ class Player {
         $user_id = $user["id"];
         
         return $user_id;
+    }
+    
+    public function getPlayerFromCookieData() {
+        
+        $user_id = $this->getUserId();
+        
+        return $this->getPlayer($user_id);
     }
     
     private function getFriends($player_id) {
