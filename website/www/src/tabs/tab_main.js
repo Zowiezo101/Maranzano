@@ -77,6 +77,7 @@ function onSubmitNewPlayer(event) {
         alert("error: " + results);
     });
 }
+
 // Create a fetch call to prevent reloading the page
 function onSubmitTravel(event) {
     event.preventDefault();

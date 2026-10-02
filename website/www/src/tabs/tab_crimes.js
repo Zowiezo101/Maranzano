@@ -55,6 +55,14 @@ function onSubmitBike(event) {
     });
 }
 
+function onClickGarage() {
+    $("#btnGarage").tab('show');
+}
+
+function onClickJail() {
+    $("#btnJail").tab('show');
+}
+
 $(function() {
     // Set prevent page reloading when submitting form
     $("#bikeForm").on("submit", function(e) {onSubmitBike(e);});

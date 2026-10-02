@@ -181,27 +181,6 @@ class Crime extends Action {
         }
     }
     
-    protected function calculateCooldown($cooldown) {        
-        // The difference between the two (in seconds)
-        $cooldown_m = round($cooldown / 60);
-        
-        // Get the waiting time in seconds
-        return $cooldown_m > 1 ? ["mintues", $cooldown_m] : ["seconds", $cooldown];
-    }
-    
-    protected function calculateWaitingTime($expires_at) {
-        // Convert the string to a timestamp     
-        $expiry_time = strtotime($expires_at);
-        $current_time = time();
-        
-        // The difference between the two (in seconds)
-        $waiting_time = $expiry_time - $current_time;
-        $waiting_time_m = ceil($waiting_time / 60);
-        
-        // Get the waiting time in seconds
-        return $waiting_time_m > 1 ? ["minute", $waiting_time_m] : ["second", $waiting_time];
-    }
-    
     private function giveXP($player, $xp, $success) {
         // With success, the player gets 100% of the XP. With a fail this is only 20%
         $earned_xp = $success ? $xp : round($xp / 5);

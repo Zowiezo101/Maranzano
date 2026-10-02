@@ -43,14 +43,14 @@ class Travel extends Action {
                 "travel.cooldown");
 
         // Make sure we're not traveling to the city we're already in
-        $this->differentLocation($player["location"], $location_id);
+        $this->differentLocation($player["location_id"], $location_id);
 
         // Set a cooldown in the travel session tablet
         $this->setCooldown($player["id"], self::ACTION_TABLE, self::ACTION_COOLDOWN);
 
         // Update the player location and cash
         $update = [
-            "location" => $location_id,
+            "location_id" => $location_id,
             "cash" => $player["cash"] - 3000
         ];
         $this->player->updatePlayer($player["id"], $update);

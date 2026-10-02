@@ -37,7 +37,7 @@
                                             <div class="col">
                                                 <!-- Header -->
                                                 <div class="row bg-body-tertiary border border-3 border-black">
-                                                    <b class="fst-normal text-center">><?php printString("info.record"); ?></b>
+                                                    <b class="fst-normal text-center"><?php printString("info.record"); ?></b>
                                                 </div>
                                                 
                                                 <!-- Stats -->
@@ -64,11 +64,7 @@
                                     <div class="tab-pane" id="tabTravel" role="tabpanel">
                                         <div class="row">
                                             <div class="col p-0">
-                                                <!-- The travel header -->
-                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-bold bg-body-tertiary border border-3 border-black"><?php printString("main.travel"); ?></h3>
-                                                
-                                                <!-- The travel image -->
-                                                <img class="img-fluid mb-3 border border-3 border-black border-top-0" src="../img/Travel.jpg"/>
+                                                <?php printHeader("main.travel", "../img/Travel.jpg"); ?>
                                                 
                                                 <p class="text-center mb-5"><?php printString("travel.info"); ?></p>
                                                 

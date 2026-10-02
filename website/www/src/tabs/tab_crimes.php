@@ -3,12 +3,9 @@
                                     <div class="tab-pane" id="tabBike" role="tabpanel">
                                         <div class="row">
                                             <div class="col p-0">
-                                                <!-- The bike header -->
-                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-normal fst-bold bg-body-tertiary border border-3 border-black"><?php printString("crimes.bike"); ?></h3>
                                                 
                                                 <div id="bikeTry">
-                                                    <!-- The bike image -->
-                                                    <img class="img-fluid mb-3 border border-3 border-black border-top-0" src="../img/Bike.jpg"/>
+                                                    <?php printHeader("crimes.bike", "../img/Bike.jpg"); ?>
 
                                                     <!-- Success chance -->
                                                     <h5 class="text-center mb-5"><?php printString("bike.info"); ?><span id="bikeRate"></span>%</h5>
@@ -28,6 +25,8 @@
                                                 </div>
                                                 
                                                 <div id="bikeSuccess" class="d-none">
+                                                    <?php printHeader("crimes.bike"); ?>
+                                                
                                                     <!-- The bike image -->
                                                     <img id="bikeImg" class="img-fluid mb-3 border border-3 border-black border-top-0"/>
 
@@ -43,8 +42,7 @@
                                                 </div>
                                                 
                                                 <div id="bikeNoSuccess" class="d-none">
-                                                    <!-- The failed image -->
-                                                    <img class="img-fluid mb-3 border border-3 border-black border-top-0" src="../img/Failed.jpg"/>
+                                                    <?php printHeader("crimes.bike", "../img/Failed.jpg"); ?>
 
                                                     <!-- Failed message -->
                                                     <b><p class="text-center"><?php printString("crimes.failed"); ?><button id="goToJail" class="btn btn-link m-0 p-0 pb-1"><b><?php printString("main.jail"); ?></b></button></p></b>

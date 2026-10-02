@@ -26,6 +26,19 @@
         return getString($name);
     }
     
+    function printHeader($title, $image = null) {
+        
+        $header = '<!-- The Header -->
+                            <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-bold bg-body-tertiary border border-3 border-black">'.getString($title).'</h3>';
+        echo $header;
+        
+        if (isset($image)) {
+            $img = '<!-- The Image -->
+                            <img class="img-fluid mb-3 border border-3 border-black border-top-0" src="'.$image.'"/>';
+            echo $img;
+        }
+    }
+    
     function printTableTemplate($table, $fields) {
         // Make sure the information is actually avaialbe
         if (isset($fields)) {            

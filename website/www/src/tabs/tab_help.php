@@ -3,8 +3,7 @@
                                     <div class="tab-pane" id="tabContact" role="tabpanel">
                                         <div class="row">
                                             <div class="col p-0">
-                                                <!-- The contact header -->
-                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-normal fst-bold bg-body-tertiary border border-3 border-black"><?php printString("help.contact"); ?></h3>
+                                                <?php printHeader("help.contact"); ?>
                                                 
                                                 <!-- The contact body -->
                                                 
@@ -33,8 +32,7 @@
                                     <div class="tab-pane" id="tabRules" role="tabpanel">
                                         <div class="row">
                                             <div class="col p-0">
-                                                <!-- The rules header -->
-                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-normal fst-bold bg-body-tertiary border border-3 border-black"><?php printString("help.rules"); ?></h3>
+                                                <?php printHeader("help.rules"); ?>
                                                 
                                                 <!-- The rules body -->
                                                 
@@ -59,8 +57,7 @@
                                     <div class="tab-pane" id="tabInfo" role="tabpanel">
                                         <div class="row">
                                             <div class="col p-0">
-                                                <!-- The info header -->
-                                                <h3 class="mt-3 mt-lg-5 mb-0 text-center fst-normal fst-bold bg-body-tertiary border border-3 border-black"><?php printString("help.info"); ?></h3>
+                                                <?php printHeader("help.info"); ?>
                                                 
                                                 <!-- The info body -->
                                                 

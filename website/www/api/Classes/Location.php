@@ -45,7 +45,7 @@ class Location extends Action {
         $player = $this->player_data;
         
         // The location ID
-        $location_id = intval($player["location"], 10);
+        $location_id = intval($player["location_id"], 10);
 
         // Put the const in a variable
         $results = self::LOCATIONS;
