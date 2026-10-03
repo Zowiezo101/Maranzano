@@ -17,6 +17,12 @@ class Action {
     // The player
     public $player_data;
     
+    // Whitelisted actions when in Jail or Hospital
+    private $white_list = [
+        "jail_city",
+        
+    ];
+    
     public function __construct($conn) {
         $this->conn = $conn;
         
@@ -38,14 +44,17 @@ class Action {
         $this->player_data = $this->player->getPlayerFromCookieData();
         
         // Make sure the player isn't in jail or in the hospital
-        $this->hasCooldown($this->player_data["id"], 
-                Jail::ACTION_TABLE, 
-                null, 
-                "jail.cooldown");
-        $this->hasCooldown($this->player_data["id"], 
-                Hospital::ACTION_TABLE, 
-                null, 
-                "hospital.cooldown");
+        if (!in_array($route, $this->white_list)) {
+            $this->hasCooldown($this->player_data["id"], 
+                    Jail::ACTION_TABLE, 
+                    null, 
+                    "jail.cooldown");
+            
+            $this->hasCooldown($this->player_data["id"], 
+                    Hospital::ACTION_TABLE, 
+                    null, 
+                    "hospital.cooldown");
+        }
         
         return $route;
     }

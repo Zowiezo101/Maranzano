@@ -4,37 +4,13 @@ namespace Classes;
 
 use PDO;
 
-class Jail {
-	private $conn;
-
-    // Other classes
-    private $user;
-    private $player;
-    private $parameters;
-    
-    // The player
-    public $player_data;
+class Jail extends Action {
     
     // Constants
     public const ACTION_TABLE = "jail_session";
     
-    public function __construct($conn) {
-    	$this->conn = $conn;
-        $this->parameters = new Parameters();
-        $this->user = new User($conn);
-        $this->player = new Player($conn);
-    }
-    
     public function route($route, $data) {
-        // These actions need to have the cookie checked
-        $auth = new Login($this->conn);
-        $auth->route("login_validate", $data);
-        
-        // Parse the input data
-        $this->parameters->setData($data);
-
-        // Get the player that belongs to this user
-        $this->player_data = $this->player->getPlayerFromCookieData();
+        parent::route($route, $data);
         
         $result = null;
         
