@@ -5,13 +5,13 @@ namespace Classes;
 use PDO;
 
 class Token {
-    private $db;
     private $mailer;
     
-    public function __construct() {
-        
-        // To connect to the database
-        $this->db = new Database();
+    // The database connection
+    protected $conn;
+    
+    public function __construct($conn) {
+        $this->conn = $conn;
         
         // To send emails
         $this->mailer = new Mailer();
@@ -139,7 +139,7 @@ class Token {
      */
     
     private function createToken($table, $user_id, $expiry_time, $password_hash = false) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Create a new token
         $sql = "INSERT INTO {$table} (user_id, token, expires_at) "
@@ -184,7 +184,7 @@ class Token {
     }
     
     private function updateToken($table, $token_id) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // The token is found, update it in the token table
         $sql = "UPDATE {$table} SET used=1 WHERE id = :id";
@@ -200,7 +200,7 @@ class Token {
     }
     
     private function retrieveToken($table, $token) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Retrieve the token from the token table
         $sql = "SELECT id, user_id, token FROM {$table} "
@@ -227,7 +227,7 @@ class Token {
     }
     
     private function retrieveTokenFromUser($table, $user_name) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Retrieve the token from the token table
         $sql = "SELECT {$table}.id, {$table}.user_id, {$table}.token FROM {$table} "
@@ -250,7 +250,7 @@ class Token {
     }
     
     private function invalidateTokens($table, $user_id) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Invalidate all tokens of this user
         $sql = "UPDATE {$table} SET used = 1 WHERE user_id = :user_id AND used = 0";

@@ -9,11 +9,11 @@ class Reset {
     private $token;    
     private $parameters;      
     
-    public function __construct() {
+    public function __construct($conn) {
         $this->parameters = new Parameters();
-        $this->user = new User();
-        $this->player = new Player();
-        $this->token = new Token();
+        $this->user = new User($conn);
+        $this->player = new Player($conn);
+        $this->token = new Token($conn);
     }
     
     public function route($route, $data) {

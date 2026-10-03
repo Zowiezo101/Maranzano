@@ -6,10 +6,12 @@ use PDO;
 
 class Player {
     // Other classes
-    protected $db;
     private $user;
     private $token;
     private $parameters;
+    
+    // The database connection
+    protected $conn;
     
     // All data per rank
     private const RANKS = [
@@ -35,18 +37,16 @@ class Player {
         20 => ["health" => 150000, "jail" => 300, "bike" => 96, "car" => 86, "store" => 86, "xp" => 3325300],
     ];
     
-    public function __construct() {
+    public function __construct($conn) {
+        $this->conn = $conn;
         $this->parameters = new Parameters();
-        $this->user = new User();
-        $this->token = new Token();
-        
-        // To connect to the database
-        $this->db = new Database();
+        $this->user = new User($conn);
+        $this->token = new Token($conn);
     }
     
     public function route($route, $data) {
         // These actions need to have the cookie checked
-        $auth = new Login();
+        $auth = new Login($this->conn);
         $auth->route("login_validate", $data);
         
         // Parse the input data
@@ -125,7 +125,7 @@ class Player {
         $id = $player["id"];
 
         // Get the crimes this player commited
-        $crimeObj = new Crime();
+        $crimeObj = new Crime($this->conn);
         $crimes = $crimeObj->getCrimes($id);
 
         $player["bikes"]  = $crimes["bikes"];
@@ -134,10 +134,10 @@ class Player {
         $player["kills"]  = $crimes["kills"];
 
         // Get the Hospital & Jail time for this player
-        $jail = new Jail();
+        $jail = new Jail($this->conn);
         $player["jail"] = $jail->getJailTime($id);
 
-        $hospital = new Hospital();
+        $hospital = new Hospital($this->conn);
         $player["hospital"] = $hospital->getHospitalTime($id);
 
         // Get the online friends of this player
@@ -205,7 +205,7 @@ class Player {
      */
     
     public function createPlayer($user_id, $name) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // The SQL to add a new player for this user
         $sql = "INSERT INTO players (user_id, name) VALUES (:user_id, :name)";
@@ -232,7 +232,7 @@ class Player {
     }
     
     public function updatePlayer($id, $update) {  
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // The values to update for the player
         $update_arr = [];
@@ -262,7 +262,7 @@ class Player {
     }
     
     public function getPlayer($user_id) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Get the player using the user_id
         $sql = "SELECT players.*, killer.name as killed_by, killer.deceased as killer_deceased FROM players LEFT JOIN players as killer ON players.killer_id = killer.id WHERE players.user_id = :user_id ORDER BY players.created_at DESC LIMIT 1";
@@ -283,7 +283,7 @@ class Player {
     }
     
     private function retrievePlayerFromName($name) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Get the player using the user_id
         $sql = "SELECT id, name FROM players WHERE name = :name";
@@ -304,7 +304,7 @@ class Player {
     }
     
     public function retrieveFriendFromId($id, $friend_id) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Get the player using the user_id
         $sql = "SELECT players.* FROM friends
@@ -372,7 +372,7 @@ class Player {
     }
     
     private function getFriends($player_id) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Get the list of friends using the player_id
         $sql = "SELECT players.id, players.name FROM friends
@@ -404,7 +404,7 @@ class Player {
      */
     
     private function formatPlayerInfo($player) {
-        $locations = new Location();
+        $locations = new Location($this->conn);
         
         $rank = $player["rank"];
         

@@ -6,28 +6,29 @@ use PDO;
 
 class Action {
     // Other classes
-    protected $db;
     protected $user;
     protected $player;
     protected $token;    
     protected $parameters; 
     
+    // The database connection
+    protected $conn;
+    
     // The player
     public $player_data;
     
-    public function __construct() {
-        $this->parameters = new Parameters();
-        $this->user = new User();
-        $this->player = new Player();
-        $this->token = new Token();
+    public function __construct($conn) {
+        $this->conn = $conn;
         
-        // To connect to the database
-        $this->db = new Database();
+        $this->parameters = new Parameters();
+        $this->user = new User($conn);
+        $this->player = new Player($conn);
+        $this->token = new Token($conn);
     }
     
     protected function route($route, $data) {
         // These actions need to have the cookie checked
-        $auth = new Login();
+        $auth = new Login($this->conn);
         $auth->route("login_validate", $data);
         
         // Parse the input data
@@ -59,8 +60,8 @@ class Action {
         }
     }
     
-    protected function hasCooldown($player_id, $table, $cooldown, $error) {
-        $conn = $this->db->getConnection();
+    protected function hasCooldown($player_id, $table, $cooldown, $error = null) {
+        $conn = $this->conn;
         
         // Retrieve the token from the token table
         $sql = "SELECT * FROM {$table} "
@@ -85,7 +86,7 @@ class Action {
     }
     
     protected function setCooldown($player_id, $table, $cooldown) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Create a new cooldown
         $sql = "INSERT INTO {$table} (player_id, expires_at) "

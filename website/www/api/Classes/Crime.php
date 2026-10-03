@@ -34,12 +34,12 @@ class Crime extends Action {
         self::BIKE_WIN   => ["id" => self::BIKE_WIN, "worth" => 1500, "img" => "../img/bikes/1500.jpg", "chance_start" => 90],
     ];
     
-    public function __construct() {
-        parent::__construct();
+    public function __construct($conn) {
+        parent::__construct($conn);
         
         // Contains the garage functions
-        $this->garage = new Garage();
-        $this->jail = new Jail();
+        $this->garage = new Garage($conn);
+        $this->jail = new Jail($conn);
     }
     
     public function route($route, $data) {
@@ -123,7 +123,7 @@ class Crime extends Action {
      */
     
     private function hasCrimeCooldown($player_id, $crime_id, $table, $cooldown, $error) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Retrieve the token from the token table
         $sql = "SELECT * FROM {$table} "
@@ -149,7 +149,7 @@ class Crime extends Action {
     }
     
     private function setCrimeCooldown($player_id, $crime_id, $succeeded, $table, $cooldown) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Create a new token
         $sql = "INSERT INTO {$table} (player_id, crime_id, expires_at, succeeded) "
@@ -218,7 +218,7 @@ class Crime extends Action {
     }
     
     private function getStolenBikes($player_id) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Search for the amount of successfull bike steals
         $sql = "SELECT * FROM " . self::ACTION_TABLE . "
@@ -241,7 +241,7 @@ class Crime extends Action {
     }
     
     private function getStolenCars($player_id) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Search for the amount of successfull bike steals
         $sql = "SELECT * FROM " . self::ACTION_TABLE . "
@@ -264,7 +264,7 @@ class Crime extends Action {
     }
     
     private function getRobbedStores($player_id) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Search for the amount of successfull bike steals
         $sql = "SELECT * FROM " . self::ACTION_TABLE . "
@@ -287,7 +287,7 @@ class Crime extends Action {
     }
     
     private function getKilledPlayers($player_id) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Search for the amount of successfull bike steals
         $sql = "SELECT * FROM " . self::ACTION_TABLE . "

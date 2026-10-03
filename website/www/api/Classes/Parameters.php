@@ -3,8 +3,6 @@
 namespace Classes;
 
 class Parameters {
-    // Other classes
-    private $location;
     
     private $data;
     
@@ -14,7 +12,6 @@ class Parameters {
     
     public function setData($data) {
         $this->data = $data;
-        $this->location = new Location();
     }
     
     /**
@@ -185,7 +182,7 @@ class Parameters {
         if (!isset($this->data[$source]["location"])) {
             // Location isn't set
             throwError("data.location.invalid", Message::CODE_INVALID);
-        } else if (!$this->location->isValidLocation($this->data[$source]["location"])) {
+        } else if (!array_key_exists($this->data[$source]["location"], Location::LOCATIONS)) {
             // Not a valid location
             throwError("data.location.invalid", Message::CODE_INVALID);
         } else {

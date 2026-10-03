@@ -69,12 +69,4 @@ class Location extends Action {
         $result = self::LOCATIONS[$value][self::IDX_COUNTRY];
         return $result;
     }
-    
-    /**
-     * Misc function
-     */
-    
-    public function isValidLocation($location_id) {
-        return array_key_exists($location_id, self::LOCATIONS);
-    }
 }

@@ -14,7 +14,7 @@ class Garage extends Action {
     }
     
     private function addVehicle($player_id, $vehicle_type, $vehicle_id) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Create a new vehicle
         $sql = "INSERT INTO garage (player_id, vehicle_type, vehicle_id) "

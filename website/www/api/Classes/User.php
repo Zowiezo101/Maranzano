@@ -5,13 +5,13 @@ namespace Classes;
 use PDO;
 
 class User {
-    // Other classes
-    protected $db;
     
-    public function __construct() {
-        // To connect to the database
-        $this->db = new Database();
-    }
+    // The database connection
+    protected $conn;
+    
+    public function __construct($conn) {
+        $this->conn = $conn;
+    } 
     
     /**
      * Availabilty function
@@ -30,7 +30,7 @@ class User {
      */
 
     public function createUser($email, $user, $pass) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
 
         // Generate the password hash
         $hash = password_hash($pass, PASSWORD_DEFAULT);
@@ -63,7 +63,7 @@ class User {
     }
     
     public function updateUser($id, $update) {  
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // The values to update for the user
         $update_arr = [];
@@ -129,7 +129,7 @@ class User {
      */
     
     public function retrieveUserFromEmail($email) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // See if the email address already exists
         $sql = "SELECT id, name, email, pass_hash, is_verified, type, created_at FROM users WHERE email = :email";
@@ -150,7 +150,7 @@ class User {
     }
     
     private function retrieveUserFromId($id) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Retrieve the user with this ID
         $sql = "SELECT id, name, email, pass_hash, is_verified, type, created_at FROM users WHERE id = :id";
@@ -171,7 +171,7 @@ class User {
     }
     
     private function retrieveUserFromName($name) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // See if the name already exists
         $sql = "SELECT id, name, email, pass_hash, is_verified, type, created_at FROM users WHERE name = :name";

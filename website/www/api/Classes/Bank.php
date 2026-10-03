@@ -120,7 +120,7 @@ class Bank extends Action {
     }
     
     protected function hasFriendCooldown($player_id, $friend_id, $table, $cooldown, $error) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Retrieve the token from the token table
         $sql = "SELECT * FROM {$table} "
@@ -146,7 +146,7 @@ class Bank extends Action {
     }
     
     protected function setFriendCooldown($player_id, $friend_id, $table, $cooldown) {
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         // Create a new token
         $sql = "INSERT INTO {$table} (player_id, friend_id, expires_at) "

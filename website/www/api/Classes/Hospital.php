@@ -5,8 +5,9 @@ namespace Classes;
 use PDO;
 
 class Hospital {
+	private $conn;
+
     // Other classes
-    protected $db;
     private $user;
     private $player;
     private $parameters;
@@ -17,18 +18,16 @@ class Hospital {
     // Constants
     public const ACTION_TABLE = "hospital_session";
     
-    public function __construct() {
+    public function __construct($conn) {
+    	$this->conn = $conn;
         $this->parameters = new Parameters();
-        $this->user = new User();
-        $this->player = new Player();
-        
-        // To connect to the database
-        $this->db = new Database();
+        $this->user = new User($conn);
+        $this->player = new Player($conn);
     }
     
     public function route($route, $data) {
         // These actions need to have the cookie checked
-        $auth = new Login();
+        $auth = new Login($this->$conn);
         $auth->route("login_validate", $data);
         
         // Parse the input data
@@ -55,8 +54,7 @@ class Hospital {
      */
     
     public function getHospitalTime($player_id) {
-        
-        $conn = $this->db->getConnection();
+        $conn = $this->conn;
         
         $sql = "SELECT SUM(TIMESTAMPDIFF(SECOND, created_at, expires_at)) AS time FROM " . self::ACTION_TABLE . " "
                 . "WHERE player_id = :player_id";

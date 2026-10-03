@@ -4,18 +4,17 @@ namespace Classes;
 
 class Login {
     
-    protected $user_id;
     // Other classes
     private $user;    
     private $player;    
-    private $token;    
+    private $token;
     private $parameters;   
     
-    public function __construct() {
+    public function __construct($conn) {
         $this->parameters = new Parameters();
-        $this->user = new User();
-        $this->player = new Player();
-        $this->token = new Token();
+        $this->user = new User($conn);
+        $this->player = new Player($conn);
+        $this->token = new Token($conn);
     }
     
     public function route($route, $data) {
@@ -40,6 +39,10 @@ class Login {
         
         return $result;
     }
+    
+    /**
+     * API functions
+     */
     
     private function loginUser() {
         
@@ -119,7 +122,7 @@ class Login {
     private function verifyVerified($verified, $id) {
          if ($verified == false) {
              // We are not verified. Send the email again
-             $register = new Register();
+             $register = new Register($this->conn);
              $register->sendVerificationToken($id);
             
             // Notify the user by throwing an error
