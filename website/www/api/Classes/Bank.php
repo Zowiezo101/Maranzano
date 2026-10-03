@@ -108,13 +108,13 @@ class Bank extends Action {
 
         // Update the player cash
         $update_player = [
-            "cash" => $player["bank"] - $amount
+            "cash" => $player["cash"] - $amount
         ];
         $this->player->updatePlayer($player["id"], $update_player);
         
         // And the friend cash
         $update_friend = [
-            "cash" => $friend["bank"] + $amount
+            "cash" => $friend["cash"] + $amount
         ];
         $this->player->updatePlayer($friend["id"], $update_friend);
     }

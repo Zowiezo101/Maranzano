@@ -14,7 +14,7 @@ function onReturnedError(message, element) {
 // Remove all errors
 function onResetAllForms() {
     // Remove all lingering errors
-    $("[id$='Error']").html("").addClass("d-none");
+    $("[id$='Error']").addClass("d-none");
     
     // Remove the success messages
     $("[id$='Success']").addClass("d-none");

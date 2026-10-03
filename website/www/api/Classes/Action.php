@@ -89,9 +89,11 @@ class Action {
         $result = getResults($stmt);
         
         // Return the cooldown to the user
-        $this->ifCooldown($result, $cooldown, $error);
+        if (isset($error)) {
+            $this->ifCooldown($result, $cooldown, $error);
+        }
         
-        return $result;
+        return $result ? $result["id"] : null;
     }
     
     protected function setCooldown($player_id, $table, $cooldown) {

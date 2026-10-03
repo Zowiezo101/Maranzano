@@ -72,7 +72,7 @@ class Crime extends Action {
                 "bike.cooldown");
         
         // The chance to succeed
-        $rate = $this->player->route("player_chance_bike", $this->parameters->getData());
+        $rate = $this->player->getPlayerSuccessBikeByRank($player["rank"]);
         
         // The RNG to create a chance to succeed or not
         $gamble = mt_rand(0, 10000) / 100;
