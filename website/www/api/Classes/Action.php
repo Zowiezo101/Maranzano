@@ -177,9 +177,16 @@ class Action {
     }
     
     protected function calculateWaitingTime($expires_at) {
+        // Timezone we're using is UTC
+        $timezone = new \DateTimeZone('UTC');
+        
+        // A datetime object with UTC time set to now
+        $current_date = new \DateTimeImmutable('now', $timezone);
+        $expiry_date = new \DateTimeImmutable($expires_at, $timezone);
+        
         // Convert the string to a timestamp     
-        $expiry_time = strtotime($expires_at);
-        $current_time = time();
+        $expiry_time = $expiry_date->getTimestamp();
+        $current_time = $current_date->getTimestamp();
         
         // The difference between the two (in seconds)
         $waiting_time = $expiry_time - $current_time;

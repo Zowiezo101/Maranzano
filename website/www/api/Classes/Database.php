@@ -17,6 +17,9 @@ class Database {
                             $db_username, $db_password,
                             [PDO::ATTR_EMULATE_PREPARES => false, 
                              PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            
+            // We want to work with UTC only
+            $this->conn->exec("SET time_zone = '+00:00'");
         } catch (\PDOException) {
             throwError();
         }
