@@ -282,6 +282,32 @@ class Player {
         return $result;
     }
     
+    public function retrievePlayerFromId($id) {
+        $conn = $this->conn;
+        
+        // Get the player using the user_id
+        $sql = "SELECT * FROM players WHERE id = :id";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = getResults($stmt);
+        
+        if (!isset($result)) {
+            // Do NOT continue if this person can't be found
+            throwError("jail.inmate_not_found");
+        }
+        
+        return $result;
+    }
+    
     private function retrievePlayerFromName($name) {
         $conn = $this->conn;
         

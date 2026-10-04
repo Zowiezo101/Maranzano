@@ -6,7 +6,7 @@ use PDO;
 
 class Jail extends Action {
     
-    // Constants
+    public const ACTION_COST = 500;
     public const ACTION_TABLE = "jail_session";
     
     public function route($route, $data) {
@@ -17,6 +17,12 @@ class Jail extends Action {
         switch($route) {
             case "jail_city":
                 $result = $this->getCityInmates();
+                break;
+            case "jail_bail":
+                $result = $this->payPlayerBail();
+                break;
+            case "jail_bust":
+                $result = $this->bustPlayerOut();
                 break;
         }
         
@@ -54,6 +60,59 @@ class Jail extends Action {
         $result = getAllResults($stmt);
         
         return $this->formatResults($result);
+    }
+    
+    private function payPlayerBail() {
+        $inmate_id = $this->parameters->getId();
+
+        // Get inmate rank
+        $inmate = $this->player->retrievePlayerFromId($inmate_id);
+        
+        // Get bail price
+        $bail = $inmate["rank"] * self::ACTION_COST;
+        
+        // Get the player
+        $player = $this->player_data;
+        
+        // Check current player cash        
+        $this->enoughFunds($player["cash"], $bail, "jail.broke");
+        
+        // Update the jail cooldown to an expired state
+        $this->updateJailCooldown($inmate_id, -1);
+
+        // Update the player cash
+        $update = [
+            "cash" => $player["cash"] - $bail
+        ];
+        $this->player->updatePlayer($player["id"], $update);
+
+        return;
+    }
+    
+    private function bustPlayerOut() {
+        $inmate_id = $this->parameters->getId();
+        
+        // The current player
+        $player = $this->player_data;
+        
+        // The chance to succeed
+        $rate = $this->player->getPlayerSuccessBikeByRank($player["rank"]);
+        
+        // The RNG to create a chance to succeed or not
+        $gamble = mt_rand(0, 10000) / 100;
+        
+        // Has the player succeeded or not?
+        $success = ($rate >= $gamble);
+        
+        if ($success) {
+            // Update the jail cooldown to an expired state
+            $this->updateJailCooldown($inmate_id, -1);
+        } else {
+            // If the player failed, they'll be sent to jail
+            $this->sendToJail($player);
+        }
+        
+        return $success;
     }
     
     /**
@@ -135,6 +194,35 @@ class Jail extends Action {
             // Do NOT continue is the cooldown hasn't been created
             throwError();
         }
+    }
+    
+    private function updateJailCooldown($inmate_id, $cooldown) {
+        $conn = $this->conn;
+        
+        // The table
+        $table = self::ACTION_TABLE;
+        
+        // Get the cooldown we're trying to pay the bail for
+        $cooldown_id = $this->hasCooldown($inmate_id, $table, 0);
+        
+        // Create a new cooldown
+        $sql = "UPDATE {$table} SET expires_at = :expires_at "
+                . "WHERE id = :id";
+        
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Generate the expire date for the cooldown
+        $expiry_date = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
+                            ->modify('+' . $cooldown . 'seconds')
+                            ->format('Y-m-d H:i:s');
+
+        // Bind the parameter
+        $stmt->bindValue(":expires_at", $expiry_date, PDO::PARAM_STR);
+        $stmt->bindValue(":id", $cooldown_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
     }
     
     private function formatResults($results) {

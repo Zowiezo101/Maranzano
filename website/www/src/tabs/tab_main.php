@@ -103,7 +103,7 @@
                                                 <?php printHeader("main.jail", "../img/Jail.jpg"); ?>
                                                 
                                                 <!-- The jail table -->
-                                                <table id="jail" class="fw-bold table table-borderless table-hover">
+                                                <table id="jail" class="fw-bold table table-bordered table-hover">
                                                     <thead>
                                                         <tr>
                                                             <th class="fst-normal"><?php printString("jail.info.name"); ?></th>
@@ -116,6 +116,22 @@
                                                         <!-- Following rows are added using JS -->
                                                     </tbody>
                                                 </table>
+                                                
+                                                <!-- No players in jail -->
+                                                <div id="jailError" class="text-center text-black d-none">
+                                                    <p><b><?php printString("jail.empty"); ?></b></p>
+                                                </div>
+
+                                                <!-- We have been sent to Jail -->
+                                                <div id="actionNoSuccess" class="mb-4 mx-3 text-center text-warning d-none">
+                                                    <!-- Failed message -->
+                                                    <b><p class="text-center"><?php printString("crimes.failed"); ?><?php printString("main.jail"); ?></p></b>
+                                                </div>
+
+                                                <!-- Error message -->
+                                                <div id="actionError" class="mb-4 mx-3 text-center text-warning d-none">
+                                                    <!-- Filled in later in case of error -->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

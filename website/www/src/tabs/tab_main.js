@@ -178,19 +178,70 @@ function updateJailTable(data) {
                 <td><button class="btn btn-link p-0 text-black-50" onclick="payPlayerBail(` + data[row]["id"] + `)"><b>` + data[row]["bail"] + `</b></button></td>
                 <td><button class="btn btn-link p-0 text-black-50" onclick="bustPlayerOut(` + data[row]["id"] + `)"><b>` + data[row]["chance"] + `</b></button></td>
             </tr>`);
-
-            $("#jail tbody").append(rows.join(""));
         }
+    } else {
+        $("#jailError").removeClass("d-none");
     }
+
+    $("#jail tbody").append(rows.join(""));
 }
 
 function payPlayerBail(id) {
-    console.log(id);
+        
+    // Remove any previous errors
+    onResetAllForms();
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "id" : id
+    };
     
+    fetchPayBail(data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#actionError");
+        } else {
+            // Successfully paid bail            
+            // Update the table with the data
+            onJailTab();
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
 }
 
 function bustPlayerOut(id) {
-    console.log(id);
+        
+    // Remove any previous errors
+    onResetAllForms();
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "id" : id
+    };
     
+    fetchBustOut(data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#actionError");
+        } else {
+            if (results.data === "") {
+                // We were sent to Jail!
+                $("#actionNoSuccess").removeClass("d-none");
+            }
+            // Update the table with the data
+            onJailTab();
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
 }
 

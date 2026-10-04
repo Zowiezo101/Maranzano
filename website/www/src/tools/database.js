@@ -24,6 +24,16 @@ function fetchAllInmates() {
     return fetchGet("get_inmates");
 }
 
+// Pay bail for this player
+function fetchPayBail(data) {
+    return fetchPost("pay_bail", data);
+}
+
+// Try to bust this player out
+function fetchBustOut(data) {
+    return fetchPost("bust_out", data);
+}
+
 // Create a new player
 function fetchNewPlayer(data) {
     return fetchPost("create_new_player", data);

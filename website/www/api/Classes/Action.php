@@ -194,6 +194,6 @@ class Action {
         $waiting_time_h = round($waiting_time_m / 60);
         
         // Get the waiting time in seconds
-        return ($waiting_time_h > 1 ? ["hours", $waiting_time_h] : ($waiting_time_m > 1 ? ["minutes", $waiting_time_m] : ["seconds", $waiting_time]));
+        return ($waiting_time_h > 1 ? ["hour(s)", $waiting_time_h] : ($waiting_time_m > 1 ? ["minute(s)", $waiting_time_m] : ["second(s)", $waiting_time]));
     }
 }

@@ -137,25 +137,28 @@ $strings = [
     "travel.select" => "Select a new location",
     "travel.broke" => "You don't have enough cash to buy a ticket",
     "travel.current" => "You already are in this city",
-    "travel.cooldown" => "You traveled less than [cooldown] [units] ago, you still need to wait [time] [unit](s)",
+    "travel.cooldown" => "You traveled less than [cooldown] [units] ago, you still need to wait [time] [unit]",
     "travel.success" => "You have successfully traveled to another location",
     
     // Jail page
-    "jail.cooldown" => "You can't do that right now, you are still in jail for [time] [unit](s)",
+    "jail.cooldown" => "You can't do that right now, you are still in jail for [time] [unit]",
     "jail.info.name" => "Name:",
     "jail.info.time" => "Time:",
     "jail.info.city" => "City:",
     "jail.info.pay_bail" => "Pay bail (€[bail])",
     "jail.info.bust_out" => "Bust out ([chance]%)",
+    "jail.empty" => "There are currently no players in jail in this city",
+    "jail.inmate_not_found" => "This player doesn't exist anymore",
+    "jail.broke" => "You don't have enough cash to bail this person out",
     
     // Hospital page
-    "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] [unit](s)",
+    "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] [unit]",
     
     // Steal a bike page
     "bike.info" => "Success rate: ",
     "bike.try" => "Attempt to steal",
     "bike.worth" => "Success! The bike is worth ",
-    "bike.cooldown" => "You have tried to steal a bike less than [cooldown] [units] ago. You still need to wait [time] [unit](s)",
+    "bike.cooldown" => "You have tried to steal a bike less than [cooldown] [units] ago. You still need to wait [time] [unit]",
     
     // General crime stuff
     "crimes.failed" => "Failed! You've been caught and are being send to ",
@@ -174,7 +177,7 @@ $strings = [
     "bank.send" => "Send",
     "bank.send.success" => "Money has been send to your friend",
     "bank.send.broke" => "Your balance isn't high enough to send that amount",
-    "bank.send.cooldown" => "You have sent money less than [cooldown] [units] ago to this friend. You still need to wait [time] [unit](s)",
+    "bank.send.cooldown" => "You have sent money less than [cooldown] [units] ago to this friend. You still need to wait [time] [unit]",
     "bank.amount" => "Amount",
     "bank.friend" => "Select friend",
     "bank.friend_not_found" => "It seems this player isn't in your friend list",
@@ -183,7 +186,7 @@ $strings = [
     "bullet.info" => "Bullets come in packs of 50 and a pack costs €25. You can buy bullets every 2 hours",
     "bullet.amount" => "Enter amount (Max. 20 packs)",
     "bullet.broke" => "You don't have enough cash to buy this amount of bullets",
-    "bullet.cooldown" => "You bought bullets less than [cooldown] [units] ago, you still need to wait [time] [unit](s)",
+    "bullet.cooldown" => "You bought bullets less than [cooldown] [units] ago, you still need to wait [time] [unit]",
     "bullet.buy" => "Purchase",
     "bullet.success" => "You have successfully bought bullets",
     "bullet.short" => "You don't have enough bullets to swap this amount",

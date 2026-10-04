@@ -35,6 +35,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     --bs-link-color-rgb:        var(--bs-black-rgb);
     --bs-link-hover-color:      var(--link-hover-color);
     --bs-link-hover-color-rgb:  var(--link-hover-color-rgb);
+    --bs-border-width:          2px;
+    --bs-border-color:          var(--bs-black);
 }
 
 /* Make sure the form link-buttons have white text  */
