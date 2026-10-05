@@ -17,6 +17,24 @@ function onBankTab() {
         alert("error: " + results);
     });
 }
+function onGarageTab() {
+    
+    // The fetch call
+    fetchAllVehicles().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong
+        } else {
+            // Success, update the select list
+            updateGarageTable(results.data);
+            
+        }
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
     
 function onSubmitShop(event) {
     event.preventDefault();
@@ -195,6 +213,10 @@ function onSubmitSend(event) {
     });
 }
 
+function onSubmitSell(event) {
+    event.preventDefault();
+}
+
 $(function() {
     // Set prevent page reloading when submitting form
     $("#shopForm").on("submit", function(e) {onSubmitShop(e);});
@@ -202,6 +224,7 @@ $(function() {
     $("#depositForm").on("submit", function(e) {onSubmitDeposit(e);});
     $("#withdrawForm").on("submit", function(e) {onSubmitWithdraw(e);});
     $("#sendForm").on("submit", function(e) {onSubmitSend(e);});
+    $("#garageForm").on("submit", function(e) {onSubmitSell(e);});
 });
 
 function updateFriendSelect(select, data) {
@@ -219,5 +242,26 @@ function updateFriendSelect(select, data) {
     
     // Insert the new location options
     $("#" + select).append(options.join(""));
+}
+
+function updateGarageTable(data) {
+    $("#garageTable tbody").empty();
+    
+    var rows = [];
+    if (data.length > 0) {
+        for (var row in data) {
+            // Name, time, city, BUST OUT
+            rows.push(
+            `<tr>
+                <td><img class="img-fluid border border-2 border-black" src="` + data[row]["img"] + `"/></td>
+                <td>` + data[row]["worth"] + `</td>
+                <td><input class="form-check-input" type="checkbox" value="" id="checkVehicle` + data[row]["id"] + `"></td>
+            </tr>`);
+        }
+    } else {
+        $("#garageTableError").removeClass("d-none");
+    }
+
+    $("#garageTable tbody").append(rows.join(""));
 }
 

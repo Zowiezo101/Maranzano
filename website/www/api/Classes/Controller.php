@@ -64,6 +64,11 @@ class Controller {
                 $controller = new Bank($conn);
             }
 
+            // Bank actions
+            else if (str_starts_with($route, "garage")) {
+                $controller = new Garage($conn);
+            }
+
             // Player actions
             else if (str_starts_with($route, "location")) {
                 $controller = new Location($conn);

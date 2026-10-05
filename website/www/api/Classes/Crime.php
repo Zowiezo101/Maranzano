@@ -27,7 +27,17 @@ class Crime extends Action {
     // Bike stuff
     private const BIKE_COOLDOWN = 50;
     private const BIKE_XP = 450;
-    private const BIKES = [
+    public const BIKES = [
+        self::BIKE_CHEAP => ["id" => self::BIKE_CHEAP, "worth" => 20,   "img" => "../img/bikes/20.jpg",   "chance_start" => 0],
+        self::BIKE_MID   => ["id" => self::BIKE_MID, "worth" => 80,   "img" => "../img/bikes/80.png",   "chance_start" => 40],
+        self::BIKE_HIGH  => ["id" => self::BIKE_HIGH, "worth" => 500,  "img" => "../img/bikes/500.png",  "chance_start" => 70],
+        self::BIKE_WIN   => ["id" => self::BIKE_WIN, "worth" => 1500, "img" => "../img/bikes/1500.jpg", "chance_start" => 90],
+    ];
+    
+    // Car stuff
+    private const CAR_COOLDOWN = 50;
+    private const CAR_XP = 450;
+    public const CARS = [
         self::BIKE_CHEAP => ["id" => self::BIKE_CHEAP, "worth" => 20,   "img" => "../img/bikes/20.jpg",   "chance_start" => 0],
         self::BIKE_MID   => ["id" => self::BIKE_MID, "worth" => 80,   "img" => "../img/bikes/80.png",   "chance_start" => 40],
         self::BIKE_HIGH  => ["id" => self::BIKE_HIGH, "worth" => 500,  "img" => "../img/bikes/500.png",  "chance_start" => 70],

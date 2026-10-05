@@ -177,7 +177,39 @@
                                     
                                     <!-- The Garage Tab -->
                                     <div class="tab-pane" id="tabGarage" role="tabpanel">
-                                        Garage
+                                        <div class="row">
+                                            <div class="col p-0">
+                                            <?php printHeader("business.garage"); ?>
+                                                
+                                                <!-- The Garage form -->
+                                                <form id="garageForm">
+                                                
+                                                    <!-- The jail table -->
+                                                    <table id="garageTable" class="fw-bold table align-middle table-borderless table-hover">
+                                                        <tbody>
+                                                            <!-- Following rows are added using JS -->
+                                                        </tbody>
+                                                    </table>
+                                                
+                                                    <!-- No vehicles in garage -->
+                                                    <div id="garageError" class="text-center text-black d-none">
+                                                        <p><b><?php printString("garage.empty"); ?></b></p>
+                                                    </div>
+
+                                                    <!-- Sell button -->
+                                                    <div class="row mb-5 justify-content-end">
+                                                        <div class="col-4 col-lg-3">
+                                                            <button type="submit" class="btn btn-primary border border-3 border-black w-100"><?php printString("garage.sell")?></button>
+                                                        </div>
+                                                        <div class="col-4 col-lg-3">
+                                                            <label for="checkAll" class="form-label"><?php printString("garage.select_all"); ?></label>
+                                                            <input class="form-check-input" type="checkbox" value="" id="checkAll">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <!-- The Family Tab -->

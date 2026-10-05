@@ -50,6 +50,9 @@ RewriteRule ^(.*)send_money$     $1/api/index?route=bank_send [QSA,DPI]
 RewriteRule ^(.*)buy_bullets$  $1/api/index?route=shop_offensive [QSA,DPI]
 RewriteRule ^(.*)swap_bullets$ $1/api/index?route=shop_defensive [QSA,DPI]
 
+# Garage requests
+RewriteRule ^(.*)get_vehicles$ $1/api/index?route=garage_all [QSA,DPI]
+
 # Crime request
 RewriteRule ^(.*)steal_bike$  $1/api/index?route=crime_bike [QSA,DPI]
 

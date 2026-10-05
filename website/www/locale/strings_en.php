@@ -195,6 +195,11 @@ $strings = [
     "bullet.swap.title" => "Swap bullet packs to defensive",
     "bullet.swap.success" => "Bullet packs have been transfered",
     
+    // Garage page
+    "garage.empty" => "You don't have any vehicles",
+    "garage.sell" => "Sell",
+    "garage.select_all" => "Select all",
+    
     // Contact page
     "contact.email" => "Email: ",
     "contact.email.info" => "For non-gameplay related questions",
@@ -275,7 +280,6 @@ $strings = [
     "update.body" => "Successfully updated password",
     "update.confirm" => "<h3>Hello [user]!</h3><p>Your password has been successfully updated! If you did not request this password reset, please contact us immediately.",
     "email.from" => "The Mafiani Team",
-    
 
     // API stuff
     "auth.db_error" => "It seems we currently have some issues with the database.. Please try again later",

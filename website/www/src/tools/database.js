@@ -69,6 +69,11 @@ function fetchSendMoney(data) {
     return fetchPost("send_money", data);
 }
 
+// Get the vehicles
+function fetchAllVehicles() {
+    return fetchGet("get_vehicles");
+}
+
 // Get the success rate
 function fetchBikeRate() {
     return fetchGet("get_bike_rate");
