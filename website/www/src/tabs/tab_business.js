@@ -29,6 +29,9 @@ function onGarageTab() {
             // Success, update the select list
             updateGarageTable(results.data);
             
+            // Set the select-all checkbox unchecked
+            $('#checkAll').prop('checked', false);
+            $('#checkAll').prop('indeterminate', false);
         }
     }).catch(function(results) {
         // Show an error if anything went wrong
@@ -215,17 +218,83 @@ function onSubmitSend(event) {
 
 function onSubmitSell(event) {
     event.preventDefault();
+        
+    // Remove any previous errors or message
+    onResetAllForms();
+        
+    // The checked checkboxes
+    var checked = $('#garageTable tbody').find(':checked');
+    
+    // The data for the request
+    var vehicle_ids = [];
+    
+    // The IDs of the checked checkboxes
+    for (var i = 0; i < checked.length; i++) {
+        var checkbox = checked.get(i);
+        vehicle_ids.push(checkbox.value);
+    }; 
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "ids": vehicle_ids.join(",")
+    };
+    
+    fetchSellVehicles(data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#sellError");
+        } else {
+            
+            // Update the table with the new amounts
+            updatePlayerInfo();
+            
+            // Refresh the page
+            onGarageTab();
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
 }
 
-$(function() {
-    // Set prevent page reloading when submitting form
-    $("#shopForm").on("submit", function(e) {onSubmitShop(e);});
-    $("#swapForm").on("submit", function(e) {onSubmitSwap(e);});
-    $("#depositForm").on("submit", function(e) {onSubmitDeposit(e);});
-    $("#withdrawForm").on("submit", function(e) {onSubmitWithdraw(e);});
-    $("#sendForm").on("submit", function(e) {onSubmitSend(e);});
-    $("#garageForm").on("submit", function(e) {onSubmitSell(e);});
-});
+function onClickCheckbox() {
+    // All the select boxes
+    var num_boxes = $('#garageTable tbody').find('[type="checkbox"]').length;
+    var num_checked = $('#garageTable tbody').find(':checked').length;
+    
+    // Check if everything is already selected
+    if (num_checked === num_boxes) {
+        // Set the select-all checkbox checked
+        $('#checkAll').prop('checked', true);
+        $('#checkAll').prop('indeterminate', false);
+        
+    } else if (num_checked === 0) {
+        // Set the select-all checkbox unchecked
+        $('#checkAll').prop('checked', false);
+        $('#checkAll').prop('indeterminate', false);
+    } else {
+        // Set the select-all checkbox to indeterminate
+        $('#checkAll').prop('checked', false);
+        $('#checkAll').prop('indeterminate', true);
+        
+    }
+}
+
+function onSelectAll() {
+    var checked = $("#checkAll").prop('checked');
+    var indeterminate = $("#checkAll").prop('indeterminate');
+    
+    if (indeterminate === true || checked === true) {
+        // Select everything
+        $('#garageTable tbody').find('[type="checkbox"]').prop('checked', true);
+    } else if (checked === false) {
+        // Toggle to unselect everything
+        $('#garageTable tbody').find('[type="checkbox"]').prop('checked', false);
+    }
+}
 
 function updateFriendSelect(select, data) {
     var options = [];
@@ -255,7 +324,7 @@ function updateGarageTable(data) {
             `<tr>
                 <td><img class="img-fluid border border-2 border-black" src="` + data[row]["img"] + `"/></td>
                 <td>` + data[row]["worth"] + `</td>
-                <td><input class="form-check-input" type="checkbox" value="" id="checkVehicle` + data[row]["id"] + `"></td>
+                <td><input class="form-check-input" type="checkbox" value="` + data[row]["id"] + `"></td>
             </tr>`);
         }
     } else {
@@ -264,4 +333,14 @@ function updateGarageTable(data) {
 
     $("#garageTable tbody").append(rows.join(""));
 }
+
+$(function() {
+    // Set prevent page reloading when submitting form
+    $("#shopForm").on("submit", function(e) {onSubmitShop(e);});
+    $("#swapForm").on("submit", function(e) {onSubmitSwap(e);});
+    $("#depositForm").on("submit", function(e) {onSubmitDeposit(e);});
+    $("#withdrawForm").on("submit", function(e) {onSubmitWithdraw(e);});
+    $("#sendForm").on("submit", function(e) {onSubmitSend(e);});
+    $("#garageForm").on("submit", function(e) {onSubmitSell(e);});
+});
 

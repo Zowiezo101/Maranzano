@@ -74,6 +74,11 @@ function fetchAllVehicles() {
     return fetchGet("get_vehicles");
 }
 
+// Sell the vehicles
+function fetchSellVehicles(data) {
+    return fetchPost("sell_vehicles", data);
+}
+
 // Get the success rate
 function fetchBikeRate() {
     return fetchGet("get_bike_rate");

@@ -145,7 +145,7 @@
                                     <div class="tab-pane" id="tabDeceased" role="tabpanel">
                                         <!-- Message -->
                                         <div class="row mt-5 text-center">
-                                            <h3 class="fst-normal"><b><?php printString("info.died"); ?><u id="killerName"></u></b><h3>
+                                            <h3 class="fst-normal"><b><?php printString("info.died"); ?><u id="killerName"></u></b></h3>
                                         </div>
                                         
                                         <!-- Tombstone -->
@@ -155,12 +155,10 @@
                                                 <div class="card bg-transparent border-0">
                                                     <img class="card-img" src="../img/Player_died.png"/>
                                                     <div class="card-img-overlay me-3 d-flex justify-content-center align-items-center text-center">
-                                                        <p class="card-text">
-                                                            <h5 class="mt-3">
-                                                                <span id="tombName"></span><br/>
-                                                                -<span id="tombRank"></span>-
-                                                            </h5>
-                                                        </p>
+                                                        <h5 class="mt-3">
+                                                            <span id="tombName"></span><br/>
+                                                            -<span id="tombRank"></span>-
+                                                        </h5>
                                                     </div>
                                                 </div>
                                             </div>

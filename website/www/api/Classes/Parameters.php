@@ -36,6 +36,7 @@ class Parameters {
         // These are the only allowed parameters we'll be looking for
         $white_list = [
             "id",
+            "ids",
             "email",
             "user",
             "player",
@@ -299,6 +300,28 @@ class Parameters {
         } else {
             // This ID is valid
             $result = $this->data[$source]["id"];
+        }
+        
+        return $result;
+    }
+    
+    public function getIds() {
+        
+        $result = null;
+        
+        // Get everything from the POST body
+        $source = "POST";
+        
+        // Validate the location
+        if (!isset($this->data[$source]["ids"])) {
+            // IDs aren't set
+            throwError("data.ids.invalid", Message::CODE_INVALID);
+        } else if (!preg_match('/^[0-9,]+$/', $this->data[$source]["ids"])) {
+            // No valid IDs
+            throwError("data.ids.invalid", Message::CODE_INVALID);
+        } else {
+            // These IDs are valid
+            $result = explode(",", $this->data[$source]["ids"]);
         }
         
         return $result;

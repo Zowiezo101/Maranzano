@@ -17,6 +17,10 @@ class Garage extends Action {
             case "garage_all":
                 $result = $this->getAllVehicles();
                 break;
+            
+            case "garage_sell":
+                $result = $this->sellVehicles();
+                break;
         }
         
         return $result;
@@ -55,8 +59,19 @@ class Garage extends Action {
         return $this->formatResults($result);
     }
     
+    private function sellVehicles() {
+        
+        // The IDs to sell
+        $ids = $this->parameters->getIds();
+        
+        foreach ($ids as $garage_id) {
+            $this->sellVehicle($garage_id);
+        }
+        
+    }
+    
     /**
-     * Adding things to the garage
+     * Garage functions
      */
     public function addBike($player_id, $bike) {
         $this->addVehicle($player_id, Crime::CRIME_BIKE, $bike["id"]);
@@ -89,6 +104,66 @@ class Garage extends Action {
         }
     }
     
+    private function getGarageVehicle($garage_id) {
+        $conn = $this->conn;
+        
+        // Set the SQL
+        $sql = "SELECT * FROM garage WHERE garage.id = :id";
+    
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);    
+
+        // Bind the parameter
+        $stmt->bindValue(":id", $garage_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = getResults($stmt);
+        
+        return $result;
+    }
+    
+    private function soldGarageVehicle($garage_id) {
+        $conn = $this->conn;
+        
+        // Set the SQL
+        $sql = "UPDATE garage SET sold = 1 WHERE garage.id = :id";
+    
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);    
+
+        // Bind the parameter
+        $stmt->bindValue(":id", $garage_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+    }
+    
+    private function sellVehicle($garage_id) {
+        // Get the record from the garage
+        $vehicle = $this->getGarageVehicle($garage_id);
+        
+        // The vehicle data
+        $vehicle_data = $this->getVehicle($vehicle["vehicle_type"], $vehicle["vehicle_id"]);
+        
+        // The worth of the vehicle
+        $worth = $vehicle_data["worth"];
+        
+        // Set the vehicle as sold
+        $this->soldGarageVehicle($garage_id);
+
+        // Update the player cash
+        $update = [
+            "cash" => $this->player_data["cash"] + $worth
+        ];
+        $this->player->updatePlayer($this->player_data["id"], $update);
+        
+        // Also update it in here (since there might be more bikes to come)
+        $this->player_data["cash"] += $worth;
+    }
+    
     /**
      * Other functions
      */
@@ -110,7 +185,7 @@ class Garage extends Action {
                 // - Image
                 // - Value
                 $formatted_results[] = [
-                    "id" => $vehicle["id"],
+                    "id" => $row["id"],
                     "img" => $vehicle["img"],
                     "worth" => "€".$vehicle["worth"],
                 ];

@@ -55,7 +55,7 @@
                     For medium and larger screens, it's half the screen
                     For smaller than medium, it's the full screen -->
             <div class="row">
-                <div class="col-md-8 col-lg-6 mx-auto">
+                <div class="col-12 col-md-8 col-lg-6 mx-auto">
                     <div class="row bg-body-secondary">
                         
                         <!-- Sidebar -->

@@ -308,6 +308,7 @@ $strings = [
     
     // Data stuff
     "data.id.invalid" => "Please select a valid player",
+    "data.ids.invalid" => "Please select a valid vehicle",
     "data.location.invalid" => "Please select a valid location",
     "data.amount.invalid" => "Please select a valid amount",
     

@@ -27,6 +27,10 @@ RewriteRule ^(.*)create_new_player$ $1/api/index?route=player_reset [QSA,DPI]
 RewriteRule ^(.*)get_friends$       $1/api/index?route=player_friends [QSA,DPI]
 RewriteRule ^(.*)get_bike_rate$     $1/api/index?route=player_chance_bike [QSA,DPI]
 
+######################
+# All Actions
+######################
+
 # Travel request
 RewriteRule ^(.*)move_to_location$   $1/api/index?route=travel_player [QSA,DPI]
 
@@ -48,7 +52,8 @@ RewriteRule ^(.*)buy_bullets$  $1/api/index?route=shop_offensive [QSA,DPI]
 RewriteRule ^(.*)swap_bullets$ $1/api/index?route=shop_defensive [QSA,DPI]
 
 # Garage requests
-RewriteRule ^(.*)get_vehicles$ $1/api/index?route=garage_all [QSA,DPI]
+RewriteRule ^(.*)get_vehicles$  $1/api/index?route=garage_all [QSA,DPI]
+RewriteRule ^(.*)sell_vehicles$ $1/api/index?route=garage_sell [QSA,DPI]
 
 # Crime request
 RewriteRule ^(.*)steal_bike$  $1/api/index?route=crime_bike [QSA,DPI]

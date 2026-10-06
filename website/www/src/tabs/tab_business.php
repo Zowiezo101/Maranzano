@@ -185,25 +185,33 @@
                                                 <form id="garageForm">
                                                 
                                                     <!-- The jail table -->
-                                                    <table id="garageTable" class="fw-bold table align-middle table-borderless table-hover">
+                                                    <table id="garageTable" class="fw-bold table align-middle table-borderless table-hover text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="w-50"></th>
+                                                                <th><?php printString("garage.select_all"); ?></th>
+                                                                <th><input class="form-check-input" type="checkbox" id="checkAll" onclick="onSelectAll()"></th>
+                                                            </tr>
+                                                        </thead>
                                                         <tbody>
                                                             <!-- Following rows are added using JS -->
                                                         </tbody>
                                                     </table>
                                                 
                                                     <!-- No vehicles in garage -->
-                                                    <div id="garageError" class="text-center text-black d-none">
+                                                    <div id="garageTableError" class="text-center text-black d-none">
                                                         <p><b><?php printString("garage.empty"); ?></b></p>
+                                                    </div>
+
+                                                    <!-- Error message -->
+                                                    <div id="sellError" class="mb-4 mx-3 text-center text-warning d-none">
+                                                        <!-- Filled in later in case of error -->
                                                     </div>
 
                                                     <!-- Sell button -->
                                                     <div class="row mb-5 justify-content-end">
                                                         <div class="col-4 col-lg-3">
-                                                            <button type="submit" class="btn btn-primary border border-3 border-black w-100"><?php printString("garage.sell")?></button>
-                                                        </div>
-                                                        <div class="col-4 col-lg-3">
-                                                            <label for="checkAll" class="form-label"><?php printString("garage.select_all"); ?></label>
-                                                            <input class="form-check-input" type="checkbox" value="" id="checkAll">
+                                                            <button type="submit" class="btn btn-primary border border-3 border-black w-100"><?php printString("garage.sell"); ?></button>
                                                         </div>
                                                     </div>
                                                     

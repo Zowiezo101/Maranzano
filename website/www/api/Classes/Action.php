@@ -19,8 +19,9 @@ class Action {
     
     // Whitelisted actions when in Jail or Hospital
     private $white_list = [
+        "location_all",
         "jail_city",
-        
+        "garage_all"
     ];
     
     public function __construct($conn) {
