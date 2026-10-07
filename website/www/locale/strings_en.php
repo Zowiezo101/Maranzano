@@ -160,6 +160,12 @@ $strings = [
     "bike.worth" => "Success! The bike is worth ",
     "bike.cooldown" => "You have tried to steal a bike less than [cooldown] [units] ago. You still need to wait [time] [unit]",
     
+    // Steal a car page
+    "car.info" => "Success rate: ",
+    "car.try" => "Attempt to steal",
+    "car.worth" => "Success! The car is worth ",
+    "car.cooldown" => "You have tried to steal a car less than [cooldown] [units] ago. You still need to wait [time] [unit]",
+    
     // General crime stuff
     "crimes.failed" => "Failed! You've been caught and are being send to ",
     
@@ -311,6 +317,7 @@ $strings = [
     "data.ids.invalid" => "Please select a valid vehicle",
     "data.location.invalid" => "Please select a valid location",
     "data.amount.invalid" => "Please select a valid amount",
+    "data.rank.too_low" => "You don't have the required rank for this action yet. Current rank = [rank], required rank = [required]",
     
     // Misc
     "global.copyright" => "<b>Copyright 2026 - ??</b>"
@@ -330,4 +337,25 @@ function getString($name) {
     $string = $strings[$name];
     
     return $string;
+}
+    
+function getRankLevel($name) {
+    global $strings;
+
+    // Get the key of this name
+    $key = array_search($name, $strings);
+
+    // Remove the "rank." and only return the number
+    $rank = str_replace("rank.", "", $key);
+
+    // Return the rank as an integer (base 10)
+    return intval($rank, 10);
+}
+    
+function getRankName($level) {
+    // Insert the level into the string
+    $name = "rank.$level";
+
+    // And use it as a key into $strings
+    return getString($name);
 }

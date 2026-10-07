@@ -63,6 +63,10 @@ function onShowTab(event) {
         case "btnBike":
             onBikeTab();
             break;
+            
+        case "btnCar":
+            onCarTab();
+            break;
     }
 }
 
@@ -159,10 +163,10 @@ $(function () {
     });
 
     // Load the home tab after the page has loaded
-    $("#btnHome").tab('show');
+    $("#btnHome").click();
     
     // TODO: Temp different starting tab
-    $("#btnGarage").tab('show');
+    $("#btnCar").click();
 });
 
 

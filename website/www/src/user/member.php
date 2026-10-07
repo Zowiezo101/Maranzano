@@ -97,7 +97,7 @@
                                     
                                     <?php printMenu("crimes", ["bike"  => $RANK_ROOKIE, 
                                                                "car"   => $RANK_MAFIOSO, 
-                                                               "store" => $RANK_MAFIOSO, 
+                                                               "store" => $RANK_HITMAN, 
                                                                "kill"  => $RANK_HITMAN]) ?>
                                     
                                     <?php printMenu("casino", ["roulette" => $RANK_ROOKIE, 

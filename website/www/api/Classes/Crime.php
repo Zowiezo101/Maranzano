@@ -18,30 +18,30 @@ class Crime extends Action {
     private const CRIME_STORE = 3;
     private const CRIME_KILL = 4;
     
-    // Bike types
-    private const BIKE_CHEAP = 1;
-    private const BIKE_MID = 2;
-    private const BIKE_HIGH = 3;
-    private const BIKE_WIN = 4;
+    // Vehicle types
+    private const VEHICLE_CHEAP = 1;
+    private const VEHICLE_MID = 2;
+    private const VEHICLE_HIGH = 3;
+    private const VEHICLE_WIN = 4;
     
     // Bike stuff
     private const BIKE_COOLDOWN = 50;
     private const BIKE_XP = 450;
     public const BIKES = [
-        self::BIKE_CHEAP => ["id" => self::BIKE_CHEAP, "worth" => 20,   "img" => "../img/bikes/20.jpg",   "chance_start" => 0],
-        self::BIKE_MID   => ["id" => self::BIKE_MID, "worth" => 80,   "img" => "../img/bikes/80.png",   "chance_start" => 40],
-        self::BIKE_HIGH  => ["id" => self::BIKE_HIGH, "worth" => 500,  "img" => "../img/bikes/500.png",  "chance_start" => 70],
-        self::BIKE_WIN   => ["id" => self::BIKE_WIN, "worth" => 1500, "img" => "../img/bikes/1500.jpg", "chance_start" => 90],
+        self::VEHICLE_CHEAP => ["id" => self::VEHICLE_CHEAP, "worth" => 20,   "img" => "../img/bikes/20.jpg",   "chance_start" => 0],
+        self::VEHICLE_MID   => ["id" => self::VEHICLE_MID,   "worth" => 80,   "img" => "../img/bikes/80.png",   "chance_start" => 40],
+        self::VEHICLE_HIGH  => ["id" => self::VEHICLE_HIGH,  "worth" => 500,  "img" => "../img/bikes/500.png",  "chance_start" => 70],
+        self::VEHICLE_WIN   => ["id" => self::VEHICLE_WIN,   "worth" => 1500, "img" => "../img/bikes/1500.jpg", "chance_start" => 90],
     ];
     
     // Car stuff
-    private const CAR_COOLDOWN = 50;
-    private const CAR_XP = 450;
+    private const CAR_COOLDOWN = 90;
+    private const CAR_XP = 1500;
     public const CARS = [
-        self::BIKE_CHEAP => ["id" => self::BIKE_CHEAP, "worth" => 20,   "img" => "../img/bikes/20.jpg",   "chance_start" => 0],
-        self::BIKE_MID   => ["id" => self::BIKE_MID, "worth" => 80,   "img" => "../img/bikes/80.png",   "chance_start" => 40],
-        self::BIKE_HIGH  => ["id" => self::BIKE_HIGH, "worth" => 500,  "img" => "../img/bikes/500.png",  "chance_start" => 70],
-        self::BIKE_WIN   => ["id" => self::BIKE_WIN, "worth" => 1500, "img" => "../img/bikes/1500.jpg", "chance_start" => 90],
+        self::VEHICLE_CHEAP => ["id" => self::VEHICLE_CHEAP, "worth" => 250,   "img" => "../img/cars/250.jpg",    "chance_start" => 0],
+        self::VEHICLE_MID   => ["id" => self::VEHICLE_MID,   "worth" => 5000,  "img" => "../img/cars/5000.png",   "chance_start" => 40],
+        self::VEHICLE_HIGH  => ["id" => self::VEHICLE_HIGH,  "worth" => 15000, "img" => "../img/cars/15.000.jpg", "chance_start" => 70],
+        self::VEHICLE_WIN   => ["id" => self::VEHICLE_WIN,   "worth" => 90000, "img" => "../img/cars/90.000.jpg", "chance_start" => 90],
     ];
     
     public function __construct($conn) {
@@ -60,6 +60,14 @@ class Crime extends Action {
         switch($route) {
             case "crime_bike":
                 $result = $this->stealBike();
+                break;
+            case "crime_car":
+                $this->hasRequiredRank(\getRankLevel("Mafioso"));
+                $result = $this->stealCar();
+                break;
+            case "crime_store":
+                $this->hasRequiredRank(\getRankLevel("Hitman"));
+                $result = $this->robStore();
                 break;
         }
         
@@ -97,14 +105,14 @@ class Crime extends Action {
             // We succeeded!
             $bike_gamble = mt_rand(0, 10000) / 100;
             
-            if (self::BIKES[self::BIKE_WIN]["chance_start"] <= $bike_gamble) {
-                $bike = self::BIKES[self::BIKE_WIN];
-            } else if (self::BIKES[self::BIKE_HIGH]["chance_start"] <= $bike_gamble) {
-                $bike = self::BIKES[self::BIKE_HIGH];
-            } else if (self::BIKES[self::BIKE_MID]["chance_start"] <= $bike_gamble) {
-                $bike = self::BIKES[self::BIKE_MID];
+            if (self::BIKES[self::VEHICLE_WIN]["chance_start"] <= $bike_gamble) {
+                $bike = self::BIKES[self::VEHICLE_WIN];
+            } else if (self::BIKES[self::VEHICLE_HIGH]["chance_start"] <= $bike_gamble) {
+                $bike = self::BIKES[self::VEHICLE_HIGH];
+            } else if (self::BIKES[self::VEHICLE_MID]["chance_start"] <= $bike_gamble) {
+                $bike = self::BIKES[self::VEHICLE_MID];
             } else {
-                $bike = self::BIKES[self::BIKE_CHEAP];
+                $bike = self::BIKES[self::VEHICLE_CHEAP];
             }
             
             // Add bike to garage
@@ -121,10 +129,67 @@ class Crime extends Action {
                 self::ACTION_TABLE, 
                 self::BIKE_COOLDOWN);
             
-        // TODO: Give the player XP
+        // Give the player XP
         $this->giveXP($player, self::BIKE_XP, $success);
         
         return $bike;
+    }
+    
+    private function stealCar() {
+        // The current player
+        $player = $this->player_data;
+        
+        // Is the player still on a cooldown?
+        $this->hasCrimeCooldown($player["id"], 
+                self::CRIME_CAR, 
+                self::ACTION_TABLE, 
+                self::CAR_COOLDOWN,
+                "car.cooldown");
+        
+        // The chance to succeed
+        $rate = $this->player->getPlayerSuccessCarByRank($player["rank"]);
+        
+        // The RNG to create a chance to succeed or not
+        $gamble = mt_rand(0, 10000) / 100;
+        
+        // Has the player succeeded or not?
+        $success = ($rate >= $gamble);
+        
+        // The car to steal
+        $car = null;
+        
+        if ($success) {
+            // We succeeded!
+            $car_gamble = mt_rand(0, 10000) / 100;
+            
+            if (self::CARS[self::VEHICLE_WIN]["chance_start"] <= $car_gamble) {
+                $car = self::CARS[self::VEHICLE_WIN];
+            } else if (self::CARS[self::VEHICLE_HIGH]["chance_start"] <= $car_gamble) {
+                $car = self::CARS[self::VEHICLE_HIGH];
+            } else if (self::CARS[self::VEHICLE_MID]["chance_start"] <= $car_gamble) {
+                $car = self::CARS[self::VEHICLE_MID];
+            } else {
+                $car = self::CARS[self::VEHICLE_CHEAP];
+            }
+            
+            // Add car to garage
+            $this->garage->addCar($player["id"], $car);
+        } else {
+            // Add player to jail
+             $this->jail->sendToJail($player);
+        }
+        
+         // Add the cooldown
+         $this->setCrimeCooldown($player["id"], 
+                 self::CRIME_CAR, 
+                 $success, 
+                 self::ACTION_TABLE, 
+                 self::CAR_COOLDOWN);
+            
+        // Give the player XP
+        $this->giveXP($player, self::CAR_XP, $success);
+        
+        return $car;
     }
     
     

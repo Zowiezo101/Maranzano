@@ -197,4 +197,19 @@ class Action {
         // Get the waiting time in seconds
         return ($waiting_time_h > 1 ? ["hour(s)", $waiting_time_h] : ($waiting_time_m > 1 ? ["minute(s)", $waiting_time_m] : ["second(s)", $waiting_time]));
     }
+    
+    protected function hasRequiredRank($required_rank) {
+        // Check if the player has a high enough rank for this action
+        $rank = $this->player_data["rank"];
+        
+        if ($rank < $required_rank) {
+            $error = getString("data.rank.too_low");
+            
+            $error1 = str_replace("[rank]", getRankName($rank), $error);
+            $error2 = str_replace("[required]", getRankName($required_rank), $error1);
+            
+            // Rank isn't high enough
+            throwError($error2, Message::CODE_FORBIDDEN);
+        }
+    }
 }

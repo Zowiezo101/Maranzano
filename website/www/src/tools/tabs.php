@@ -5,27 +5,6 @@
     $RANK_HITMAN = getRankLevel("Hitman");
     $RANK_DON = getRankLevel("Don");
     
-    function getRankLevel($name) {
-        global $strings;
-        
-        // Get the key of this name
-        $key = array_search($name, $strings);
-        
-        // Remove the "rank." and only return the number
-        $rank = str_replace("rank.", "", $key);
-        
-        // Return the rank as an integer (base 10)
-        return intval($rank, 10);
-    }
-    
-    function getRankName($level) {
-        // Insert the level into the string
-        $name = "rank.$level";
-        
-        // And use it as a key into $strings
-        return getString($name);
-    }
-    
     function printHeader($title, $image = null) {
         
         $header = '<!-- The Header -->

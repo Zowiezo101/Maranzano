@@ -77,6 +77,10 @@ class Garage extends Action {
         $this->addVehicle($player_id, Crime::CRIME_BIKE, $bike["id"]);
     }
     
+    public function addCar($player_id, $car) {
+        $this->addVehicle($player_id, Crime::CRIME_CAR, $car["id"]);
+    }
+    
     private function addVehicle($player_id, $vehicle_type, $vehicle_id) {
         $conn = $this->conn;
         
@@ -187,12 +191,17 @@ class Garage extends Action {
                 $formatted_results[] = [
                     "id" => $row["id"],
                     "img" => $vehicle["img"],
-                    "worth" => "€".$vehicle["worth"],
+                    "worth" => $this->formatCurrency($vehicle["worth"]),
                 ];
             }
         }
         
         return $formatted_results;
+    }
+    
+    private function formatCurrency($value) {
+        $result = "€".number_format($value, 0, ",", ".");
+        return $result;
     }
     
     private function getVehicle($vehicle_type, $vehicle_id) {

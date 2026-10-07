@@ -21,19 +21,19 @@ class Player {
         4 =>  ["health" => 2200,   "jail" => 24,  "bike" => 17, "car" => 0,  "store" => 0,  "xp" => 5065],
         5 =>  ["health" => 2900,   "jail" => 28,  "bike" => 22, "car" => 0,  "store" => 0,  "xp" => 7600],
         6 =>  ["health" => 3750,   "jail" => 33,  "bike" => 27, "car" => 0,  "store" => 0,  "xp" => 11400],
-        7 =>  ["health" => 4850,   "jail" => 39,  "bike" => 32, "car" => 5,  "store" => 5,  "xp" => 17100],
-        8 =>  ["health" => 6300,   "jail" => 45,  "bike" => 37, "car" => 11, "store" => 11, "xp" => 25650],
-        9 =>  ["health" => 8250,   "jail" => 53,  "bike" => 42, "car" => 18, "store" => 18, "xp" => 38450],
-        10 => ["health" => 10750,  "jail" => 62,  "bike" => 47, "car" => 24, "store" => 24, "xp" => 57700],
-        11 => ["health" => 14000,  "jail" => 73,  "bike" => 52, "car" => 30, "store" => 30, "xp" => 86500],
-        12 => ["health" => 18200,  "jail" => 85,  "bike" => 57, "car" => 37, "store" => 37, "xp" => 129750],
-        13 => ["health" => 23700,  "jail" => 100, "bike" => 62, "car" => 43, "store" => 43, "xp" => 194600],
-        14 => ["health" => 30850,  "jail" => 117, "bike" => 67, "car" => 49, "store" => 49, "xp" => 291950],
-        15 => ["health" => 40150,  "jail" => 137, "bike" => 71, "car" => 56, "store" => 56, "xp" => 437900],
-        16 => ["health" => 52250,  "jail" => 160, "bike" => 76, "car" => 62, "store" => 62, "xp" => 656850],
-        17 => ["health" => 68000,  "jail" => 187, "bike" => 81, "car" => 68, "store" => 68, "xp" => 985300],
-        18 => ["health" => 88550,  "jail" => 219, "bike" => 86, "car" => 75, "store" => 75, "xp" => 1477900],
-        19 => ["health" => 115250, "jail" => 256, "bike" => 91, "car" => 81, "store" => 81, "xp" => 2216900],
+        7 =>  ["health" => 4850,   "jail" => 39,  "bike" => 32, "car" => 5,  "store" => 0,  "xp" => 17100],
+        8 =>  ["health" => 6300,   "jail" => 45,  "bike" => 37, "car" => 11, "store" => 0, "xp" => 25650],
+        9 =>  ["health" => 8250,   "jail" => 53,  "bike" => 42, "car" => 18, "store" => 5, "xp" => 38450],
+        10 => ["health" => 10750,  "jail" => 62,  "bike" => 47, "car" => 24, "store" => 12, "xp" => 57700],
+        11 => ["health" => 14000,  "jail" => 73,  "bike" => 52, "car" => 30, "store" => 20, "xp" => 86500],
+        12 => ["health" => 18200,  "jail" => 85,  "bike" => 57, "car" => 37, "store" => 27, "xp" => 129750],
+        13 => ["health" => 23700,  "jail" => 100, "bike" => 62, "car" => 43, "store" => 34, "xp" => 194600],
+        14 => ["health" => 30850,  "jail" => 117, "bike" => 67, "car" => 49, "store" => 42, "xp" => 291950],
+        15 => ["health" => 40150,  "jail" => 137, "bike" => 71, "car" => 56, "store" => 49, "xp" => 437900],
+        16 => ["health" => 52250,  "jail" => 160, "bike" => 76, "car" => 62, "store" => 57, "xp" => 656850],
+        17 => ["health" => 68000,  "jail" => 187, "bike" => 81, "car" => 68, "store" => 64, "xp" => 985300],
+        18 => ["health" => 88550,  "jail" => 219, "bike" => 86, "car" => 75, "store" => 71, "xp" => 1477900],
+        19 => ["health" => 115250, "jail" => 256, "bike" => 91, "car" => 81, "store" => 79, "xp" => 2216900],
         20 => ["health" => 150000, "jail" => 300, "bike" => 96, "car" => 86, "store" => 86, "xp" => 3325300],
     ];
     
@@ -73,6 +73,10 @@ class Player {
             
             case "player_chance_bike":
                 $result = $this->getPlayerSuccessBike();
+                break;
+            
+            case "player_chance_car":
+                $result = $this->getPlayerSuccessCar();
                 break;
         }
         
@@ -193,11 +197,29 @@ class Player {
         return $this->getPlayerSuccessBikeByRank($player["rank"]);
     }
     
+    public function getPlayerSuccessCar() {
+        
+        $user_id = $this->getUserId();
+
+        // Get the player that belongs to this user
+        $player = $this->getPlayer($user_id);
+        
+        // Get the current rank
+        return $this->getPlayerSuccessCarByRank($player["rank"]);
+    }
+    
     public function getPlayerSuccessBikeByRank($rank) {
         // Get the current rank data
         $rank_data = self::RANKS[$rank];
         
         return $rank_data["bike"];
+    }
+    
+    public function getPlayerSuccessCarByRank($rank) {
+        // Get the current rank data
+        $rank_data = self::RANKS[$rank];
+        
+        return $rank_data["car"];
     }
     
     /**
