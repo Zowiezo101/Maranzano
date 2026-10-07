@@ -36,6 +36,25 @@ function onCarTab() {
         alert("error: " + results);
     });
 }
+
+function onStoreTab() {
+    $("#storeTry").removeClass("d-none");
+    
+    // The fetch call
+    fetchStoreRate().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong
+        } else {
+            // Success, update the span
+            $("#storeRate").text(results.data);
+        }
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
     
 function onSubmitBike(event) {
     event.preventDefault();
@@ -110,6 +129,42 @@ function onSubmitCar(event) {
         alert("error: " + results);
     });
 }
+    
+function onSubmitStore(event) {
+    event.preventDefault();
+        
+    // Remove any previous errors
+    onResetAllForms();
+    
+    fetchRobStore().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#storeError");
+        } else {
+            // Successfully attempted to rob a store
+            if (results.data !== "") {
+                // We succeeded in robbing the store!
+                $("#storeTry").addClass("d-none");
+                $("#storeSuccess").removeClass("d-none");
+                
+                $("#storeWorth").text("€" + results.data["worth"] + ",-");
+            } else {
+                // We failed in robbing the store..
+                $("#storeTry").addClass("d-none");
+                $("#storeNoSuccess").removeClass("d-none");
+            }
+            
+            // Update the table with the new amounts
+            updatePlayerInfo();
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
 
 function onClickGarage() {
     $("#btnGarage").click();
@@ -123,6 +178,7 @@ $(function() {
     // Set prevent page reloading when submitting form
     $("#bikeForm").on("submit", function(e) {onSubmitBike(e);});
     $("#carForm").on("submit", function(e) {onSubmitCar(e);});
+    $("#storeForm").on("submit", function(e) {onSubmitStore(e);});
     
     // The buttons to go to jail and our garage
     $(".goToGarage").on("click", function(e) {onClickGarage(e);});

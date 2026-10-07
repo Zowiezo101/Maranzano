@@ -78,6 +78,10 @@ class Player {
             case "player_chance_car":
                 $result = $this->getPlayerSuccessCar();
                 break;
+            
+            case "player_chance_store":
+                $result = $this->getPlayerSuccessStore();
+                break;
         }
         
         return $result;
@@ -208,6 +212,17 @@ class Player {
         return $this->getPlayerSuccessCarByRank($player["rank"]);
     }
     
+    public function getPlayerSuccessStore() {
+        
+        $user_id = $this->getUserId();
+
+        // Get the player that belongs to this user
+        $player = $this->getPlayer($user_id);
+        
+        // Get the current rank
+        return $this->getPlayerSuccessStoreByRank($player["rank"]);
+    }
+    
     public function getPlayerSuccessBikeByRank($rank) {
         // Get the current rank data
         $rank_data = self::RANKS[$rank];
@@ -220,6 +235,13 @@ class Player {
         $rank_data = self::RANKS[$rank];
         
         return $rank_data["car"];
+    }
+    
+    public function getPlayerSuccessStoreByRank($rank) {
+        // Get the current rank data
+        $rank_data = self::RANKS[$rank];
+        
+        return $rank_data["store"];
     }
     
     /**

@@ -155,18 +155,22 @@ $strings = [
     "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] [unit]",
     
     // Steal a bike page
-    "bike.info" => "Success rate: ",
     "bike.try" => "Attempt to steal",
     "bike.worth" => "Success! The bike is worth ",
     "bike.cooldown" => "You have tried to steal a bike less than [cooldown] [units] ago. You still need to wait [time] [unit]",
     
     // Steal a car page
-    "car.info" => "Success rate: ",
     "car.try" => "Attempt to steal",
     "car.worth" => "Success! The car is worth ",
     "car.cooldown" => "You have tried to steal a car less than [cooldown] [units] ago. You still need to wait [time] [unit]",
     
+    // Rob a store page
+    "store.try" => "Attempt to rob",
+    "store.worth" => "Success! You got away with ",
+    "store.cooldown" => "You have tried to rob a store less than [cooldown] [units] ago. You still need to wait [time] [unit]",
+    
     // General crime stuff
+    "crime.info" => "Success rate: ",
     "crimes.failed" => "Failed! You've been caught and are being send to ",
     
     // Bank page

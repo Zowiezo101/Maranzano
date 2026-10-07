@@ -99,6 +99,16 @@ function fetchStealCar() {
     return fetchGet("steal_car");
 }
 
+// Get the success rate
+function fetchStoreRate() {
+    return fetchGet("get_store_rate");
+}
+
+// Rob the store
+function fetchRobStore() {
+    return fetchGet("rob_store");
+}
+
 // Send a post request to the given URL with fetch
 function fetchGet(url) {
     var response = fetchRequest(url, "GET");

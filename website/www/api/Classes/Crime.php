@@ -44,6 +44,16 @@ class Crime extends Action {
         self::VEHICLE_WIN   => ["id" => self::VEHICLE_WIN,   "worth" => 90000, "img" => "../img/cars/90.000.jpg", "chance_start" => 90],
     ];
     
+    // Store stuff
+    private const STORE_COOLDOWN = 180;
+    private const STORE_XP = 5000;
+    public const STORES = [
+        self::VEHICLE_CHEAP => ["start" => 2000,  "end" => 5000,  "chance_start" => 0],
+        self::VEHICLE_MID   => ["start" => 5000,  "end" => 10000, "chance_start" => 40],
+        self::VEHICLE_HIGH  => ["start" => 10000, "end" => 15000, "chance_start" => 70],
+        self::VEHICLE_WIN   => ["start" => 15000, "end" => 20000, "chance_start" => 90],
+    ];
+    
     public function __construct($conn) {
         parent::__construct($conn);
         
@@ -190,6 +200,74 @@ class Crime extends Action {
         $this->giveXP($player, self::CAR_XP, $success);
         
         return $car;
+    }
+    
+    private function robStore() {
+        // The current player
+        $player = $this->player_data;
+        
+        // Is the player still on a cooldown?
+        $this->hasCrimeCooldown($player["id"], 
+                self::CRIME_STORE, 
+                self::ACTION_TABLE, 
+                self::STORE_COOLDOWN,
+                "store.cooldown");
+        
+        // The chance to succeed
+        $rate = $this->player->getPlayerSuccessStoreByRank($player["rank"]);
+        
+        // The RNG to create a chance to succeed or not
+        $gamble = mt_rand(0, 10000) / 100;
+        
+        // Has the player succeeded or not?
+        $success = ($rate >= $gamble);
+        
+        // The car to steal
+        $store = null;
+        
+        if ($success) {
+            // We succeeded!
+            $store_gamble = mt_rand(0, 10000) / 100;
+            
+            if (self::STORES[self::VEHICLE_WIN]["chance_start"] <= $store_gamble) {
+                $store = self::STORES[self::VEHICLE_WIN];
+            } else if (self::STORES[self::VEHICLE_HIGH]["chance_start"] <= $store_gamble) {
+                $store = self::STORES[self::VEHICLE_HIGH];
+            } else if (self::STORES[self::VEHICLE_MID]["chance_start"] <= $store_gamble) {
+                $store = self::STORES[self::VEHICLE_MID];
+            } else {
+                $store = self::STORES[self::VEHICLE_CHEAP];
+            }
+            
+            // The amount the player has stolen
+            $worth = mt_rand($store["start"], $store["end"]);
+            
+            // Update the player cash with that amount
+            $update = [
+                "cash" => $this->player_data["cash"] + $worth
+            ];
+            $this->player->updatePlayer($this->player_data["id"], $update);
+            
+            // Send the data back to the client
+            $store = [
+                "worth" => $worth,
+            ];
+        } else {
+            // Add player to jail
+             $this->jail->sendToJail($player);
+        }
+        
+         // Add the cooldown
+         $this->setCrimeCooldown($player["id"], 
+                 self::CRIME_STORE, 
+                 $success, 
+                 self::ACTION_TABLE, 
+                 self::STORE_COOLDOWN);
+            
+        // Give the player XP
+        $this->giveXP($player, self::STORE_XP, $success);
+        
+        return $store;
     }
     
     

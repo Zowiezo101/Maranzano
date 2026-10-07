@@ -67,6 +67,10 @@ function onShowTab(event) {
         case "btnCar":
             onCarTab();
             break;
+            
+        case "btnStore":
+            onStoreTab();
+            break;
     }
 }
 
@@ -166,7 +170,7 @@ $(function () {
     $("#btnHome").click();
     
     // TODO: Temp different starting tab
-    $("#btnCar").click();
+    $("#btnStore").click();
 });
 
 

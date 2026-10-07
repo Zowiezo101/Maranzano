@@ -8,7 +8,7 @@
                                                     <?php printHeader("crimes.bike", "../img/Bike.jpg"); ?>
 
                                                     <!-- Success chance -->
-                                                    <h5 class="text-center mb-5"><?php printString("bike.info"); ?><span id="bikeRate"></span>%</h5>
+                                                    <h5 class="text-center mb-5"><?php printString("crime.info"); ?><span id="bikeRate"></span>%</h5>
 
                                                     <!-- The bike body -->
                                                     <form id="bikeForm">       
@@ -60,7 +60,7 @@
                                                     <?php printHeader("crimes.car", "../img/Car.png"); ?>
 
                                                     <!-- Success chance -->
-                                                    <h5 class="text-center mb-5"><?php printString("car.info"); ?><span id="carRate"></span>%</h5>
+                                                    <h5 class="text-center mb-5"><?php printString("crime.info"); ?><span id="carRate"></span>%</h5>
 
                                                     <!-- The car body -->
                                                     <form id="carForm">       
@@ -105,7 +105,44 @@
                                     
                                     <!-- The Rob a store Tab -->
                                     <div class="tab-pane" id="tabStore" role="tabpanel">
-                                        Store
+                                        <div class="row">
+                                            <div class="col p-0">
+                                                
+                                                <div id="storeTry">
+                                                    <?php printHeader("crimes.store", "../img/Store.jpg"); ?>
+
+                                                    <!-- Success chance -->
+                                                    <h5 class="text-center mb-5"><?php printString("crime.info"); ?><span id="storeRate"></span>%</h5>
+
+                                                    <!-- The store body -->
+                                                    <form id="storeForm">       
+                                                        <!-- Attempt button -->
+                                                        <div class="col-6 mx-auto">
+                                                            <button type="submit" class="btn btn-primary border border-3 border-black w-100"><?php printString("store.try")?></button>
+                                                        </div>
+
+                                                        <!-- Error message -->
+                                                        <div id="storeError" class="mb-4 mx-3 text-center text-warning d-none">
+                                                            <!-- Filled in later in case of error -->
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                
+                                                <div id="storeSuccess" class="d-none">
+                                                    <?php printHeader("crimes.store", "../img/Success.jpg"); ?>
+
+                                                    <!-- Store worth -->
+                                                    <b><p class="text-center"><?php printString("store.worth"); ?><span id="storeWorth"></span></p></b>
+                                                </div>
+                                                
+                                                <div id="storeNoSuccess" class="d-none">
+                                                    <?php printHeader("crimes.store", "../img/Failed.jpg"); ?>
+
+                                                    <!-- Failed message -->
+                                                    <b><p class="text-center"><?php printString("crimes.failed"); ?><button class="goToJail btn btn-link m-0 p-0 pb-1"><b><?php printString("main.jail"); ?></b></button></p></b>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <!-- The Kill player Tab -->

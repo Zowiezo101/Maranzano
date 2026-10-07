@@ -27,6 +27,7 @@ RewriteRule ^(.*)create_new_player$ $1/api/index?route=player_reset [QSA,DPI]
 RewriteRule ^(.*)get_friends$       $1/api/index?route=player_friends [QSA,DPI]
 RewriteRule ^(.*)get_bike_rate$     $1/api/index?route=player_chance_bike [QSA,DPI]
 RewriteRule ^(.*)get_car_rate$      $1/api/index?route=player_chance_car [QSA,DPI]
+RewriteRule ^(.*)get_store_rate$    $1/api/index?route=player_chance_store [QSA,DPI]
 
 ######################
 # All Actions
@@ -59,6 +60,7 @@ RewriteRule ^(.*)sell_vehicles$ $1/api/index?route=garage_sell [QSA,DPI]
 # Crime request
 RewriteRule ^(.*)steal_bike$ $1/api/index?route=crime_bike [QSA,DPI]
 RewriteRule ^(.*)steal_car$  $1/api/index?route=crime_car [QSA,DPI]
+RewriteRule ^(.*)rob_store$  $1/api/index?route=crime_store [QSA,DPI]
 
 
 # Making sure things are redirected to the correct file types
