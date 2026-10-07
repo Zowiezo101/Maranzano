@@ -103,7 +103,7 @@
                                                 <?php printHeader("main.jail", "../img/Jail.jpg"); ?>
                                                 
                                                 <!-- The jail table -->
-                                                <table id="jail" class="fw-bold table table-bordered table-hover">
+                                                <table id="jail" class="fw-bold table table-striped table-bordered table-hover">
                                                     <thead>
                                                         <tr>
                                                             <th class="fst-normal"><?php printString("jail.info.name"); ?></th>

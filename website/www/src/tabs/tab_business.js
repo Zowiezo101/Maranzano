@@ -26,7 +26,7 @@ function onGarageTab() {
         if (results.error !== "" && results.error !== null) {
             // Something went wrong
         } else {
-            // Success, update the select list
+            // Success, update the table
             updateGarageTable(results.data);
             
             // Set the select-all checkbox unchecked

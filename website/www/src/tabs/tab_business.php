@@ -184,7 +184,7 @@
                                                 <!-- The Garage form -->
                                                 <form id="garageForm">
                                                 
-                                                    <!-- The jail table -->
+                                                    <!-- The garage table -->
                                                     <table id="garageTable" class="fw-bold table align-middle table-borderless table-hover text-center">
                                                         <thead>
                                                             <tr>

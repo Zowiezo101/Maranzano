@@ -71,6 +71,10 @@ function onShowTab(event) {
         case "btnStore":
             onStoreTab();
             break;
+            
+        case "btnUserlist":
+            onPlayerlistTab();
+            break;
     }
 }
 
@@ -167,10 +171,9 @@ $(function () {
     });
 
     // Load the home tab after the page has loaded
-    $("#btnHome").click();
-    
-    // TODO: Temp different starting tab
-    $("#btnStore").click();
+    // TODO:
+//    $("#btnHome").click();
+    $("#btnUserlist").click();
 });
 
 

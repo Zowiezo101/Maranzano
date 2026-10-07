@@ -82,6 +82,10 @@ class Player {
             case "player_chance_store":
                 $result = $this->getPlayerSuccessStore();
                 break;
+            
+            case "player_all":
+                $result = $this->getAllPlayers();
+                break;
         }
         
         return $result;
@@ -242,6 +246,25 @@ class Player {
         $rank_data = self::RANKS[$rank];
         
         return $rank_data["store"];
+    }
+    
+    private function getAllPlayers() {
+        $conn = $this->conn;
+        
+        // Get all the players in the database
+        $sql = "SELECT id, name, players.rank, deceased FROM players ORDER BY created_at DESC";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $results = getAllResults($stmt);
+        
+        // Send the ids, names, ranks and deceased state back
+        return $this->formatAllPlayers($results);
     }
     
     /**
@@ -498,13 +521,11 @@ class Player {
         return $data;
     }
     
-    private function formatPlayerStats($player, $user) {
-        $rank = $player["rank"];
-        
+    private function formatPlayerStats($player, $user) {        
         $data = [
             "u-name" => $user["name"],
             "name" => $player["name"],
-            "prank" => $rank,
+            "prank" => $player["rank"],
             "created" => $this->formatTime($user["created_at"]),
             
             // This information is from other tables
@@ -518,6 +539,21 @@ class Player {
         ];
         
         return $data;
+    }
+    
+    private function formatAllPlayers($data) {
+        $formatted_data = [];
+        
+        foreach ($data as $row) {
+            $formatted_data[] = [
+                "id" => $row["id"],
+                "name" => $row["name"],
+                "rank" => getRankName($row["rank"]),
+                "deceased" => $row["deceased"]
+            ];
+        }
+        
+        return $formatted_data;
     }
     
     private function formatCurrency($value) {

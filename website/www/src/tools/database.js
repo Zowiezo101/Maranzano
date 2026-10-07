@@ -9,6 +9,11 @@ function fetchPlayerStats() {
     return fetchGet("get_player_stats");
 }
 
+// Get the player stats for the home tab
+function fetchAllPlayers() {
+    return fetchGet("get_all_players");
+}
+
 // Get the list of locations to travel to
 function fetchAllLocations() {
     return fetchGet("get_locations");

@@ -28,6 +28,7 @@ RewriteRule ^(.*)get_friends$       $1/api/index?route=player_friends [QSA,DPI]
 RewriteRule ^(.*)get_bike_rate$     $1/api/index?route=player_chance_bike [QSA,DPI]
 RewriteRule ^(.*)get_car_rate$      $1/api/index?route=player_chance_car [QSA,DPI]
 RewriteRule ^(.*)get_store_rate$    $1/api/index?route=player_chance_store [QSA,DPI]
+RewriteRule ^(.*)get_all_players$   $1/api/index?route=player_all [QSA,DPI]
 
 ######################
 # All Actions

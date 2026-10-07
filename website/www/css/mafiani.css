@@ -118,5 +118,6 @@ form .btn-link:not(hover) {
     --bs-table-bg: var(--bg-color-secondary);
     --bs-table-color: var(--bs-white);
     --bs-table-hover-color: var(--bs-white);
+    --bs-table-striped-color: var(--bs-white);
 }
 
