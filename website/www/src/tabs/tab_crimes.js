@@ -112,11 +112,11 @@ function onSubmitCar(event) {
 }
 
 function onClickGarage() {
-    $("#btnGarage").tab('show');
+    $("#btnGarage").click();
 }
 
 function onClickJail() {
-    $("#btnJail").tab('show');
+    $("#btnJail").click();
 }
 
 $(function() {
@@ -125,6 +125,6 @@ $(function() {
     $("#carForm").on("submit", function(e) {onSubmitCar(e);});
     
     // The buttons to go to jail and our garage
-    $("#goToGarage").on("click", function(e) {onClickGarage(e);});
-    $("#goToJail").on("click", function(e) {onClickJail(e);});
+    $(".goToGarage").on("click", function(e) {onClickGarage(e);});
+    $(".goToJail").on("click", function(e) {onClickJail(e);});
 });

@@ -88,7 +88,7 @@ function onSubmitNewPlayer(event) {
         } else {
             // Successfully started anew
             // Show the home tab
-            $("#btnHome").tab('show');
+            $("#btnHome").click();
         }
 
     }).catch(function(results) {

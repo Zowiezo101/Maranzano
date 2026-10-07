@@ -36,7 +36,7 @@
                                                     <!-- Link to the Garage -->
                                                     <div class="row">
                                                         <div class="col text-center">
-                                                            <button id="goToGarage" class="btn btn-link mt-3"><b><?php printString("business.garage"); ?></b></button>
+                                                            <button class="goToGarage btn btn-link mt-3"><b><?php printString("business.garage"); ?></b></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -45,7 +45,7 @@
                                                     <?php printHeader("crimes.bike", "../img/Failed.jpg"); ?>
 
                                                     <!-- Failed message -->
-                                                    <b><p class="text-center"><?php printString("crimes.failed"); ?><button id="goToJail" class="btn btn-link m-0 p-0 pb-1"><b><?php printString("main.jail"); ?></b></button></p></b>
+                                                    <b><p class="text-center"><?php printString("crimes.failed"); ?><button class="goToJail btn btn-link m-0 p-0 pb-1"><b><?php printString("main.jail"); ?></b></button></p></b>
                                                 </div>
                                             </div>
                                         </div>
@@ -88,7 +88,7 @@
                                                     <!-- Link to the Garage -->
                                                     <div class="row">
                                                         <div class="col text-center">
-                                                            <button id="goToGarage" class="btn btn-link mt-3"><b><?php printString("business.garage"); ?></b></button>
+                                                            <button class="goToGarage btn btn-link mt-3"><b><?php printString("business.garage"); ?></b></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -97,7 +97,7 @@
                                                     <?php printHeader("crimes.car", "../img/Failed.jpg"); ?>
 
                                                     <!-- Failed message -->
-                                                    <b><p class="text-center"><?php printString("crimes.failed"); ?><button id="goToJail" class="btn btn-link m-0 p-0 pb-1"><b><?php printString("main.jail"); ?></b></button></p></b>
+                                                    <b><p class="text-center"><?php printString("crimes.failed"); ?><button class="goToJail btn btn-link m-0 p-0 pb-1"><b><?php printString("main.jail"); ?></b></button></p></b>
                                                 </div>
                                             </div>
                                         </div>
