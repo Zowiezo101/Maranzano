@@ -153,8 +153,8 @@ function addCross(name) {
 
 $(function () {
 
-    // Activate this function if a tab is loading
-    $('button[data-bs-toggle="tab"]').on("show.bs.tab", function(event){
+    // Activate this function if a tab is clicked
+    $('button[data-bs-toggle="tab"]').on("click", function(event){
         onShowTab(event);
     });
 
