@@ -9,7 +9,7 @@ function fetchPlayerStats() {
     return fetchGet("get_player_stats");
 }
 
-// Get the player stats for the home tab
+// Get a list of all the players
 function fetchAllPlayers() {
     return fetchGet("get_all_players");
 }
@@ -112,6 +112,11 @@ function fetchStoreRate() {
 // Rob the store
 function fetchRobStore() {
     return fetchGet("rob_store");
+}
+
+// Befriend a player
+function fetchBefriendPlayer(data) {
+    return fetchPost("friend_request", data);
 }
 
 // Send a post request to the given URL with fetch

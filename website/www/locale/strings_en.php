@@ -210,6 +210,18 @@ $strings = [
     "garage.sell" => "Sell",
     "garage.select_all" => "Select all",
     
+    // Friend list
+    "friends.self" => "You can't add yourself as a friend",
+    "friends.player_not_found" => "This player doesn't exist anymore",
+    "friends.already_friends" => "You already are friends with this peron",
+    "friends.deceased" => "This player has been killed",
+    
+    // Userlist
+    "userlist.message" => "Message",
+    "userlist.befriend" => "Befriend",
+    "userlist.message.success" => "A message has been send!",
+    "userlist.befriend.success" => "A friend request has been send!",
+    
     // Contact page
     "contact.email" => "Email: ",
     "contact.email.info" => "For non-gameplay related questions",

@@ -7,7 +7,7 @@ function onPlayerlistTab() {
 
         if (results.error !== "" && results.error !== null) {
             // Something went wrong, show an error message
-            onReturnedError(results.error, "#databaseError");
+            onReturnedError(results.error, "#playerError");
         } else {
             // Success, update the player list
             updatePlayerTable(results.data);
@@ -26,7 +26,8 @@ function updatePlayerTable(data) {
         for (var row in data) {
             var classNames = "";
             var nameIcon = " • ";
-            var onclick = 'onclick="messagePlayer(' + data[row]["id"] + ')"';
+            var onclickMessage = 'onclick="onClickMessage(' + data[row]["id"] + ')"';
+            var onclickBefriend = 'onclick="onClickBefriend(' + data[row]["id"] + ')"';
             
             // TODO: Add Ban option for moderators
             // Deceased, name, rank, message
@@ -38,7 +39,8 @@ function updatePlayerTable(data) {
                 nameIcon = '<i class="fa-solid fa-cross fa-width-auto"></i>';
                 
                 // No onclick
-                onclick = 'disabled';
+                onclickMessage = 'disabled';
+                onclickBefriend = 'disabled';
             }
             
             rows.push(
@@ -46,8 +48,13 @@ function updatePlayerTable(data) {
                     <td class="${classNames}"><b>${nameIcon} ${data[row]["name"]}</b></td>
                     <td class="${classNames}"><b><i>${data[row]["rank"]}</i></b></td>
                     <td class="${classNames}"><b>
-                        <button class="btn btn-link p-0 text-black-50" ${onclick}>
-                            <b>Message</b>
+                        <button class="btn btn-link p-0 text-black-50" ${onclickMessage}>
+                            <b>${data[row]["message"]}</b>
+                        </button>
+                    </b></td>
+                    <td class="${classNames}"><b>
+                        <button class="btn btn-link p-0 text-black-50" ${onclickBefriend}>
+                            <b>${data[row]["befriend"]}</b>
                         </button>
                     </b></td>
                 </tr>`);
@@ -57,6 +64,37 @@ function updatePlayerTable(data) {
     }
 
     $("#playerlist tbody").append(rows.join(""));
+}
+
+function onClickMessage(id) {
+    
+}
+
+function onClickBefriend(player_id) {        
+    // Remove any previous errors or message
+    onResetAllForms();
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "id": player_id
+    };
+    
+    fetchBefriendPlayer(data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#playerError");
+        } else {    
+            // Show the success message
+            $("#playerSuccess").text(results.data);
+            $("#playerSuccess").removeClass("d-none");
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
 }
 
 

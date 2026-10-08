@@ -95,6 +95,11 @@ class Bank extends Action {
         // Check this person is actually a friend of the player
         $friend = $this->player->retrieveFriendFromId($player["id"], $friend_id);
         
+        if (!isset($friend)) {
+            // Do NOT continue if this friend can't be found
+            throwError("bank.friend_not_found");
+        }
+        
         // Has this friend already received money from this player?
         $this->hasFriendCooldown($player["id"], $friend_id, 
                 self::ACTION_TABLE, 

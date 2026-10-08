@@ -68,6 +68,11 @@ class Jail extends Action {
         // Get inmate rank
         $inmate = $this->player->retrievePlayerFromId($inmate_id);
         
+        if (!isset($inmate)) {
+            // Do NOT continue if this person can't be found
+            throwError("jail.inmate_not_found");
+        }
+        
         // Get bail price
         $bail = $inmate["rank"] * self::ACTION_COST;
         
@@ -85,6 +90,9 @@ class Jail extends Action {
             "cash" => $player["cash"] - $bail
         ];
         $this->player->updatePlayer($player["id"], $update);
+        
+        // Send message to the mailbox of the other player
+        // TODO: $this->mailbox->sendJailBail($inmate_id);
 
         return;
     }

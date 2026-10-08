@@ -171,8 +171,8 @@ $(function () {
     });
 
     // Load the home tab after the page has loaded
+    $("#btnHome").click();
     // TODO:
-//    $("#btnHome").click();
     $("#btnUserlist").click();
 });
 
