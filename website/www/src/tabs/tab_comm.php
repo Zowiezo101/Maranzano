@@ -1,7 +1,23 @@
 
                                     <!-- The Online users Tab -->
                                     <div class="tab-pane" id="tabOnline" role="tabpanel">
-                                        Online
+                                        <div class="row">
+                                            <div class="col p-0">
+                                                
+                                                <?php printHeader("comms.online"); ?>
+                                                
+                                                <div class="mt-3 text-center">
+                                                    <p id="onlineList">
+                                                        <!-- Filled in by JS -->
+                                                    </p>
+                                                </div>
+
+                                                <!-- Error message -->
+                                                <div id="onlineError" class="mb-4 mx-3 text-center text-warning d-none">
+                                                    <!-- Filled in later in case of error -->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <!-- The Friend list Tab -->

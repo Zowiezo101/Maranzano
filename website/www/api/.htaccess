@@ -20,16 +20,20 @@ RewriteRule ^(.*)login$    $1/api/index?route=login_session [QSA,DPI]
 RewriteRule ^(.*)session$  $1/api/index?route=login_validate [QSA,DPI]
 RewriteRule ^(.*)logout$   $1/api/index?route=login_logout [QSA,DPI]
 
+# Get the online players
+RewriteRule ^(.*)get_online_count$ $1/api/index?route=login_online [QSA,DPI]
+
 # Player requests
-RewriteRule ^(.*)get_player_info$   $1/api/index?route=player_info [QSA,DPI]
-RewriteRule ^(.*)get_player_stats$  $1/api/index?route=player_stats [QSA,DPI]
-RewriteRule ^(.*)create_new_player$ $1/api/index?route=player_reset [QSA,DPI]
-RewriteRule ^(.*)get_friends$       $1/api/index?route=player_friends [QSA,DPI]
-RewriteRule ^(.*)friend_request$    $1/api/index?route=player_friend_request [QSA,DPI]
-RewriteRule ^(.*)get_bike_rate$     $1/api/index?route=player_chance_bike [QSA,DPI]
-RewriteRule ^(.*)get_car_rate$      $1/api/index?route=player_chance_car [QSA,DPI]
-RewriteRule ^(.*)get_store_rate$    $1/api/index?route=player_chance_store [QSA,DPI]
-RewriteRule ^(.*)get_all_players$   $1/api/index?route=player_all [QSA,DPI]
+RewriteRule ^(.*)get_player_info$    $1/api/index?route=player_info [QSA,DPI]
+RewriteRule ^(.*)get_player_stats$   $1/api/index?route=player_stats [QSA,DPI]
+RewriteRule ^(.*)create_new_player$  $1/api/index?route=player_reset [QSA,DPI]
+RewriteRule ^(.*)get_friends$        $1/api/index?route=player_friends [QSA,DPI]
+RewriteRule ^(.*)friend_request$     $1/api/index?route=player_friend_request [QSA,DPI]
+RewriteRule ^(.*)get_bike_rate$      $1/api/index?route=player_chance_bike [QSA,DPI]
+RewriteRule ^(.*)get_car_rate$       $1/api/index?route=player_chance_car [QSA,DPI]
+RewriteRule ^(.*)get_store_rate$     $1/api/index?route=player_chance_store [QSA,DPI]
+RewriteRule ^(.*)get_all_players$    $1/api/index?route=player_all [QSA,DPI]
+RewriteRule ^(.*)get_online_players$ $1/api/index?route=player_online [QSA,DPI]
 
 ######################
 # All Actions

@@ -1,4 +1,23 @@
 
+function onOnlineTab() {
+    
+    // The fetch call
+    fetchOnlineList().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#onlineError");
+        } else {
+            // Success, update the player list
+            updatePlayerList(results.data);
+        }
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
+
 function onPlayerlistTab() {
     
     // The fetch call
@@ -64,6 +83,25 @@ function updatePlayerTable(data) {
     }
 
     $("#playerlist tbody").append(rows.join(""));
+}
+
+function updatePlayerList(data) {
+    $("#onlineList").empty();
+    
+    var names = [];
+    if (data.length > 0) {
+        for (var row in data) {
+            var name = data[row]["name"];
+            
+            if (data[row]["is_confirmed"] === 1) {
+                name = `<span class="text-blue"><b>${data[row]["name"]}</b></span>`;
+            }
+            
+            names.push(name);
+        }
+    }
+
+    $("#onlineList").append(names.join(", "));
 }
 
 function onClickMessage(id) {

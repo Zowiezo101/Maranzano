@@ -14,6 +14,11 @@ function fetchAllPlayers() {
     return fetchGet("get_all_players");
 }
 
+// Get a list of all the online players
+function fetchOnlinePlayers() {
+    return fetchGet("get_online_count");
+}
+
 // Get the list of locations to travel to
 function fetchAllLocations() {
     return fetchGet("get_locations");
@@ -117,6 +122,11 @@ function fetchRobStore() {
 // Befriend a player
 function fetchBefriendPlayer(data) {
     return fetchPost("friend_request", data);
+}
+
+// Get a list of all the online players
+function fetchOnlineList() {
+    return fetchGet("get_online_players");
 }
 
 // Send a post request to the given URL with fetch

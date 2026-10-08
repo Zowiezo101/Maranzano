@@ -37,6 +37,9 @@ function onShowTab(event) {
     
     // Update the player info table
     updatePlayerInfo();
+    
+    // Update the "X players online" message
+    updateOnlineCount();
 
     // Insert the data per tab
     switch(event.target.id) {
@@ -72,6 +75,10 @@ function onShowTab(event) {
             onStoreTab();
             break;
             
+        case "btnOnline":
+            onOnlineTab();
+            break;
+            
         case "btnUserlist":
             onPlayerlistTab();
             break;
@@ -96,6 +103,23 @@ function updatePlayerInfo() {
             // Remove the error message
             infoError.addClass("d-none");
             infoTable.removeClass("d-none");
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
+
+function updateOnlineCount() {
+    // The fetch call
+    fetchOnlinePlayers().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Can't show error message here
+        } else {
+            $("#amountUsers").text(results.data);
         }
 
     }).catch(function(results) {
@@ -173,7 +197,7 @@ $(function () {
     // Load the home tab after the page has loaded
     $("#btnHome").click();
     // TODO:
-    $("#btnUserlist").click();
+    $("#btnOnline").click();
 });
 
 

@@ -10,6 +10,13 @@ function getNews() {
     echo "<p>Hier komen nieuws artikelen vanuit de database</p>";
 }
 
+function getOnlineUsers() {
+    // Get the amount of users from the database
+    $amount = getAmountPlayers();
+    
+    echo "<span id=\"amountUsers\">{$amount}</span> ".getString("menu.users");
+}
+
 function isValidCookie() {
     $isValid = false;
     
@@ -59,12 +66,13 @@ function validateReset() {
     return $result;
 }
 
-function getOnlineUsers() {
-    // Get the amount of users from the database
-    // TODO
-    $amount = "X";
+function getAmountPlayers() {
     
-    echo "{$amount} ".getString("menu.users");
+    // Try to make the GET request using cURL
+    $result = curlGet("get_online_count");
+    
+    // Return the result
+    return (isset($result->data) && $result->data !== "") ? $result->data : 0;
 }
 
 // Send a post request to the given URL with curl

@@ -121,3 +121,8 @@ form .btn-link:not(hover) {
     --bs-table-striped-color: var(--bs-white);
 }
 
+.text-blue {
+  --bs-text-opacity: 1;
+  color: var(--bs-blue) !important;
+}
+

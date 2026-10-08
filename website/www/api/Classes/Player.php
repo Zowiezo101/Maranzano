@@ -90,6 +90,10 @@ class Player {
             case "player_all":
                 $result = $this->getAllPlayers();
                 break;
+            
+            case "player_online":
+                $result = $this->getOnlinePlayers();
+                break;
         }
         
         return $result;
@@ -305,6 +309,37 @@ class Player {
         
         // Send the ids, names, ranks and deceased state back
         return $this->formatAllPlayers($results);
+    }
+    
+    private function getOnlinePlayers() {
+        
+        $user_id = $this->getUserId();
+
+        // Get the player that belongs to this user
+        $player = $this->getPlayer($user_id);
+        
+        // The database connection
+        $conn = $this->conn;
+        
+        // Get all the online players in the database
+        $sql = "SELECT DISTINCT players.id, players.name, friends.is_confirmed FROM players "
+                . "LEFT JOIN friends ON friends.player_id = players.id AND friends.friend_id = :player_id "
+                . "WHERE players.last_active >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":player_id", $player["id"], PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $results = getAllResults($stmt);
+        
+        // Send the ids, names, ranks and deceased state back
+        return $results;
     }
     
     /**
@@ -613,9 +648,48 @@ class Player {
         return $result;
     }
     
-    private function getOnlineFriends() {
-        // TODO:
-        return 67;
+    public function getOnlineCount() {
+        
+        $conn = $this->conn;
+        
+        // Get all the players in the database
+        $sql = "SELECT * FROM players WHERE last_active >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = $stmt->rowCount();
+        
+        // Send the ids, names, ranks and deceased state back
+        return $result;
+    }
+    
+    private function getOnlineFriends($player_id) {
+        $conn = $this->conn;
+        
+        // Get all the players in the database
+        $sql = "SELECT * FROM players "
+                . "JOIN friends on friends.friend_id = players.id "
+                . "WHERE friends.player_id = :player_id AND friends.is_confirmed = 1 AND players.last_active >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = $stmt->rowCount();
+        
+        // Send the ids, names, ranks and deceased state back
+        return $result;
     }
     
     /**
@@ -744,5 +818,32 @@ class Player {
     
     public function getRankJailTime($rank) {
         return self::RANKS[$rank]["jail"];
+    }
+    
+    /**
+     * Update the timestamp
+     */
+    
+    public function updateTimestamp() {
+        
+        $user_id = $this->getUserId();
+        
+        // Try to get the expected parameters
+        $player = $this->getPlayer($user_id);
+        
+        // The connection
+        $conn = $this->conn;
+        
+        // Update the timestamp of this player
+        $sql = "UPDATE players SET last_active=CURRENT_TIMESTAMP WHERE id=:player_id";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":player_id", $player["id"], PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
     }
 }

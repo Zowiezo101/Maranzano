@@ -35,6 +35,10 @@ class Login {
             case "login_logout":
                 $result = $this->logoutUser();
                 break;
+            
+            case "login_online":
+                $result = $this->getOnlinePlayers();
+                break;
         }
         
         return $result;
@@ -103,6 +107,9 @@ class Login {
             if(!password_verify($token_hex, $token_hash)) {
                 $this->invalidateCookie($token_hex, $user);
             }
+            
+            // Seeing as every action needs the session to be validated, update player timestamp
+            $this->player->updateTimestamp();
         } else {
             $this->invalidateCookie($token_hex, $user);
         }
@@ -111,6 +118,14 @@ class Login {
     private function logoutUser() {
         
     }
+    
+    private function getOnlinePlayers() {
+        return $this->player->getOnlineCount();
+    }
+    
+    /**
+     * Verify functions
+     */
     
     private function verifyPass($pass, $pass_hash) {    
         if (!password_verify($pass, $pass_hash)) {
@@ -182,5 +197,5 @@ class Login {
 
         // Throw the rror
         throwError("auth.token.invalid", Message::CODE_UNAUTHETICATED);
-}
+    }
 }

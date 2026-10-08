@@ -16,7 +16,7 @@ $strings = [
     "menu.signup" => "Sign up",
     "menu.rules" => "Rules",
     "menu.aboutus" => "About us",
-    "menu.users" => "users online",
+    "menu.users" => "player(s) online",
     
     // Member Menu
     "menu.main" => "Main",
