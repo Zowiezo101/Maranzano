@@ -79,6 +79,11 @@ class Controller {
                 $controller = new Crime($conn);
             }
 
+            // Mailbox actions
+            else if (str_starts_with($route, "message")) {
+                $controller = new Mailbox($conn);
+            }
+
             if (isset($controller)) {                
                 // Executing the actual request
                 $result = $controller->route($route, $data);

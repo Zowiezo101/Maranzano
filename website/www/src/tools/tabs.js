@@ -82,6 +82,10 @@ function onShowTab(event) {
         case "btnUserlist":
             onPlayerlistTab();
             break;
+            
+        case "btnMail":
+            onMailTab();
+            break;
     }
 }
 
@@ -197,7 +201,7 @@ $(function () {
     // Load the home tab after the page has loaded
     $("#btnHome").click();
     // TODO:
-    $("#btnOnline").click();
+    $("#btnMail").click();
 });
 
 

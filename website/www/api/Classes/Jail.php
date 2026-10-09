@@ -5,9 +5,17 @@ namespace Classes;
 use PDO;
 
 class Jail extends Action {
+    // Other classes
+    private $mailbox;
     
     public const ACTION_COST = 500;
     public const ACTION_TABLE = "jail_session";
+    
+    public function __construct($conn) {
+        parent::__construct($conn);
+        
+        $this->mailbox = new Mailbox($conn);
+    }
     
     public function route($route, $data) {
         parent::route($route, $data);
@@ -92,7 +100,7 @@ class Jail extends Action {
         $this->player->updatePlayer($player["id"], $update);
         
         // Send message to the mailbox of the other player
-        // TODO: $this->mailbox->sendJailBail($inmate_id);
+        $this->mailbox->sendJailBail($player["name"], $inmate_id);
 
         return;
     }
@@ -115,6 +123,9 @@ class Jail extends Action {
         if ($success) {
             // Update the jail cooldown to an expired state
             $this->updateJailCooldown($inmate_id, -1);
+        
+            // Send message to the mailbox of the other player
+            $this->mailbox->sendJailFreed($player["name"], $inmate_id);
         } else {
             // If the player failed, they'll be sent to jail
             $this->sendToJail($player);

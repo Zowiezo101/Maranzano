@@ -9,6 +9,7 @@ class Player {
     private $user;
     private $token;
     private $parameters;
+    private $mailbox;
     
     // The database connection
     protected $conn;
@@ -42,6 +43,7 @@ class Player {
         $this->parameters = new Parameters();
         $this->user = new User($conn);
         $this->token = new Token($conn);
+        $this->mailbox = new Mailbox($conn);
     }
     
     public function route($route, $data) {
@@ -232,9 +234,6 @@ class Player {
         // Add this unconfirmed friend to the players friends list
         $this->handleFriendRequest($player["id"], $friend["id"]);
         
-        // Send message to the mailbox of the other player
-        // TODO: $this->mailbox->sendFriendRequest($friend_id);
-        
         return getString("userlist.befriend.success");
     }
     
@@ -322,9 +321,9 @@ class Player {
         $conn = $this->conn;
         
         // Get all the online players in the database
-        $sql = "SELECT DISTINCT players.id, players.name, friends.is_confirmed FROM players "
+        $sql = "SELECT DISTINCT players.id, players.name, friends.is_confirmed, players.last_active FROM players "
                 . "LEFT JOIN friends ON friends.player_id = players.id AND friends.friend_id = :player_id "
-                . "WHERE players.last_active >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
+                . "WHERE players.last_active >= DATE_SUB(NOW(), INTERVAL 5 MINUTE) ORDER BY players.last_active DESC";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);
@@ -589,8 +588,16 @@ class Player {
                 // Both players have already confirmed their friendship
                 throwError("friends.already_friends");
             }
+        
+            // Send message to the mailbox of the other player
+            $player = $this->retrievePlayerFromId($player_id);
+            $this->mailbox->sendFriendRequest($player["name"], $friend_id);
         } else {
             $this->addFriend($player_id, $friend_id);
+        
+            // Send message to the mailbox of the other player
+            $player = $this->retrievePlayerFromId($player_id);
+            $this->mailbox->sendFriendRequest($player["name"], $friend_id);
         }
         
         if (isset($friend_record) && ($friend_record["is_confirmed"] === 0)) {

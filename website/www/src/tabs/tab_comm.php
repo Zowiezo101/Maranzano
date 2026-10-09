@@ -54,7 +54,7 @@
                                                 
                                                 <!-- No players in list -->
                                                 <div id="playerlistError" class="text-center text-black d-none">
-                                                    <p><b><?php printString("garage.empty"); ?></b></p>
+                                                    <p><b><?php printString("userlist.empty"); ?></b></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -62,5 +62,30 @@
                                     
                                     <!-- The Mailbox Tab -->
                                     <div class="tab-pane" id="tabMail" role="tabpanel">
-                                        Mail
+                                        <div class="row">
+                                            <div class="col p-0">
+
+                                                <!-- Success message -->
+                                                <div id="mailSuccess" class="my-2 mx-3 text-center text-warning d-none">
+                                                    <!-- Filled in by JS -->
+                                                </div>
+
+                                                <!-- Error message -->
+                                                <div id="mailError" class="my-2 mx-3 text-center text-warning d-none">
+                                                    <!-- Filled in later in case of error -->
+                                                </div>
+                                                
+                                                <?php printHeader("comms.mail"); ?>
+                                                <table id="maillist" class="align-middle table table-sm table-striped table-bordered table-hover fst-normal">                                                    
+                                                    <tbody>
+                                                        <!-- Following rows are added using JS -->
+                                                    </tbody>
+                                                </table>
+                                                
+                                                <!-- No players in list -->
+                                                <div id="maillistError" class="text-center text-black d-none">
+                                                    <p><b><?php printString("maillist.empty"); ?></b></p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>

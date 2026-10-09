@@ -68,6 +68,9 @@ RewriteRule ^(.*)steal_bike$ $1/api/index?route=crime_bike [QSA,DPI]
 RewriteRule ^(.*)steal_car$  $1/api/index?route=crime_car [QSA,DPI]
 RewriteRule ^(.*)rob_store$  $1/api/index?route=crime_store [QSA,DPI]
 
+# Mailbox requests
+RewriteRule ^(.*)get_messages$  $1/api/index?route=message_list [QSA,DPI]
+
 
 # Making sure things are redirected to the correct file types
 RewriteCond %{REQUEST_FILENAME} !-d

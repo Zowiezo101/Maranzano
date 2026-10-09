@@ -129,6 +129,11 @@ function fetchOnlineList() {
     return fetchGet("get_online_players");
 }
 
+// Get a list of all the messages for this player
+function fetchAllMessages() {
+    return fetchGet("get_messages");
+}
+
 // Send a post request to the given URL with fetch
 function fetchGet(url) {
     var response = fetchRequest(url, "GET");

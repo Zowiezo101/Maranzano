@@ -22,6 +22,7 @@ require __DIR__ . "/../Classes/Mailer.php";
 require __DIR__ . "/../Classes/Message.php";
 require __DIR__ . "/../Classes/Token.php";
 require __DIR__ . "/../Classes/Action.php";
+require __DIR__ . "/../Classes/Mailbox.php";
 require __DIR__ . "/../Classes/Location.php";
 require __DIR__ . "/../Classes/Shop.php";
 require __DIR__ . "/../Classes/Bank.php";

@@ -37,6 +37,25 @@ function onPlayerlistTab() {
     });
 }
 
+function onMailTab() {
+    
+    // The fetch call
+    fetchAllMessages().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#mailError");
+        } else {
+            // Success, update the player list
+            updateMailTable(results.data);
+        }
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
+
 function updatePlayerTable(data) {
     $("#playerlist tbody").empty();
     
@@ -104,6 +123,61 @@ function updatePlayerList(data) {
     $("#onlineList").append(names.join(", "));
 }
 
+function updateMailTable(data) {
+    $("#maillist tbody").empty();
+    
+    var rows = [];
+    if (data.length > 0) {
+        for (var row in data) {
+            
+            var tag = "b";
+            if (data[row]["read"] === 1) {
+                tag = "span";
+            }
+            
+            var body = data[row]["body"];
+            if (body.includes("[accept_friend_request]")) {
+                var id = data[row]["id"];
+                // We need to rewrite this as a link
+                // TODO:
+                body = body.replace("[accept_friend_request]", `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickAcceptFriendRequest(` + id + `)">accept</button>`);
+            }
+            
+            if (body.includes("[decline_friend_request]")) {
+                var id = data[row]["id"];
+                // We need to rewrite this as a link
+                // TODO:
+                body = body.replace("[decline_friend_request]", `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickDeclineFriendRequest(` + id + `)">decline</button>`);
+            }
+            
+            rows.push(
+                `<tr><td class="px-2">
+                    <input class="form-check-input" type="checkbox">
+                </td><td>
+                    <div class="row text-black-50">
+                        <div class="col-6">
+                            <b>${data[row]["from"]}</b>
+                        </div>
+                        <div class="col-6 text-end">
+                            <b>${data[row]["sent"]}</b>
+                        </div>
+                    </div>
+                    <hr class="my-0 py-0">
+                    <div class="row text-black-50">
+                        <${tag}>${data[row]["subject"]}</${tag}>
+                    </div>
+                    <div class="row">
+                        <${tag}>${body}</${tag}>
+                    </div>
+                </td></tr>`);
+        }
+    } else {
+        $("#maillistError").removeClass("d-none");
+    }
+
+    $("#maillist tbody").append(rows.join(""));
+}
+
 function onClickMessage(id) {
     
 }
@@ -133,6 +207,14 @@ function onClickBefriend(player_id) {
         // Show an error if anything went wrong
         alert("error: " + results);
     });
+}
+
+function onClickAcceptFriendRequest(player_id) {
+    
+}
+
+function onClickDeclineFriendRequest(player_id) {
+    
 }
 
 

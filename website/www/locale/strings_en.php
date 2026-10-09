@@ -221,6 +221,10 @@ $strings = [
     "userlist.befriend" => "Befriend",
     "userlist.message.success" => "A message has been send!",
     "userlist.befriend.success" => "A friend request has been send!",
+    "userlist.empty" => "There are no users online",
+    
+    // Mailbox
+    "maillist.empty" => "You don't have any messages",
     
     // Contact page
     "contact.email" => "Email: ",
@@ -334,6 +338,12 @@ $strings = [
     "data.location.invalid" => "Please select a valid location",
     "data.amount.invalid" => "Please select a valid amount",
     "data.rank.too_low" => "You don't have the required rank for this action yet. Current rank = [rank], required rank = [required]",
+    "data.subject.friend_request" => "[player] has sent you a friend request!",
+    "data.body.friend_request" => "[player] would like to have you as their ally. Do you [accept_friend_request] or [decline_friend_request] their offer?",
+    "data.subject.jail_bail" => "Your bail has been paid",
+    "data.body.jail_bail" => "[player] has paid your bail for you. You are no longer in jail.",
+    "data.subject.jail_freed" => "You have been busted out of jail",
+    "data.body.jail_freed" => "[player] has busted you out of jail! You are no longer in jail.",
     
     // Misc
     "global.copyright" => "<b>Copyright 2026 - ??</b>"
