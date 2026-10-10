@@ -55,6 +55,10 @@ function onShowTab(event) {
             onJailTab();
             break;
             
+        case "btnHospital":
+            onHospitalTab();
+            break;
+            
         case "btnBank":
             onBankTab();
             break;
@@ -203,7 +207,8 @@ $(function () {
     // Load the home tab after the page has loaded
     $("#btnHome").click();
     // TODO:
-    $("#btnMail").click();
+//    $("#btnMail").click();
+    $("#btnHospital").click();
 });
 
 function onClickGarage() {

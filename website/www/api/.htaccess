@@ -50,6 +50,10 @@ RewriteRule ^(.*)get_inmates$   $1/api/index?route=jail_city [QSA,DPI]
 RewriteRule ^(.*)pay_bail$      $1/api/index?route=jail_bail [QSA,DPI]
 RewriteRule ^(.*)bust_out$      $1/api/index?route=jail_bust [QSA,DPI]
 
+# Hospital requests
+RewriteRule ^(.*)get_hospital_time$ $1/api/index?route=hospital_time [QSA,DPI]
+RewriteRule ^(.*)pay_hospital_bill$ $1/api/index?route=hospital_bill [QSA,DPI]
+
 # Bank requests
 RewriteRule ^(.*)deposit_money$  $1/api/index?route=bank_deposit [QSA,DPI]
 RewriteRule ^(.*)withdraw_money$ $1/api/index?route=bank_withdraw [QSA,DPI]

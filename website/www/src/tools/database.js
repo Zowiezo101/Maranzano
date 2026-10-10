@@ -44,6 +44,16 @@ function fetchBustOut(data) {
     return fetchPost("bust_out", data);
 }
 
+// Get the list of inmates from this jail
+function fetchHospitalTime() {
+    return fetchGet("get_hospital_time");
+}
+
+// Get the list of inmates from this jail
+function fetchPayHospitalBill() {
+    return fetchGet("pay_hospital_bill");
+}
+
 // Create a new player
 function fetchNewPlayer(data) {
     return fetchPost("create_new_player", data);

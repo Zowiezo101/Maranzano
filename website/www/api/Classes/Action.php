@@ -18,10 +18,29 @@ class Action {
     public $player_data;
     
     // Whitelisted actions when in Jail or Hospital
-    private $white_list = [
+    private $white_list_j = [
+        // Get the list of locations to travel to
         "location_all",
+        // Get all the people in jail
         "jail_city",
-        "garage_all"
+        // See the hospital time & bill
+        "hospital_time",
+        // See all the vehicles in the garage
+        "garage_all",
+    ];
+    
+    // Whitelisted actions when in Jail or Hospital
+    private $white_list_h = [
+        // Get the list of locations to travel to
+        "location_all",
+        // Get all the people in jail
+        "jail_city",
+        // See the hospital time & bill
+        "hospital_time",
+        // Pay the hospital bill
+        "hospital_bill",
+        // See all the vehicles in the garage
+        "garage_all",
     ];
     
     public function __construct($conn) {
@@ -45,12 +64,14 @@ class Action {
         $this->player_data = $this->player->getPlayerFromCookieData();
         
         // Make sure the player isn't in jail or in the hospital
-        if (!in_array($route, $this->white_list)) {
+        if (!in_array($route, $this->white_list_j)) {
             $this->hasCooldown($this->player_data["id"], 
                     Jail::ACTION_TABLE, 
                     null, 
                     "jail.cooldown");
+        }
             
+        if (!in_array($route, $this->white_list_h)) {
             $this->hasCooldown($this->player_data["id"], 
                     Hospital::ACTION_TABLE, 
                     null, 
@@ -70,7 +91,7 @@ class Action {
         }
     }
     
-    protected function hasCooldown($player_id, $table, $cooldown, $error = null) {
+    public function hasCooldown($player_id, $table, $cooldown, $error = null) {
         $conn = $this->conn;
         
         // Retrieve the token from the token table

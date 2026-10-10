@@ -54,6 +54,11 @@ class Controller {
                 $controller = new Jail($conn);
             }
 
+            // Hospital actions
+            else if (str_starts_with($route, "hospital")) {
+                $controller = new Hospital($conn);
+            }
+
             // Shop actions
             else if (str_starts_with($route, "shop")) {
                 $controller = new Shop($conn);

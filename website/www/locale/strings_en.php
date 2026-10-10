@@ -152,7 +152,14 @@ $strings = [
     "jail.broke" => "You don't have enough cash to bail this person out",
     
     // Hospital page
+    "hospital.pay.title" => "Pay hospital bill ahead",
+    "hospital.pay" => "Pay",
+    "hospital.pay.success" => "You've successfully paid your hospital bill",
+    "hospital.remaining" => "Time remaining: ",
+    "hospital.none" => "You are not in need of medical assistance",
+    "hospital.time" => "[minute] minute(s) and [second] second(s)",
     "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] [unit]",
+    "hospital.broke" => "You don't have a high enough bank balance to pay your hospital bill",
     
     // Steal a bike page
     "bike.try" => "Attempt to steal",

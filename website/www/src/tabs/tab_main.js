@@ -46,6 +46,9 @@ function onTravelTab() {
 }
 
 function onJailTab() {
+            
+    // Update the table with the new data
+    updatePlayerInfo();
     
     // The fetch call
     fetchAllInmates().then(function(results) {
@@ -56,6 +59,28 @@ function onJailTab() {
         } else {
             // Success, update the jail table
             updateJailTable(results.data);
+            
+        }
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
+
+function onHospitalTab() {
+            
+    // Update the table with the new data
+    updatePlayerInfo();
+    
+    // The fetch call
+    fetchHospitalTime().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong
+        } else {
+            // Success, update the hospital data
+            updateHospitalData(results.data);
             
         }
     }).catch(function(results) {
@@ -237,6 +262,40 @@ function bustPlayerOut(id) {
             }
             // Update the table with the data
             onJailTab();
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
+
+function updateHospitalData(data) {
+    $("#hospitalTime").text(data["time"]);
+    $("#hospitalAmount").text(data["amount"]);
+    
+    if (data["amount"] > 0) {
+        $("#hospitalBill").removeClass("d-none");
+    } else {
+        $("#hospitalBill").addClass("d-none");
+    }
+}
+
+function payHospitalBill() {
+        
+    // Remove any previous errors
+    onResetAllForms();
+    
+    fetchPayHospitalBill().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#hospitalError");
+        } else {
+            // Successfully paid bail            
+            // Update the table with the data
+            onHospitalTab();
         }
 
     }).catch(function(results) {
