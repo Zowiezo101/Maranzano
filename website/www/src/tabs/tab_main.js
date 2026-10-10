@@ -173,10 +173,10 @@ function updateJailTable(data) {
             // Name, time, city, BUST OUT
             rows.push(
             `<tr>
-                <td>` + data[row]["name"] + `</td>
-                <td>` + data[row]["time"] + `</td>
-                <td><button class="btn btn-link p-0 text-black-50" onclick="payPlayerBail(` + data[row]["id"] + `)"><b>` + data[row]["bail"] + `</b></button></td>
-                <td><button class="btn btn-link p-0 text-black-50" onclick="bustPlayerOut(` + data[row]["id"] + `)"><b>` + data[row]["chance"] + `</b></button></td>
+                <td>${data[row]["name"]}</td>
+                <td>${data[row]["time"]}</td>
+                <td><button class="btn btn-link p-0 text-black-50" onclick="payPlayerBail(${data[row]["id"]})"><b>${data[row]["bail"]}</b></button></td>
+                <td><button class="btn btn-link p-0 text-black-50" onclick="bustPlayerOut(${data[row]["id"]})"><b>${data[row]["chance"]}</b></button></td>
             </tr>`);
         }
     } else {

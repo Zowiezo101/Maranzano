@@ -322,9 +322,9 @@ function updateGarageTable(data) {
             // Name, time, city, BUST OUT
             rows.push(
             `<tr>
-                <td><img class="img-fluid border border-2 border-black" src="` + data[row]["img"] + `"/></td>
-                <td>` + data[row]["worth"] + `</td>
-                <td><input class="form-check-input" type="checkbox" value="` + data[row]["id"] + `"></td>
+                <td><img class="img-fluid border border-2 border-black" src="${data[row]["img"]}"/></td>
+                <td>${data[row]["worth"]}</td>
+                <td><input class="form-check-input" type="checkbox" value="${data[row]["id"]}"></td>
             </tr>`);
         }
     } else {

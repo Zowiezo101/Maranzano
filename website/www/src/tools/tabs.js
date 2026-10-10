@@ -92,6 +92,8 @@ function onShowTab(event) {
 function updatePlayerInfo() {
     var infoError = $("#playerInfoError");
     var infoTable = $("#playerInfo");
+    
+    // TODO: Insert the unread messages icon 
 
     // The fetch call
     fetchPlayerInfo().then(function(results) {
@@ -203,5 +205,17 @@ $(function () {
     // TODO:
     $("#btnMail").click();
 });
+
+function onClickGarage() {
+    $("#btnGarage").click();
+}
+
+function onClickJail() {
+    $("#btnJail").click();
+}
+
+function onClickMail() {
+    $('#btnMail').click();
+}
 
 

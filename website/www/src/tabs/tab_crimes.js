@@ -166,14 +166,6 @@ function onSubmitStore(event) {
     });
 }
 
-function onClickGarage() {
-    $("#btnGarage").click();
-}
-
-function onClickJail() {
-    $("#btnJail").click();
-}
-
 $(function() {
     // Set prevent page reloading when submitting form
     $("#bikeForm").on("submit", function(e) {onSubmitBike(e);});

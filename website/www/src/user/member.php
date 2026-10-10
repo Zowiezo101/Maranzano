@@ -63,7 +63,12 @@
                             
                             <!-- Player name -->
                             <div class="row fst-normal bg-body-tertiary border-bottom border-3 border-black">
-                                <b id="playerName"></b>
+                                <div class="col-8">
+                                    <b id="playerName"></b>
+                                </div>
+                                <div id="playerUnread" class="d-none col-4 text-end">
+                                    <button class="btn btn-light-outline p-0 my-0" onclick="onClickMail()"><i class="fa-solid fa-envelope pe-2"></i></button>
+                                </div>
                             </div>
                             
                             <!-- Player info -->
