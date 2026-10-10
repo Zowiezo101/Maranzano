@@ -86,6 +86,13 @@
                                                 <div id="maillistError" class="text-center text-black d-none">
                                                     <p><b><?php printString("maillist.empty"); ?></b></p>
                                                 </div>
+
+                                                <div class="row mb-5 justify-content-end">                                                    
+                                                    <!-- Delete button -->
+                                                    <div class="col-4 col-lg-3">
+                                                        <button id="delete" onClick="onClickDelete()" class="btn btn-primary border border-3 border-black w-100"><?php printString("maillist.delete"); ?></button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

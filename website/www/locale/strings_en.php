@@ -225,6 +225,9 @@ $strings = [
     
     // Mailbox
     "maillist.empty" => "You don't have any messages",
+    "maillist.delete" => "Delete",
+    "maillist.read" => "Mark as read",
+    "maillist.reply" => "Reply",
     
     // Contact page
     "contact.email" => "Email: ",
@@ -333,8 +336,8 @@ $strings = [
     "player.data.error" => "Something went wrong while trying to fetch your player data",
     
     // Data stuff
-    "data.id.invalid" => "Please select a valid player",
-    "data.ids.invalid" => "Please select a valid vehicle",
+    "data.id.invalid" => "Please select a valid item",
+    "data.ids.invalid" => "Please select a valid item",
     "data.location.invalid" => "Please select a valid location",
     "data.amount.invalid" => "Please select a valid amount",
     "data.rank.too_low" => "You don't have the required rank for this action yet. Current rank = [rank], required rank = [required]",

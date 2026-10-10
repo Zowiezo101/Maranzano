@@ -37,6 +37,18 @@ class Mailbox {
             case "message_list":
                 $result = $this->getMessages();
                 break;
+            
+            case "message_delete":
+                $result = $this->deleteMessages();
+                break;
+            
+            case "message_read":
+                $result = $this->readMessage();
+                break;
+            
+            case "message_unread":
+                $result = $this->getUnreadMessages();
+                break;
         }
         
         return $result;
@@ -57,7 +69,7 @@ class Mailbox {
         $conn = $this->conn;
         
         // The SQL
-        $sql = "SELECT * FROM messages WHERE receiver_id = :receiver_id";
+        $sql = "SELECT * FROM messages WHERE receiver_id = :receiver_id ORDER BY created_at DESC";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);
@@ -72,6 +84,64 @@ class Mailbox {
         $result = getAllResults($stmt);
         
         return $this->formatMessages($result);
+    }
+    
+    private function deleteMessages() {
+        
+        // Try to get the expected parameters
+        $ids = $this->parameters->getIds();
+        
+        foreach ($ids as $message_id) {
+            $this->deleteMessage($message_id);
+        }
+    }
+    
+    private function readMessage() {
+        $playerObj = new Player($this->conn);
+        $player = $playerObj->getPlayerFromCookieData();
+        
+        // Try to get the expected parameters
+        $message_id = $this->parameters->getId();
+        
+        // The connection
+        $conn = $this->conn;
+        
+        // Update the message to read
+        $sql = "UPDATE messages SET is_read = 1 WHERE receiver_id = :receiver_id AND id = :message_id";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":receiver_id", $player["id"], PDO::PARAM_INT);
+        $stmt->bindValue(":message_id", $message_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+    }
+    
+    private function getUnreadMessages() {
+        $playerObj = new Player($this->conn);
+        $player = $playerObj->getPlayerFromCookieData();
+        
+        $conn = $this->conn;
+        
+        // The SQL
+        $sql = "SELECT * FROM messages WHERE receiver_id = :receiver_id WHERE is_read = 0 ORDER BY created_at DESC";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":receiver_id", $player["id"], PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = $stmt->rowCount();
+        
+        return $result;
     }
     
     /**
@@ -146,6 +216,27 @@ class Mailbox {
         $this->sendMessageToPlayer(self::SYSTEM_ID, $friend_id, $subject1, $body1);
     }
     
+    private function deleteMessage($message_id) {
+        $playerObj = new Player($this->conn);
+        $player = $playerObj->getPlayerFromCookieData();
+        
+        // The connection
+        $conn = $this->conn;
+        
+        // Update the message to read
+        $sql = "DELETE FROM messages WHERE receiver_id = :receiver_id AND id = :message_id";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":receiver_id", $player["id"], PDO::PARAM_INT);
+        $stmt->bindValue(":message_id", $message_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+    }
+    
     /**
      * Formatting functions
      */
@@ -164,15 +255,27 @@ class Mailbox {
 
                 $formatted_data[] = [
                     "id"      => $row["id"],
+                    "sender_id"      => $row["sender_id"],
                     "from"    => $sender["name"],
                     "subject" => $row["subject"],
                     "body"    => $row["body"],
-                    "sent"    => $row["created_at"],
-                    "read"    => $row["is_read"]
+                    "sent"    => $this->formatTime($row["created_at"]),
+                    "read"    => $row["is_read"],
+                    "reply"   => getString("maillist.reply")
                 ];
             }
         }
         
         return $formatted_data;
+    }
+    
+    private function formatTime($value) {   
+        // Convert the string to a timestamp     
+        $time = strtotime($value);
+
+        // Format the timestamp
+        $result = date("d-m-Y", $time);
+        
+        return $result;
     }
 }

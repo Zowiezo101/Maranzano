@@ -134,6 +134,21 @@ function fetchAllMessages() {
     return fetchGet("get_messages");
 }
 
+// Get the amount of unread messages for this player
+function fetchUnreadMessages() {
+    return fetchGet("get_unread_messages");
+}
+
+// Delete messages
+function fetchDeleteMessages(data) {
+    return fetchPost("delete_messages", data);
+}
+
+// Mark message as read
+function fetchMarkAsRead(data) {
+    return fetchPost("read_message", data);
+}
+
 // Send a post request to the given URL with fetch
 function fetchGet(url) {
     var response = fetchRequest(url, "GET");

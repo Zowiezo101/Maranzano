@@ -129,45 +129,53 @@ function updateMailTable(data) {
     var rows = [];
     if (data.length > 0) {
         for (var row in data) {
+            var id = data[row]["id"];
+            var body = data[row]["body"];
             
-            var tag = "b";
+            // Show something as read or unread
+            var className = "fw-bolder";
             if (data[row]["read"] === 1) {
-                tag = "span";
+                className = "fw-normal";
             }
             
-            var body = data[row]["body"];
+            var reply = "";
+            if (data[row]["sender_id"] !== -999) {
+                // Can't reply to system messages
+                reply = `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickReply(${data[row]["sender_id"]})">
+                            ${data[row]["reply"]}
+                        </button>`;
+            }
+            
+            // Friend request stuff
             if (body.includes("[accept_friend_request]")) {
-                var id = data[row]["id"];
                 // We need to rewrite this as a link
-                // TODO:
-                body = body.replace("[accept_friend_request]", `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickAcceptFriendRequest(` + id + `)">accept</button>`);
+                body = body.replace("[accept_friend_request]", `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickAcceptFriendRequest(${id})">accept</button>`);
             }
             
             if (body.includes("[decline_friend_request]")) {
-                var id = data[row]["id"];
                 // We need to rewrite this as a link
-                // TODO:
-                body = body.replace("[decline_friend_request]", `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickDeclineFriendRequest(` + id + `)">decline</button>`);
+                body = body.replace("[decline_friend_request]", `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickDeclineFriendRequest(${id})">decline</button>`);
             }
             
             rows.push(
-                `<tr><td class="px-2">
-                    <input class="form-check-input" type="checkbox">
-                </td><td>
-                    <div class="row text-black-50">
+                `<tr id="tr_${id}" onclick="onClickMarkAsRead(${id}, ${data[row]["read"]})"><td class="px-2">
+                    <input class="form-check-input" type="checkbox" value="${id}">
+                </td><td id="td_${id}" class="${className}">
+                    <div class="row text-black">
                         <div class="col-6">
-                            <b>${data[row]["from"]}</b>
+                            ${data[row]["from"]}
                         </div>
                         <div class="col-6 text-end">
-                            <b>${data[row]["sent"]}</b>
+                            ${data[row]["sent"]}
                         </div>
                     </div>
                     <hr class="my-0 py-0">
-                    <div class="row text-black-50">
-                        <${tag}>${data[row]["subject"]}</${tag}>
+                    <div class="row text-black">
+                        <span>${data[row]["subject"]}</span>
                     </div>
-                    <div class="row">
-                        <${tag}>${body}</${tag}>
+                    <div id="body_${id}" class="row text-black-50 body-div d-none">
+                        <span>${body}</span>
+                        ${reply}
                     </div>
                 </td></tr>`);
         }
@@ -178,8 +186,12 @@ function updateMailTable(data) {
     $("#maillist tbody").append(rows.join(""));
 }
 
-function onClickMessage(id) {
-    
+function onClickMessage(player_id) {
+    // TODO
+}
+
+function onClickReply(player_id) {
+    // TODO
 }
 
 function onClickBefriend(player_id) {        
@@ -209,12 +221,95 @@ function onClickBefriend(player_id) {
     });
 }
 
-function onClickAcceptFriendRequest(player_id) {
-    
+function onClickAcceptFriendRequest(message_id) {
+    // TODO
 }
 
-function onClickDeclineFriendRequest(player_id) {
-    
+function onClickDeclineFriendRequest(message_id) {
+    // TODO
 }
 
+function onClickMarkAsRead(message_id, read) {  
+        
+    // Remove any previous errors or message
+    onResetAllForms();
+    
+    // Show the clicked message
+    $(".body-div").addClass("d-none");
+    $(`#body_${message_id}`).toggleClass("d-none");
+    
+    if (read === 0) {
+        // Mark the message as read
+        $(`#td_${message_id}`).removeClass("fw-bolder").addClass("fw-normal");  
+    
+        // Put the data in an easier-to-send format
+        var data = {
+            "id": message_id
+        };
 
+        fetchMarkAsRead(data).then(function(results) {
+            // Handle the results of the fetch call
+
+            if (results.error !== "" && results.error !== null) {
+                // Something went wrong, show an error message
+                onReturnedError(results.error, "#mailError");
+            } else {
+
+                // Update the table with the new unread message amount
+                updatePlayerInfo();
+                
+                // Update the function to no longer access the server for this
+                $(`#tr_${message_id}`).click(function() {
+                    onClickMarkAsRead(message_id, 1);
+                });
+            }
+
+        }).catch(function(results) {
+            // Show an error if anything went wrong
+            alert("error: " + results);
+        });
+    }
+}
+
+function onClickDelete() {    
+        
+    // Remove any previous errors or message
+    onResetAllForms();
+    
+    // The checked checkboxes
+    var checked = $('#maillist tbody').find(':checked');
+    
+    // The data for the request
+    var message_ids = [];
+    
+    // The IDs of the checked checkboxes
+    for (var i = 0; i < checked.length; i++) {
+        var checkbox = checked.get(i);
+        message_ids.push(checkbox.value);
+    }; 
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "ids": message_ids.join(",")
+    };
+    
+    fetchDeleteMessages(data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#mailError");
+        } else {
+            
+            // Update the table with the new unread message amount
+            updatePlayerInfo();
+            
+            // Refresh the page
+            onMailTab();
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
