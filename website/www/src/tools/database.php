@@ -7,7 +7,7 @@
 
 function getNews() {
     // TODO
-    echo "<p>Hier komen nieuws artikelen vanuit de database</p>";
+    echo "<p>".getString("news.1")."</p>";
 }
 
 function getOnlineUsers() {
