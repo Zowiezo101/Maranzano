@@ -118,7 +118,7 @@
                                                 <p class="text-center mb-5"><?php printString("bullet.info"); ?></p>
                                                 
                                                 <!-- The bullet body -->
-                                                <form id="shopForm">
+                                                <form id="shopForm" class="mb-5">
                                                     <label for="shopAmount" class="form-label"><b class="fst-normal"><?php printString("bullet.amount")?></b></label>
                                                     
                                                     <!-- The amount -->

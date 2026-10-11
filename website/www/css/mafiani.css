@@ -1,10 +1,7 @@
+
 /*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : 28 aug 2026, 19:31:38
-    Author     : Zowiezo101
+    Setting some values here that cannot be set using bootstrap classes
+    Also to prevent class-itis
 */
 
 :root {
@@ -39,10 +36,34 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     --bs-border-color:          var(--bs-black);
 }
 
+/*
+    This is to set certain colors in bootstrap that 
+    otherwise would use other color rules
+*/
+
 /* Make sure the form link-buttons have white text  */
-form .btn-link:not(hover) {
-    color: var(--bs-white);
+ form .btn-link {
+    --bs-btn-color: var(--bs-white);
 }
+
+.form-control {
+    background-color: var(--bg-color-secondary);
+}
+
+.form-select {
+    background-color: var(--bg-color-secondary);
+}
+
+.table {
+    --bs-table-bg: var(--bg-color-secondary);
+    --bs-table-color: var(--bs-white);
+    --bs-table-hover-color: var(--bs-white);
+    --bs-table-striped-color: var(--bs-white);
+}
+
+/*
+    Our own classes
+*/
 
 /* Collapsibles have the little arrow from Bootstrap */
 .collapsible {
@@ -75,6 +96,26 @@ form .btn-link:not(hover) {
   transform: var(--bs-accordion-btn-icon-transform);
 }
 
+.bg-gradient-center {
+    background-image: linear-gradient(90deg,
+        rgba(36, 32, 30, 1) 0%, 
+        rgba(69, 64, 53, 1) 15%, 
+        rgba(69, 64, 53, 1) 85%, 
+        rgba(36, 32, 30, 1) 100%);
+}
+
+#friendsCard {
+    margin-top: 20%;
+    margin-bottom: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.text-blue {
+  --bs-text-opacity: 1;
+  color: var(--bs-blue) !important;
+}
+
 /**
  * Adding some bootstrap classes together
  * to prevent Class-itis
@@ -104,33 +145,5 @@ form .btn-link:not(hover) {
     
     /* pb-0 */
     padding-bottom: 0;
-}
-
-.bg-gradient-center {
-    background-image: linear-gradient(90deg,
-        rgba(36, 32, 30, 1) 0%, 
-        rgba(69, 64, 53, 1) 15%, 
-        rgba(69, 64, 53, 1) 85%, 
-        rgba(36, 32, 30, 1) 100%);
-}
-
-.form-control {
-    background-color: var(--bg-color-secondary);
-}
-
-.form-select {
-    background-color: var(--bg-color-secondary);
-}
-
-.table {
-    --bs-table-bg: var(--bg-color-secondary);
-    --bs-table-color: var(--bs-white);
-    --bs-table-hover-color: var(--bs-white);
-    --bs-table-striped-color: var(--bs-white);
-}
-
-.text-blue {
-  --bs-text-opacity: 1;
-  color: var(--bs-blue) !important;
 }
 

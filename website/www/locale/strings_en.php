@@ -9,62 +9,14 @@ $strings = [
     "global.error" => "Something went wrong..",
     "global.done" => "Done",
     "global.close" => "You can now close this page or go back to the homepage",
-    
-    // News articles (TODO: Will be implemented later to go via database)
-    "news.1" => "We are currently working on the full version of <b>Mafiani</b>, the version of the game you are currently playing is a <b>demo</b>.<br><br>The full version will also include the casino, mafia families and support for browsers on mobile phones.",
 
-    // Menu
+    // Menu items when not logged in
     "menu.home" => "Home",
     "menu.login" => "Log in",
     "menu.signup" => "Sign up",
     "menu.rules" => "Rules",
     "menu.aboutus" => "About us",
     "menu.users" => "player(s) online",
-    
-    // Member Menu
-    "menu.main" => "Main",
-    "menu.business" => "Businesses",
-    "menu.crimes" => "Crimes",
-    "menu.casino" => "Casino",
-    "menu.comms" => "Communication",
-    "menu.help" => "Help",
-    
-    // Main menu
-    "main.home" => "Home",
-    "main.travel" => "Travel",
-    "main.jail" => "Jail",
-    "main.hospital" => "Hospital",
-    "main.deceased" => "Deceased",
-    
-    // Business menu
-    "business.bank" => "Bank",
-    "business.bullet" => "Bullet shop",
-    "business.garage" => "Garage",
-    "business.family" => "Family",
-    "business.manage" => "Manage family",
-    
-    // Crimes menu
-    "crimes.bike" => "Steal a bike",
-    "crimes.car" => "Steal a car",
-    "crimes.store" => "Rob a store",
-    "crimes.kill" => "Kill player",
-    
-    // Casino menu
-    "casino.roulette" => "Roulette",
-    "casino.scratch" => "Scratch & Match",
-    
-    // Communication menu"
-    "comms.online" => "Online players",
-    "comms.friends" => "Friend list",
-    "comms.news" => "Newspaper",
-    "comms.userlist" => "Player list",
-    "comms.mail" => "Mailbox",
-    
-    // Help menu
-    "help.contact" => "Contact info",
-    "help.rules" => "Rules",
-    "help.info" => "Game info",
-    "help.settings" => "Settings",
     
     // Homepage
     "home.content" => "
@@ -84,6 +36,54 @@ $strings = [
             <p>We started creating this website in late August of the year of our Lord, 2026. The site is still in super early development as of now, but we are looking forward to where the road ahead takes us with this project.</p>
             <p>Missus wants you to know that no vibe coding was used in the making of this website. Code is either written by Missus or \"yoinked\" from 13 year old forum pages.</p>",
     
+    // News articles (TODO: Will be implemented later to go via database)
+    "news.1" => "We are currently working on the full version of <b>Mafiani</b>, the version of the game you are currently playing is a <b>demo</b>.<br><br>The full version will also include the casino, mafia families and support for browsers on mobile phones.",
+    
+    // Member Menu (For when player is logged in)
+    "menu.main" => "Main",
+    "menu.business" => "Businesses",
+    "menu.crimes" => "Crimes",
+    "menu.casino" => "Casino",
+    "menu.comms" => "Communication",
+    "menu.help" => "Help",
+    
+    // Main menu items
+    "main.home" => "Home",
+    "main.travel" => "Travel",
+    "main.jail" => "Jail",
+    "main.hospital" => "Hospital",
+    "main.deceased" => "Deceased",
+    
+    // Business menu items
+    "business.bank" => "Bank",
+    "business.bullet" => "Bullet shop",
+    "business.garage" => "Garage",
+    "business.family" => "Family",
+    "business.manage" => "Manage family",
+    
+    // Crimes menu items
+    "crimes.bike" => "Steal a bike",
+    "crimes.car" => "Steal a car",
+    "crimes.store" => "Rob a store",
+    "crimes.kill" => "Kill player",
+    
+    // Casino menu items
+    "casino.roulette" => "Roulette",
+    "casino.scratch" => "Scratch & Match",
+    
+    // Communication menu items
+    "comms.online" => "Online players",
+    "comms.friends" => "Friend list",
+    "comms.news" => "Newspaper",
+    "comms.userlist" => "Player list",
+    "comms.mail" => "Mailbox",
+    
+    // Help menu items
+    "help.contact" => "Contact info",
+    "help.rules" => "Rules",
+    "help.info" => "Game info",
+    "help.settings" => "Settings",
+    
     // Member Home
     "info.no-player" => "Player information currently isn't available",
     "info.cash" => "Cash",
@@ -97,28 +97,6 @@ $strings = [
     "info.bullets" => "Off. bullets",
     "info.shields" => "Def. bullets",
     
-    // Ranks
-    "rank.1" => "Rookie",
-    "rank.2" => "Hustler",
-    "rank.3" => "Thug",
-    "rank.4" => "Enforcer",
-    "rank.5" => "Associate",
-    "rank.6" => "Runner",
-    "rank.7" => "Mafioso",
-    "rank.8" => "Soldier",
-    "rank.9" => "Hitman",
-    "rank.10" => "Veteran",
-    "rank.11" => "Captain",
-    "rank.12" => "Lieutenant",
-    "rank.13" => "Consigliere",
-    "rank.14" => "Underboss",
-    "rank.15" => "Boss",
-    "rank.16" => "Don",
-    "rank.17" => "Kingpin",
-    "rank.18" => "Mafia Lod",
-    "rank.19" => "Supreme Boss",
-    "rank.20" => "Godfather",
-    
     // Member Home
     "info.stats" => "Player Stats",
     "info.u-name" => "Username",
@@ -131,8 +109,8 @@ $strings = [
     "info.cars" => "Cars stolen",
     "info.stores" => "Succesful roberies",
     "info.kills" => "Kills made",
-    "info.jail" => "Time spent in Jail (Minutes)",
-    "info.hospital" => "Time spent in Hospital (Minutes)",
+    "info.jail" => "Time spent in Jail",
+    "info.hospital" => "Time spent in Hospital",
     
     // Travel page
     "travel.info" => "A traveling ticket costs €3.000. You can travel once every 30 minutes.",
@@ -152,6 +130,7 @@ $strings = [
     "jail.info.bust_out" => "Bust out ([chance]%)",
     "jail.empty" => "There are currently no players in jail in this city",
     "jail.inmate_not_found" => "This player doesn't exist anymore",
+    "jail.no_inmate" => "This player isn't in jail anymore",
     "jail.broke" => "You don't have enough cash to bail this person out",
     
     // Hospital page
@@ -164,24 +143,10 @@ $strings = [
     "hospital.cooldown" => "You can't do that right now, you are still in the hospital for [time] [unit]",
     "hospital.broke" => "You don't have enough cash to pay your hospital bill",
     
-    // Steal a bike page
-    "bike.try" => "Attempt to steal",
-    "bike.worth" => "Success! The bike is worth ",
-    "bike.cooldown" => "You have tried to steal a bike less than [cooldown] [units] ago. You still need to wait [time] [unit]",
-    
-    // Steal a car page
-    "car.try" => "Attempt to steal",
-    "car.worth" => "Success! The car is worth ",
-    "car.cooldown" => "You have tried to steal a car less than [cooldown] [units] ago. You still need to wait [time] [unit]",
-    
-    // Rob a store page
-    "store.try" => "Attempt to rob",
-    "store.worth" => "Success! You got away with ",
-    "store.cooldown" => "You have tried to rob a store less than [cooldown] [units] ago. You still need to wait [time] [unit]",
-    
-    // General crime stuff
-    "crime.info" => "Success rate: ",
-    "crimes.failed" => "Failed! You've been caught and are being send to ",
+    // Deceased page
+    "info.died" => "You died!! You were killed by ",
+    "info.new-name" => "Your new Mafia name",
+    "info.startover" => "Start over",
     
     // Bank page
     "bank.info" => "Your bank balance will remain after death, but you can't use this balance for purchases",
@@ -193,7 +158,7 @@ $strings = [
     "bank.withdraw" => "Withdraw",
     "bank.withdraw.success" => "Cash has been added to your stash",
     "bank.withdraw.broke" => "Your balance isn't high enough to withdraw that amount",
-    "bank.send.title" => "Send balance to friend (Max 10.000 per player per day)",
+    "bank.send.title" => "Send balance to friend (Max €10.000 per player per day)",
     "bank.send" => "Send",
     "bank.send.success" => "Money has been send to your friend",
     "bank.send.broke" => "Your balance isn't high enough to send that amount",
@@ -220,7 +185,26 @@ $strings = [
     "garage.sell" => "Sell",
     "garage.select_all" => "Select all",
     
-    // Friend list
+    // Steal a bike page
+    "bike.try" => "Attempt to steal",
+    "bike.worth" => "Success! The bike is worth ",
+    "bike.cooldown" => "You have tried to steal a bike less than [cooldown] [units] ago. You still need to wait [time] [unit]",
+    
+    // Steal a car page
+    "car.try" => "Attempt to steal",
+    "car.worth" => "Success! The car is worth ",
+    "car.cooldown" => "You have tried to steal a car less than [cooldown] [units] ago. You still need to wait [time] [unit]",
+    
+    // Rob a store page
+    "store.try" => "Attempt to rob",
+    "store.worth" => "Success! You got away with ",
+    "store.cooldown" => "You have tried to rob a store less than [cooldown] [units] ago. You still need to wait [time] [unit]",
+    
+    // General crime stuff
+    "crime.info" => "Success rate: ",
+    "crimes.failed" => "Failed! You've been caught and are being send to ",
+    
+    // Friend list page
     "friends.self" => "You can't add yourself as a friend",
     "friends.player_not_found" => "This player doesn't exist anymore",
     "friends.already_friends" => "You already are friends with this peron",
@@ -232,14 +216,14 @@ $strings = [
     "friends.add.title" => "Add friend: ",
     "friends.add" => "Add",
     
-    // Userlist
+    // Userlist page
     "userlist.message" => "Message",
     "userlist.befriend" => "Befriend",
     "userlist.message.success" => "A message has been send!",
     "userlist.befriend.success" => "A friend request has been send!",
     "userlist.empty" => "There are no users online",
     
-    // Mailbox
+    // Mailbox page
     "maillist.empty" => "You don't have any messages",
     "maillist.delete" => "Delete",
     "maillist.read" => "Mark as read",
@@ -289,10 +273,27 @@ $strings = [
     "game.info.mail" => "This tab will bring you to your mailbox. You can send messages, reply to messages from friends or see automatic game notifications. Messages sent to other players are not encrypted. If there is suspicion, a server admin can look into it. But only if necessary.", 
     "game.info.settings" => "This tab will bring you to the settings tab. Here you will be able to change your e-mail address or log out.",
     
-    // You died
-    "info.died" => "You died!! You were killed by ",
-    "info.new-name" => "Your new Mafia name",
-    "info.startover" => "Start over",
+    // Ranks
+    "rank.1" => "Rookie",
+    "rank.2" => "Hustler",
+    "rank.3" => "Thug",
+    "rank.4" => "Enforcer",
+    "rank.5" => "Associate",
+    "rank.6" => "Runner",
+    "rank.7" => "Mafioso",
+    "rank.8" => "Soldier",
+    "rank.9" => "Hitman",
+    "rank.10" => "Veteran",
+    "rank.11" => "Captain",
+    "rank.12" => "Lieutenant",
+    "rank.13" => "Consigliere",
+    "rank.14" => "Underboss",
+    "rank.15" => "Boss",
+    "rank.16" => "Don",
+    "rank.17" => "Kingpin",
+    "rank.18" => "Mafia Lod",
+    "rank.19" => "Supreme Boss",
+    "rank.20" => "Godfather",
     
     // Authentication
     "login.title" => "Logging in",
@@ -384,6 +385,7 @@ function getString($name) {
     return $string;
 }
     
+// Convert rank name to level
 function getRankLevel($name) {
     global $strings;
 
@@ -397,6 +399,7 @@ function getRankLevel($name) {
     return intval($rank, 10);
 }
     
+// Convert rank level to name
 function getRankName($level) {
     // Insert the level into the string
     $name = "rank.$level";

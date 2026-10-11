@@ -18,7 +18,7 @@ var ranks = {
     "rank-15": "Boss",
     "rank-16": "Don",
     "rank-17": "Kingpin",
-    "rank-18": "Mafia Lod",
+    "rank-18": "Mafia Lord",
     "rank-19": "Supreme Boss",
     "rank-20": "Godfather"
 };
@@ -179,7 +179,7 @@ function isAlive(data) {
         $('[role="tab"]').attr("disabled", true);
         
         // Show the deceased tab
-        $("#btnDeceased").tab('show');
+        $("#btnDeceased").click();
     } else {
         // Enable all tabs again
         $('[role="tab"]').attr("disabled", false);
