@@ -79,6 +79,14 @@ form .btn-link:not(hover) {
  * Adding some bootstrap classes together
  * to prevent Class-itis
  */
+.body-class {
+    /* min-vh-100 */
+    min-height: 100vh;
+    
+    /* h-100 */
+    height: 100%;
+}
+
 .btn-group-vertical > button {    
     /* fw-bold */
     font-weight: 700;
