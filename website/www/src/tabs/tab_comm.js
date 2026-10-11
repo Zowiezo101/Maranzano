@@ -118,7 +118,6 @@ function updatePlayerTable(data) {
             var onclickMessage = 'onclick="onClickMessage(' + data[row]["id"] + ')"';
             var onclickBefriend = 'onclick="onClickBefriend(' + data[row]["id"] + ')"';
             
-            // TODO: Add Ban option for moderators
             // Deceased, name, rank, message
             if (data[row]["deceased"]) {
                 // Enclose it all with strikethrough tags (<s>)
@@ -132,6 +131,7 @@ function updatePlayerTable(data) {
                 onclickBefriend = 'disabled';
             }
             
+            // TODO: Ban option for moderators will be implemented later
             rows.push(
                 `<tr>
                     <td class="${classNames}"><b>${nameIcon} ${data[row]["name"]}</b></td>

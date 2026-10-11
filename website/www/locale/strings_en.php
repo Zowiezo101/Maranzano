@@ -10,7 +10,7 @@ $strings = [
     "global.done" => "Done",
     "global.close" => "You can now close this page or go back to the homepage",
     
-    // News
+    // News articles (TODO: Will be implemented later to go via database)
     "news.1" => "We are currently working on the full version of <b>Mafiani</b>, the version of the game you are currently playing is a <b>demo</b>.<br><br>The full version will also include the casino, mafia families and support for browsers on mobile phones.",
 
     // Menu

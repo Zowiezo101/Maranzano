@@ -92,32 +92,40 @@
                                                              "travel"   => $RANK_ROOKIE, 
                                                              "jail"     => $RANK_ROOKIE, 
                                                              "hospital" => $RANK_ROOKIE,
-                                                             "deceased" => 999]) ?>
+                                                             "deceased" => 999
+                                                            ]) ?>
                                     
                                     <?php printMenu("business", ["bank"  => $RANK_ROOKIE, 
                                                                  "bullet" => $RANK_ROOKIE, 
                                                                  "garage" => $RANK_ROOKIE, 
-                                                                 "family" => $RANK_ROOKIE, 
-                                                                 "manage" => $RANK_DON]) ?>
+                                                                 // TODO: Will be implemented later
+                                                                 // "family" => $RANK_ROOKIE, 
+                                                                 // "manage" => $RANK_DON
+                                                            ]) ?>
                                     
                                     <?php printMenu("crimes", ["bike"  => $RANK_ROOKIE, 
                                                                "car"   => $RANK_MAFIOSO, 
                                                                "store" => $RANK_HITMAN, 
-                                                               "kill"  => $RANK_HITMAN]) ?>
+                                                               "kill"  => $RANK_HITMAN
+                                                            ]) ?>
                                     
-                                    <?php printMenu("casino", ["roulette" => $RANK_ROOKIE, 
-                                                               "scratch"  => $RANK_ROOKIE]) ?>
+                                    <!-- TODO: Casino will be implemented later -->
+                                    <?php /*printMenu("casino", ["roulette" => $RANK_ROOKIE, 
+                                                               "scratch"  => $RANK_ROOKIE
+                                                            ])*/ ?>
                                     
                                     <?php printMenu("comms", ["online"   => $RANK_ROOKIE, 
                                                               "friends"  => $RANK_ROOKIE, 
                                                               "news"     => $RANK_ROOKIE, 
                                                               "userlist" => $RANK_ROOKIE, 
-                                                              "mail"     => $RANK_ROOKIE]) ?>
+                                                              "mail"     => $RANK_ROOKIE
+                                                            ]) ?>
                                     
                                     <?php printMenu("help", ["contact"  => $RANK_ROOKIE,
                                                              "rules"    => $RANK_ROOKIE, 
                                                              "info"     => $RANK_ROOKIE, 
-                                                             "settings" => $RANK_ROOKIE]) ?>
+                                                             "settings" => $RANK_ROOKIE
+                                                            ]) ?>
 
                                     <!-- X Users online -->
                                     <div class="mt-3 px-3">

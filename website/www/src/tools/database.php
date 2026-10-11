@@ -6,7 +6,7 @@
  */
 
 function getNews() {
-    // TODO
+    // TODO: Will be implemented later
     echo "<p>".getString("news.1")."</p>";
 }
 
