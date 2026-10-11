@@ -64,14 +64,14 @@ class Hospital extends Action {
         $bill = $full_hp / 10;
         
         // Check current player cash        
-        $this->enoughFunds($this->player_data["bank"], $bill, "hospital.broke");
+        $this->enoughFunds($this->player_data["cash"], $bill, "hospital.broke");
         
         // Update the hospital cooldown to an expired state
         $this->updateHospitalCooldown(-1);
 
         // Update the player bank
         $update = [
-            "bank" => $this->player_data["bank"] - $bill
+            "cash" => $this->player_data["cash"] - $bill
         ];
         $this->player->updatePlayer($this->player_data["id"], $update);
 
