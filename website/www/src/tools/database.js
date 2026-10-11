@@ -89,6 +89,11 @@ function fetchSendMoney(data) {
     return fetchPost("send_money", data);
 }
 
+// Get the friend list (both online and offline)
+function fetchFriendList() {
+    return fetchGet("get_friend_list");
+}
+
 // Get the vehicles
 function fetchAllVehicles() {
     return fetchGet("get_vehicles");

@@ -225,6 +225,12 @@ $strings = [
     "friends.player_not_found" => "This player doesn't exist anymore",
     "friends.already_friends" => "You already are friends with this peron",
     "friends.deceased" => "This player has been killed",
+    "friends.online" => "Online friends: ",
+    "friends.online.empty" => "There are no online friends",
+    "friends.offline" => "Offline friends: ",
+    "friends.offline.empty" => "There are no offline friends",
+    "friends.add.title" => "Add friend: ",
+    "friends.add" => "Add",
     
     // Userlist
     "userlist.message" => "Message",

@@ -83,6 +83,10 @@ function onShowTab(event) {
             onOnlineTab();
             break;
             
+        case "btnFriends":
+            onFriendsTab();
+            break;
+            
         case "btnUserlist":
             onPlayerlistTab();
             break;
@@ -207,8 +211,7 @@ $(function () {
     // Load the home tab after the page has loaded
     $("#btnHome").click();
     // TODO:
-//    $("#btnMail").click();
-    $("#btnHospital").click();
+    $("#btnFriends").click();
 });
 
 function onClickGarage() {

@@ -22,7 +22,82 @@
                                     
                                     <!-- The Friend list Tab -->
                                     <div class="tab-pane" id="tabFriends" role="tabpanel">
-                                        Friends
+                                        <div class="row">
+                                            <div class="col p-0">
+                                                
+                                                <?php printHeader("comms.friends"); ?>
+                                        
+                                                <!-- Clipboard -->
+                                                <div class="row mt-2">
+                                                    <div class="col-lg-10 mx-auto">
+                                                        <div class="card bg-transparent border-0">
+                                                            <!-- Clipboard image -->
+                                                            <img class="card-img" src="../img/Friends.png"/>
+                                                            
+                                                            <!-- Text contents -->
+                                                            <div id="friendsCard" class="card-img-overlay p-0">
+                                                                <b class="fst-normal"><?php printString("friends.online"); ?></b>
+                                                                <table id="onlineFriends" class="fw-bold table table-hover">
+                                                                    <tbody>
+                                                                        <!-- Rows are added using JS -->
+                                                                    </tbody>
+                                                                </table>
+                                                
+                                                                <!-- No players in list -->
+                                                                <div id="onlineFriendsError" class="text-center text-black d-none">
+                                                                    <p><b><?php printString("friends.online.empty"); ?></b></p>
+                                                                </div>
+                                                                
+                                                                <br/>
+                                                                
+                                                                <b class="fst-normal"><?php printString("friends.offline"); ?></b>
+                                                                <table id="offlineFriends" class="fw-bold table table-hover">
+                                                                    <tbody>
+                                                                        <!-- Rows are added using JS -->
+                                                                    </tbody>
+                                                                </table>
+                                                
+                                                                <!-- No players in list -->
+                                                                <div id="offlineFriendsError" class="text-center text-black d-none">
+                                                                    <p><b><?php printString("friends.offline.empty"); ?></b></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                                
+                                                <!-- Add friends -->
+                                                <form id="friendForm" class="mt-3">
+                                                    <label for="friendName" class="form-label"><b class="fst-normal"><?php printString("friends.add.title")?></b></label>
+
+                                                    <!-- The name -->
+                                                    <div class="row">
+                                                        <div class="text-center col-8">
+                                                            <input type="input" class="form-control" id="friendName">
+                                                        </div>
+
+                                                        <!-- Add button -->
+                                                        <div class="col-4">
+                                                            <button type="submit" class="btn btn-primary border border-3 border-black w-100"><?php printString("friends.add")?></button>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Error message -->
+                                                    <div id="friendAddError" class="mb-4 mx-3 text-center text-warning d-none">
+                                                        <!-- Filled in later in case of error -->
+                                                    </div>
+
+                                                    <div id="friendAddSuccess" class="text-center d-none">
+                                                        <p><b><?php printString("userlist.befriend.success"); ?></b></p>
+                                                    </div>
+                                                </form>
+
+                                                <!-- Error message -->
+                                                <div id="friendError" class="mb-4 mx-3 text-center text-warning d-none">
+                                                    <!-- Filled in later in case of error -->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <!-- The Newspaper Tab -->

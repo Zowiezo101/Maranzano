@@ -73,6 +73,10 @@ class Player {
                 $result = $this->getPlayerFriends();
                 break;
             
+            case "player_friend_list":
+                $result = $this->getPlayerFriendList();
+                break;
+            
             case "player_friend_request":
                 $result = $this->friendRequest();
                 break;
@@ -213,6 +217,26 @@ class Player {
         $friends = $this->getFriends($id);
         
         return $friends;
+    }
+    
+    private function getPlayerFriendList() {
+        
+        $user_id = $this->getUserId();
+            
+        // Get the player that belongs to this user
+        $player = $this->getPlayer($user_id);
+
+        // The player ID
+        $id = $player["id"];
+        
+        // Check which of these friends are online
+        $online_friends = $this->getOnlineFriendList($id);
+        $offline_friends = $this->getOfflineFriendList($id);
+        
+        return [
+            "online" => $online_friends,
+            "offline" => $offline_friends
+        ];
     }
     
     private function friendRequest() {
@@ -708,6 +732,54 @@ class Player {
         
         // Send the ids, names, ranks and deceased state back
         return $result;
+    }
+    
+    private function getOnlineFriendList($player_id) {
+        $conn = $this->conn;
+        
+        // Get all the players in the database
+        $sql = "SELECT * FROM players "
+                . "JOIN friends on friends.friend_id = players.id "
+                . "WHERE friends.player_id = :player_id AND friends.is_confirmed = 1 AND players.last_active >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $results = getAllResults($stmt);
+        
+        // Send the ids, names, ranks and deceased state back
+        return $results ? $results : [];
+    }
+    
+    private function getOfflineFriendList($player_id) {
+        $conn = $this->conn;
+        
+        // Get all the players in the database
+        $sql = "SELECT * FROM players "
+                . "JOIN friends on friends.friend_id = players.id "
+                . "WHERE friends.player_id = :player_id AND friends.is_confirmed = 1 AND players.last_active < DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $results = getAllResults($stmt);
+        
+        // Send the ids, names, ranks and deceased state back
+        return $results ? $results : [];
     }
     
     /**

@@ -17,6 +17,24 @@ function onOnlineTab() {
         alert("error: " + results);
     });
 }
+function onFriendsTab() {
+    
+    // The fetch call
+    fetchFriendList().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#friendError");
+        } else {
+            // Success, update the player list
+            updateFriendList(results.data);
+        }
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
 
 function onPlayerlistTab() {
     
@@ -54,6 +72,39 @@ function onMailTab() {
         // Show an error if anything went wrong
         alert("error: " + results);
     });
+}
+
+function updateFriendList(data) {
+    updateStatusFriendList(data, "online");
+    updateStatusFriendList(data, "offline");
+}
+
+function updateStatusFriendList(data, status) {
+    $("#" + status + "Friends tbody").empty();
+    
+    var rows = [];
+    if (data[status].length > 0) {
+        for (var row in data[status]) {
+            rows.push(
+                `<tr>
+                    <td><b>${data[status][row]["name"]}</b></td>
+                    <td><b>
+                        <button class="btn btn-link p-0 text-danger" onclick="onClickMessage(${data[status][row]["id"]})">
+                            <b>${data[status][row]["message"]}</b>
+                        </button>
+                    </b></td>
+                    <td><b>
+                        <button class="btn btn-link p-0 text-black-50" onclick="onClickMessage(${data[status][row]["id"]})">
+                            <b>${data[status][row]["remove"]}</b>
+                        </button>
+                    </b></td>
+                </tr>`);
+        }
+    } else {
+        $("#" + status + "FriendsError").removeClass("d-none");
+    }
+
+    $("#" + status + "Friends tbody").append(rows.join(""));
 }
 
 function updatePlayerTable(data) {
@@ -194,6 +245,10 @@ function onClickReply(player_id) {
     // TODO
 }
 
+function onClickDelete(player_id) {
+    // TODO
+}
+
 function onClickBefriend(player_id) {        
     // Remove any previous errors or message
     onResetAllForms();
@@ -313,3 +368,12 @@ function onClickDelete() {
         alert("error: " + results);
     });
 }
+
+function onSubmitFriend() {
+    // TODO:
+}
+
+$(function() {
+    // Set prevent page reloading when submitting form
+    $("#friendForm").on("submit", function(e) {onSubmitFriend(e);});
+});
