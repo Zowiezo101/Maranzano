@@ -347,9 +347,9 @@ class Player {
         $conn = $this->conn;
         
         // Get all the online players in the database
-        $sql = "SELECT DISTINCT players.id, players.name, friends.is_confirmed, players.last_active FROM players "
+        $sql = "SELECT DISTINCT players.id, players.name, players.rank, friends.is_confirmed, players.last_active FROM players "
                 . "LEFT JOIN friends ON friends.player_id = players.id AND friends.friend_id = :player_id "
-                . "WHERE players.last_active >= DATE_SUB(NOW(), INTERVAL 5 MINUTE) ORDER BY players.last_active DESC";
+                . "WHERE players.last_active >= DATE_SUB(NOW(), INTERVAL 5 MINUTE) ORDER BY players.rank DESC";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);
