@@ -108,8 +108,17 @@ class Login {
                 $this->invalidateCookie($token_hex, $user);
             }
             
-            // Seeing as every action needs the session to be validated, update player timestamp
+            // Seeing as every action needs the session to be validated, 
+            // do some other actions here as well
+            
+            // Update the player timestamp
             $this->player->updateTimestamp();
+        
+            // Check the player's hospital status
+            $this->player->checkHospitalStatus();
+            
+            // Check the players search-for-victim status
+            $this->player->checkSearchStatus();
         } else {
             $this->invalidateCookie($token_hex, $user);
         }

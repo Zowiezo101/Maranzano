@@ -128,15 +128,6 @@ class Player {
         // Get the player that belongs to this user
         $player = $this->getPlayer($user_id);
         
-        // Since this is often loaded, we're gonna use it to check the players hospital status
-        $hospital = new Hospital($this->conn);
-        if ($hospital->hasCooldown($player["id"], 
-                Hospital::ACTION_TABLE, null) === null) {
-            
-            // Set the players health to 100%
-            $hospital->healPlayer();
-        }
-        
         // And to check for unread messages
 
         // Prepare the data and make it human readable
@@ -780,6 +771,25 @@ class Player {
         
         // Send the ids, names, ranks and deceased state back
         return $results ? $results : [];
+    }
+    
+    public function checkHospitalStatus() {
+        $user_id = $this->getUserId();
+
+        // Get the player that belongs to this user
+        $player = $this->getPlayer($user_id);
+        
+        $hospital = new Hospital($this->conn);
+        if ($hospital->hasCooldown($player["id"], 
+                Hospital::ACTION_TABLE, null) === null) {
+
+            // Set the players health to 100%
+            $hospital->healPlayer();
+        }
+    }
+    
+    public function checkSearchStatus() {
+        
     }
     
     /**
