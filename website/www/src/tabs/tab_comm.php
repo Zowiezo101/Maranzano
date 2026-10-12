@@ -171,3 +171,25 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                    <!-- The Message modal -->
+                                    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content border border-3 border-white">
+
+                                                <!-- The Modal header -->
+                                                <div class="modal-header bg-body-tertiary">
+                                                    <h5 class="modal-title fs-5 " id="messageModalLabel"><?php printString("message.to"); ?><span id="messageToName"></span></h5>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <!-- The Modal body -->
+                                                <div class="modal-body">
+                                                    <!-- Login form -->
+                                                    <form id="messageForm">
+                                                        <!-- Filled in by JS -->
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>

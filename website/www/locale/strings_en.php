@@ -232,6 +232,9 @@ $strings = [
     "maillist.read" => "Mark as read",
     "maillist.reply" => "Reply",
     
+    // Messaging
+    "message.to" => "Sending a message to ",
+    
     // Contact page
     "contact.email" => "Email: ",
     "contact.email.info" => "For non-gameplay related questions",

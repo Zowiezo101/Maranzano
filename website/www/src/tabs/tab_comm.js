@@ -89,7 +89,7 @@ function updateStatusFriendList(data, status) {
                 `<tr>
                     <td><b>${data[status][row]["name"]}</b></td>
                     <td><b>
-                        <button class="btn btn-link p-0 mb-1 text-danger" onclick="onClickMessage(${data[status][row]["id"]}, ${data[status][row]["name"]})">
+                        <button class="btn btn-link p-0 mb-1 text-danger" onclick="onClickMessage(${data[status][row]["id"]}, '${data[status][row]["name"]}')">
                             <b>${data[status][row]["message"]}</b>
                         </button>
                     </b></td>
@@ -115,7 +115,7 @@ function updatePlayerTable(data) {
         for (var row in data) {
             var classNames = "";
             var nameIcon = " • ";
-            var onclickMessage = `onclick="onClickMessage(${data[row]["id"]}, ${data[row]["id"]})"`;
+            var onclickMessage = `onclick="onClickMessage(${data[row]["id"]}, '${data[row]["name"]}')"`;
             var onclickBefriend = `onclick="onClickBefriend(${data[row]["id"]})"`;
             
             // Deceased, name, rank, message
@@ -192,7 +192,7 @@ function updateMailTable(data) {
             var reply = "";
             if (data[row]["sender_id"] !== -999) {
                 // Can't reply to system messages
-                reply = `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickReply(${data[row]["sender_id"]}, ${data[row]["from"]})">
+                reply = `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickReply(${data[row]["sender_id"]}, '${data[row]["from"]}')">
                             ${data[row]["reply"]}
                         </button>`;
             }
@@ -237,12 +237,25 @@ function updateMailTable(data) {
     $("#maillist tbody").append(rows.join(""));
 }
 
-function onClickMessage(player_id) {
+function onClickMessage(player_id, player_name) {
     // TODO
+    // Update the title
+    $("#messageToName").text(player_name);
+    
+    // Show the message modal
+    var modal = new bootstrap.Modal("#messageModal");
+    modal.show();
+    
 }
 
-function onClickReply(player_id) {
+function onClickReply(player_id, player_name) {
     // TODO
+    // Update the title
+    $("#messageToName").text(player_name);
+    
+    // Show the message modal
+    var modal = new bootstrap.Modal("#messageModal");
+    modal.show();
 }
 
 function onClickFriendDelete(player_id) {  
@@ -422,8 +435,100 @@ function onSubmitFriend() {
         alert("error: " + results);
     });
 }
+    
+// Load the form sending a message
+function onModalMessage() {
+    var html = getHTML(`
+                <-- Subject -->
+                <div class="mb-3 row">
+                    <label for="messageSubject" class="col-4 col-sm-2 col-form-label"><?php printString("login.email"); ?></label>
+                    <div class="col-8 col-sm-10">
+                        <input type="input" class="form-control" id="messageSubject" required>
+                    </div>
+                </div>
+
+                <-- Message -->
+                <div class="mb-3 row">
+                    <label for="messageBody" class="col-4 col-sm-2 col-form-label"><?php printString("login.password"); ?></label>
+                    <div class="col-8 col-sm-10">
+                        <input type="input" class="form-control" id="messageBody" required>
+                    </div>
+                </div>
+
+                <-- Login button -->
+                <div class="mb-3 mx-3 row">
+                    <button type="submit" class="btn btn-primary"><?php printString("menu.login"); ?></button>
+                </div>
+
+                <-- Error message -->
+                <div id="loginError" class="mb-4 mx-3 text-center text-warning d-none">
+                    <-- Filled in later in case of error -->
+                </div>`);
+
+    // Update the information
+    $("#messageForm").html(html);
+}
+    
+// Create a fetch call to prevent reloading the page
+function onSubmitMessage(event) {
+    event.preventDefault();
+
+    // Remove any previous errors
+    onResetAllForms();
+
+    // The data for resetting password
+    var resetEmail = $("#resetEmail").val();
+
+    // Put the data in an easier-to-send format
+    var data = {
+        "email": resetEmail
+    };
+
+    // The fetch call
+    fetchPost("reset", data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#resetError");
+        } else {
+            // Success, show the confirm content
+            onInformReset();
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
+    
+// Update the form to inform the player that a message has been sent
+function onInformReset() {
+    var html = getHTML(`
+                    <-- Inform user that an e-mail has been send for password reset -->
+                    <div class="row text-center">
+                        <p><?php printString("reset.email"); ?></p>
+                    </div>
+
+                    <-- Done -->
+                    <div class="mb-3 mx-3 row">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><?php printString("global.done"); ?></button>
+                    </div>`);
+
+    // Update the information
+    $("#reset-form").html(html);
+}
 
 $(function() {
     // Set prevent page reloading when submitting form
     $("#friendForm").on("submit", function(e) {onSubmitFriend(e);});
+    $("messageForm").on("submit", function(e) {onSubmitMessage(e);});
+    
+    // Make sure the login modal gets reset whenever it gets hidden
+    $("#messageModal").on("hidden.bs.modal", function(){
+        onModalMessage();
+    });
+
+    // Show the message content in the message modal
+    onModalMessage();
 });
