@@ -44,6 +44,11 @@ class Controller {
                 $controller = new Player($conn);
             }
 
+            // Player info
+            else if (str_starts_with($route, "friend")) {
+                $controller = new Friend($conn);
+            }
+
             // Travel actions
             else if (str_starts_with($route, "travel")) {
                 $controller = new Travel($conn);

@@ -37,7 +37,7 @@
                                                             <!-- Text contents -->
                                                             <div id="friendsCard" class="card-img-overlay p-0">
                                                                 <b class="fst-normal"><?php printString("friends.online"); ?></b>
-                                                                <table id="onlineFriends" class="fw-bold table table-hover">
+                                                                <table id="onlineFriends" class="fw-bold table table-sm table-hover">
                                                                     <tbody>
                                                                         <!-- Rows are added using JS -->
                                                                     </tbody>

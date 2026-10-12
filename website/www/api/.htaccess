@@ -27,14 +27,15 @@ RewriteRule ^(.*)get_online_count$ $1/api/index?route=login_online [QSA,DPI]
 RewriteRule ^(.*)get_player_info$    $1/api/index?route=player_info [QSA,DPI]
 RewriteRule ^(.*)get_player_stats$   $1/api/index?route=player_stats [QSA,DPI]
 RewriteRule ^(.*)create_new_player$  $1/api/index?route=player_reset [QSA,DPI]
-RewriteRule ^(.*)get_friends$        $1/api/index?route=player_friends [QSA,DPI]
-RewriteRule ^(.*)get_friend_list$    $1/api/index?route=player_friend_list [QSA,DPI]
-RewriteRule ^(.*)friend_request$     $1/api/index?route=player_friend_request [QSA,DPI]
-RewriteRule ^(.*)get_bike_rate$      $1/api/index?route=player_chance_bike [QSA,DPI]
-RewriteRule ^(.*)get_car_rate$       $1/api/index?route=player_chance_car [QSA,DPI]
-RewriteRule ^(.*)get_store_rate$     $1/api/index?route=player_chance_store [QSA,DPI]
 RewriteRule ^(.*)get_all_players$    $1/api/index?route=player_all [QSA,DPI]
 RewriteRule ^(.*)get_online_players$ $1/api/index?route=player_online [QSA,DPI]
+
+# Friend requests
+RewriteRule ^(.*)get_friends$     $1/api/index?route=friend_get [QSA,DPI]
+RewriteRule ^(.*)get_friend_list$ $1/api/index?route=friend_list [QSA,DPI]
+RewriteRule ^(.*)add_friend$      $1/api/index?route=friend_add [QSA,DPI]
+RewriteRule ^(.*)remove_friend$   $1/api/index?route=friend_remove [QSA,DPI]
+RewriteRule ^(.*)friend_request$  $1/api/index?route=friend_request [QSA,DPI]
 
 ######################
 # All Actions
@@ -69,9 +70,12 @@ RewriteRule ^(.*)get_vehicles$  $1/api/index?route=garage_all [QSA,DPI]
 RewriteRule ^(.*)sell_vehicles$ $1/api/index?route=garage_sell [QSA,DPI]
 
 # Crime request
-RewriteRule ^(.*)steal_bike$ $1/api/index?route=crime_bike [QSA,DPI]
-RewriteRule ^(.*)steal_car$  $1/api/index?route=crime_car [QSA,DPI]
-RewriteRule ^(.*)rob_store$  $1/api/index?route=crime_store [QSA,DPI]
+RewriteRule ^(.*)steal_bike$     $1/api/index?route=crime_bike [QSA,DPI]
+RewriteRule ^(.*)steal_car$      $1/api/index?route=crime_car [QSA,DPI]
+RewriteRule ^(.*)rob_store$      $1/api/index?route=crime_store [QSA,DPI]
+RewriteRule ^(.*)get_bike_rate$  $1/api/index?route=crime_chance_bike [QSA,DPI]
+RewriteRule ^(.*)get_car_rate$   $1/api/index?route=crime_chance_car [QSA,DPI]
+RewriteRule ^(.*)get_store_rate$ $1/api/index?route=crime_chance_store [QSA,DPI]
 
 # Mailbox requests
 RewriteRule ^(.*)get_messages$        $1/api/index?route=message_list [QSA,DPI]

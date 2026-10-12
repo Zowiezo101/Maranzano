@@ -207,6 +207,7 @@ $strings = [
     // Friend list page
     "friends.self" => "You can't add yourself as a friend",
     "friends.player_not_found" => "This player doesn't exist anymore",
+    "friends.name_not_found" => "We couldn't find any player with that name",
     "friends.already_friends" => "You already are friends with this peron",
     "friends.deceased" => "This player has been killed",
     "friends.online" => "Online friends: ",
@@ -215,6 +216,8 @@ $strings = [
     "friends.offline.empty" => "There are no offline friends",
     "friends.add.title" => "Add friend: ",
     "friends.add" => "Add",
+    "friends.message" => "Message",
+    "friends.remove" => "Remove",
     
     // Userlist page
     "userlist.message" => "Message",

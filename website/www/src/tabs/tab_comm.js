@@ -89,12 +89,12 @@ function updateStatusFriendList(data, status) {
                 `<tr>
                     <td><b>${data[status][row]["name"]}</b></td>
                     <td><b>
-                        <button class="btn btn-link p-0 text-danger" onclick="onClickMessage(${data[status][row]["id"]})">
+                        <button class="btn btn-link p-0 mb-1 text-danger" onclick="onClickMessage(${data[status][row]["id"]}, ${data[status][row]["name"]})">
                             <b>${data[status][row]["message"]}</b>
                         </button>
                     </b></td>
                     <td><b>
-                        <button class="btn btn-link p-0 text-black-50" onclick="onClickMessage(${data[status][row]["id"]})">
+                        <button class="btn btn-link p-0 mb-1 text-black-50" onclick="onClickFriendDelete(${data[status][row]["id"]})">
                             <b>${data[status][row]["remove"]}</b>
                         </button>
                     </b></td>
@@ -115,8 +115,8 @@ function updatePlayerTable(data) {
         for (var row in data) {
             var classNames = "";
             var nameIcon = " • ";
-            var onclickMessage = 'onclick="onClickMessage(' + data[row]["id"] + ')"';
-            var onclickBefriend = 'onclick="onClickBefriend(' + data[row]["id"] + ')"';
+            var onclickMessage = `onclick="onClickMessage(${data[row]["id"]}, ${data[row]["id"]})"`;
+            var onclickBefriend = `onclick="onClickBefriend(${data[row]["id"]})"`;
             
             // Deceased, name, rank, message
             if (data[row]["deceased"]) {
@@ -192,7 +192,7 @@ function updateMailTable(data) {
             var reply = "";
             if (data[row]["sender_id"] !== -999) {
                 // Can't reply to system messages
-                reply = `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickReply(${data[row]["sender_id"]})">
+                reply = `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickReply(${data[row]["sender_id"]}, ${data[row]["from"]})">
                             ${data[row]["reply"]}
                         </button>`;
             }
@@ -245,8 +245,28 @@ function onClickReply(player_id) {
     // TODO
 }
 
-function onClickDelete(player_id) {
-    // TODO
+function onClickFriendDelete(player_id) {  
+    // Remove any previous errors or message
+    onResetAllForms();
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "id": player_id
+    };
+    
+    fetchDeleteFriend(data).then(function(results) {
+        onFriendsTab();
+        
+        // Handle the results of the fetch call
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#friendError");
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
 }
 
 function onClickBefriend(player_id) {        
@@ -370,7 +390,37 @@ function onClickDelete() {
 }
 
 function onSubmitFriend() {
-    // TODO:
+    event.preventDefault();
+        
+    // Remove any previous errors or message
+    onResetAllForms();
+        
+    // The data for the request
+    var player = $("#friendName").val();
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "player" : player
+    };
+    
+    fetchAddFriend(data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#friendAddError");
+        } else {
+            // Show the success message
+            $("#friendAddSuccess").removeClass("d-none");
+            
+            // Update the friends table
+            onFriendsTab();
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
 }
 
 $(function() {

@@ -94,6 +94,16 @@ function fetchFriendList() {
     return fetchGet("get_friend_list");
 }
 
+// Delete a friend
+function fetchDeleteFriend(data) {
+    return fetchPost("remove_friend", data);
+}
+
+// Add a friend
+function fetchAddFriend(data) {
+    return fetchPost("add_friend", data);
+}
+
 // Get the vehicles
 function fetchAllVehicles() {
     return fetchGet("get_vehicles");
