@@ -69,18 +69,6 @@ class Player {
                 $result = $this->resetPlayer();
                 break;
             
-            case "player_chance_bike":
-                $result = $this->getPlayerSuccessBike();
-                break;
-            
-            case "player_chance_car":
-                $result = $this->getPlayerSuccessCar();
-                break;
-            
-            case "player_chance_store":
-                $result = $this->getPlayerSuccessStore();
-                break;
-            
             case "player_all":
                 $result = $this->getAllPlayers();
                 break;
@@ -180,39 +168,6 @@ class Player {
 
         // Create a new player for this user
         $this->createPlayer($user_id, $player);
-    }
-    
-    public function getPlayerSuccessBike() {
-        
-        $user_id = $this->getUserId();
-
-        // Get the player that belongs to this user
-        $player = $this->getPlayer($user_id);
-        
-        // Get the current rank
-        return $this->getPlayerSuccessBikeByRank($player["rank"]);
-    }
-    
-    public function getPlayerSuccessCar() {
-        
-        $user_id = $this->getUserId();
-
-        // Get the player that belongs to this user
-        $player = $this->getPlayer($user_id);
-        
-        // Get the current rank
-        return $this->getPlayerSuccessCarByRank($player["rank"]);
-    }
-    
-    public function getPlayerSuccessStore() {
-        
-        $user_id = $this->getUserId();
-
-        // Get the player that belongs to this user
-        $player = $this->getPlayer($user_id);
-        
-        // Get the current rank
-        return $this->getPlayerSuccessStoreByRank($player["rank"]);
     }
     
     public function getPlayerSuccessBikeByRank($rank) {

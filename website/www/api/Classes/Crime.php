@@ -71,13 +71,27 @@ class Crime extends Action {
             case "crime_bike":
                 $result = $this->stealBike();
                 break;
+            
             case "crime_car":
                 $this->hasRequiredRank(\getRankLevel("Mafioso"));
                 $result = $this->stealCar();
                 break;
+            
             case "crime_store":
                 $this->hasRequiredRank(\getRankLevel("Hitman"));
                 $result = $this->robStore();
+                break;
+            
+            case "crime_chance_bike":
+                $result = $this->getSuccessRateBike();
+                break;
+            
+            case "crime_chance_car":
+                $result = $this->getSuccessRateCar();
+                break;
+            
+            case "crime_chance_store":
+                $result = $this->getSuccessRateStore();
                 break;
         }
         
@@ -268,6 +282,33 @@ class Crime extends Action {
         $this->giveXP($player, self::STORE_XP, $success);
         
         return $store;
+    }
+    
+    public function getSuccessRateBike() {
+        
+        // The current player
+        $player = $this->player_data;
+        
+        // Get the current rank
+        return $this->player->getPlayerSuccessBikeByRank($player["rank"]);
+    }
+    
+    public function getSuccessRateCar() {
+        
+        // The current player
+        $player = $this->player_data;
+        
+        // Get the current rank
+        return $this->player->getPlayerSuccessCarByRank($player["rank"]);
+    }
+    
+    public function getSuccessRateStore() {
+        
+        // The current player
+        $player = $this->player_data;
+        
+        // Get the current rank
+        return $this->player->getPlayerSuccessStoreByRank($player["rank"]);
     }
     
     
