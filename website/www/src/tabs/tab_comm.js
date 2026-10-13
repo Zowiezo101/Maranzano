@@ -181,7 +181,7 @@ function updateMailTable(data) {
     if (data.length > 0) {
         for (var row in data) {
             var id = data[row]["id"];
-            var body = data[row]["body"];
+            var body = escapeHTML(data[row]["body"]);
             
             // Show something as read or unread
             var className = "fw-bolder";
@@ -222,7 +222,7 @@ function updateMailTable(data) {
                     </div>
                     <hr class="my-0 py-0">
                     <div class="row text-black">
-                        <span>${data[row]["subject"]}</span>
+                        <span>${escapeHTML(data[row]["subject"])}</span>
                     </div>
                     <div id="body_${id}" class="row text-black-50 body-div d-none">
                         <span>${body}</span>

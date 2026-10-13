@@ -73,8 +73,13 @@ class Mailbox {
         $friend = $playerObj->retrievePlayerFromId($friend_id);
         
         if (!isset($friend)) {
-            // Do NOT continue if the player can't be hound
+            // Do NOT continue if this person can't be found
             throwError("friends.player_not_found");
+        }
+        
+        if ($friend["deceased"] !== 0) {
+            // Also do NOT continue if this player is deceased
+            throwError("friends.deceased");
         }
         
         // The subject and body

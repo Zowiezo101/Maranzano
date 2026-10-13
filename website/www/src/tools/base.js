@@ -55,3 +55,27 @@ function updateTabs(data) {
         }
     }
 }
+
+/*
+ * Source:
+ * https://www.sitelint.com/blog/escape-html-string-tags-in-javascript
+ */
+function escapeHTML(str) {
+    if (typeof str !== 'string') {
+        return '';
+    }
+
+    const escapeCharacter = (match) => {
+        switch (match) {
+            case '&': return '&amp;';
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '"': return '&quot;';
+            case '\'': return '&#039;';
+            case '`': return '&#096;';
+            default: return match;
+        }
+    };
+
+    return str.replace(/[&<>"'`]/g, escapeCharacter);
+}

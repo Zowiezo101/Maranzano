@@ -203,8 +203,8 @@
 
                                                         <!-- Send button -->
                                                         <div class="mb-3 row">
-                                                            <div class="col">
-                                                                <button type="submit" class="btn btn-primary"><?php printString("message.send"); ?></button>
+                                                            <div class="col d-flex justify-content-end">
+                                                                <button type="submit" class="btn btn-primary text-end"><?php printString("message.send"); ?></button>
                                                             </div>
                                                         </div>
 
