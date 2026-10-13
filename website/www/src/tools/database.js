@@ -169,6 +169,11 @@ function fetchDeleteMessages(data) {
     return fetchPost("delete_messages", data);
 }
 
+// Send a message
+function fetchSendMessage(data) {
+    return fetchPost("send_message", data);
+}
+
 // Mark message as read
 function fetchMarkAsRead(data) {
     return fetchPost("read_message", data);

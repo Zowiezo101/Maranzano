@@ -238,9 +238,11 @@ function updateMailTable(data) {
 }
 
 function onClickMessage(player_id, player_name) {
-    // TODO
     // Update the title
     $("#messageToName").text(player_name);
+    
+    // Set the receiver ID ready
+    $("#messageForm").data("receiver-id", player_id);
     
     // Show the message modal
     var modal = new bootstrap.Modal("#messageModal");
@@ -438,35 +440,12 @@ function onSubmitFriend() {
     
 // Load the form sending a message
 function onModalMessage() {
-    var html = getHTML(`
-                <-- Subject -->
-                <div class="mb-3 row">
-                    <label for="messageSubject" class="col-4 col-sm-2 col-form-label"><?php printString("login.email"); ?></label>
-                    <div class="col-8 col-sm-10">
-                        <input type="input" class="form-control" id="messageSubject" required>
-                    </div>
-                </div>
-
-                <-- Message -->
-                <div class="mb-3 row">
-                    <label for="messageBody" class="col-4 col-sm-2 col-form-label"><?php printString("login.password"); ?></label>
-                    <div class="col-8 col-sm-10">
-                        <input type="input" class="form-control" id="messageBody" required>
-                    </div>
-                </div>
-
-                <-- Login button -->
-                <div class="mb-3 mx-3 row">
-                    <button type="submit" class="btn btn-primary"><?php printString("menu.login"); ?></button>
-                </div>
-
-                <-- Error message -->
-                <div id="loginError" class="mb-4 mx-3 text-center text-warning d-none">
-                    <-- Filled in later in case of error -->
-                </div>`);
-
-    // Update the information
-    $("#messageForm").html(html);
+    // Clear out filed in fields
+    $(".message-field").val("");
+    
+    // Make sure to show the correct screen
+    $("#messageForm").removeClass("d-none");
+    $("#messageSuccess").addClass("d-none");
 }
     
 // Create a fetch call to prevent reloading the page
@@ -477,23 +456,27 @@ function onSubmitMessage(event) {
     onResetAllForms();
 
     // The data for resetting password
-    var resetEmail = $("#resetEmail").val();
+    var messageReceiver = $("#messageForm").data("receiver-id");
+    var messageSubject = $("#messageSubject").val();
+    var messageBody = $("#messageBody").val();
 
     // Put the data in an easier-to-send format
     var data = {
-        "email": resetEmail
+        "id": messageReceiver,
+        "subject": messageSubject,
+        "body": messageBody
     };
 
     // The fetch call
-    fetchPost("reset", data).then(function(results) {
+    fetchSendMessage(data).then(function(results) {
         // Handle the results of the fetch call
 
         if (results.error !== "" && results.error !== null) {
             // Something went wrong, show an error message
-            onReturnedError(results.error, "#resetError");
+            onReturnedError(results.error, "#messageError");
         } else {
             // Success, show the confirm content
-            onInformReset();
+            onInformMessage();
         }
 
     }).catch(function(results) {
@@ -503,26 +486,19 @@ function onSubmitMessage(event) {
 }
     
 // Update the form to inform the player that a message has been sent
-function onInformReset() {
-    var html = getHTML(`
-                    <-- Inform user that an e-mail has been send for password reset -->
-                    <div class="row text-center">
-                        <p><?php printString("reset.email"); ?></p>
-                    </div>
-
-                    <-- Done -->
-                    <div class="mb-3 mx-3 row">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><?php printString("global.done"); ?></button>
-                    </div>`);
-
-    // Update the information
-    $("#reset-form").html(html);
+function onInformMessage() {
+    // Clear out filed in fields
+    $(".message-field").val("");
+    
+    // Make sure to show the correct screen
+    $("#messageForm").addClass("d-none");
+    $("#messageSuccess").removeClass("d-none");
 }
 
 $(function() {
     // Set prevent page reloading when submitting form
     $("#friendForm").on("submit", function(e) {onSubmitFriend(e);});
-    $("messageForm").on("submit", function(e) {onSubmitMessage(e);});
+    $("#messageForm").on("submit", function(e) {onSubmitMessage(e);});
     
     // Make sure the login modal gets reset whenever it gets hidden
     $("#messageModal").on("hidden.bs.modal", function(){

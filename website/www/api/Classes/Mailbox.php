@@ -38,6 +38,10 @@ class Mailbox {
                 $result = $this->getMessages();
                 break;
             
+            case "message_send":
+                $result = $this->sendMessage();
+                break;
+            
             case "message_delete":
                 $result = $this->deleteMessages();
                 break;
@@ -59,7 +63,25 @@ class Mailbox {
      */
     
     private function sendMessage() {
+        $playerObj = new Player($this->conn);
+        $player = $playerObj->getPlayerFromCookieData();
         
+        // Get the player_id to send the email to
+        $friend_id = $this->parameters->getId();
+
+        // Make sure the receiver exists
+        $friend = $playerObj->retrievePlayerFromId($friend_id);
+        
+        if (!isset($friend)) {
+            // Do NOT continue if the player can't be hound
+            throwError("friends.player_not_found");
+        }
+        
+        // The subject and body
+        $subject = $this->parameters->getSubject();
+        $body = $this->parameters->getBody();
+        
+        $this->sendMessageToPlayer($player["id"], $friend_id, $subject, $body);
     }
     
     private function getMessages() {

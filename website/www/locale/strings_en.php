@@ -234,6 +234,9 @@ $strings = [
     
     // Messaging
     "message.to" => "Sending a message to ",
+    "message.subject" => "Subject",
+    "message.body" => "Message contents",
+    "message.send" => "Send",
     
     // Contact page
     "contact.email" => "Email: ",
@@ -363,6 +366,8 @@ $strings = [
     "data.ids.invalid" => "Please select a valid item",
     "data.location.invalid" => "Please select a valid location",
     "data.amount.invalid" => "Please select a valid amount",
+    "data.subject.invalid" => "Please insert a valid message subject line",
+    "data.body.invalid" => "Please insert a valid message body",
     "data.rank.too_low" => "You don't have the required rank for this action yet. Current rank = [rank], required rank = [required]",
     "data.subject.friend_request" => "[player] has sent you a friend request!",
     "data.body.friend_request" => "[player] would like to have you as their ally. Do you [accept_friend_request] or [decline_friend_request] their offer?",

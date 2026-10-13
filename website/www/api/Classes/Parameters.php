@@ -45,6 +45,8 @@ class Parameters {
             "token",
             "location",
             "amount",
+            "subject",
+            "body"
         ];
         
         $parameters = [];
@@ -322,6 +324,44 @@ class Parameters {
         } else {
             // These IDs are valid
             $result = explode(",", $this->data[$source]["ids"]);
+        }
+        
+        return $result;
+    }
+    
+    public function getSubject() {
+        
+        $result = null;
+        
+        // Get everything from the POST parameters
+        $source = "POST";
+        
+        // Validate the subject
+        if (!isset($this->data[$source]["subject"])) {
+            // Subject isn't set
+            throwError("data.subject.invalid", Message::CODE_INVALID);
+        }else {
+            // This subject is valid
+            $result = $this->data[$source]["subject"];
+        }
+        
+        return $result;
+    }
+    
+    public function getBody() {
+        
+        $result = null;
+        
+        // Get everything from the POST parameters
+        $source = "POST";
+        
+        // Validate the body
+        if (!isset($this->data[$source]["body"])) {
+            // Body isn't set
+            throwError("auth.body.invalid", Message::CODE_INVALID);
+        } else {
+            // This body is valid
+            $result = $this->data[$source]["body"];
         }
         
         return $result;

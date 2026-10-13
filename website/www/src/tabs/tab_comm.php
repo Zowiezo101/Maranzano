@@ -186,9 +186,45 @@
                                                 <!-- The Modal body -->
                                                 <div class="modal-body">
                                                     <!-- Login form -->
-                                                    <form id="messageForm">
-                                                        <!-- Filled in by JS -->
+                                                    <form id="messageForm" data-receiver-id="-999">
+                                                        <!-- Subject -->
+                                                        <div class="mb-3 row">
+                                                            <div class="col">
+                                                                <input type="input" class="form-control message-field" id="messageSubject" placeholder=<?php printString("message.subject", true)?> required>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Message -->
+                                                        <div class="mb-3 row">
+                                                            <div class="col">
+                                                                <textarea type="input" class="form-control message-field" id="messageBody" placeholder=<?php printString("message.body", true)?> required></textarea>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Send button -->
+                                                        <div class="mb-3 row">
+                                                            <div class="col">
+                                                                <button type="submit" class="btn btn-primary"><?php printString("message.send"); ?></button>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Error message -->
+                                                        <div id="messageError" class="mb-4 mx-3 text-center text-warning d-none">
+                                                            <!-- Filled in later in case of error -->
+                                                        </div>
                                                     </form>
+                                                    
+                                                    <div id="messageSuccess" class="d-none">
+                                                        <!-- Inform user that the message has been sent -->
+                                                        <div class="row text-center">
+                                                            <p><?php printString("userlist.message.success"); ?></p>
+                                                        </div>
+
+                                                        <!-- Done -->
+                                                        <div class="mb-3 mx-3 row">
+                                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><?php printString("global.done"); ?></button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
