@@ -192,7 +192,7 @@ function updateMailTable(data) {
             var reply = "";
             if (data[row]["sender_id"] !== -999) {
                 // Can't reply to system messages
-                reply = `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickReply(${data[row]["sender_id"]}, '${data[row]["from"]}')">
+                reply = `<button class="btn btn-link mb-1 px-0 py-0" onclick="onClickReply(${data[row]["sender_id"]}, '${data[row]["from"]}', '${data[row]["subject"]}')">
                             ${data[row]["reply"]}
                         </button>`;
             }
@@ -250,10 +250,15 @@ function onClickMessage(player_id, player_name) {
     
 }
 
-function onClickReply(player_id, player_name) {
-    // TODO
+function onClickReply(player_id, player_name, message_subject) {
     // Update the title
     $("#messageToName").text(player_name);
+    
+    // Set the receiver ID ready
+    $("#messageForm").data("receiver-id", player_id);
+    
+    // Also set a preset for the subject
+    $("#messageSubject").val("RE: " + message_subject);
     
     // Show the message modal
     var modal = new bootstrap.Modal("#messageModal");
