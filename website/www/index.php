@@ -51,7 +51,7 @@
                     <!-- The Header on top, 
                             with a 3px border and some padding on top and the sides -->
                     <div class="row bg-body bordered">
-                        <div class="col home-banner">
+                        <div class="col px-5 pt-3">
                             
                             <!-- The Banner and version number --> 
                             <img class="img-fluid" src="img/Mafiani_wit.png" alt="Mafiani"/>
@@ -68,7 +68,7 @@
                         
                         <!-- Menu -->
                         <div class="col-3 bordered border-top-0">
-                            <div class="row home-menu">
+                            <div class="row d-flex align-items-start flex-column" style="height: 500px">
                                 <!-- The Menu has 3 rows:
                                         1. Menu titel
                                         2. Menu items
@@ -120,7 +120,7 @@
                                     2. News items -->
                             
                             <!-- News titel -->
-                            <div class="row home-news bg-body-tertiary bordered-bottom">
+                            <div class="row bg-body-tertiary text-center bordered-bottom">
                                 <b><?php printString("global.news"); ?></b>
                             </div>
                             

@@ -43,7 +43,7 @@ function onSubmitShop(event) {
     event.preventDefault();
         
     // Remove any previous errors
-    onResetAllForms();
+    onResetVisibility();
         
     // The data for the shop
     var amount = $("#shopAmount").val();
@@ -80,7 +80,7 @@ function onSubmitSwap(event) {
     event.preventDefault();
         
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
         
     // The data for the swap
     var amount = $("#swapAmount").val();
@@ -116,7 +116,7 @@ function onSubmitDeposit(event) {
     event.preventDefault();
         
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
         
     // The data for the request
     var amount = $("#depositAmount").val();
@@ -150,7 +150,7 @@ function onSubmitWithdraw(event) {
     event.preventDefault();
         
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
         
     // The data for the request
     var amount = $("#withdrawAmount").val();
@@ -184,7 +184,7 @@ function onSubmitSend(event) {
     event.preventDefault();
         
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
         
     // The data for the request
     var friend_id = $("#friend").val();
@@ -220,7 +220,7 @@ function onSubmitSell(event) {
     event.preventDefault();
         
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
         
     // The checked checkboxes
     var checked = $('#garageTable tbody').find(':checked');

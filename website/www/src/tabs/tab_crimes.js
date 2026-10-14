@@ -60,7 +60,7 @@ function onSubmitBike(event) {
     event.preventDefault();
         
     // Remove any previous errors
-    onResetAllForms();
+    onResetVisibility();
     
     fetchStealBike().then(function(results) {
         // Handle the results of the fetch call
@@ -97,7 +97,7 @@ function onSubmitCar(event) {
     event.preventDefault();
         
     // Remove any previous errors
-    onResetAllForms();
+    onResetVisibility();
     
     fetchStealCar().then(function(results) {
         // Handle the results of the fetch call
@@ -134,7 +134,7 @@ function onSubmitStore(event) {
     event.preventDefault();
         
     // Remove any previous errors
-    onResetAllForms();
+    onResetVisibility();
     
     fetchRobStore().then(function(results) {
         // Handle the results of the fetch call

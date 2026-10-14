@@ -11,9 +11,8 @@ function onReturnedError(message, element) {
     $(element).html(message).removeClass("d-none");
 }
 
-// Remove all errors
-function onResetAllForms() {
-    // TODO: Remove this eventually
+// Reset visibilty
+function onResetVisibility() {
     // Remove all lingering errors
     $("[id$='Error']").addClass("d-none");
     
@@ -22,15 +21,6 @@ function onResetAllForms() {
     
     // Show all forms
     $("[id$='Form']").removeClass("d-none");
-}
-
-// Reset visibilty
-function onResetVisibility() {
-    // Show everything with data-reset = "show"
-    $("[data-reset='show']").removeClass("d-none");
-    
-    // Hide everything with data-reset = "hide"
-    $("[data-reset='hide']").addClass("d-none");
 }
 
 // A rewrite of a PHP function

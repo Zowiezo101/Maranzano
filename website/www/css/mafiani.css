@@ -118,7 +118,7 @@
 
 /**
  * Adding some bootstrap classes together
- * to prevent Class-itis
+ * to prevent Class-itis or to prevent copy-paste errors
  */
 .body-class {
     /* min-vh-100 */
@@ -169,34 +169,6 @@
     /* border-black */
     --bs-border-opacity: 1;
     border-color: rgba(var(--bs-black-rgb), var(--bs-border-opacity));
-}
-
-.home-banner {
-    /* px-5 */
-    padding-right: 3rem;
-    padding-left: 3rem;
-  
-    /* pt-3 */
-    padding-top: 1rem;
-}
-
-.home-menu {
-    /* d-flex */
-    display: flex;
-    
-    /* align-items-start */
-    align-items: flex-start;
-    
-    /* flex-column */
-    flex-direction: column;
-    
-    /* style="height: 500px" */
-    height: 500px;
-}
-
-.home-news {
-    /* text-center */
-    text-align: center;
 }
 
 .home-footer {
@@ -306,6 +278,16 @@
     /* text-warning */
     --bs-text-opacity: 1;
     color: rgba(var(--bs-warning-rgb), var(--bs-text-opacity));
+}
+
+.warning-message {
+  
+    /* text-center */
+    text-align: center;
+  
+    /* text-black */
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-black-rgb), var(--bs-text-opacity));
 }
 
 .btn-group-vertical > button {    

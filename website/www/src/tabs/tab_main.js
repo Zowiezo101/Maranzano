@@ -94,7 +94,7 @@ function onSubmitNewPlayer(event) {
     event.preventDefault();
         
     // Remove any previous errors
-    onResetAllForms();
+    onResetVisibility();
         
     // The data for the new player
     var newPlayerName = $("#newPlayer").val();
@@ -127,7 +127,7 @@ function onSubmitTravel(event) {
     event.preventDefault();
         
     // Remove any previous errors
-    onResetAllForms();
+    onResetVisibility();
         
     // The new location for this player
     var location = $("#travel").val();
@@ -214,7 +214,7 @@ function updateJailTable(data) {
 function payPlayerBail(id) {
         
     // Remove any previous errors
-    onResetAllForms();
+    onResetVisibility();
         
     // Put the data in an easier-to-send format
     var data = {
@@ -242,7 +242,7 @@ function payPlayerBail(id) {
 function bustPlayerOut(id) {
         
     // Remove any previous errors
-    onResetAllForms();
+    onResetVisibility();
         
     // Put the data in an easier-to-send format
     var data = {
@@ -284,7 +284,7 @@ function updateHospitalData(data) {
 function payHospitalBill() {
         
     // Remove any previous errors
-    onResetAllForms();
+    onResetVisibility();
     
     fetchPayHospitalBill().then(function(results) {
         // Handle the results of the fetch call

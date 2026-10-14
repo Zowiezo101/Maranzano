@@ -267,7 +267,7 @@ function onClickReply(player_id, player_name, message_subject) {
 
 function onClickFriendDelete(player_id) {  
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
         
     // Put the data in an easier-to-send format
     var data = {
@@ -291,7 +291,7 @@ function onClickFriendDelete(player_id) {
 
 function onClickBefriend(player_id) {        
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
         
     // Put the data in an easier-to-send format
     var data = {
@@ -320,7 +320,7 @@ function onClickAcceptFriendRequest(message_id) {
     event.preventDefault();
         
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
         
     // Put the data in an easier-to-send format
     var data = {
@@ -351,7 +351,7 @@ function onClickDeclineFriendRequest(message_id) {
     event.preventDefault();
         
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
         
     // Put the data in an easier-to-send format
     var data = {
@@ -381,7 +381,7 @@ function onClickDeclineFriendRequest(message_id) {
 function onClickMarkAsRead(message_id, read) {  
         
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
     
     // Show the clicked message
     $(".body-div").addClass("d-none");
@@ -423,7 +423,7 @@ function onClickMarkAsRead(message_id, read) {
 function onClickDelete() {    
         
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
     
     // The checked checkboxes
     var checked = $('#maillist tbody').find(':checked');
@@ -467,7 +467,7 @@ function onSubmitFriend() {
     event.preventDefault();
         
     // Remove any previous errors or message
-    onResetAllForms();
+    onResetVisibility();
         
     // The data for the request
     var player = $("#friendName").val();
@@ -512,7 +512,7 @@ function onSubmitMessage(event) {
     event.preventDefault();
 
     // Remove any previous errors
-    onResetAllForms();
+    onResetVisibility();
 
     // The data for resetting password
     var messageReceiver = $("#messageForm").data("receiver-id");

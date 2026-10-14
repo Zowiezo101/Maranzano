@@ -33,7 +33,7 @@ function getRankName(level) {
 
 function onShowTab(event) {
     // Remove any lingering messages
-    onResetAllForms();
+    onResetVisibility();
     
     // Update the player info table
     updatePlayerInfo();
