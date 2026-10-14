@@ -102,7 +102,11 @@
                                     
                                     <!-- The Newspaper Tab -->
                                     <div class="tab-pane" id="tabNews" role="tabpanel">
-                                        News
+                                        <div class="row">
+                                            <div class="col p-0">
+                                                <?php printHeader("comms.news"); ?>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <!-- The User list Tab -->

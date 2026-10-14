@@ -50,6 +50,14 @@
     background-color: var(--bg-color-secondary);
 }
 
+.form-control:focus {
+    background-color: var(--bg-color-secondary);
+}
+
+.form-control::placeholder {
+    color: var(--bs-white);
+}
+
 .form-select {
     background-color: var(--bg-color-secondary);
 }

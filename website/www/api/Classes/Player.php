@@ -171,27 +171,6 @@ class Player {
         $this->createPlayer($user_id, $player);
     }
     
-    public function getPlayerSuccessBikeByRank($rank) {
-        // Get the current rank data
-        $rank_data = self::RANKS[$rank];
-        
-        return $rank_data["bike"];
-    }
-    
-    public function getPlayerSuccessCarByRank($rank) {
-        // Get the current rank data
-        $rank_data = self::RANKS[$rank];
-        
-        return $rank_data["car"];
-    }
-    
-    public function getPlayerSuccessStoreByRank($rank) {
-        // Get the current rank data
-        $rank_data = self::RANKS[$rank];
-        
-        return $rank_data["store"];
-    }
-    
     private function getAllPlayers() {
         $conn = $this->conn;
         
@@ -447,6 +426,27 @@ class Player {
         
         // Send the ids, names, ranks and deceased state back
         return $result;
+    }
+    
+    public function getPlayerSuccessBikeByRank($rank) {
+        // Get the current rank data
+        $rank_data = self::RANKS[$rank];
+        
+        return $rank_data["bike"];
+    }
+    
+    public function getPlayerSuccessCarByRank($rank) {
+        // Get the current rank data
+        $rank_data = self::RANKS[$rank];
+        
+        return $rank_data["car"];
+    }
+    
+    public function getPlayerSuccessStoreByRank($rank) {
+        // Get the current rank data
+        $rank_data = self::RANKS[$rank];
+        
+        return $rank_data["store"];
     }
     
     public function checkHospitalStatus() {

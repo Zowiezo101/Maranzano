@@ -133,7 +133,7 @@ function updateOnlineCount() {
         if (results.error !== "" && results.error !== null) {
             // Can't show error message here
         } else {
-            $("#amountUsers").text(results.data);
+            $("#amountUsers").text(results.data !== "" ? results.data : 0);
         }
 
     }).catch(function(results) {
