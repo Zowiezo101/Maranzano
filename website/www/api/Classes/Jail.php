@@ -249,8 +249,11 @@ class Jail extends Action {
         // The formatted array
         $formatted_results = [];
         
+        // Player data
+        $player = $this->player_data;
+        
         // The chance to bust someone out is dependent on your own rank (same as bike chance)
-        $chance = $this->player->getPlayerSuccessBike();
+        $chance = $this->player->getPlayerSuccessBikeByRank($player["rank"]);
         $chance1 = getString("jail.info.bust_out");
         $chance2 = str_replace("[chance]", $chance, $chance1);
         
