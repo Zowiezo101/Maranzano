@@ -211,7 +211,7 @@ $(function () {
     // Load the home tab after the page has loaded
     $("#btnHome").click();
     // TODO:
-    $("#btnFriends").click();
+    $("#btnMail").click();
 });
 
 function onClickGarage() {

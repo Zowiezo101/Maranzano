@@ -222,10 +222,10 @@ function updateMailTable(data) {
                     </div>
                     <hr class="my-0 py-0">
                     <div class="row text-black">
-                        <span>${escapeHTML(data[row]["subject"])}</span>
+                        <span class="text-break">${escapeHTML(data[row]["subject"])}</span>
                     </div>
                     <div id="body_${id}" class="row text-black-50 body-div d-none">
-                        <span>${body}</span>
+                        <span class="text-break">${body}</span>
                         ${reply}
                     </div>
                 </td></tr>`);
