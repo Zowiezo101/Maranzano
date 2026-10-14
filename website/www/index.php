@@ -155,7 +155,7 @@
                 <div class="modal-body">
                     
                     <!-- Login form -->
-                    <form id="loginForm">
+                    <form id="loginScreen">
                         
                         <!-- Email address -->
                         <div class="mb-3 row">
@@ -184,13 +184,13 @@
                         </div>
 
                         <!-- Error message -->
-                        <div id="loginError" class="error-message d-none" data-reset="hide">
+                        <div id="loginError" class="error-message d-none">
                             <!-- Filled in later in case of error -->
                         </div>
                     </form>
                     
                     <!-- Forgot password form -->
-                    <form id="resetForm" class="d-none">
+                    <form id="resetScreen" class="d-none">
                         
                         <!-- Explanation on resetting your password -->
                         <div class="row text-center">
@@ -216,12 +216,12 @@
                         </div>
 
                         <!-- Error message -->
-                        <div id="resetError" class="error-message d-none" data-reset="hide">
+                        <div id="resetError" class="error-message d-none">
                             <!-- Filled in later in case of error -->
                         </div>
                     </form>
                     
-                    <div id="resetSuccess" class="d-none" data-reset="hide">
+                    <div id="resetSuccess" class="d-none">
                         
                         <!-- Inform user that an e-mail has been send for password reset -->
                         <div class="row text-center">
@@ -251,7 +251,7 @@
                 
                 <!-- The Modal body -->
                 <div class="modal-body">
-                    <form id="registerForm" data-reset="show">
+                    <form id="registerForm">
                         <!-- Email address -->
                         <div class="mb-3 mx-3">
                             <label for="registerEmail" class="form-label"><?php printString("login.email"); ?></label>
@@ -282,12 +282,12 @@
                         </div>
 
                         <!-- Error message -->
-                        <div id="registerError" class="error-message d-none" data-reset="hide">
+                        <div id="registerError" class="error-message d-none">
                             <!-- Filled in later in case of error -->
                         </div>
                     </form>
                     
-                    <div id="registerSuccess" class="d-none" data-reset="hide">
+                    <div id="registerSuccess" class="d-none">
                         
                         <!-- Inform user that account creation was successfull
                         Now they'll need to verify their email address -->
@@ -315,8 +315,8 @@
         
         // Make sure to show the correct screen
         $("#resetSuccess").addClass("d-none");
-        $("#resetForm").addClass("d-none");
-        $("#loginForm").removeClass("d-none");
+        $("#resetScreen").addClass("d-none");
+        $("#loginScreen").removeClass("d-none");
     }
     
     // Load the form for resetting password
@@ -325,9 +325,9 @@
         $(".form-field").val("");
         
         // Make sure to show the correct screen
-        $("#loginForm").addClass("d-none");
+        $("#loginScreen").addClass("d-none");
         $("#resetSuccess").addClass("d-none");
-        $("#resetForm").removeClass("d-none");
+        $("#resetScreen").removeClass("d-none");
     }
     
     // Load the form for registering an account
@@ -346,8 +346,8 @@
         $(".form-field").val("");
         
         // Make sure to show the correct screen
-        $("#loginForm").addClass("d-none");
-        $("#resetForm").addClass("d-none");
+        $("#loginScreen").addClass("d-none");
+        $("#resetScreen").addClass("d-none");
         $("#resetSuccess").removeClass("d-none");
     }
     
@@ -481,8 +481,8 @@
         });
 
         // Set prevent page reloading when submitting form
-        $("#loginForm").on("submit", function(e) {onSubmitLogin(e);});
-        $("#resetForm").on("submit", function(e) {onSubmitReset(e);});
+        $("#loginScreen").on("submit", function(e) {onSubmitLogin(e);});
+        $("#resetScreen").on("submit", function(e) {onSubmitReset(e);});
         $("#registerForm").on("submit", function(e) {onSubmitRegister(e);});
 
         // Show the login content in the login modal
