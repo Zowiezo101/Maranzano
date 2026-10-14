@@ -37,6 +37,14 @@ class Friend extends Player {
             case "friend_request":
                 $result = $this->friendRequest();
                 break;
+            
+            case "friend_accept":
+                $result = $this->friendAccept();
+                break;
+            
+            case "friend_decline":
+                $result = $this->friendDecline();
+                break;
         }
         
         return $result;
@@ -125,25 +133,7 @@ class Friend extends Player {
         // Get the player_id this player wants to befriend
         $friend_id = $this->parameters->getId();
         
-        // The connection
-        $conn = $this->conn;
-        
-        // Update the message to read
-        $sql = "DELETE FROM friends WHERE "
-                . "(player_id = :player_id AND friend_id = :friend_id) OR "
-                . "(player_id = :friend_id2 AND friend_id = :player_id2)";
-
-        // Prepare query statement
-        $stmt = $conn->prepare($sql);
-
-        // Bind the parameter
-        $stmt->bindValue(":player_id", $player["id"], PDO::PARAM_INT);
-        $stmt->bindValue(":player_id2", $player["id"], PDO::PARAM_INT);
-        $stmt->bindValue(":friend_id", $friend_id, PDO::PARAM_INT);
-        $stmt->bindValue(":friend_id2", $friend_id, PDO::PARAM_INT);
-
-        // Execute the statement
-        $stmt->execute();
+        $this->deleteFriend($player["id"], $friend_id);
     }
     
     private function friendRequest() {
@@ -177,6 +167,76 @@ class Friend extends Player {
         $this->handleFriendRequest($player["id"], $friend["id"]);
         
         return getString("userlist.befriend.success");
+    }
+    
+    private function friendAccept() {
+        
+        $user_id = $this->getUserId();
+
+        // Get the player that belongs to this user
+        $player = $this->getPlayer($user_id);
+        
+        // Get the message ID
+        $message_id = $this->parameters->getId();
+        
+        // Get the player_name from the message
+        $friend_name = $this->mailbox->getFriendName($message_id);
+
+        // Get the possibly future friend data
+        $friend = $this->retrievePlayerFromName($friend_name); 
+        
+        if (!isset($friend)) {
+            // Do NOT continue if this person can't be found
+            throwError("friends.player_not_found");
+        }
+        
+        if ($friend["deceased"] !== 0) {
+            // Also do NOT continue if this player is deceased
+            throwError("friends.deceased");
+        }
+        
+        // Add this unconfirmed friend to the players friends list
+        $this->acceptFriendRequest($player["id"], $friend["id"], $message_id);
+        
+        return getString("message.accept");
+    }
+    
+    private function friendDecline() {
+        
+        // TODO: Confirm that the message exists
+        
+        $user_id = $this->getUserId();
+
+        // Get the player that belongs to this user
+        $player = $this->getPlayer($user_id);
+        
+        // Get the message ID
+        $message_id = $this->parameters->getId();
+        
+        // Get the player_name from the message
+        $friend_name = $this->mailbox->getFriendName($message_id);
+
+        // Get the possibly future friend data
+        $friend = $this->retrievePlayerFromName($friend_name); 
+        
+        if (!isset($friend)) {
+            // Do NOT continue if this person can't be found
+            throwError("friends.player_not_found");
+        }
+        
+        if ($friend["id"] === $player["id"]) {
+            throwError("friends.self");
+        }
+        
+        if ($friend["deceased"] !== 0) {
+            // Also do NOT continue if this player is deceased
+            throwError("friends.deceased");
+        }
+        
+        // Add this unconfirmed friend to the players friends list
+        $this->declineFriendRequest($player["id"], $friend["id"], $message_id);
+        
+        return getString("message.decline");
     }
     
     /**
@@ -290,8 +350,72 @@ class Friend extends Player {
             $this->updateFriend($friend_id, $player_id);
         }
     }
+    
+    private function acceptFriendRequest($player_id, $friend_id, $message_id) {
         
+        // Checking for active records
+        $player_record = $this->retrieveRecordFromFriendlist($player_id, $friend_id);
+        $friend_record = $this->retrieveRecordFromFriendlist($friend_id, $player_id);
         
+        // Check if the friend request is still valid
+        if (!isset($friend_record)) {
+            // Remove the expired message
+            $this->mailbox->deleteMessage($message_id);
+            
+            throwError("friends.expired");
+        } 
+        
+        if ($friend_record["is_confirmed"] === 0) {
+            
+            if (!isset($player_record)) {
+                // Only if this player hasn't already tried to befriend the other player
+                // We don't want double records in the database
+                $this->addFriend($player_id, $friend_id);
+            }
+            
+            // The other player wants to be friends, we only
+            // have to do an update to confirm the friendship
+            $this->updateFriend($player_id, $friend_id);
+            $this->updateFriend($friend_id, $player_id);
+            
+            // Now remove this message
+            $this->mailbox->deleteMessage($message_id);
+        } else {
+            // Remove the now expired message
+            $this->mailbox->deleteMessage($message_id);
+            
+            // Both players have already confirmed their friendship
+            throwError("friends.already_friends");
+        }
+    }
+    
+    private function declineFriendRequest($player_id, $friend_id, $message_id) {
+        
+        // Checking for active records
+        $friend_record = $this->retrieveRecordFromFriendlist($friend_id, $player_id);
+        
+        // Check if the friend request is still valid
+        if (!isset($friend_record)) {
+            // Remove the expired message
+            $this->mailbox->deleteMessage($message_id);
+            
+            throwError("friends.expired");
+        } 
+        
+        if ($friend_record["is_confirmed"] === 1) {
+            // Remove the now expired message
+            $this->mailbox->deleteMessage($message_id);
+            
+            // Both players have already confirmed their friendship
+            throwError("friends.already_friends");
+        } else {
+            $this->deleteFriend($player_id, $friend_id);
+            
+            // Remove the now expired message
+            $this->mailbox->deleteMessage($message_id);
+        }
+    }
+
     private function addFriend($player_id, $friend_id) {
         // The connection
         $conn = $this->conn;
@@ -336,6 +460,28 @@ class Friend extends Player {
         $result = getResults($stmt);
         
         return $result;
+    }
+    
+    private function deleteFriend($player_id, $friend_id) {
+        // The connection
+        $conn = $this->conn;
+        
+        // Update the message to read
+        $sql = "DELETE FROM friends WHERE "
+                . "(player_id = :player_id AND friend_id = :friend_id) OR "
+                . "(player_id = :friend_id2 AND friend_id = :player_id2)";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_INT);
+        $stmt->bindValue(":player_id2", $player_id, PDO::PARAM_INT);
+        $stmt->bindValue(":friend_id", $friend_id, PDO::PARAM_INT);
+        $stmt->bindValue(":friend_id2", $friend_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
     }
     
     private function getOnlineFriendList($player_id) {

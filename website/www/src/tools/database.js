@@ -179,6 +179,14 @@ function fetchMarkAsRead(data) {
     return fetchPost("read_message", data);
 }
 
+function fetchAcceptFriendRequest(data) {
+    return fetchPost("accept_friend", data);
+}
+
+function fetchDeclineFriendRequest(data) {
+    return fetchPost("decline_friend", data);
+}
+
 // Send a post request to the given URL with fetch
 function fetchGet(url) {
     var response = fetchRequest(url, "GET");

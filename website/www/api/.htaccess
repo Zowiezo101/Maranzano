@@ -36,6 +36,8 @@ RewriteRule ^(.*)get_friend_list$ $1/api/index?route=friend_list [QSA,DPI]
 RewriteRule ^(.*)add_friend$      $1/api/index?route=friend_add [QSA,DPI]
 RewriteRule ^(.*)remove_friend$   $1/api/index?route=friend_remove [QSA,DPI]
 RewriteRule ^(.*)friend_request$  $1/api/index?route=friend_request [QSA,DPI]
+RewriteRule ^(.*)accept_friend$   $1/api/index?route=friend_accept [QSA,DPI]
+RewriteRule ^(.*)decline_friend$  $1/api/index?route=friend_decline [QSA,DPI]
 
 ######################
 # All Actions

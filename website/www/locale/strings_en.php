@@ -208,7 +208,8 @@ $strings = [
     "friends.self" => "You can't add yourself as a friend",
     "friends.player_not_found" => "This player doesn't exist anymore",
     "friends.name_not_found" => "We couldn't find any player with that name",
-    "friends.already_friends" => "You already are friends with this peron",
+    "friends.already_friends" => "You already are friends with this person",
+    "friends.expired" => "This friend request has expired",
     "friends.deceased" => "This player has been killed",
     "friends.online" => "Online friends: ",
     "friends.online.empty" => "There are no online friends",
@@ -237,6 +238,8 @@ $strings = [
     "message.subject" => "Subject",
     "message.body" => "Message contents",
     "message.send" => "Send",
+    "message.accept" => "Friend request accepted",
+    "message.decline" => "Friend request declined",
     
     // Contact page
     "contact.email" => "Email: ",

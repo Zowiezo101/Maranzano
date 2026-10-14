@@ -317,11 +317,65 @@ function onClickBefriend(player_id) {
 }
 
 function onClickAcceptFriendRequest(message_id) {
-    // TODO
+    event.preventDefault();
+        
+    // Remove any previous errors or message
+    onResetAllForms();
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "id" : message_id
+    };
+    
+    fetchAcceptFriendRequest(data).then(function(results) {
+        // Refresh the page
+        onMailTab();
+
+        // Handle the results of the fetch call
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#mailError");
+        } else {
+            // Show the success message
+            $("#mailSuccess").text(results.data);
+            $("#mailSuccess").removeClass("d-none");
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
 }
 
 function onClickDeclineFriendRequest(message_id) {
-    // TODO
+    event.preventDefault();
+        
+    // Remove any previous errors or message
+    onResetAllForms();
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "id" : message_id
+    };
+    
+    fetchDeclineFriendRequest(data).then(function(results) {
+        // Refresh the page
+        onMailTab();
+        
+        // Handle the results of the fetch call
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#mailError");
+        } else {
+            // Show the success message
+            $("#mailSuccess").text(results.data);
+            $("#mailSuccess").removeClass("d-none");
+        }
+            
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
 }
 
 function onClickMarkAsRead(message_id, read) {  

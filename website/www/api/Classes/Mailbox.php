@@ -217,6 +217,35 @@ class Mailbox {
         $this->sendMessageToPlayer(self::SYSTEM_ID, $friend_id, $subject1, $body1);
     }
     
+    public function getFriendName($message_id) {
+        $conn = $this->conn;
+        
+        // The SQL
+        $sql = "SELECT subject FROM messages WHERE id = :id";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":id", $message_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Insert the ID into the parameter array
+        $result = getResults($stmt);
+        
+        if (!isset($result)) {
+            // Do NOT continue if the message can't be found
+            throwError("friends.expired");
+        }
+        
+        // Only get the first word of this string
+        $name = explode(" ", $result["subject"])[0];
+        
+        return $name;
+    }
+    
     public function sendJailBail($player_name, $friend_id) {
         
         // The subbject of the message
@@ -243,7 +272,7 @@ class Mailbox {
         $this->sendMessageToPlayer(self::SYSTEM_ID, $friend_id, $subject1, $body1);
     }
     
-    private function deleteMessage($message_id) {
+    public function deleteMessage($message_id) {
         $playerObj = new Player($this->conn);
         $player = $playerObj->getPlayerFromCookieData();
         
