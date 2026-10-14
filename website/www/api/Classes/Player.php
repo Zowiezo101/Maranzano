@@ -104,7 +104,8 @@ class Player {
         // Get the player that belongs to this user
         $player = $this->getPlayer($user_id);
         
-        // And to check for unread messages
+        // And check for unread messages
+        $player["unread"] = $this->mailbox->getUnreadMessages();
 
         // Prepare the data and make it human readable
         $data = $this->formatPlayerInfo($player);
@@ -478,6 +479,7 @@ class Player {
         
         $data = [
             "name" => $player["name"],
+            "unread" => $player["unread"] > 0,
             "cash" => $this->formatCurrency($player["cash"]),
             "bank" => $this->formatCurrency($player["bank"]),
             "rank" => $rank,

@@ -81,7 +81,6 @@ RewriteRule ^(.*)get_store_rate$ $1/api/index?route=crime_chance_store [QSA,DPI]
 
 # Mailbox requests
 RewriteRule ^(.*)get_messages$        $1/api/index?route=message_list [QSA,DPI]
-RewriteRule ^(.*)get_unread_messages$ $1/api/index?route=message_unread [QSA,DPI]
 RewriteRule ^(.*)delete_messages$     $1/api/index?route=message_delete [QSA,DPI]
 RewriteRule ^(.*)read_message$        $1/api/index?route=message_read [QSA,DPI]
 RewriteRule ^(.*)send_message$        $1/api/index?route=message_send [QSA,DPI]

@@ -146,6 +146,13 @@ function insertPlayerInfo(data) {
     
     // First add the player name
     $("#playerName").html(data["name"]);
+    
+    // Check for any unread messages
+    if (data["unread"] === true) {
+        $("#playerUnread").removeClass("d-none");
+    } else {
+        $("#playerUnread").addClass("d-none");
+    }
 
     // This is for the tombstone
     $("#tombName").html(data["name"]);

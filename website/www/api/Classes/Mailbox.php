@@ -49,10 +49,6 @@ class Mailbox {
             case "message_read":
                 $result = $this->readMessage();
                 break;
-            
-            case "message_unread":
-                $result = $this->getUnreadMessages();
-                break;
         }
         
         return $result;
@@ -145,30 +141,6 @@ class Mailbox {
 
         // Execute the statement
         $stmt->execute();
-    }
-    
-    private function getUnreadMessages() {
-        $playerObj = new Player($this->conn);
-        $player = $playerObj->getPlayerFromCookieData();
-        
-        $conn = $this->conn;
-        
-        // The SQL
-        $sql = "SELECT * FROM messages WHERE receiver_id = :receiver_id WHERE is_read = 0 ORDER BY created_at DESC";
-
-        // Prepare query statement
-        $stmt = $conn->prepare($sql);
-
-        // Bind the parameter
-        $stmt->bindValue(":receiver_id", $player["id"], PDO::PARAM_INT);
-
-        // Execute the statement
-        $stmt->execute();
-
-        // Get the results
-        $result = $stmt->rowCount();
-        
-        return $result;
     }
     
     /**
@@ -291,6 +263,30 @@ class Mailbox {
 
         // Execute the statement
         $stmt->execute();
+    }
+    
+    public function getUnreadMessages() {
+        $playerObj = new Player($this->conn);
+        $player = $playerObj->getPlayerFromCookieData();
+        
+        $conn = $this->conn;
+        
+        // The SQL
+        $sql = "SELECT * FROM messages WHERE receiver_id = :receiver_id AND is_read = 0 ORDER BY created_at DESC";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":receiver_id", $player["id"], PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = $stmt->rowCount();
+        
+        return $result;
     }
     
     /**
