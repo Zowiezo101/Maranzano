@@ -250,7 +250,7 @@ $strings = [
     "contact.discord" => "Discord: ",
     "contact.discord.link" => "https://discord.gg/5JCDceAMbu",
     "contact.socials" => "Social media: ",
-    "contact.socials.links" => "https://x.com/mafianigame<br/>https://www.youtube.com/@TheToweler<br/>https://www.facebook.com/people/Mafianigame/61594780064744/",
+    "contact.socials.links" => "- https://x.com/mafianigame<br/>- https://www.youtube.com/@TheToweler<br/>- https://www.facebook.com/people/Mafianigame/61594780064744/",
     
     // Rules page
     "rules.title" => "Game rules",

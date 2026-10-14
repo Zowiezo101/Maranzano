@@ -1,111 +1,93 @@
 
                                     <!-- The Contact Tab -->
                                     <div class="tab-pane" id="tabContact" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col p-0">
-                                                <?php printHeader("help.contact"); ?>
-                                                
-                                                <!-- The contact body -->
-                                                
-                                                <!-- Email -->
-                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><?php printString("contact.email"); ?></b></p>
-                                                <p class="mb-0"><b class="text-white"><?php echo $email_user; ?></b></p>
-                                                <p class="mt-0"><b class="text-black-50"><?php printString("contact.email.info"); ?></b></p>
-                                                
-                                                <!-- Donations -->
-                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><?php printString("contact.donations"); ?></b></p>
-                                                <p class="mb-0"><b class="text-white"><?php printString("contact.donations.link"); ?></b></p>
-                                                <p class="mt-0"><b class="text-black-50"><?php printString("contact.donations.info"); ?></b></p>
-                                                
-                                                <!-- Discord -->
-                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><?php printString("contact.discord"); ?></b></p>
-                                                <p class="mt-0"><b class="text-white"><?php printString("contact.discord.link"); ?></b></p>
-                                                
-                                                <!-- Socials -->
-                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><?php printString("contact.socials"); ?></b></p>
-                                                <p class="mt-0"><b class="fst-normal text-white"><?php printString("contact.socials.links"); ?></b></p>
-                                            </div>
-                                        </div>
+                                        <?php printHeader("help.contact"); ?>
+
+                                        <!-- Email -->
+                                        <p class="socials-title"><?php printString("contact.email"); ?></p>
+                                        <p class="socials-url">- <?php echo $email_user; ?></p>
+                                        <p class="socials-info"><?php printString("contact.email.info"); ?></p>
+
+                                        <!-- Donations -->
+                                        <p class="socials-title"><?php printString("contact.donations"); ?></p>
+                                        <p class="socials-url">- <?php printString("contact.donations.link"); ?></p>
+                                        <p class="socials-info"><?php printString("contact.donations.info"); ?></p>
+
+                                        <!-- Discord -->
+                                        <p class="socials-title"><?php printString("contact.discord"); ?></p>
+                                        <p class="socials-url">- <?php printString("contact.discord.link"); ?></p>
+
+                                        <!-- Socials -->
+                                        <p class="socials-title"><?php printString("contact.socials"); ?></p>
+                                        <p class="socials-url"><?php printString("contact.socials.links"); ?></p>
                                     </div>
                                     
                                     <!-- The Rules Tab -->
                                     <div class="tab-pane" id="tabRules" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col p-0">
-                                                <?php printHeader("help.rules"); ?>
-                                                
-                                                <!-- The rules body -->
-                                                
-                                                <!-- Title -->
-                                                <h4 class="mt-3"><b class="fst-normal"><?php printString("rules.title"); ?></b></h4>
-                                                
-                                                <!-- Rules -->
-                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">1. </span><?php printString("rules.rule1"); ?></b></p>
-                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">2. </span><?php printString("rules.rule2"); ?></b></p>
-                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">3. </span><?php printString("rules.rule3"); ?></b></p>
-                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">4. </span><?php printString("rules.rule4"); ?></b></p>
-                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">5. </span><?php printString("rules.rule5"); ?></b></p>
-                                                <p class="mt-3 mb-0"><b class="fst-normal text-black"><span class="text-white">6. </span><?php printString("rules.rule6"); ?></b></p>
-                                                
-                                                <!-- Last but not least -->
-                                                <p class="mt-3"><b class="fst-normal text-black"><?php printString("rules.havefun"); ?></b></p>
-                                            </div>
-                                        </div>
+                                        <?php printHeader("help.rules"); ?>
+
+                                        <!-- Title -->
+                                        <h4 class="rule-info text-white"><?php printString("rules.title"); ?></h4>
+
+                                        <!-- Rules -->
+                                        <p class="rule-info"><span class="text-white">1. </span><?php printString("rules.rule1"); ?></p>
+                                        <p class="rule-info"><span class="text-white">2. </span><?php printString("rules.rule2"); ?></p>
+                                        <p class="rule-info"><span class="text-white">3. </span><?php printString("rules.rule3"); ?></p>
+                                        <p class="rule-info"><span class="text-white">4. </span><?php printString("rules.rule4"); ?></p>
+                                        <p class="rule-info"><span class="text-white">5. </span><?php printString("rules.rule5"); ?></p>
+                                        <p class="rule-info"><span class="text-white">6. </span><?php printString("rules.rule6"); ?></p>
+
+                                        <!-- Last but not least -->
+                                        <p class="rule-info"><?php printString("rules.havefun"); ?></p>
                                     </div>
                                     
                                     <!-- The Info Tab -->
                                     <div class="tab-pane" id="tabInfo" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col p-0">
-                                                <?php printHeader("help.info"); ?>
-                                                
-                                                <!-- The info body -->
-                                                
-                                                <!-- Game info -->
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("main.home"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.home"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("main.travel"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.travel"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("main.jail"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.jail"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("main.hospital"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.hospital"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("business.bank"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.bank"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("business.bullet"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.bullet"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("business.garage"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.garage"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("business.family"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.family"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("business.manage"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.manage"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("crimes.bike"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.bike"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("crimes.car"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.car"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("crimes.store"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.store"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("crimes.kill"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.kill"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("casino.roulette"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.roulette"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("casino.scratch"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.scratch"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.online"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.online"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.friends"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.friends"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.news"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.news"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.userlist"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.userlist"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("comms.mail"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.mail"); ?></b></p>
-                                                <p class="mt-3 mb-0 text-center"><b class="fst-normal">-<?php printString("help.settings"); ?>-</b></p>
-                                                <p class="mt-0"><b class="fst-normal text-black"><?php printString("game.info.settings"); ?></b></p>
-                                            </div>
-                                        </div>
+                                        <?php printHeader("help.info"); ?>
+
+                                        <!-- Game info -->
+                                        <p class="game-info-header">-<?php printString("main.home"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.home"); ?></p>
+                                        <p class="game-info-header">-<?php printString("main.travel"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.travel"); ?></p>
+                                        <p class="game-info-header">-<?php printString("main.jail"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.jail"); ?></p>
+                                        <p class="game-info-header">-<?php printString("main.hospital"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.hospital"); ?></p>
+                                        <p class="game-info-header">-<?php printString("business.bank"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.bank"); ?></p>
+                                        <p class="game-info-header">-<?php printString("business.bullet"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.bullet"); ?></p>
+                                        <p class="game-info-header">-<?php printString("business.garage"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.garage"); ?></p>
+                                        <p class="game-info-header">-<?php printString("business.family"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.family"); ?></p>
+                                        <p class="game-info-header">-<?php printString("business.manage"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.manage"); ?></p>
+                                        <p class="game-info-header">-<?php printString("crimes.bike"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.bike"); ?></p>
+                                        <p class="game-info-header">-<?php printString("crimes.car"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.car"); ?></p>
+                                        <p class="game-info-header">-<?php printString("crimes.store"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.store"); ?></p>
+                                        <p class="game-info-header">-<?php printString("crimes.kill"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.kill"); ?></p>
+                                        <p class="game-info-header">-<?php printString("casino.roulette"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.roulette"); ?></p>
+                                        <p class="game-info-header">-<?php printString("casino.scratch"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.scratch"); ?></p>
+                                        <p class="game-info-header">-<?php printString("comms.online"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.online"); ?></p>
+                                        <p class="game-info-header">-<?php printString("comms.friends"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.friends"); ?></p>
+                                        <p class="game-info-header">-<?php printString("comms.news"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.news"); ?></p>
+                                        <p class="game-info-header">-<?php printString("comms.userlist"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.userlist"); ?></p>
+                                        <p class="game-info-header">-<?php printString("comms.mail"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.mail"); ?></p>
+                                        <p class="game-info-header">-<?php printString("help.settings"); ?>-</p>
+                                        <p class="game-info"><?php printString("game.info.settings"); ?></p>
                                     </div>
                                     
                                     <!-- The Settings Tab -->
