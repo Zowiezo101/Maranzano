@@ -1,4 +1,19 @@
 
+// Logging in
+function fetchLogin(data) {
+    return fetchPost("login", data);
+}
+
+// Reseting password
+function fetchReset(data) {
+    return fetchPost("reset", data);
+}
+
+// Registering new user
+function fetchRegister(data) {
+    return fetchPost("register", data);
+}
+
 // Get the player info for the member page
 function fetchPlayerInfo() {
     return fetchGet("get_player_info");

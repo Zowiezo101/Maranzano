@@ -22,7 +22,7 @@
 <!doctype html>
 
 <html>
-    
+    <!-- The HTML head -->
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,20 +46,35 @@
         <title><?php printString($page_title); ?></title>
     </head>
     
+    <!-- The HTML body -->
     <body>        
         
         <!-- The container with all the rows and columns -->
         <div class="container-fluid">
+            
+            <!-- The full contents of this page
+                    For medium and larger screens, it's around half the screen
+                    For smaller than medium, it's the full screen -->
             <div class="row">
-                <div class="col-md-6 mx-auto">
+                <div class="col-md-8 col-lg-6 mx-auto">
+                    
+                    <!-- The card to show the reset form -->
                     <div class="card bg-body-secondary text-center">
+                        
+                        <!-- The card header -->
                         <div id="card-header" class="card-header bg-body-tertiary">
                             <?php echo $header; ?>
                         </div>
+                        
+                        <!-- The card body -->
                         <div class="card-body">
+                            
+                            <!-- Card title -->
                             <h5 id="card-title" class="card-title">
                                 <?php echo $title; ?>
                             </h5>
+                            
+                            <!-- Card text -->
                             <p id="card-text"  class="card-text">
 <?php if ($user == "") { ?>
                                 <?php printString("reset.again"); ?>
@@ -110,7 +125,7 @@
         event.preventDefault();
         
         // Remove any previous errors
-        onResetAllForms();
+        onResetVisibility();
         
         // The data for registering
         var resetPass1 = $("#resetPassword").val();

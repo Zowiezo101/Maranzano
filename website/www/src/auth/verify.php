@@ -22,7 +22,7 @@
 <!doctype html>
 
 <html>
-    
+    <!-- The HTML head -->
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,6 +46,7 @@
         <title><?php printString($page_title); ?></title>
     </head>
     
+    <!-- The HTML body -->
     <body>
         
         <!-- The container with all the rows and columns -->

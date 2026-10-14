@@ -54,7 +54,7 @@ class Register {
         // Create a new player for this user
         $this->player->createPlayer($id, $player);
         
-        $this->sendVerificationToken();
+        $this->sendVerificationToken($id);
     }
     
     private function verifyUser() {
