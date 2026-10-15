@@ -1,4 +1,8 @@
 
+/*
+ * Loading pages
+ */
+
 function onOnlineTab() {
     
     // The fetch call
@@ -72,6 +76,122 @@ function onMailTab() {
         // Show an error if anything went wrong
         alert("error: " + results);
     });
+}
+
+/*
+ * onPageLoad
+ */
+
+$(function() {
+    // Make sure the login modal gets reset whenever it gets hidden
+    $("#messageModal").on("hidden.bs.modal", function(){
+        onModalMessage();
+    });
+
+    // Set prevent page reloading when submitting form
+    $("#friendForm").on("submit", function(e) {onSubmitFriend(e);});
+    $("#messageForm").on("submit", function(e) {onSubmitMessage(e);});
+    
+    // Show the message content in the message modal
+    onModalMessage();
+});
+
+/*
+ * Submitting forms
+ */
+
+function onSubmitFriend() {
+    event.preventDefault();
+        
+    // Remove any previous errors or message
+    onResetVisibility();
+        
+    // The data for the request
+    var player = $("#friendName").val();
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "player" : player
+    };
+    
+    fetchAddFriend(data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#friendAddError");
+        } else {
+            // Show the success message
+            $("#friendAddSuccess").removeClass("d-none");
+            
+            // Update the friends table
+            onFriendsTab();
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
+    
+// Create a fetch call to prevent reloading the page
+function onSubmitMessage(event) {
+    event.preventDefault();
+
+    // Remove any previous errors
+    onResetVisibility();
+
+    // The data for resetting password
+    var messageReceiver = $("#messageForm").data("receiver-id");
+    var messageSubject = $("#messageSubject").val();
+    var messageBody = $("#messageBody").val();
+
+    // Put the data in an easier-to-send format
+    var data = {
+        "id": messageReceiver,
+        "subject": messageSubject,
+        "body": messageBody
+    };
+
+    // The fetch call
+    fetchSendMessage(data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#messageError");
+        } else {
+            // Success, show the confirm content
+            onInformMessage();
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
+
+/*
+ * Updating elements after page load
+ */
+
+function updatePlayerList(data) {
+    $("#onlineList").empty();
+    
+    var names = [];
+    if (data.length > 0) {
+        for (var row in data) {
+            var name = data[row]["name"];
+            
+            if (data[row]["is_confirmed"] === 1) {
+                name = `<span class="text-blue"><b>${data[row]["name"]}</b></span>`;
+            }
+            
+            names.push(name);
+        }
+    }
+
+    $("#onlineList").append(names.join(", "));
 }
 
 function updateFriendList(data) {
@@ -155,25 +275,6 @@ function updatePlayerTable(data) {
     $("#playerlist tbody").append(rows.join(""));
 }
 
-function updatePlayerList(data) {
-    $("#onlineList").empty();
-    
-    var names = [];
-    if (data.length > 0) {
-        for (var row in data) {
-            var name = data[row]["name"];
-            
-            if (data[row]["is_confirmed"] === 1) {
-                name = `<span class="text-blue"><b>${data[row]["name"]}</b></span>`;
-            }
-            
-            names.push(name);
-        }
-    }
-
-    $("#onlineList").append(names.join(", "));
-}
-
 function updateMailTable(data) {
     $("#maillist tbody").empty();
     
@@ -236,6 +337,10 @@ function updateMailTable(data) {
 
     $("#maillist tbody").append(rows.join(""));
 }
+
+/*
+ * Clicking buttons
+ */
 
 function onClickMessage(player_id, player_name) {
     // Update the title
@@ -463,43 +568,13 @@ function onClickDelete() {
     });
 }
 
-function onSubmitFriend() {
-    event.preventDefault();
-        
-    // Remove any previous errors or message
-    onResetVisibility();
-        
-    // The data for the request
-    var player = $("#friendName").val();
-        
-    // Put the data in an easier-to-send format
-    var data = {
-        "player" : player
-    };
-    
-    fetchAddFriend(data).then(function(results) {
-        // Handle the results of the fetch call
-
-        if (results.error !== "" && results.error !== null) {
-            // Something went wrong, show an error message
-            onReturnedError(results.error, "#friendAddError");
-        } else {
-            // Show the success message
-            $("#friendAddSuccess").removeClass("d-none");
-            
-            // Update the friends table
-            onFriendsTab();
-        }
-
-    }).catch(function(results) {
-        // Show an error if anything went wrong
-        alert("error: " + results);
-    });
-}
+/*
+ * Clicking modals
+ */
     
 // Load the form sending a message
 function onModalMessage() {
-    // Clear out filed in fields
+    // Clear out filled in fields
     $(".message-field").val("");
     
     // Make sure to show the correct screen
@@ -507,63 +582,12 @@ function onModalMessage() {
     $("#messageSuccess").addClass("d-none");
 }
     
-// Create a fetch call to prevent reloading the page
-function onSubmitMessage(event) {
-    event.preventDefault();
-
-    // Remove any previous errors
-    onResetVisibility();
-
-    // The data for resetting password
-    var messageReceiver = $("#messageForm").data("receiver-id");
-    var messageSubject = $("#messageSubject").val();
-    var messageBody = $("#messageBody").val();
-
-    // Put the data in an easier-to-send format
-    var data = {
-        "id": messageReceiver,
-        "subject": messageSubject,
-        "body": messageBody
-    };
-
-    // The fetch call
-    fetchSendMessage(data).then(function(results) {
-        // Handle the results of the fetch call
-
-        if (results.error !== "" && results.error !== null) {
-            // Something went wrong, show an error message
-            onReturnedError(results.error, "#messageError");
-        } else {
-            // Success, show the confirm content
-            onInformMessage();
-        }
-
-    }).catch(function(results) {
-        // Show an error if anything went wrong
-        alert("error: " + results);
-    });
-}
-    
 // Update the form to inform the player that a message has been sent
 function onInformMessage() {
-    // Clear out filed in fields
+    // Clear out filled in fields
     $(".message-field").val("");
     
     // Make sure to show the correct screen
     $("#messageForm").addClass("d-none");
     $("#messageSuccess").removeClass("d-none");
 }
-
-$(function() {
-    // Set prevent page reloading when submitting form
-    $("#friendForm").on("submit", function(e) {onSubmitFriend(e);});
-    $("#messageForm").on("submit", function(e) {onSubmitMessage(e);});
-    
-    // Make sure the login modal gets reset whenever it gets hidden
-    $("#messageModal").on("hidden.bs.modal", function(){
-        onModalMessage();
-    });
-
-    // Show the message content in the message modal
-    onModalMessage();
-});

@@ -1,4 +1,8 @@
-    
+
+/*
+ * Loading pages
+ */
+
 function onBankTab() {
     
     // The fetch call
@@ -38,6 +42,24 @@ function onGarageTab() {
         alert("error: " + results);
     });
 }
+
+/*
+ * onPageLoad
+ */
+
+$(function() {
+    // Set prevent page reloading when submitting form
+    $("#shopForm").on("submit", function(e) {onSubmitShop(e);});
+    $("#swapForm").on("submit", function(e) {onSubmitSwap(e);});
+    $("#depositForm").on("submit", function(e) {onSubmitDeposit(e);});
+    $("#withdrawForm").on("submit", function(e) {onSubmitWithdraw(e);});
+    $("#sendForm").on("submit", function(e) {onSubmitSend(e);});
+    $("#garageForm").on("submit", function(e) {onSubmitSell(e);});
+});
+
+/*
+ * Submitting forms
+ */
     
 function onSubmitShop(event) {
     event.preventDefault();
@@ -132,7 +154,9 @@ function onSubmitDeposit(event) {
         if (results.error !== "" && results.error !== null) {
             // Something went wrong, show an error message
             onReturnedError(results.error, "#depositError");
-        } else {    
+        } else {
+            // Successfully deposited money
+            
             // Show the success message
             $("#depositSuccess").removeClass("d-none");
             
@@ -167,6 +191,8 @@ function onSubmitWithdraw(event) {
             // Something went wrong, show an error message
             onReturnedError(results.error, "#withdrawError");
         } else {    
+            // Successfully withdrew money
+            
             // Show the success message
             $("#withdrawSuccess").removeClass("d-none");
             
@@ -202,7 +228,9 @@ function onSubmitSend(event) {
         if (results.error !== "" && results.error !== null) {
             // Something went wrong, show an error message
             onReturnedError(results.error, "#sendError");
-        } else {    
+        } else {
+            // Successfully send money
+            
             // Show the success message
             $("#sendSuccess").removeClass("d-none");
             
@@ -246,12 +274,13 @@ function onSubmitSell(event) {
             // Something went wrong, show an error message
             onReturnedError(results.error, "#sellError");
         } else {
-            
-            // Update the table with the new amounts
-            updatePlayerInfo();
+            // Successfully sold vehicles
             
             // Refresh the page
             onGarageTab();
+            
+            // Update the table with the new amounts
+            updatePlayerInfo();
         }
 
     }).catch(function(results) {
@@ -259,6 +288,51 @@ function onSubmitSell(event) {
         alert("error: " + results);
     });
 }
+
+/*
+ * Updating elements after page load
+ */
+
+function updateFriendSelect(select, data) {
+    var options = [];
+    
+    for (var value of Object.values(data)) {     
+        var id = value["id"];
+        var name = value["name"];
+        
+        options.push(`<option class="friend-option" value="${id}">${name}</option>`); 
+    }
+    
+    // Remove the previous location options
+    $(".friend-option").remove();
+    
+    // Insert the new location options
+    $("#" + select).append(options.join(""));
+}
+
+function updateGarageTable(data) {
+    $("#garageTable tbody").empty();
+    
+    var rows = [];
+    if (data.length > 0) {
+        for (var row in data) {
+            rows.push(
+            `<tr>
+                <td><img class="img-fluid border border-2 border-black" src="${data[row]["img"]}"/></td>
+                <td>${data[row]["worth"]}</td>
+                <td><input class="form-check-input" type="checkbox" value="${data[row]["id"]}"></td>
+            </tr>`);
+        }
+    } else {
+        $("#garageTableError").removeClass("d-none");
+    }
+
+    $("#garageTable tbody").append(rows.join(""));
+}
+
+/*
+ * Clicking buttons
+ */
 
 function onClickCheckbox() {
     // All the select boxes
@@ -295,52 +369,4 @@ function onSelectAll() {
         $('#garageTable tbody').find('[type="checkbox"]').prop('checked', false);
     }
 }
-
-function updateFriendSelect(select, data) {
-    var options = [];
-    
-    for (var value of Object.values(data)) {     
-        var id = value["id"];
-        var name = value["name"];
-        
-        options.push(`<option class="friend-option" value="${id}">${name}</option>`); 
-    }
-    
-    // Remove the previous location options
-    $(".friend-option").remove();
-    
-    // Insert the new location options
-    $("#" + select).append(options.join(""));
-}
-
-function updateGarageTable(data) {
-    $("#garageTable tbody").empty();
-    
-    var rows = [];
-    if (data.length > 0) {
-        for (var row in data) {
-            // Name, time, city, BUST OUT
-            rows.push(
-            `<tr>
-                <td><img class="img-fluid border border-2 border-black" src="${data[row]["img"]}"/></td>
-                <td>${data[row]["worth"]}</td>
-                <td><input class="form-check-input" type="checkbox" value="${data[row]["id"]}"></td>
-            </tr>`);
-        }
-    } else {
-        $("#garageTableError").removeClass("d-none");
-    }
-
-    $("#garageTable tbody").append(rows.join(""));
-}
-
-$(function() {
-    // Set prevent page reloading when submitting form
-    $("#shopForm").on("submit", function(e) {onSubmitShop(e);});
-    $("#swapForm").on("submit", function(e) {onSubmitSwap(e);});
-    $("#depositForm").on("submit", function(e) {onSubmitDeposit(e);});
-    $("#withdrawForm").on("submit", function(e) {onSubmitWithdraw(e);});
-    $("#sendForm").on("submit", function(e) {onSubmitSend(e);});
-    $("#garageForm").on("submit", function(e) {onSubmitSell(e);});
-});
 

@@ -1,4 +1,8 @@
 
+/*
+ * Loading pages
+ */
+
 function onBikeTab() {
     $("#bikeTry").removeClass("d-none");
     
@@ -55,6 +59,21 @@ function onStoreTab() {
         alert("error: " + results);
     });
 }
+
+/*
+ * onPageLoad
+ */
+
+$(function() {
+    // Set prevent page reloading when submitting form
+    $("#bikeForm").on("submit", function(e) {onSubmitBike(e);});
+    $("#carForm").on("submit", function(e) {onSubmitCar(e);});
+    $("#storeForm").on("submit", function(e) {onSubmitStore(e);});
+});
+
+/*
+ * Submitting forms
+ */
     
 function onSubmitBike(event) {
     event.preventDefault();
@@ -70,6 +89,7 @@ function onSubmitBike(event) {
             onReturnedError(results.error, "#bikeError");
         } else {
             // Successfully attempted to steal a bike
+            
             if (results.data !== "") {
                 // We succeeded in stealing the bike!
                 $("#bikeTry").addClass("d-none");
@@ -107,6 +127,7 @@ function onSubmitCar(event) {
             onReturnedError(results.error, "#carError");
         } else {
             // Successfully attempted to steal a car
+            
             if (results.data !== "") {
                 // We succeeded in stealing the car!
                 $("#carTry").addClass("d-none");
@@ -144,6 +165,7 @@ function onSubmitStore(event) {
             onReturnedError(results.error, "#storeError");
         } else {
             // Successfully attempted to rob a store
+            
             if (results.data !== "") {
                 // We succeeded in robbing the store!
                 $("#storeTry").addClass("d-none");
@@ -165,14 +187,3 @@ function onSubmitStore(event) {
         alert("error: " + results);
     });
 }
-
-$(function() {
-    // Set prevent page reloading when submitting form
-    $("#bikeForm").on("submit", function(e) {onSubmitBike(e);});
-    $("#carForm").on("submit", function(e) {onSubmitCar(e);});
-    $("#storeForm").on("submit", function(e) {onSubmitStore(e);});
-    
-    // The buttons to go to jail and our garage
-    $(".goToGarage").on("click", function(e) {onClickGarage(e);});
-    $(".goToJail").on("click", function(e) {onClickJail(e);});
-});

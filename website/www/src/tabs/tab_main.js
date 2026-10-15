@@ -1,9 +1,9 @@
 
+/*
+ * Loading pages
+ */
+
 function onHomeTab() {
-    var statsError = $("#playerStatsError");
-    var crimeError = $("#playerCrimeError");
-    var statsTable = $("#playerStats");
-    var crimeTable = $("#criminalRecord");
     
     // The fetch call
     fetchPlayerStats().then(function(results) {
@@ -11,10 +11,12 @@ function onHomeTab() {
 
         if (results.error !== "" && results.error !== null) {
             // Something went wrong, show an error message
-            statsError.removeClass("d-none");
-            crimeError.removeClass("d-none");
-            statsTable.addClass("d-none");
-            crimeTable.addClass("d-none");
+            $("#playerStatsError").removeClass("d-none");
+            $("#playerCrimeError").removeClass("d-none");
+            
+            // And hide the tables
+            $("#playerStats").addClass("d-none");
+            $("#criminalRecord").addClass("d-none");
         } else {            
             // Success, update the table
             updateTable("home", results.data);
@@ -46,9 +48,6 @@ function onTravelTab() {
 }
 
 function onJailTab() {
-            
-    // Update the table with the new data
-    updatePlayerInfo();
     
     // The fetch call
     fetchAllInmates().then(function(results) {
@@ -68,9 +67,6 @@ function onJailTab() {
 }
 
 function onHospitalTab() {
-            
-    // Update the table with the new data
-    updatePlayerInfo();
     
     // The fetch call
     fetchHospitalTime().then(function(results) {
@@ -88,8 +84,22 @@ function onHospitalTab() {
         alert("error: " + results);
     });
 }
+
+/*
+ * onPageLoad
+ */
+
+$(function() {
+    // Set prevent page reloading when submitting form
+    $("#newPlayerForm").on("submit", function(e) {onSubmitNewPlayer(e);});
+    $("#travelForm").on("submit", function(e) {onSubmitTravel(e);});
+});
+
+/*
+ * Submitting forms
+ */
     
-// Create a fetch call to prevent reloading the page
+// Creating a new player after this one got killed
 function onSubmitNewPlayer(event) {
     event.preventDefault();
         
@@ -112,6 +122,7 @@ function onSubmitNewPlayer(event) {
             onReturnedError(results.error, "#newPlayerError");
         } else {
             // Successfully started anew
+            
             // Show the home tab
             $("#btnHome").click();
         }
@@ -122,7 +133,7 @@ function onSubmitNewPlayer(event) {
     });
 }
 
-// Create a fetch call to prevent reloading the page
+// Traveling to a new location
 function onSubmitTravel(event) {
     event.preventDefault();
         
@@ -160,11 +171,9 @@ function onSubmitTravel(event) {
     });
 }
 
-$(function() {
-    // Set prevent page reloading when submitting form
-    $("#newPlayerForm").on("submit", function(e) {onSubmitNewPlayer(e);});
-    $("#travelForm").on("submit", function(e) {onSubmitTravel(e);});
-});
+/*
+ * Updating elements after page load
+ */
 
 function updateLocationSelect(select, data) {
     var options = [];
@@ -211,6 +220,21 @@ function updateJailTable(data) {
     $("#jail tbody").append(rows.join(""));
 }
 
+function updateHospitalData(data) {
+    $("#hospitalTime").text(data["time"]);
+    $("#hospitalAmount").text(data["amount"]);
+    
+    if (data["amount"] > 0) {
+        $("#hospitalBill").removeClass("d-none");
+    } else {
+        $("#hospitalBill").addClass("d-none");
+    }
+}
+
+/*
+ * Clicking buttons
+ */
+
 function payPlayerBail(id) {
         
     // Remove any previous errors
@@ -228,9 +252,13 @@ function payPlayerBail(id) {
             // Something went wrong, show an error message
             onReturnedError(results.error, "#actionError");
         } else {
-            // Successfully paid bail            
+            // Successfully paid bail   
+                     
             // Update the table with the data
             onJailTab();
+            
+            // Update the table with the data
+            updatePlayerInfo();
         }
 
     }).catch(function(results) {
@@ -260,25 +288,18 @@ function bustPlayerOut(id) {
                 // We were sent to Jail!
                 $("#actionNoSuccess").removeClass("d-none");
             }
+            
             // Update the table with the data
             onJailTab();
+            
+            // Update the table with the data
+            updatePlayerInfo();
         }
 
     }).catch(function(results) {
         // Show an error if anything went wrong
         alert("error: " + results);
     });
-}
-
-function updateHospitalData(data) {
-    $("#hospitalTime").text(data["time"]);
-    $("#hospitalAmount").text(data["amount"]);
-    
-    if (data["amount"] > 0) {
-        $("#hospitalBill").removeClass("d-none");
-    } else {
-        $("#hospitalBill").addClass("d-none");
-    }
 }
 
 function payHospitalBill() {
@@ -293,9 +314,13 @@ function payHospitalBill() {
             // Something went wrong, show an error message
             onReturnedError(results.error, "#hospitalError");
         } else {
-            // Successfully paid bail            
+            // Successfully paid bail    
+                    
             // Update the table with the data
             onHospitalTab();
+            
+            // Update the table with the data
+            updatePlayerInfo();
         }
 
     }).catch(function(results) {

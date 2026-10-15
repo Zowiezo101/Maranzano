@@ -98,10 +98,6 @@ function onShowTab(event) {
 }
 
 function updatePlayerInfo() {
-    var infoError = $("#playerInfoError");
-    var infoTable = $("#playerInfo");
-    
-    // TODO: Insert the unread messages icon 
 
     // The fetch call
     fetchPlayerInfo().then(function(results) {
@@ -109,14 +105,14 @@ function updatePlayerInfo() {
 
         if (results.error !== "" && results.error !== null) {
             // Something went wrong, show an error message
-            infoError.removeClass("d-none");
-            infoTable.addClass("d-none");
+            $("#playerInfoError").removeClass("d-none");
+            $("#playerInfo").addClass("d-none");
         } else {
             insertPlayerInfo(results.data);
 
             // Remove the error message
-            infoError.addClass("d-none");
-            infoTable.removeClass("d-none");
+            $("#playerInfoError").addClass("d-none");
+            $("#playerInfo").removeClass("d-none");
         }
 
     }).catch(function(results) {
@@ -126,6 +122,7 @@ function updatePlayerInfo() {
 }
 
 function updateOnlineCount() {
+    
     // The fetch call
     fetchOnlinePlayers().then(function(results) {
         // Handle the results of the fetch call
@@ -217,8 +214,6 @@ $(function () {
 
     // Load the home tab after the page has loaded
     $("#btnHome").click();
-    // TODO:
-    $("#btnMail").click();
 });
 
 function onClickGarage() {

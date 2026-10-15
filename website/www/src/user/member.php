@@ -13,6 +13,7 @@
 <!doctype html>
 
 <html>
+    <!-- The HTML head -->
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,34 +47,49 @@
         <title><?php printString($page_title); ?></title>
     </head>
     
-    <!-- The HTML body -->
+    <!-- The HTML body 
+        I've added plenty of comments for myself, because I know I'm gonna
+        forget everything within a month of not working on this project -->
     <body class="body-class">
         
         <!-- The container with all the rows and columns -->
         <div class="container-fluid">
             
             <!-- The full contents of this page
-                    For medium and larger screens, it's half the screen
+                    For medium and larger screens, it's around half the screen
                     For smaller than medium, it's the full screen -->
             <div class="row">
                 <div class="col-12 col-md-8 col-lg-6 mx-auto">
+                    
+                    <!-- Page contents -->
                     <div class="row bg-body-secondary">
                         
                         <!-- Sidebar -->
-                        <div class="col-4 col-lg-3 border border-3 border-black">
+                        <div class="col-4 col-lg-3 bordered">
                             
-                            <!-- Player name -->
-                            <div class="row fst-normal bg-body-tertiary border-bottom border-3 border-black">
-                                <div class="col-8">
-                                    <b id="playerName"></b>
+                            <!-- Player name & Unread messages notification -->
+                            <div class="row bg-body-tertiary bordered-bottom">
+                                
+                                <!-- The player name (So NOT the username) -->
+                                <div id="playerName" class="col-8 fw-bold">
+                                    <!-- Filled in by JS -->
                                 </div>
+                                
                                 <div id="playerUnread" class="d-none col-4 text-end">
-                                    <button class="btn btn-light-outline p-0 my-0" onclick="onClickMail()"><i class="fa-solid fa-envelope pe-2"></i></button>
+                                    
+                                    <!-- Unread messages icon -->
+                                    <button class="btn btn-light-outline p-0 my-0" onclick="onClickMail()">
+                                        <!-- Little envelope to show the user that
+                                            they've got unread messages -->
+                                        <i class="fa-solid fa-envelope pe-2"></i>
+                                    </button>
                                 </div>
                             </div>
                             
                             <!-- Player info -->
-                            <div class="row pt-2 pb-3 px-1 border-bottom border-3 border-black">
+                            <div class="row pt-2 pb-3 px-1 bordered-bottom">
+                                
+                                <!-- Table with the player info (filled in by JS) -->
                                 <table id="playerInfo" class="fw-bold">
                                     <?php printTableTemplate("info", ["cash", "bank",
                                                                       "rank", "progress",
@@ -88,6 +104,8 @@
                             
                             <!-- Menu -->
                             <div class="row">
+                                
+                                <!-- Tablist is also an acordion, so the menu's can be minimized -->
                                 <div class="col-12 mt-2 accordion" role="tablist">
                                     <?php printMenu("main", ["home"     => $RANK_ROOKIE, 
                                                              "travel"   => $RANK_ROOKIE, 
@@ -132,17 +150,17 @@
                                     <div class="mt-3 px-3">
                                         <?php getOnlineUsers(); ?>
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Content -->
-                        <div class="col-8 col-lg-9 border border-3 border-start-0 border-black">
+                        <div class="col-8 col-lg-9 bordered border-start-0">
 
                             <!-- Header -->
-                            <div class="row bg-body border-bottom border-3 border-black">
+                            <div class="row bg-body bordered-bottom">
                                 <div class="col px-3 px-lg-5 pt-1 mx-3 mx-lg-5">
+                                    
                                     <!-- The Banner and version number --> 
                                     <img class="img-fluid" src="img/Mafiani_wit.png" alt="Mafiani"/>
                                 </div>
@@ -150,7 +168,7 @@
                             
                             <!-- Selected tab -->
                             <div class="row">
-                                <div class="col-10 mx-auto tab-content" role="tab-content">
+                                <div class="col-10 mx-auto g-0 tab-content" role="tab-content">
                                     <!--
                                         Main menu
                                     -->
@@ -186,11 +204,9 @@
                     </div>
 
                     <!-- The Footer -->
-                    <div class="row text-center text-black">
+                    <div class="row home-footer">
                         <?php printString("global.copyright"); ?>
-                        
                     </div>
-                    
                 </div>
             </div>
         </div>
