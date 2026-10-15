@@ -23,6 +23,11 @@ class Controller {
             
             // Passing on the database connection
             $conn = $this->db->getConnection();
+
+            // Do not continue if the database connection wasn't successful
+            if (!isset($conn)) {
+                throwError("auth.db_error");
+            }
         
             // Registering
             if (str_starts_with($route, "register")) {
@@ -101,10 +106,10 @@ class Controller {
                 // Set the data in the message object, to send it back to the client
                 $this->message->setData($result);
             }
-        } catch (\Exception $ex) {
-            // Set the error in the message object, to send it back to the client
-            $this->message->setError($ex->getMessage(), $ex->getCode());
         } catch (\PDOException $ex) {
+            // Set the error in the message object, to send it back to the client
+            $this->message->setError("auth.db_error", Message::CODE_ERROR);
+        } catch (\Exception $ex) {
             // Set the error in the message object, to send it back to the client
             $this->message->setError($ex->getMessage(), $ex->getCode());
         }

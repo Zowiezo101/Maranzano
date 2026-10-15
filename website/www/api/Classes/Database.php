@@ -21,7 +21,7 @@ class Database {
             // We want to work with UTC only
             $this->conn->exec("SET time_zone = '+00:00'");
         } catch (\PDOException) {
-            throwError();
+            // We caught the error and will see in Controller->route that the connection has failed
         }
     }
     
