@@ -123,8 +123,11 @@ function onSubmitNewPlayer(event) {
         } else {
             // Successfully started anew
             
-            // Show the home tab
+            // The click allows the tablist to be enabled again
             $("#btnHome").click();
+            
+            // Show the home tab
+            $("#btnHome").tab("show");
         }
 
     }).catch(function(results) {

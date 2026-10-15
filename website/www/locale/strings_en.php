@@ -147,6 +147,7 @@ $strings = [
     "info.died" => "You died!! You were killed by ",
     "info.new-name" => "Your new Mafia name",
     "info.startover" => "Start over",
+    "info.still_alive" => "You can't start over. You are still alive",
     
     // Bank page
     "bank.info" => "Your bank balance will remain after death, but you can't use this balance for purchases",

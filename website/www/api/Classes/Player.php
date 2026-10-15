@@ -160,6 +160,13 @@ class Player {
     private function resetPlayer() {
         
         $user_id = $this->getUserId();
+
+        // Make sure the current player is deceased
+        $player_old = $this->getPlayer($user_id);
+
+        if ($player_old["deceased"] !== 1) {
+            throwError("info.still_alive");
+        }
         
         // Try to get the expected parameters
         $player = $this->parameters->getPlayer();

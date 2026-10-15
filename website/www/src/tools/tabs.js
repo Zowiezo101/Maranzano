@@ -151,10 +151,6 @@ function insertPlayerInfo(data) {
         $("#playerUnread").addClass("d-none");
     }
 
-    // This is for the tombstone
-    $("#tombName").html(data["name"]);
-    $("#tombRank").html(getRankName(data["rank"]));
-
     // Is the player still alive?
     isAlive(data);
 
@@ -168,6 +164,11 @@ function insertPlayerInfo(data) {
 function isAlive(data) {
     
     if (data["deceased"] === true) {
+
+        // This is for the tombstone
+        $("#tombName").html(data["name"]);
+        $("#tombRank").html(getRankName(data["rank"]));
+    
         // Add a cross to your name
         addCross("playerName");
         
@@ -179,11 +180,11 @@ function isAlive(data) {
             addCross("killerName");
         }
         
+        // Show the deceased tab
+        $("#btnDeceased").tab("show");
+        
         // Disable some tabs temporarily
         $('[role="tab"]').attr("disabled", true);
-        
-        // Show the deceased tab
-        $("#btnDeceased").click();
     } else {
         // Enable all tabs again
         $('[role="tab"]').attr("disabled", false);
