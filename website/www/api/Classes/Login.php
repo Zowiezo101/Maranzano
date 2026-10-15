@@ -3,6 +3,9 @@
 namespace Classes;
 
 class Login {
+
+    // The connection
+    private $conn;
     
     // Other classes
     private $user;    
@@ -11,6 +14,7 @@ class Login {
     private $parameters;   
     
     public function __construct($conn) {
+        $this->conn = $conn;
         $this->parameters = new Parameters();
         $this->user = new User($conn);
         $this->player = new Player($conn);
@@ -79,7 +83,7 @@ class Login {
             // Create a cookie
             $this->createCookies($token, $name);
         } else {
-            throwError("login.error", Message::CODE_ERROR);
+            throwError("auth.login.invalid", Message::CODE_ERROR);
         }
     }
     
@@ -125,7 +129,7 @@ class Login {
     }
     
     private function logoutUser() {
-        
+        // TODO:
     }
     
     private function getOnlinePlayers() {
