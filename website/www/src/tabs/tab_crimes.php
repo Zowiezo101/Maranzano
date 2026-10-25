@@ -108,7 +108,7 @@
                                             <form id="storeForm">       
                                                 <!-- Attempt button -->
                                                 <div class="col-6 mx-auto">
-                                                    <button type="submit" class="btn btn-primary borderd w-100"><?php printString("store.try")?></button>
+                                                    <button type="submit" class="btn btn-primary bordered w-100"><?php printString("store.try")?></button>
                                                 </div>
 
                                                 <!-- Error message -->

@@ -27,6 +27,10 @@ class Action {
         "hospital_time",
         // See all the vehicles in the garage
         "garage_all",
+        // Return the success chance
+        "crime_chance_bike",
+        "crime_chance_car",
+        "crime_chance_store",
     ];
     
     // Whitelisted actions when in Jail or Hospital
@@ -41,6 +45,10 @@ class Action {
         "hospital_bill",
         // See all the vehicles in the garage
         "garage_all",
+        // Return the success chance
+        "crime_chance_bike",
+        "crime_chance_car",
+        "crime_chance_store",
     ];
     
     public function __construct($conn) {
