@@ -92,8 +92,10 @@ class Bank extends Action {
         // Make sure the player has enough balance to send this amount
         $this->enoughFunds($player["bank"], $amount, "bank.send.broke");
         
+        $friend_obj = new Friend($this->conn);
+        
         // Check this person is actually a friend of the player
-        $friend = $this->player->retrieveFriendFromId($player["id"], $friend_id);
+        $friend = $friend_obj->retrieveFriendFromId($player["id"], $friend_id);
         
         if (!isset($friend)) {
             // Do NOT continue if this friend can't be found
