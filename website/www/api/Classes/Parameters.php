@@ -285,20 +285,20 @@ class Parameters {
         return $result;
     }
     
-    public function getId() {
+    public function getId($error = "data.id.invalid") {
         
         $result = null;
         
         // Get everything from the POST body
         $source = "POST";
         
-        // Validate the location
+        // Validate the ID
         if (!isset($this->data[$source]["id"])) {
             // ID isn't set
-            throwError("data.id.invalid", Message::CODE_INVALID);
+            throwError($error, Message::CODE_INVALID);
         } else if (!is_numeric($this->data[$source]["id"])) {
             // Not a valid ID
-            throwError("data.id.invalid", Message::CODE_INVALID);
+            throwError($error, Message::CODE_INVALID);
         } else {
             // This ID is valid
             $result = $this->data[$source]["id"];
@@ -307,7 +307,12 @@ class Parameters {
         return $result;
     }
     
-    public function getIds() {
+    public function getPlayerId() {
+        
+        return $this->getId("data.player.invalid");
+    }
+    
+    public function getIds($error = "data.ids.invalid") {
         
         $result = null;
         
@@ -317,16 +322,21 @@ class Parameters {
         // Validate the location
         if (!isset($this->data[$source]["ids"])) {
             // IDs aren't set
-            throwError("data.ids.invalid", Message::CODE_INVALID);
+            throwError($error, Message::CODE_INVALID);
         } else if (!preg_match('/^[0-9,]+$/', $this->data[$source]["ids"])) {
             // No valid IDs
-            throwError("data.ids.invalid", Message::CODE_INVALID);
+            throwError($error, Message::CODE_INVALID);
         } else {
             // These IDs are valid
             $result = explode(",", $this->data[$source]["ids"]);
         }
         
         return $result;
+    }
+    
+    public function getPlayerIds() {
+        
+        return $this->getIds("data.players.invalid");
     }
     
     public function getSubject() {

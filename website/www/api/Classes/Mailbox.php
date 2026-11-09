@@ -38,10 +38,6 @@ class Mailbox {
                 $result = $this->getMessages();
                 break;
             
-            case "message_send":
-                $result = $this->sendMessage();
-                break;
-            
             case "message_delete":
                 $result = $this->deleteMessages();
                 break;
@@ -189,17 +185,18 @@ class Mailbox {
         $this->sendMessageToPlayer(self::SYSTEM_ID, $friend_id, $subject1, $body1);
     }
     
-    public function getFriendName($message_id) {
+    public function getFriendName($message_id, $player_id) {
         $conn = $this->conn;
         
         // The SQL
-        $sql = "SELECT subject FROM messages WHERE id = :id";
+        $sql = "SELECT subject FROM messages WHERE id = :id AND receiver_id = :player_id";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);
 
         // Bind the parameter
         $stmt->bindValue(":id", $message_id, PDO::PARAM_INT);
+        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_INT);
 
         // Execute the statement
         $stmt->execute();

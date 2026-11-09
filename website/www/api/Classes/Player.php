@@ -367,10 +367,6 @@ class Player {
         // Get the user using the username
         $user = $this->user->getUser(name: $user_name);
         
-        if (!isset($user)) {
-            throwError();
-        }
-        
         return $user;
     }
     

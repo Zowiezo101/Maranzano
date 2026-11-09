@@ -180,7 +180,7 @@ class Friend extends Player {
         $message_id = $this->parameters->getId();
         
         // Get the player_name from the message
-        $friend_name = $this->mailbox->getFriendName($message_id);
+        $friend_name = $this->mailbox->getFriendName($message_id, $player["id"]);
 
         // Get the possibly future friend data
         $friend = $this->retrievePlayerFromName($friend_name); 
@@ -188,6 +188,10 @@ class Friend extends Player {
         if (!isset($friend)) {
             // Do NOT continue if this person can't be found
             throwError("friends.player_not_found");
+        }
+        
+        if ($friend["id"] === $player["id"]) {
+            throwError("friends.self");
         }
         
         if ($friend["deceased"] !== 0) {
@@ -214,7 +218,7 @@ class Friend extends Player {
         $message_id = $this->parameters->getId();
         
         // Get the player_name from the message
-        $friend_name = $this->mailbox->getFriendName($message_id);
+        $friend_name = $this->mailbox->getFriendName($message_id, $player["id"]);
 
         // Get the possibly future friend data
         $friend = $this->retrievePlayerFromName($friend_name); 

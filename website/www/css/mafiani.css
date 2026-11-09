@@ -28,12 +28,12 @@
     --bs-secondary-bg-rgb:  var(--bg-color-secondary-rgb);
     --bs-tertiary-bg:       var(--acc-color);
     --bs-tertiary-bg-rgb:   var(--acc-color-rgb);
-    --bs-link-color:            var(--bs-black);
-    --bs-link-color-rgb:        var(--bs-black-rgb);
-    --bs-link-hover-color:      var(--link-hover-color);
-    --bs-link-hover-color-rgb:  var(--link-hover-color-rgb);
-    --bs-border-width:          2px;
-    --bs-border-color:          var(--bs-black);
+    --bs-link-color:             var(--bs-black);
+    --bs-link-color-rgb:         var(--bs-black-rgb);
+    --bs-link-hover-color:       var(--link-hover-color);
+    --bs-link-hover-color-rgb:   var(--link-hover-color-rgb);
+    --bs-border-width:           2px;
+    --bs-border-color:           var(--bs-black);
 }
 
 /*
@@ -136,6 +136,7 @@
 }
 
 .bordered {
+    
     /* border */
     border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
   
@@ -147,7 +148,16 @@
     border-color: rgba(var(--bs-black-rgb), var(--bs-border-opacity));
 }
 
+.bordered:hover {
+    
+    /* border-black */
+    --bs-border-opacity: 1;
+    border-color: rgba(var(--bs-black-rgb), var(--bs-border-opacity));
+}
+
 .bordered-white {
+    --bs-btn-hover-border-color: var(--bs-white);
+    
     /* border */
     border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
   

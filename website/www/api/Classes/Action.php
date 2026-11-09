@@ -234,8 +234,8 @@ class Action {
         if ($rank < $required_rank) {
             $error = getString("data.rank.too_low");
             
-            $error1 = str_replace("[rank]", getRankName($rank), $error);
-            $error2 = str_replace("[required]", getRankName($required_rank), $error1);
+            $error1 = str_replace("[rank]", getRankName($rank)." (".$rank.")", $error);
+            $error2 = str_replace("[required]", getRankName($required_rank)." (".$required_rank.")", $error1);
             
             // Rank isn't high enough
             throwError($error2, Message::CODE_FORBIDDEN);

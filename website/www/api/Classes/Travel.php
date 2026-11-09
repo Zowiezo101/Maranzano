@@ -57,7 +57,7 @@ class Travel extends Action {
     }
     
     private function differentLocation($current_location, $new_location) {
-        if ($current_location === $new_location) {
+        if (intval($current_location, 10) === intval($new_location, 10)) {
             throwError("travel.current");
         }
     }

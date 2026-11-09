@@ -26,9 +26,11 @@ class Jail extends Action {
             case "jail_city":
                 $result = $this->getCityInmates();
                 break;
+
             case "jail_bail":
                 $result = $this->payPlayerBail();
                 break;
+                
             case "jail_bust":
                 $result = $this->bustPlayerOut();
                 break;
@@ -72,6 +74,9 @@ class Jail extends Action {
     
     private function payPlayerBail() {
         $inmate_id = $this->parameters->getId();
+        
+        // Get the player
+        $player = $this->player_data;
 
         // Get inmate rank
         $inmate = $this->player->retrievePlayerFromId($inmate_id);
@@ -81,11 +86,11 @@ class Jail extends Action {
             throwError("jail.inmate_not_found");
         }
         
+        // Check that the inmate is actually in this jail
+        $this->hasJailCooldownInCity($inmate_id, $player["location_id"]);
+        
         // Get bail price
         $bail = $inmate["rank"] * self::ACTION_COST;
-        
-        // Get the player
-        $player = $this->player_data;
         
         // Check current player cash        
         $this->enoughFunds($player["cash"], $bail, "jail.broke");
@@ -110,6 +115,9 @@ class Jail extends Action {
         
         // The current player
         $player = $this->player_data;
+        
+        // Check that the inmate actually exists
+        $this->hasJailCooldownInCity($inmate_id, $player["location_id"]);
         
         // The chance to succeed
         $rate = $this->player->getPlayerSuccessBikeByRank($player["rank"]);
@@ -178,6 +186,36 @@ class Jail extends Action {
         
         // Set the cooldown
         $this->setJailCooldown($id, $location_id, $cooldown);
+    }
+    
+    private function hasJailCooldownInCity($inmate_id, $location_id) {
+        $conn = $this->conn;
+        
+        // The table
+        $table = self::ACTION_TABLE;
+        
+        // Create a new cooldown
+        $sql = "SELECT player_id FROM {$table} "
+                . "WHERE player_id = :player_id AND location_id = :location_id "
+                . "AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
+        
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":player_id", $inmate_id, PDO::PARAM_INT);
+        $stmt->bindValue(":location_id", $location_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = getResults($stmt);
+        
+        if (!isset($result)) {
+            // Do NOT continue is the inmate wasn't found
+            throwError("jail.no_inmate");
+        }
     }
     
     private function setJailCooldown($player_id, $location_id, $cooldown) {

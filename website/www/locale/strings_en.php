@@ -129,8 +129,8 @@ $strings = [
     "jail.info.pay_bail" => "Pay bail (€[bail])",
     "jail.info.bust_out" => "Bust out ([chance]%)",
     "jail.empty" => "There are currently no players in jail in this city",
-    "jail.inmate_not_found" => "This player doesn't exist anymore",
-    "jail.no_inmate" => "This player isn't in jail anymore",
+    "jail.inmate_not_found" => "This player doesn't exist (anymore)",
+    "jail.no_inmate" => "This player isn't in this jail (anymore)",
     "jail.broke" => "You don't have enough cash to bail this person out",
     
     // Hospital page
@@ -207,7 +207,7 @@ $strings = [
     
     // Friend list page
     "friends.self" => "You can't add yourself as a friend",
-    "friends.player_not_found" => "This player doesn't exist anymore",
+    "friends.player_not_found" => "This player doesn't exist (anymore)",
     "friends.name_not_found" => "We couldn't find any player with that name",
     "friends.already_friends" => "You already are friends with this person",
     "friends.expired" => "This friend request has expired",
@@ -367,7 +367,9 @@ $strings = [
     
     // Data stuff
     "data.id.invalid" => "Please select a valid item",
+    "data.player.invalid" => "Please select a valid person",
     "data.ids.invalid" => "Please select a valid item",
+    "data.players.invalid" => "Please select a valid person",
     "data.location.invalid" => "Please select a valid location",
     "data.amount.invalid" => "Please select a valid amount",
     "data.subject.invalid" => "Please insert a valid message subject line",

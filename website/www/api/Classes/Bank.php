@@ -7,7 +7,7 @@ use PDO;
 class Bank extends Action {
     
     private const ACTION_TABLE = "bank_session";
-    private const ACTION_COOLDOWN = 24*60;
+    private const ACTION_COOLDOWN = 24*60*60;
     private const ACTION_MIN = 1;
     private const ACTION_MAX = 10000;
     
@@ -85,7 +85,7 @@ class Bank extends Action {
         $amount = $this->parameters->getAmount();
         
         // The friend this player wants to send the money to
-        $friend_id = $this->parameters->getId();
+        $friend_id = $this->parameters->getPlayerId();
         
         $this->isValidAmount($amount, min:self::ACTION_MIN, max:self::ACTION_MAX);
 
@@ -100,6 +100,9 @@ class Bank extends Action {
         if (!isset($friend)) {
             // Do NOT continue if this friend can't be found
             throwError("bank.friend_not_found");
+        } else if ($friend["deceased"] === 1) {
+            // Do NOT continue if this friend has deceased
+            throwError("friends.deceased");
         }
         
         // Has this friend already received money from this player?
@@ -164,7 +167,7 @@ class Bank extends Action {
 
         // Genereate the expire date for the verification
         $expiry_date = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
-                            ->modify('+' . $cooldown . ' minutes')
+                            ->modify('+' . $cooldown . ' seconds')
                             ->format('Y-m-d H:i:s');
 
         // Bind the parameter
