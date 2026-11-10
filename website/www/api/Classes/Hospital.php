@@ -56,9 +56,15 @@ class Hospital extends Action {
     }
     
     private function payHospitalBill() {
+        
+        // Get the player
+        $player = $this->player_data;
+        
+        // Check that this persib us actually still in the hospital
+        $this->hasHospitalCooldown($player["id"]);
 
         // Bill depends on the rank of the player and their full health
-        $full_hp = $this->player->getRankHealth($this->player_data["rank"]);
+        $full_hp = $this->player->getRankHealth($player["rank"]);
 
         // Every 10 HP is €1
         $bill = $full_hp / 10;
@@ -81,6 +87,34 @@ class Hospital extends Action {
     /**
      * Other functions
      */
+    
+    private function hasHospitalCooldown($player_id) {
+        $conn = $this->conn;
+        
+        // The table
+        $table = self::ACTION_TABLE;
+        
+        // Create a new cooldown
+        $sql = "SELECT player_id FROM {$table} "
+                . "WHERE player_id = :player_id AND expires_at >= UTC_TIMESTAMP() LIMIT 1";
+        
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = getResults($stmt);
+        
+        if (!isset($result)) {
+            // Do NOT continue if you don't need medical assistence
+            throwError("hospital.none");
+        }
+    }
     
     public function getHospitalTime($player_id) {
         $conn = $this->conn;
