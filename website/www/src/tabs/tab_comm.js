@@ -21,6 +21,7 @@ function onOnlineTab() {
         alert("error: " + results);
     });
 }
+
 function onFriendsTab() {
     
     // The fetch call

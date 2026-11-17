@@ -40,6 +40,9 @@ function onShowTab(event) {
     
     // Update the "X players online" message
     updateOnlineCount();
+    
+    // TODO, check somehow we are now on a different tab
+    // And thus no longer execute code down below
 
     // Insert the data per tab
     switch(event.target.id) {
