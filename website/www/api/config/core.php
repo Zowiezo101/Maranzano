@@ -32,6 +32,7 @@ require __DIR__ . "/../Classes/Crime.php";
 require __DIR__ . "/../Classes/Garage.php";
 require __DIR__ . "/../Classes/Hospital.php";
 require __DIR__ . "/../Classes/Jail.php";
+require __DIR__ . "/../Classes/News.php";
 
 // PHP Mailer
 require __DIR__ . "/../tools/PHPMailer/PHPMailer.php";

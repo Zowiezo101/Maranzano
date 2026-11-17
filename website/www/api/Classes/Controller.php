@@ -99,6 +99,11 @@ class Controller {
                 $controller = new Mailbox($conn);
             }
 
+            // News actions
+            else if (str_starts_with($route, "news")) {
+                $controller = new News($conn);
+            }
+
             if (isset($controller)) {                
                 // Executing the actual request
                 $result = $controller->route($route, $data);

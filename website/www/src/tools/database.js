@@ -169,6 +169,11 @@ function fetchOnlineList() {
     return fetchGet("get_online_players");
 }
 
+// Get the latest news
+function fetchNews() {
+    return fetchGet("get_news");
+}
+
 // Get a list of all the messages for this player
 function fetchAllMessages() {
     return fetchGet("get_messages");

@@ -452,6 +452,51 @@ class Player {
         return $rank_data["store"];
     }
     
+    public function getNewPlayersNews($time_range) {
+        $conn = $this->conn;
+        
+        // Search for the amount of successfull bike steals
+        $sql = "SELECT created_at as date, name FROM players
+                    WHERE created_at > DATE_SUB(UTC_TIMESTAMP, INTERVAL :time_range SECOND)";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":time_range", $time_range, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = getAllResults($stmt);
+        
+        return $this->formatNewsResults($result, News::NEWS_NEW);
+    }
+    
+    public function getKilledPlayersNews($time_range) {
+        $conn = $this->conn;
+        
+        // Search for the amount of successfull bike steals
+        $sql = "SELECT deceased_at as date, name FROM players
+                    WHERE deceased_at > DATE_SUB(UTC_TIMESTAMP, INTERVAL :time_range SECOND)
+                    AND deceased = 1";
+
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameter
+        $stmt->bindValue(":time_range", $time_range, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the results
+        $result = getAllResults($stmt);
+        
+        return $this->formatNewsResults($result, News::NEWS_KILL);
+    }
+    
     public function checkHospitalStatus() {
         $user_id = $this->getUserId();
 
@@ -582,6 +627,23 @@ class Player {
         $result = date("d-m-Y", $time);
         
         return $result;
+    }
+    
+    public function formatNewsResults($data, $type) {
+        $results = [];
+        
+        if (isset($data)) {
+            foreach ($data as $row) {
+
+                $results[] = [
+                    "name" => $row["name"],
+                    "date" => $row["date"],
+                    "type" => $type,
+                ];
+            }
+        }
+        
+        return $results;
     }
     
     /**

@@ -85,6 +85,9 @@ RewriteRule ^(.*)delete_messages$     $1/api/index?route=message_delete [QSA,DPI
 RewriteRule ^(.*)read_message$        $1/api/index?route=message_read [QSA,DPI]
 RewriteRule ^(.*)send_message$        $1/api/index?route=message_send [QSA,DPI]
 
+# News request
+RewriteRule ^(.*)get_news$ $1/api/index?route=news_load [QSA,DPI]
+
 
 # Making sure things are redirected to the correct file types
 RewriteCond %{REQUEST_FILENAME} !-d
