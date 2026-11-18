@@ -90,6 +90,10 @@ function onShowTab(event) {
             onFriendsTab();
             break;
             
+        case "btnNews":
+            onNewsTab();
+            break;
+            
         case "btnUserlist":
             onPlayerlistTab();
             break;

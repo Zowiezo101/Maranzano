@@ -53,6 +53,15 @@ class News {
         // Merge the arrays 
         $results = array_merge($results_kill, $results_new);
         
+        if (isset($results)) {
+            usort($results, function($a, $b) {
+                $time_a = strtotime($a["date"]);
+                $time_b = strtotime($b["date"]);
+
+                return -$time_a <=> -$time_b;
+            });
+        }
+        
         return $results;
     }
 }

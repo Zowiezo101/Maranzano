@@ -41,6 +41,25 @@ function onFriendsTab() {
     });
 }
 
+function onNewsTab() {
+    
+    // The fetch call
+    fetchNews().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#newsError");
+        } else {
+            // Success, update the player list
+            updateNews(results.data);
+        }
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
+
 function onPlayerlistTab() {
     
     // The fetch call
@@ -226,6 +245,24 @@ function updateStatusFriendList(data, status) {
     }
 
     $("#" + status + "Friends tbody").append(rows.join(""));
+}
+
+function updateNews(data) {
+    $("#newsTable tbody").empty();
+    
+    var rows = [];
+    if (data.length > 0) {
+        for (var row in data) {            
+            rows.push(
+                `<tr>
+                    <td class="text-black"><b>${data[row]["name"]}</b><br><b>${data[row]["date"]}</b></td>
+                </tr>`);
+        }
+    } else {
+        $("#newsError").removeClass("d-none");
+    }
+
+    $("#newsTable tbody").append(rows.join(""));
 }
 
 function updatePlayerTable(data) {

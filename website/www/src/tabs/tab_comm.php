@@ -98,7 +98,27 @@
                                     
                                     <!-- The Newspaper Tab -->
                                     <div class="tab-pane" id="tabNews" role="tabpanel">
-                                        <?php printHeader("comms.news"); ?>
+                                        
+                                        <!-- Card with newspaper image -->
+                                        <div class="card mt-3 bg-transparent border-0">
+
+                                            <!-- Clipboard image -->
+                                            <img class="card-img" src="../img/News.png"/>
+
+                                            <!-- Text contents -->
+                                            <div id="newsCard" class="card-img-overlay g-0 p-0 col-5 mx-auto" style="margin-top: 30%; overflow: hidden; margin-bottom: 3px">
+                                                <table id="newsTable" class="table table-sm table-hover" style="--bs-table-bg: transparent;">
+                                                    <tbody>
+                                                        <!-- Rows are added using JS -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- Error message -->
+                                        <div id="newsError" class="error-message d-none">
+                                            <!-- Filled in later in case of error -->
+                                        </div>
                                     </div>
                                     
                                     <!-- The User list Tab -->

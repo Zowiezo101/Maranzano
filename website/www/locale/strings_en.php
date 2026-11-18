@@ -221,6 +221,10 @@ $strings = [
     "friends.message" => "Message",
     "friends.remove" => "Remove",
     
+    // Newspaper page
+    "news.killed" => " got killed!",
+    "news.joined" => " just joined Mafiani!",
+    
     // Userlist page
     "userlist.message" => "Message",
     "userlist.befriend" => "Befriend",

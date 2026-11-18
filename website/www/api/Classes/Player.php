@@ -634,9 +634,13 @@ class Player {
         
         if (isset($data)) {
             foreach ($data as $row) {
+                
+                $name = ($type === 0) ?
+                    $row["name"] . getString("news.killed") : 
+                    $row["name"] . getString("news.killed");
 
                 $results[] = [
-                    "name" => $row["name"],
+                    "name" => $name,
                     "date" => $row["date"],
                     "type" => $type,
                 ];
