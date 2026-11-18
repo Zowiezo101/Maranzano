@@ -224,6 +224,7 @@ $strings = [
     // Newspaper page
     "news.killed" => " got killed!",
     "news.joined" => " just joined Mafiani!",
+    "news.none" => "There is no news",
     
     // Userlist page
     "userlist.message" => "Message",

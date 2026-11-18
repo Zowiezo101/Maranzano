@@ -112,6 +112,11 @@
                                                         <!-- Rows are added using JS -->
                                                     </tbody>
                                                 </table>
+
+                                                <!-- Error message -->
+                                                <div id="noNewsError" class="error-message d-none">
+                                                    <?php printString("news.none"); ?>
+                                                </div>
                                             </div>
                                         </div>
 
