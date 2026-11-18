@@ -114,7 +114,7 @@
                                                 </table>
 
                                                 <!-- Error message -->
-                                                <div id="noNewsError" class="error-message d-none">
+                                                <div id="noNewsError" class="warning-message d-none">
                                                     <?php printString("news.none"); ?>
                                                 </div>
                                             </div>
