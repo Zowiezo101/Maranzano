@@ -17,6 +17,7 @@ class Crime extends Action {
     public const CRIME_CAR = 2;
     private const CRIME_STORE = 3;
     private const CRIME_KILL = 4;
+    private const CRIME_SEARCH = 5;
     
     // Vehicle types
     private const VEHICLE_CHEAP = 1;
@@ -53,6 +54,10 @@ class Crime extends Action {
         self::VEHICLE_HIGH  => ["start" => 10000, "end" => 15000, "chance_start" => 70],
         self::VEHICLE_WIN   => ["start" => 15000, "end" => 20000, "chance_start" => 90],
     ];
+    
+    // Kill stuff
+    private const KILL_COOLDOWN = 1800;
+    private const SEARCH_COOLDOWN = 600;
     
     public function __construct($conn) {
         parent::__construct($conn);

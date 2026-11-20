@@ -64,7 +64,7 @@
                                             <!-- Explanation on sending money to a friend -->
                                             <p><?php printString("bank.send.title"); ?></p>
 
-                                            <div class="row mb-3">
+                                            <div class="row">
                                                 <div class="text-center col-4">
                                                     <label for="sendAmount" class="form-label fw-bold"><?php printString("bank.amount")?></label>
                                                 </div>

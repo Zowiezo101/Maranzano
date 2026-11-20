@@ -135,5 +135,84 @@
                                     
                                     <!-- The Kill player Tab -->
                                     <div class="tab-pane" id="tabKill" role="tabpanel">
-                                        Kill
+                                        <?php printHeader("crimes.kill", "../img/Kill.png"); ?>
+                                        
+                                        <!-- Search player form -->
+                                        <form id="searchForm">
+                                            
+                                            <label for="playerName" class="form-label fw-bold"><?php printString("kill.search.title")?></label>
+
+                                            <!-- The Name -->
+                                            <div class="row mb-3">
+                                                <div class="text-center col-4 pe-1">
+                                                    <input type="input" class="form-control" id="playerName" placeholder=<?php printString("kill.search.name", true)?>>
+                                                </div>
+                                                
+                                                <div class="text-center col-4 px-1">
+                                                    <select class="form-select" id="location">
+                                                        <option selected disabled><?php printString("kill.search.location"); ?></option>
+                                                    </select>
+                                                </div>
+
+                                                <!-- Search button--> 
+                                                <div class="col-4">
+                                                    <button type="submit" class="btn btn-primary bordered w-100"><?php printString("kill.search")?></button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Explanation on the search function -->
+                                            <p><?php printString("kill.search.info"); ?></p>
+
+                                            <!-- Error message -->
+                                            <div id="searchError" class="error-message d-none">
+                                                <!-- Filled in later in case of error -->
+                                            </div>
+
+                                            <div id="searchSuccess" class="text-center d-none">
+                                                <!-- Filled in later in case of success -->
+                                            </div>
+                                        </form>
+
+                                        <!-- Kill a player form -->
+                                        <form id="killForm" class="mt-5">
+
+                                            <div class="row">
+                                                <div class="text-center col-4">
+                                                    <label for="killPlayer" class="form-label fw-bold"><?php printString("kill.player")?></label>
+                                                </div>
+                                                
+                                                <div class="text-center col-4">
+                                                    <label for="bulletAmount" class="form-label fw-bold"><?php printString("kill.amount")?></label>
+                                                </div>
+                                            </div>
+
+                                            <!-- The amount -->
+                                            <div class="row mb-3">
+                                                <div class="col-4 pe-1">
+                                                        <input type="input" class="form-control" id="killPlayer" placeholder=<?php printString("kill.search.name", true)?>>
+                                                </div>
+                                                
+                                                <div class="text-center col-4 px-1">
+                                                    <input type="number" class="form-control" id="bulletAmount">
+                                                </div>
+
+                                                <!-- Send button -->
+                                                <div class="col-4">
+                                                    <button type="submit" class="btn btn-primary bordered w-100"><?php printString("kill.kill")?></button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Explanation on sending money to a friend -->
+                                            <p><?php printString("kill.kill.info"); ?></p>
+
+                                            <!-- Error message -->
+                                            <div id="killError" class="error-message d-none">
+                                                <!-- Filled in later in case of error -->
+                                            </div>
+
+
+                                            <div id="killSuccess" class="text-center d-none">
+                                                <p><b><?php printString("bank.send.success"); ?></b></p>
+                                            </div>
+                                        </form>
                                     </div>

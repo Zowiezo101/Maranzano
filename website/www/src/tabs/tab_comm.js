@@ -259,7 +259,7 @@ function updateNews(data) {
                 </tr>`);
         }
     } else {
-        $("#newsError").removeClass("d-none");
+        $("#noNewsError").removeClass("d-none");
     }
 
     $("#newsTable tbody").append(rows.join(""));

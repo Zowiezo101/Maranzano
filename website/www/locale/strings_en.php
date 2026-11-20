@@ -65,7 +65,7 @@ $strings = [
     "crimes.bike" => "Steal a bike",
     "crimes.car" => "Steal a car",
     "crimes.store" => "Rob a store",
-    "crimes.kill" => "Kill player",
+    "crimes.kill" => "Kill a player",
     
     // Casino menu items
     "casino.roulette" => "Roulette",
@@ -200,6 +200,18 @@ $strings = [
     "store.try" => "Attempt to rob",
     "store.worth" => "Success! You got away with ",
     "store.cooldown" => "You have tried to rob a store less than [cooldown] [units] ago. You still need to wait [time] [unit]",
+    
+    // Kill a player page
+    "kill.search.title" => "Search player",
+    "kill.search.info" => "This will take 10 minutes. You will get a notification if the search was successful",
+    "kill.search.location" => "Location",
+    "kill.search.name" => "Name",
+    "kill.search" => "Search",
+    "kill.player" => "Player",
+    "kill.select" => "Select a player",
+    "kill.amount" => "Amount of bullets",
+    "kill.kill" => "Kill",
+    "kill.kill.info" => "You can only kill 1 rank above yours, or all the ranks beneath yours. Enter the right amount of bullets required for their rank.",
     
     // General crime stuff
     "crime.info" => "Success rate: ",
