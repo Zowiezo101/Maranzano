@@ -39,6 +39,11 @@ function fetchAllLocations() {
     return fetchGet("get_locations");
 }
 
+// Get the list of locations to travel to
+function fetchTravelLocations() {
+    return fetchGet("get_travel_locations");
+}
+
 // Travel to a different location
 function fetchTravel(data) {
     return fetchPost("move_to_location", data);
@@ -142,6 +147,10 @@ function fetchStealBike() {
 // Get the success rate
 function fetchCarRate() {
     return fetchGet("get_car_rate");
+}
+
+function fetchSearchPlayer(data) {
+    return fetchPost("search_player", data);
 }
 
 // Steal the car

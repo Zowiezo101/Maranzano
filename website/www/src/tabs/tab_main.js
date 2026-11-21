@@ -31,7 +31,7 @@ function onHomeTab() {
 function onTravelTab() {
     
     // The fetch call
-    fetchAllLocations().then(function(results) {
+    fetchTravelLocations().then(function(results) {
         // Handle the results of the fetch call
 
         if (results.error !== "" && results.error !== null) {

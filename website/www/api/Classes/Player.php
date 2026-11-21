@@ -35,7 +35,7 @@ class Player {
         17 => ["health" => 68000,  "jail" => 187, "bike" => 81, "car" => 68, "store" => 64, "xp" => 985300],
         18 => ["health" => 88550,  "jail" => 219, "bike" => 86, "car" => 75, "store" => 71, "xp" => 1477900],
         19 => ["health" => 115250, "jail" => 256, "bike" => 91, "car" => 81, "store" => 79, "xp" => 2216900],
-        20 => ["health" => 150000, "jail" => 300, "bike" => 96, "car" => 86, "store" => 86, "xp" => 3325300],
+        20 => ["health" => 150000, "jail" => 300, "bike" => 96, "car" => 86, "store" => 86, "xp" => -1],
     ];
     
     public function __construct($conn) {
@@ -331,11 +331,11 @@ class Player {
         return $result;
     }
     
-    protected function retrievePlayerFromName($name) {
+    public function retrievePlayerFromName($name) {
         $conn = $this->conn;
         
         // Get the player using the user_id
-        $sql = "SELECT id, name, deceased FROM players WHERE name = :name";
+        $sql = "SELECT id, name, location_id, deceased FROM players WHERE name = :name";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);
@@ -594,7 +594,7 @@ class Player {
         $max_xp = self::RANKS[$rank]["xp"];
         
         // Make sure XP are converted to percentage
-        $result = round($value * 100/$max_xp)."%";
+        $result = ($max_xp === -1) ? "100%" : round($value * 100/$max_xp)."%";
         return $result;
     }
     

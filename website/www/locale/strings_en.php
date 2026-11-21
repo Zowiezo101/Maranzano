@@ -203,7 +203,7 @@ $strings = [
     
     // Kill a player page
     "kill.search.title" => "Search player",
-    "kill.search.info" => "This will take 10 minutes. You will get a notification if the search was successful",
+    "kill.search.info" => "Send out a spy to see if a player is in the specified location. You can do this every 10 minutes",
     "kill.search.location" => "Location",
     "kill.search.name" => "Name",
     "kill.search" => "Search",
@@ -211,7 +211,11 @@ $strings = [
     "kill.select" => "Select a player",
     "kill.amount" => "Amount of bullets",
     "kill.kill" => "Kill",
-    "kill.kill.info" => "You can only kill 1 rank above yours, or all the ranks beneath yours. Enter the right amount of bullets required for their rank.",
+    "kill.kill.info" => "You can only kill 1 rank above yours, or all the ranks beneath yours. Enter the right amount of bullets required for their rank",
+    "kill.search.cooldown" => "You have tried to search for a player less than [cooldown] [units] ago. You still need to wait [time] [unit]",
+    "kill.kill.cooldown" => "You have tried to kill a player less than [cooldown] [units] ago. You still need to wait [time] [unit]",
+    "kill.search.success" => "Your spy has successfully found the target in the specific location",
+    "kill.search.nosuccess" => "Your spy couldn't find the target in the specific location..",
     
     // General crime stuff
     "crime.info" => "Success rate: ",

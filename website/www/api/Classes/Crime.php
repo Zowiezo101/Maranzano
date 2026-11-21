@@ -87,6 +87,11 @@ class Crime extends Action {
                 $result = $this->robStore();
                 break;
             
+            case "crime_kill":
+                $this->hasRequiredRank(\getRankLevel("Hitman"));
+                $result = $this->robStore();
+                break;
+            
             case "crime_chance_bike":
                 $result = $this->getSuccessRateBike();
                 break;
@@ -97,6 +102,10 @@ class Crime extends Action {
             
             case "crime_chance_store":
                 $result = $this->getSuccessRateStore();
+                break;
+            
+            case "crime_search_player":
+                $result = $this->searchPlayer();
                 break;
         }
         
@@ -316,6 +325,50 @@ class Crime extends Action {
         return $this->player->getPlayerSuccessStoreByRank($player["rank"]);
     }
     
+    public function searchPlayer() {
+
+        // The current player
+        $player = $this->player_data;
+        
+        // Is the player still on a cooldown?
+        $this->hasCrimeCooldown($player["id"], 
+                self::CRIME_SEARCH, 
+                self::ACTION_TABLE, 
+                self::SEARCH_COOLDOWN,
+                "kill.search.cooldown");
+        
+        // Get the player name
+        $player_name = $this->parameters->getPlayer();
+
+        // Get the location
+        $location_id = $this->parameters->getLocation();
+
+        // Check if the player name is a valid player
+        $target = $this->player->retrievePlayerFromName($player_name);
+        
+        if (!isset($target)) {
+            // Do NOT continue if this person can't be found
+            throwError("friends.name_not_found");
+        }
+        
+        if ($target["deceased"] !== 0) {
+            // Also do NOT continue if this player is deceased
+            throwError("friends.deceased");
+        }
+
+        // Check player is in this location
+        $found = (intval($location_id, 10) === intval($target["location_id"], 10));
+
+         // Add the cooldown
+         $this->setCrimeCooldown($player["id"], 
+                 self::CRIME_SEARCH, 
+                 $found, 
+                 self::ACTION_TABLE, 
+                 self::SEARCH_COOLDOWN);
+
+        // Return message whether this player has been found or not
+        return $found ? 1 : 0;
+    }
     
     /**
      * Misc functions
@@ -398,7 +451,7 @@ class Crime extends Action {
         // Is this a rank-up?
         $new_rank = $current_rank;
         $new_health = $current_health;
-        if ($new_xp >= $xp_ceiling) {
+        if ($new_xp >= $xp_ceiling && $xp_ceiling !== -1) {
             // The XP starts clean with the bit that's left after rank-up
             $new_xp = $new_xp - $xp_ceiling;
             $new_rank = $current_rank + 1;

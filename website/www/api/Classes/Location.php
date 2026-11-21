@@ -31,6 +31,10 @@ class Location extends Action {
             case "location_all":
                 $result = $this->getAllLocations();
                 break;
+            
+            case "location_travel":
+                $result = $this->getTravelLocations();
+                break;
         }
         
         return $result;
@@ -41,6 +45,14 @@ class Location extends Action {
      */
     
     private function getAllLocations() {
+        
+        // Put the const in a variable
+        $results = self::LOCATIONS;
+        
+        return $results;
+    }
+    
+    private function getTravelLocations() {
         // The current player
         $player = $this->player_data;
         

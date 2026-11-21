@@ -145,7 +145,7 @@
                                             <!-- The Name -->
                                             <div class="row mb-3">
                                                 <div class="text-center col-4 pe-1">
-                                                    <input type="input" class="form-control" id="playerName" placeholder=<?php printString("kill.search.name", true)?>>
+                                                    <input type="input" class="form-control" id="searchPlayer" placeholder=<?php printString("kill.search.name", true)?>>
                                                 </div>
                                                 
                                                 <div class="text-center col-4 px-1">
@@ -168,8 +168,12 @@
                                                 <!-- Filled in later in case of error -->
                                             </div>
 
-                                            <div id="searchSuccess" class="text-center d-none">
-                                                <!-- Filled in later in case of success -->
+                                            <div id="searchSuccess" class="text-center warning-message d-none">
+                                                <p><?php printString("kill.search.success"); ?></p>
+                                            </div>
+
+                                            <div id="searchNoSuccess" class="text-center warning-message d-none">
+                                                <p><?php printString("kill.search.nosuccess"); ?></p>
                                             </div>
                                         </form>
 
@@ -186,17 +190,17 @@
                                                 </div>
                                             </div>
 
-                                            <!-- The amount -->
+                                            <!-- The amount and name -->
                                             <div class="row mb-3">
                                                 <div class="col-4 pe-1">
-                                                        <input type="input" class="form-control" id="killPlayer" placeholder=<?php printString("kill.search.name", true)?>>
+                                                    <input type="input" class="form-control" id="killPlayer" placeholder=<?php printString("kill.search.name", true)?>>
                                                 </div>
                                                 
                                                 <div class="text-center col-4 px-1">
                                                     <input type="number" class="form-control" id="bulletAmount">
                                                 </div>
 
-                                                <!-- Send button -->
+                                                <!-- Kill button -->
                                                 <div class="col-4">
                                                     <button type="submit" class="btn btn-primary bordered w-100"><?php printString("kill.kill")?></button>
                                                 </div>

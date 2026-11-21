@@ -82,6 +82,10 @@ function onShowTab(event) {
             onStoreTab();
             break;
             
+        case "btnKill":
+            onKillTab();
+            break;
+            
         case "btnOnline":
             onOnlineTab();
             break;

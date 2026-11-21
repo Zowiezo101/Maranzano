@@ -60,6 +60,23 @@ function onStoreTab() {
     });
 }
 
+function onKillTab() {    
+    // The fetch call
+    fetchAllLocations().then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong
+        } else {
+            // Success, update the select list
+            updateLocationSelect("location", results.data);
+        }
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
+
 /*
  * onPageLoad
  */
@@ -69,6 +86,8 @@ $(function() {
     $("#bikeForm").on("submit", function(e) {onSubmitBike(e);});
     $("#carForm").on("submit", function(e) {onSubmitCar(e);});
     $("#storeForm").on("submit", function(e) {onSubmitStore(e);});
+    $("#searchForm").on("submit", function(e) {onSubmitSearch(e);});
+    $("#killForm").on("submit", function(e) {onSubmitKill(e);});
 });
 
 /*
@@ -186,4 +205,81 @@ function onSubmitStore(event) {
         // Show an error if anything went wrong
         alert("error: " + results);
     });
+}
+    
+function onSubmitSearch(event) {
+    event.preventDefault();
+        
+    // Remove any previous errors
+    onResetVisibility();
+    
+    // The data for searching a player
+    var name = $("#searchPlayer").val();
+    var location = $("#location").val();
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "player" : name,
+        "location": location
+    };
+    
+    fetchSearchPlayer(data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#searchError");
+        } else {
+            // Successfully attempted to search for a player
+            
+            if (results.data !== "") {
+                // We succeeded in finding the player!
+                $("#searchSuccess").removeClass("d-none");
+            } else {
+                // We failed in finding the player..
+                $("#searchNoSuccess").removeClass("d-none");
+            }
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
+}
+    
+function onSubmitKill(event) {
+    event.preventDefault();
+        
+    // Remove any previous errors
+    onResetVisibility();
+    
+//    fetchRobStore().then(function(results) {
+//        // Handle the results of the fetch call
+//
+//        if (results.error !== "" && results.error !== null) {
+//            // Something went wrong, show an error message
+//            onReturnedError(results.error, "#storeError");
+//        } else {
+//            // Successfully attempted to rob a store
+//            
+//            if (results.data !== "") {
+//                // We succeeded in robbing the store!
+//                $("#storeTry").addClass("d-none");
+//                $("#storeSuccess").removeClass("d-none");
+//                
+//                $("#storeWorth").text("€" + results.data["worth"] + ",-");
+//            } else {
+//                // We failed in robbing the store..
+//                $("#storeTry").addClass("d-none");
+//                $("#storeNoSuccess").removeClass("d-none");
+//            }
+//            
+//            // Update the table with the new amounts
+//            updatePlayerInfo();
+//        }
+//
+//    }).catch(function(results) {
+//        // Show an error if anything went wrong
+//        alert("error: " + results);
+//    });
 }

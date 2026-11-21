@@ -47,7 +47,8 @@ RewriteRule ^(.*)decline_friend$  $1/api/index?route=friend_decline [QSA,DPI]
 RewriteRule ^(.*)move_to_location$   $1/api/index?route=travel_player [QSA,DPI]
 
 # Location requests
-RewriteRule ^(.*)get_locations$   $1/api/index?route=location_all [QSA,DPI]
+RewriteRule ^(.*)get_locations$        $1/api/index?route=location_all [QSA,DPI]
+RewriteRule ^(.*)get_travel_locations$ $1/api/index?route=location_travel [QSA,DPI]
 
 # Jail requests
 RewriteRule ^(.*)get_inmates$   $1/api/index?route=jail_city [QSA,DPI]
@@ -75,9 +76,11 @@ RewriteRule ^(.*)sell_vehicles$ $1/api/index?route=garage_sell [QSA,DPI]
 RewriteRule ^(.*)steal_bike$     $1/api/index?route=crime_bike [QSA,DPI]
 RewriteRule ^(.*)steal_car$      $1/api/index?route=crime_car [QSA,DPI]
 RewriteRule ^(.*)rob_store$      $1/api/index?route=crime_store [QSA,DPI]
+RewriteRule ^(.*)kill_player$    $1/api/index?route=crime_kill [QSA,DPI]
 RewriteRule ^(.*)get_bike_rate$  $1/api/index?route=crime_chance_bike [QSA,DPI]
 RewriteRule ^(.*)get_car_rate$   $1/api/index?route=crime_chance_car [QSA,DPI]
 RewriteRule ^(.*)get_store_rate$ $1/api/index?route=crime_chance_store [QSA,DPI]
+RewriteRule ^(.*)search_player$  $1/api/index?route=crime_search_player [QSA,DPI]
 
 # Mailbox requests
 RewriteRule ^(.*)get_messages$        $1/api/index?route=message_list [QSA,DPI]
