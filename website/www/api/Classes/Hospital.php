@@ -145,6 +145,45 @@ class Hospital extends Action {
         return ($time_h > 1 ? $time_h . " hours" : ($time_m > 1 ? $time_m . " minutes" : $time_s . " seconds"));
     }
     
+    public function setHospitalCooldown($player_id, $health, $rank) {
+        $conn = $this->conn;
+        
+        // Calculate the cooldown
+        $max_health = $this->player->getRankHealth($rank);
+        $health_diff = $max_health - $health;
+        $cooldown = round($health_diff / 10);
+        
+        // The table
+        $table = self::ACTION_TABLE;
+        
+        // Create a new token
+        $sql = "INSERT INTO {$table} (player_id, expires_at) "
+                . "VALUES (:player_id, :expires_at)";
+        
+        // Prepare query statement
+        $stmt = $conn->prepare($sql);
+
+        // Generate the expire date for the cooldown
+        $expiry_date = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
+                            ->modify('+' . $cooldown . 'seconds')
+                            ->format('Y-m-d H:i:s');
+
+        // Bind the parameter
+        $stmt->bindValue(":player_id", $player_id, PDO::PARAM_INT);
+        $stmt->bindValue(":expires_at", $expiry_date, PDO::PARAM_STR);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Check that the cooldown has been properly created
+        $id = $conn->lastInsertId();
+        
+        if (!isset($id)) {
+            // Do NOT continue is the cooldown hasn't been created
+            throwError();
+        }
+    }
+    
     private function updateHospitalCooldown($cooldown) {
         $conn = $this->conn;
         

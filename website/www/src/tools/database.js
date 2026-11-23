@@ -149,10 +149,6 @@ function fetchCarRate() {
     return fetchGet("get_car_rate");
 }
 
-function fetchSearchPlayer(data) {
-    return fetchPost("search_player", data);
-}
-
 // Steal the car
 function fetchStealCar() {
     return fetchGet("steal_car");
@@ -166,6 +162,14 @@ function fetchStoreRate() {
 // Rob the store
 function fetchRobStore() {
     return fetchGet("rob_store");
+}
+
+function fetchSearchPlayer(data) {
+    return fetchPost("search_player", data);
+}
+
+function fetchKillPlayer(data) {
+    return fetchPost("kill_player", data);
 }
 
 // Befriend a player

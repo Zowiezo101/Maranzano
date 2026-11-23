@@ -253,33 +253,36 @@ function onSubmitKill(event) {
     // Remove any previous errors
     onResetVisibility();
     
-//    fetchRobStore().then(function(results) {
-//        // Handle the results of the fetch call
-//
-//        if (results.error !== "" && results.error !== null) {
-//            // Something went wrong, show an error message
-//            onReturnedError(results.error, "#storeError");
-//        } else {
-//            // Successfully attempted to rob a store
-//            
-//            if (results.data !== "") {
-//                // We succeeded in robbing the store!
-//                $("#storeTry").addClass("d-none");
-//                $("#storeSuccess").removeClass("d-none");
-//                
-//                $("#storeWorth").text("€" + results.data["worth"] + ",-");
-//            } else {
-//                // We failed in robbing the store..
-//                $("#storeTry").addClass("d-none");
-//                $("#storeNoSuccess").removeClass("d-none");
-//            }
-//            
-//            // Update the table with the new amounts
-//            updatePlayerInfo();
-//        }
-//
-//    }).catch(function(results) {
-//        // Show an error if anything went wrong
-//        alert("error: " + results);
-//    });
+    // The data for killing a player
+    var name = $("#killPlayer").val();
+    var amount = $("#bulletAmount").val();
+        
+    // Put the data in an easier-to-send format
+    var data = {
+        "player" : name,
+        "amount": amount
+    };
+    
+    fetchKillPlayer(data).then(function(results) {
+        // Handle the results of the fetch call
+
+        if (results.error !== "" && results.error !== null) {
+            // Something went wrong, show an error message
+            onReturnedError(results.error, "#killError");
+        } else {
+            // Successfully attempted to kill a player
+            
+            if (results.data !== "") {
+                // We succeeded in killing the player!
+                $("#killSuccess").removeClass("d-none");
+            } else {
+                // We failed in killing the player..
+                $("#killNoSuccess").removeClass("d-none");
+            }
+        }
+
+    }).catch(function(results) {
+        // Show an error if anything went wrong
+        alert("error: " + results);
+    });
 }

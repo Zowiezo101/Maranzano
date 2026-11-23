@@ -59,6 +59,9 @@ class Crime extends Action {
     private const KILL_COOLDOWN = 1800;
     private const SEARCH_COOLDOWN = 600;
     
+    private const MIN_AGE = 7*24;
+    private const ACTION_MIN = 1;
+    
     public function __construct($conn) {
         parent::__construct($conn);
         
@@ -89,7 +92,7 @@ class Crime extends Action {
             
             case "crime_kill":
                 $this->hasRequiredRank(\getRankLevel("Hitman"));
-                $result = $this->robStore();
+                $result = $this->killPlayer();
                 break;
             
             case "crime_chance_bike":
@@ -296,6 +299,130 @@ class Crime extends Action {
         $this->giveXP($player, self::STORE_XP, $success);
         
         return $store;
+    }
+    
+    private function killPlayer() {
+
+        // The current player
+        $player = $this->player_data;
+        
+        // Is the player still on a cooldown?
+        $this->hasCrimeCooldown($player["id"], 
+                self::CRIME_KILL, 
+                self::ACTION_TABLE, 
+                self::KILL_COOLDOWN,
+                "kill.kill.cooldown");
+        
+        // Get the player name
+        $player_name = $this->parameters->getPlayer();
+
+        // Get the amount of bullets
+        $amount = $this->parameters->getAmount();
+        
+        $this->isValidAmount($amount, min:self::ACTION_MIN);
+        
+        // Do we actually have this amount of bullets
+        if ($player["bullets"] < $amount) {
+            throwError("kill.broke");
+        }
+
+        // Check if the player name is a valid player
+        $target = $this->player->retrievePlayerFromName($player_name);
+        
+        if (!isset($target)) {
+            // Do NOT continue if this person can't be found
+            throwError("friends.name_not_found");
+        }
+        
+        if ($target["id"] === $player["id"]) {
+            throwError("kill.self");
+        }
+        
+        if ($target["deceased"] !== 0) {
+            // Also do NOT continue if this player is deceased
+            throwError("friends.deceased");
+        }
+        
+        // Can't kill players less than a week old AND lower than hitman
+        if (($target["age"] < self::MIN_AGE) && ($target["rank"] < \getRankLevel("Hitman"))) {
+            throwError("kill.too_young");
+        }
+        
+        // Compare the targets rank to our own, 
+        // we can only kill 1 rank higher and lower
+        if ($player["rank"] + 1 < $target["rank"]) {
+            throwError("kill.too_low");
+        }
+        
+        // Check player is in the same location
+        if ($player["location_id"] !== $target["location_id"]) {
+            throwError("kill.wrong_location");
+        }
+        
+        $succeeded = 0;
+        
+        $new_health_t = $target["health"] - $amount;
+        $new_health_p = $this->player_data["health"] - $target["shields"];
+        
+        // Update for the target
+        $target_update = [
+            "shields" => 0,
+            "health" => max($new_health_t, 0)
+        ];
+        
+        $stolen_cash = 0;
+        if ($new_health_t <= 0) {
+            // Target is killed
+            $target_update["cash"] = 0;
+            $stolen_cash = $target["cash"];
+            
+            // Their kill date and info
+            $target_update["deceased"] = 1;
+            $target_update["killer_id"] = $this->player_data["id"];
+            // TODO: Deceased date
+//            $target_update["deceased_at"] = ;
+            
+            $succeeded = 1;
+        } else {
+            // Admit them to the hospital
+            $hospital = new Hospital($this->conn);
+            $hospital->setHospitalCooldown($target["id"], $new_health_t, $target["rank"]);
+        }
+        
+        // Update for the player
+        $player_update = [
+            "bullets" => $this->player_data["bullets"] - $amount,
+            "health" => max($new_health_p, 0),
+            "cash" => $this->player_data["cash"] + $stolen_cash
+        ];
+                
+        if ($new_health_p <= 0) {
+            // Player is killed
+            
+            // Their kill date and info
+            $player_update["deceased"] = 1;
+            $player_update["killer_id"] = $target["id"];
+            // TODO: Deceased date
+//            $player_update["deceased_at"] = ;
+        } else {
+            // Admit them to the hospital
+            $hospital = new Hospital($this->conn);
+            $hospital->setHospitalCooldown($this->player_data["id"], $new_health_p, $this->player_data["rank"]);
+        }
+        
+        $this->player->updatePlayer($target["id"], $target_update);
+        $this->player->updatePlayer($this->player_data["id"], $player_update);
+
+        // TODO:
+//         // Add the cooldown
+//         $this->setCrimeCooldown($player["id"], 
+//                 self::CRIME_KILL, 
+//                 $found, 
+//                 self::ACTION_TABLE, 
+//                 self::KILL_COOLDOWN);
+
+        // Return message whether this player has been killed or not
+        return $succeeded ? 1 : 0;
     }
     
     public function getSuccessRateBike() {

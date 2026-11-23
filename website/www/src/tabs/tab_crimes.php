@@ -145,7 +145,7 @@
                                             <!-- The Name -->
                                             <div class="row mb-3">
                                                 <div class="text-center col-4 pe-1">
-                                                    <input type="input" class="form-control" id="searchPlayer" placeholder=<?php printString("kill.search.name", true)?>>
+                                                    <input type="input" class="form-control" id="searchPlayer" placeholder=<?php printString("kill.name", true)?>>
                                                 </div>
                                                 
                                                 <div class="text-center col-4 px-1">
@@ -193,7 +193,7 @@
                                             <!-- The amount and name -->
                                             <div class="row mb-3">
                                                 <div class="col-4 pe-1">
-                                                    <input type="input" class="form-control" id="killPlayer" placeholder=<?php printString("kill.search.name", true)?>>
+                                                    <input type="input" class="form-control" id="killPlayer" placeholder=<?php printString("kill.name", true)?>>
                                                 </div>
                                                 
                                                 <div class="text-center col-4 px-1">
@@ -216,7 +216,12 @@
 
 
                                             <div id="killSuccess" class="text-center d-none">
-                                                <p><b><?php printString("bank.send.success"); ?></b></p>
+                                                <p><?php printString("kill.kill.success"); ?></p>
+                                            </div>
+
+
+                                            <div id="killNoSuccess" class="text-center d-none">
+                                                <p><?php printString("kill.kill.nosuccess"); ?></p>
                                             </div>
                                         </form>
                                     </div>

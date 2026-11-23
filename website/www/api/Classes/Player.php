@@ -335,7 +335,7 @@ class Player {
         $conn = $this->conn;
         
         // Get the player using the user_id
-        $sql = "SELECT id, name, location_id, deceased FROM players WHERE name = :name";
+        $sql = "SELECT id, name, players.rank, location_id, cash, health, shields, deceased, TIMESTAMPDIFF(HOUR, created_at, NOW()) AS age FROM players WHERE name = :name";
 
         // Prepare query statement
         $stmt = $conn->prepare($sql);
