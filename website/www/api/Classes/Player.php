@@ -175,7 +175,19 @@ class Player {
         $this->isPlayerAvailable($player);
 
         // Create a new player for this user
-        $this->createPlayer($user_id, $player);
+        $new_id = $this->createPlayer($user_id, $player);
+        
+        // Transfer the bank money to the new player
+        $update_new = [
+            "bank" => $player_old["bank"]
+        ];
+                
+        $update_old = [
+            "bank" => 0
+        ];
+        
+        $this->updatePlayer($new_id, $update_new);
+        $this->updatePlayer($player_old["id"], $update_old);
     }
     
     private function getAllPlayers() {

@@ -415,13 +415,12 @@ class Crime extends Action {
         $this->player->updatePlayer($target["id"], $target_update);
         $this->player->updatePlayer($this->player_data["id"], $player_update);
 
-        // TODO:
-//         // Add the cooldown
-//         $this->setCrimeCooldown($player["id"], 
-//                 self::CRIME_KILL, 
-//                 $found, 
-//                 self::ACTION_TABLE, 
-//                 self::KILL_COOLDOWN);
+        // Add the cooldown
+        $this->setCrimeCooldown($player["id"], 
+                self::CRIME_KILL, 
+                $succeeded, 
+                self::ACTION_TABLE, 
+                self::KILL_COOLDOWN);
 
         // Return message whether this player has been killed or not
         return $succeeded ? 1 : 0;

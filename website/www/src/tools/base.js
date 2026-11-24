@@ -38,6 +38,10 @@ function updateTable(table, data) {
             // Use the rank name
             value = getRankName(value);
         }
+        
+        if (key === "health") {
+            value = (data["deceased"] === 1) ? value : "-";
+        }
 
         $("#data" + ucfirst(table) + ucfirst(key)).text(value);
     }
