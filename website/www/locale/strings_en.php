@@ -82,7 +82,7 @@ $strings = [
     "help.contact" => "Contact info",
     "help.rules" => "Rules",
     "help.info" => "Game info",
-    "help.settings" => "Settings",
+    "help.logout" => "Log out",
     
     // Member Home
     "info.no-player" => "Player information currently isn't available",

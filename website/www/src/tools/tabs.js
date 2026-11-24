@@ -195,7 +195,7 @@ function isAlive(data) {
         $("#btnDeceased").tab("show");
         
         // Disable some tabs temporarily
-        $('[role="tab"]').attr("disabled", true);
+        $('[role="tab"]').not('#btnLogout').attr("disabled", true);
     } else {
         // Enable all tabs again
         $('[role="tab"]').attr("disabled", false);
@@ -238,6 +238,11 @@ function onClickJail() {
 
 function onClickMail() {
     $('#btnMail').click();
+}
+
+function onClickLogOut() {
+    // Log the user out
+    fetchLogout().then(() => isCookieValid());
 }
 
 

@@ -82,6 +82,10 @@
         // They will be made visible by JS in updateTabs
         $tab = '<button id="btn'.ucfirst($tab_name).'" type="button" class="btn btn-link'.($tab_rank > 1 ? " d-none" : "").'" data-rank="'.$tab_rank.'" data-bs-toggle="tab" data-bs-target="#tab'. ucfirst($tab_name).'" role="tab">'.getString("$category.$tab_name").'</button>';
         
+        // The logging out tab is a button with functionality and remains active even in case of death
+        if ($tab_name === "logout") {
+            $tab = '<button id="btn'.ucfirst($tab_name).'" type="button" class="btn btn-link" onclick="onClickLogOut()">'.getString("$category.$tab_name").'</button>';
+        }
         
         return $tab;
     }

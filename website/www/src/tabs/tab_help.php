@@ -89,8 +89,3 @@
                                         <p class="game-info-header">-<?php printString("help.settings"); ?>-</p>
                                         <p class="game-info"><?php printString("game.info.settings"); ?></p>
                                     </div>
-                                    
-                                    <!-- The Settings Tab -->
-                                    <div class="tab-pane" id="tabSettings" role="tabpanel">
-                                        Settings
-                                    </div>

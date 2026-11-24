@@ -140,10 +140,10 @@
                                                               "mail"     => $RANK_ROOKIE
                                                             ]) ?>
                                     
-                                    <?php printMenu("help", ["contact"  => $RANK_ROOKIE,
-                                                             "rules"    => $RANK_ROOKIE, 
-                                                             "info"     => $RANK_ROOKIE, 
-                                                             "settings" => $RANK_ROOKIE
+                                    <?php printMenu("help", ["contact" => $RANK_ROOKIE,
+                                                             "rules"   => $RANK_ROOKIE, 
+                                                             "info"    => $RANK_ROOKIE, 
+                                                             "logout"  => $RANK_ROOKIE
                                                             ]) ?>
 
                                     <!-- X Users online -->

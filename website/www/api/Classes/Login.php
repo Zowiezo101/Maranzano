@@ -129,7 +129,19 @@ class Login {
     }
     
     private function logoutUser() {
-        // TODO:
+        
+        // Try to get the expected parameters
+        $token_hex = null;
+        if ($this->parameters->hasTokenCookie()) {
+            $token_hex = $this->parameters->getToken(from_cookie: true);
+        }
+        
+        $user = null;
+        if ($this->parameters->hasUserCookie()) {
+            $user = $this->parameters->getUser(from_cookie: true);
+        }
+        
+        $this->invalidateCookie($token_hex, $user);
     }
     
     private function getOnlinePlayers() {
@@ -208,7 +220,7 @@ class Login {
         $_SESSION = [];
         session_destroy();
 
-        // Throw the rror
+        // Throw the error
         throwError("auth.token.invalid", Message::CODE_UNAUTHETICATED);
     }
 }

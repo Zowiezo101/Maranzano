@@ -14,6 +14,11 @@ function fetchRegister(data) {
     return fetchPost("register", data);
 }
 
+// Logging out
+function fetchLogout() {
+    return fetchGet("logout");
+}
+
 // Get the player info for the member page
 function fetchPlayerInfo() {
     return fetchGet("get_player_info");
