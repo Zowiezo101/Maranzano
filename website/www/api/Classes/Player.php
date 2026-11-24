@@ -649,7 +649,7 @@ class Player {
                 
                 $name = ($type === 0) ?
                     $row["name"] . getString("news.killed") : 
-                    $row["name"] . getString("news.killed");
+                    $row["name"] . getString("news.joined");
 
                 $results[] = [
                     "name" => $name,
