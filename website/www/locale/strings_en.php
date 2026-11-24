@@ -23,7 +23,9 @@ $strings = [
             <b>Welcome to Mafiani</b>
             <p>An oldskool mafia game inspired by the beloved \"DeLuccio\". Climb to power in this thrilling player driven mafia experience. Where you choose how to play and who to trust.</p>
             <br/>
-            <p>-Team Mafiani</p>",
+            <p>-Team Mafiani</p>
+            <br/>
+            <sup>Disclaimer: No AI generated content or coding is used in whilst making this website. Image used are royalty free or public domain</sup>",
     "rules.content" => "
             <b>Rules:</b>
             <p>1. Play like a mobster, Act like gentleman.</p>

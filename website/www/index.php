@@ -104,7 +104,20 @@
                             
                             <!-- The Rules Tab -->
                             <div class="tab-pane" id="tabRules" role="tabpanel">
-                                <?php printString("rules.content"); ?>
+                                
+                                <!-- Title -->
+                                <b><?php printString("rules.title"); ?></b>
+
+                                <!-- Rules -->
+                                <p class="rule-info"><span class="text-white">1. </span><?php printString("rules.rule1"); ?></p>
+                                <p class="rule-info"><span class="text-white">2. </span><?php printString("rules.rule2"); ?></p>
+                                <p class="rule-info"><span class="text-white">3. </span><?php printString("rules.rule3"); ?></p>
+                                <p class="rule-info"><span class="text-white">4. </span><?php printString("rules.rule4"); ?></p>
+                                <p class="rule-info"><span class="text-white">5. </span><?php printString("rules.rule5"); ?></p>
+                                <p class="rule-info"><span class="text-white">6. </span><?php printString("rules.rule6"); ?></p>
+
+                                <!-- Last but not least -->
+                                <p class="rule-info"><?php printString("rules.havefun"); ?></p>
                             </div>
                             
                             <!-- The About Us Tab -->
