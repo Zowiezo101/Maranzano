@@ -549,6 +549,7 @@ class Friend extends Player {
                 "name" => $row["name"],
                 "message" => getString("friends.message"),
                 "remove" => getString("friends.remove"),
+                "deceased" => $row["deceased"],
             ];
         }
         

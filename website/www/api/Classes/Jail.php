@@ -55,7 +55,7 @@ class Jail extends Action {
         // Retrieve the token from the token table
         $sql = "SELECT players.id, players.name, players.rank, TIMESTAMPDIFF(SECOND, CURRENT_TIMESTAMP, jail_session.expires_at) as time FROM {$table} "
                 . "JOIN players on jail_session.player_id = players.id "
-                . "WHERE jail_session.location_id = :location_id AND expires_at >= UTC_TIMESTAMP()";
+                . "WHERE jail_session.location_id = :location_id AND players.deceased = 0 AND expires_at >= UTC_TIMESTAMP()";
     
         // Prepare query statement
         $stmt = $conn->prepare($sql);    

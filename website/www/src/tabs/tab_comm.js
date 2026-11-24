@@ -203,8 +203,12 @@ function updatePlayerList(data) {
         for (var row in data) {
             var name = data[row]["name"];
             
+            if (data[row]["deceased"] === 1) {
+                name = `<i class="fa-solid fa-cross"></i><s>${name}</s>`;
+            }
+            
             if (data[row]["is_confirmed"] === 1) {
-                name = `<span class="text-blue"><b>${data[row]["name"]}</b></span>`;
+                name = `<span class="text-blue"><b>${name}</b></span>`;
             }
             
             names.push(name);
@@ -225,9 +229,15 @@ function updateStatusFriendList(data, status) {
     var rows = [];
     if (data[status].length > 0) {
         for (var row in data[status]) {
+            var name = data[status][row]["name"];
+            
+            if (data[status][row]["deceased"] === 1) {
+                name = `<i class="fa-solid fa-cross"></i><s>${name}</s>`;
+            }
+            
             rows.push(
                 `<tr>
-                    <td><b>${data[status][row]["name"]}</b></td>
+                    <td><b>${name}</b></td>
                     <td><b>
                         <button class="btn btn-link p-0 mb-1 text-danger" onclick="onClickMessage(${data[status][row]["id"]}, '${data[status][row]["name"]}')">
                             <b>${data[status][row]["message"]}</b>
