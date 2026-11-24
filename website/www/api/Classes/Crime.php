@@ -305,6 +305,10 @@ class Crime extends Action {
 
         // The current player
         $player = $this->player_data;
+
+        // The current date
+        $current_date = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
+                            ->format('Y-m-d H:i:s');
         
         // Is the player still on a cooldown?
         $this->hasCrimeCooldown($player["id"], 
@@ -379,8 +383,7 @@ class Crime extends Action {
             // Their kill date and info
             $target_update["deceased"] = 1;
             $target_update["killer_id"] = $this->player_data["id"];
-            // TODO: Deceased date
-//            $target_update["deceased_at"] = ;
+            $target_update["deceased_at"] = $current_date;
             
             $succeeded = 1;
         } else {
@@ -402,8 +405,7 @@ class Crime extends Action {
             // Their kill date and info
             $player_update["deceased"] = 1;
             $player_update["killer_id"] = $target["id"];
-            // TODO: Deceased date
-//            $player_update["deceased_at"] = ;
+            $player_update["deceased_at"] = $current_date;
         } else {
             // Admit them to the hospital
             $hospital = new Hospital($this->conn);
