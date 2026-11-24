@@ -40,7 +40,7 @@ function updateTable(table, data) {
         }
         
         if (key === "health") {
-            value = (data["deceased"] === 1) ? value : "-";
+            value = (data["deceased"] !== true) ? value : "-";
         }
 
         $("#data" + ucfirst(table) + ucfirst(key)).text(value);

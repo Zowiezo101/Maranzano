@@ -33,6 +33,13 @@ function printString($name, $json = false) {
     echo $string;
 }
 
+// Print the copyright years
+function printCopyright() {
+    $copyright = getString("global.copyright");
+    $copyright1 = str_replace("[yyyy]", date("Y"), $copyright);
+    echo $copyright1;
+}
+
 function checkLoggedIn($url_if_true="", $url_if_false="") {
     $loggedIn = false;
     

@@ -468,7 +468,7 @@ class Player {
         $conn = $this->conn;
         
         // Search for the amount of successfull bike steals
-        $sql = "SELECT created_at as date, name FROM players
+        $sql = "SELECT DATE_FORMAT(created_at, '%Y-%m-%d') as date, name FROM players
                     WHERE created_at > DATE_SUB(UTC_TIMESTAMP, INTERVAL :time_range SECOND)";
 
         // Prepare query statement
@@ -490,7 +490,7 @@ class Player {
         $conn = $this->conn;
         
         // Search for the amount of successfull bike steals
-        $sql = "SELECT deceased_at as date, name FROM players
+        $sql = "SELECT DATE_FORMAT(deceased_at, '%Y-%m-%d') as date, name FROM players
                     WHERE deceased_at > DATE_SUB(UTC_TIMESTAMP, INTERVAL :time_range SECOND)
                     AND deceased = 1";
 

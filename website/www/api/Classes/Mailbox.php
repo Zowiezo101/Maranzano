@@ -145,9 +145,6 @@ class Mailbox {
     
     public function sendMessageToPlayer($sender_id, $player_id, $subject, $body) {
         $conn = $this->conn;
-
-        // TODO: Make sure this only works if a player is still alive
-        // TODO: Do NOT send an error message if sender_id = self::SYSTEM_ID
         
         // The SQL
         $sql = "INSERT INTO messages (sender_id, receiver_id, subject, body) VALUES (:sender_id, :receiver_id, :subject, :body)";

@@ -411,7 +411,7 @@ $strings = [
     "data.body.jail_freed" => "[player] has busted you out of jail! You are no longer in jail.",
     
     // Misc
-    "global.copyright" => "<b>Copyright 2026 - ??</b>"
+    "global.copyright" => "<b>Copyright 2026 - [yyyy]</b>"
 ];
 
 // Check if a key exists in Strings

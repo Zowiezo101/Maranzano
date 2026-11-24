@@ -207,8 +207,6 @@ class Friend extends Player {
     
     private function friendDecline() {
         
-        // TODO: Confirm that the message exists
-        
         $user_id = $this->getUserId();
 
         // Get the player that belongs to this user

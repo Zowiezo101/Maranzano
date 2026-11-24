@@ -133,7 +133,7 @@
 
                     <!-- The Footer -->
                     <div class="row home-footer">
-                        <?php printString("global.copyright"); ?>
+                        <?php printCopyright(); ?>
                     </div>
                 </div>
             </div>
