@@ -72,6 +72,8 @@
                                         <p class="game-info"><?php printString("game.info.store"); ?></p>
                                         <p class="game-info-header">-<?php printString("crimes.kill"); ?>-</p>
                                         <p class="game-info"><?php printString("game.info.kill"); ?></p>
+                                        <p class="game-info-header">-<?php printString("game.ranks"); ?>-</p>
+                                        <ul class="game-info"><?php printString("game.info.ranks"); ?></ul>
                                         <p class="game-info-header">-<?php printString("casino.roulette"); ?>-</p>
                                         <p class="game-info"><?php printString("game.info.roulette"); ?></p>
                                         <p class="game-info-header">-<?php printString("casino.scratch"); ?>-</p>
@@ -86,6 +88,4 @@
                                         <p class="game-info"><?php printString("game.info.userlist"); ?></p>
                                         <p class="game-info-header">-<?php printString("comms.mail"); ?>-</p>
                                         <p class="game-info"><?php printString("game.info.mail"); ?></p>
-                                        <p class="game-info-header">-<?php printString("help.settings"); ?>-</p>
-                                        <p class="game-info"><?php printString("game.info.settings"); ?></p>
                                     </div>
